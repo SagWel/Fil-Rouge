@@ -1,0 +1,57 @@
+.barnav {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: absolute;
+    background-color: #1B191F;
+    top: 0;
+    left: 0;
+    font-weight: 700;
+    padding-top: 24px;
+    padding-bottom: 16px;
+    border-right: 1px solid #555257;
+    border-bottom: 1px solid #555257;
+    width: 272px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 8px;
+}
+
+.css-barnav {
+    height: 24px;
+}
+
+.nom {
+    padding: 8px;
+    font-size: 20px;
+}
+
+.liens {
+    text-decoration: none;
+    color: #fdfcfe;
+    padding: 8px;
+    font-size: 19px;
+}
+
+.liste {
+    display: flex;
+}
+
+ .deezer {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+} 
+
+.chakra-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 3px;
+    stroke: #b560ff;
+    stroke-width: 2.5px;
+    /* fill: #b560ff; */
+}
