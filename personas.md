@@ -4,6 +4,8 @@
 Femme - 19 ans 
 <br>
 Etudiante - Bordeaux
+<br>
+Basse (2ans)
 
 ### Objectifs : 
 Cherche à apprendre des nouveau morceaux
@@ -26,6 +28,8 @@ Ecoute intensive de musiques - reseaux socio
 Homme - 10 ans
 <br>
 Etudiant - Dijon
+<br>
+Guitare (Débutant)
 
 ### Objectifs :
 Apprendre d'un instrument
@@ -54,6 +58,8 @@ Sans utilistation précises
 Homme - 39 ans
 <br>
 Salarié dans le commerce de proximité - Paris
+<br>
+Batterie (15 ans)
 
 ### Objectif :
 Diversifié les morceaux de musique de son groupe
