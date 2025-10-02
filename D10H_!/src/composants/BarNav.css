@@ -1,57 +1,116 @@
-.barnav {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    position: absolute;
-    background-color: #1B191F;
-    top: 0;
-    left: 0;
+.d10h-logo {
+    font-family: 'Inter', Arial, sans-serif;
     font-weight: 700;
-    padding-top: 24px;
-    padding-bottom: 16px;
-    border-right: 1px solid #555257;
-    border-bottom: 1px solid #555257;
-    width: 272px;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    padding-left: 8px;
-}
-
-.css-barnav {
-    height: 24px;
-}
-
-.nom {
-    padding: 8px;
-    font-size: 20px;
-}
-
-.liens {
+    font-size: 18px;
+    line-height: 24px;
     text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #fdfcfe;
-    padding: 8px;
-    font-size: 19px;
+    padding-inline-start: 1rem;
 }
 
-.liste {
+.cssbox-nav {
     display: flex;
+    align-items: stretch;
+    background: #1b191f;
+    border-bottom-color: #3a393d;
+    border-bottom-style: solid;
+    border-bottom-width: 0.0625rem;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    padding-top: 1.5rem;
+    z-index: 1;
 }
 
- .deezer {
-    font-size: 25px;
-    font-weight: 900;
-    letter-spacing: 1.5px;
-} 
+.css-link-deezer {
+    transition-property: background-color, border-color, outline-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    color: #fdfcfe;
+    display: block;
+    height: 32px;
+    padding-inline-start: 1rem;
+    padding-inline-end: 1rem;
+}
 
-.chakra-icon {
+.css-svg-deezer {
+    display: flex;
+    height: 32px;
+    align-items: center;
+}
+
+.cssbox-links-nav {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-inline-start: 0.5rem;
+    padding-inline-end: 0.5rem;
+}
+
+.css-link-home {
+    transition-property: background-color, border-color, outline-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    display: flex;
+    align-items: center;
+    padding-inline-start: 0.5rem;
+    padding-inline-end: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    gap: 0.5rem;
+    color: #b560ff;
+    background: #29282d;
+}
+
+.css-svg-nav {
     width: 24px;
     height: 24px;
-    margin-right: 3px;
-    stroke: #b560ff;
-    stroke-width: 2.5px;
-    /* fill: #b560ff; */
+    line-height: 1em;
+    flex-shrink: 0;
+    color: currentcolor;
+    fill: currentcolor;
+    display: block;
+}
+
+.css-heading {
+    font-family: 'Inter', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    --chakra-line-clamp: 1;
+}
+
+.css-links-nav {
+    transition-property: background-color, border-color, outline-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    display: flex;
+    align-items: center;
+    padding-inline-start: 0.5rem;
+    padding-inline-end: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    gap: 0.5rem;
+    color: ;
 }
