@@ -4,7 +4,7 @@ import './BarNav.css'
 
 function BarNav() {
     return (
-        <nav className="barnav">
+        <nav>
             <div className="cssbox-nav">
                 <Link className="d10h-logo" href="/">D10H !</Link>
                 <Link className="css-link-deezer" href="https://deezer.com">
