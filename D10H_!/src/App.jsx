@@ -1,36 +1,59 @@
-/* import { useState } from 'react' */
-/* import reactLogo from './assets/react.svg' */ 
-/* import viteLogo from '/vite.svg'*/
-/* import './App.css' */
+import React from 'react';
+import { Grid, Box } from '@chakra-ui/react';
 import { Routes, Route } from 'react-router-dom';
-import BarNav from './composants/BarNav.jsx';
-import Connexion from './pages/Connexion.jsx';
+
+import BarNav from './composants/BarNav2.jsx';
+import Favoris from './pages/Favoris.jsx';
 import PageAcceuil from './pages/PageAcceuil.jsx';
 import PartitionsGuitare from './pages/guitare/PartitionsGuitare.jsx';
 import ListeInstruments from './pages/ListeInstruments.jsx';
 import Morceau from './pages/PageMorceau.jsx';
-import './index.css';
+import './index.css'; 
 
 function App() {
-    return (
-    <div>
 
-      <BarNav />
+  const NAV_WIDTH = "271px";
+  const PLAYER_HEIGHT = "80px";
+  const HEADER_HEIGHT = "80px";
 
-      <Routes>
+  return (
+    <Grid
+      
+      bg={"#0F0D13"}
+      height="100vh"
+      templateRows={`${HEADER_HEIGHT} 1fr ${PLAYER_HEIGHT}`}
+      templateColumns={`${NAV_WIDTH} 1fr`}
+      templateAreas={`
+        "nav header"
+        "nav main"
+        "playeur playeur"
+      `}
+    >
+      <Box gridArea={"nav"}>
+        <BarNav />
+      </Box>
+      <Box gridArea={"header"}>
 
-        <Route path='/' element={<PageAcceuil />} />
+      </Box>
+      <Box gridArea={"main"}>
+        <Routes>
 
-        <Route path='/Instruments' element={<ListeInstruments />} />
+          <Route path='/' element={<PageAcceuil />} />
 
-        <Route path='/Partitions/guitare' element={<PartitionsGuitare />} />
+          <Route path='/Instruments' element={<ListeInstruments />} />
 
-        <Route path='/Connexion' element={<Connexion />} />
+          <Route path='/Partitions/guitare' element={<PartitionsGuitare />} />
 
-        <Route path='/mMrceau/:id' element={<Morceau />} />
+          <Route path='/Favoris' element={<Favoris />} />
 
-      </Routes>
-    </div>
+          <Route path='/Morceau/:id' element={<Morceau />} />
+
+        </Routes>
+      </Box>
+      <Box gridArea={"playeur"}>
+        
+      </Box>
+    </Grid>
   )
 }
 
