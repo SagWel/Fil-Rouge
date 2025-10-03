@@ -1,10 +1,16 @@
 import React from "react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 
 function PageAcceuil() {
     return (
-        <div>
-            <h3>Morceaux joués récemment</h3>
-        </div>
+        <Box>
+            <Flex>
+                <Heading as={"h3"} 
+                color={"#fdfcfeff"} fontSize={"16px"}>
+                    Morceaux joués récemment
+                </Heading>
+            </Flex>
+        </Box>
     );
 }
 

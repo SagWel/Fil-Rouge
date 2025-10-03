@@ -1,16 +1,16 @@
 import "react";
 import { Link } from "react-router-dom";
-import { Flex, Box, Heading } from "@chakra-ui/react";
+import { Flex, Box, Heading, IconButton } from "@chakra-ui/react";
 
 function BarNav() {
     return (
-        <Box id="Sideleft"
+        <Box id="sideleft"
         paddingBottom={"80px"}
         position={"fixed"}
         borderRightColor={"#3a393d"} borderRightStyle={"solid"} borderRightWidth={"0.0625rem"}
         height={"100%"} bg={"#1B191F"}
         >
-            <Flex id="Navigation" 
+            <Flex id="navigation" 
             p={"24px 0px 16px"} paddingTop={"16px"}
             direction={"column"} justifyContent={"space-between"} 
             height={"224px"} 
@@ -39,9 +39,13 @@ function BarNav() {
                             <Flex id="Acceuil" 
                             gap={"0.5rem"} p={"8px"} 
                             direction={"row"}
-                            height={"40px"} color={"#b560ff"} bg={"#29282D"} borderRadius={"0.5rem"}>
+                            height={"40px"} color={"#fdfcfeff"}
+                            _hover={{
+                                bg: "#29282D",
+                                borderRadius: "0.5rem"
+                            }}>
                                 <svg width="24" height="24">
-                                    <path fill="#b560ffff" d="M22.834 14.656c-.182-2.288-.495-3.923-.853-5.738 0 0-2.517-2.695-5.128-4.817C14.324 2.044 12.788 1 12.006 1h-.012c-.764 0-2.316 1.044-4.847 3.101-2.61 2.122-5.128 4.817-5.128 4.817-.358 1.816-.671 3.45-.853 5.738A52.258 52.258 0 0 0 1.167 23H9v-6.31a3 3 0 0 1 3-2.994 3 3 0 0 1 3 2.994V23h7.833c.185-2.29.257-5.113 0-8.344Z"></path>
+                                    <path fill="#fdfcfeff" d="M12.037 3.07c.433.21 1.4.832 3.555 2.583 1.883 1.531 3.747 3.406 4.535 4.22.331 1.781.57 3.589.713 5.382.164 2.064.201 3.697.113 5.745h-4.958v-4.308A4 4 0 0 0 12 12.697c-2.203 0-4.015 1.792-4.015 3.995V21H3.047a43.615 43.615 0 0 1 .113-5.745c.142-1.793.381-3.6.712-5.381.789-.815 2.653-2.69 4.536-4.22 2.158-1.755 3.21-2.375 3.629-2.585ZM12.005 1h-.012c-.642 0-2.316 1.044-4.848 3.101C4.536 6.223 2.02 8.918 2.02 8.918a53.892 53.892 0 0 0-.853 6.179c-.257 3.23-.185 5.613 0 7.903H10v-6.31a2 2 0 0 1 4 0V23h8.833c.185-2.29.257-4.673 0-7.903a53.892 53.892 0 0 0-.852-6.18s-2.517-2.694-5.128-4.816C14.323 2.044 12.79 1 12.006 1Z"></path>
                                 </svg>
                                 <Heading fontSize={"18px"} fontWeight={"700"}>Acceuil</Heading>
                             </Flex>
@@ -78,24 +82,41 @@ function BarNav() {
                         </Link>
                     </Flex>
             </Flex>
-            <Box id="Sidebar">
-                <Box id="Sidebar-Visible">
-                    <Flex id="Scorbraries" 
+            <Box id="sidebar">
+                <Box id="sidebar-visible">
+                    <Flex id="scorbraries" 
                     padding={"0px 16px 0px 16px"}
                     direction={"row"} justifyContent={"space-between"} alignItems={"center"} 
                     height={"40px"}>
-                            <Link to={"/Favoris/Scorbraries"}>
+                            <Link to={"/favoris/scorbraries"}>
                                 <Heading fontSize={"18px"} fontWeight={"700"} color={"#fdfcfeff"}>Scorbraries</Heading>
                             </Link>
-                            <Link to={"/???"} id="Bouton">
+                            <IconButton id="boutoun-new-scorbrary" aria-label="Ajouter un Scorbrary"
+                            icon={
                                 <svg height={"24"} width={"24"}>
                                     <path fill="#fdfcfeff" d="M11.335 11.335V4h1.33v7.335H20v1.33h-7.335V20h-1.33v-7.335H4v-1.33h7.335Z"></path>
-                                </svg>
+                                </svg>}
+                            variant={"ghost"}
+                            _hover={{
+                                bg: "#29282D",
+                                borderRadius: "100%"
+                            }}>
+                                
+                            </IconButton>
+                    </Flex>
+                    <Flex direction={"column"} id="scorbraries-list"
+                    fontFamily={"Inter, Arial, sans-serif"} fontSize={"16px"} fontWeight={"400"}
+                    color={"#fdfcfeff"}>
+                            <Link to={"/scorbrary/concert-30-09"} id="concert-30/09">
+                                Concert 30/09
+                            </Link>
+                            <Link to={"/scorbrary/rock"} id="rock" >
+                                Rock
+                            </Link>
+                            <Link to={"/scorbrary/au-coin-du-feu"} id="au-coin-du-feu" >
+                                Au coin du feu
                             </Link>
                     </Flex>
-                    <Box id="Scorbraries_List">
-
-                    </Box>
                 </Box>
             </Box>
         </Box>
