@@ -14,7 +14,7 @@ import './index.css';
 
 function App() {
 
-  const NAV_WIDTH = "193px";
+  const NAV_WIDTH = "272px";
   const PLAYER_HEIGHT = "80px";
   const HEADER_HEIGHT = "80px";
 
