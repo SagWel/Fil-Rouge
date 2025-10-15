@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Flex, Heading } from "@chakra-ui/react";
-import { Link, useParams } from "react-router-dom";
+import { Box, Heading } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 
 function Scorbrary () {
 

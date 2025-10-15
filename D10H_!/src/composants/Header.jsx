@@ -1,20 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, Icon, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, IconButton } from "@chakra-ui/react";
 
 function Header() {
     return(
-        <Box id="header-container">
+        <Flex id="header-container" 
+        alignItems={"center"}
+        height={"80px"} minWidth={"770px"}
+        padding={"1rem"}
+        background={"#000000"}
+        position={"fixed"} left={"272px"} right={"0"} top={"0"}
+        borderBottom={"1px solid #4e4c51"}>
             <Flex id="header"
             direction={"row"} align={"center"}
-            padding={"1rem"}
             height={"80px"} width={"100%"}
-            borderBottomColor={"#555257"} borderBottomStyle={"solid"} borderBottomWidth={"0.0625rem"}>
+            >
                 <Box id="top-search-bar"
                 marginRight={"auto"}
                 width={"375px"}>
                     <InputGroup id="search-zone"
-                    bg={"#29282D"}
+                    bg={"#242326"}
                     color={"#6D6D71"}
                     borderRadius={"0.5rem"}
                     >
@@ -48,8 +51,8 @@ function Header() {
                             fontFamily: "Inter, Arial, sans-serif",
                         }}
                         _hover={{
-                            borderColor: "#3a393d",
-                            bg: "#3a393d",
+                            borderColor: "#2e2c30",
+                            bg: "#2e2c30",
                         }}
                         _focus={{
                             borderColor: "#A238FF",
@@ -88,19 +91,38 @@ function Header() {
                 marginLeft={"1rem"}
                 height={"32px"} width={"32px"}>
                     <IconButton type="button" aria-label="Notifications"
-                    background={"transparent"}>
+                    background={"transparent"} borderRadius={"9999xp"}
+                    height={"2rem"} width={"2rem"} minWidth={"2rem"}
+                    _active={{
+                        backgroundColor: "#464549",
+                        color: "#ebe7ee",
+                        borderRadius: "9999px"
+                    }}
+                    _focusVisible={{
+                        borderRadius: "9999px",
+                        outlineColor: "#9A36F3",
+                        boxShadow: "none"
+                    }}
+                    _hover={{
+                        background: "#3A393D",
+                        borderRadius: "9999px"
+                    }}
+                    >
                         <svg height={"24"} width={"24"}>
                             <path fill="#F5F2F8" d="M19.48 16.773s-.902-5.09-2.634-8.647C15.114 4.569 13.607 4.5 12 4.5c-1.607 0-3.114.069-4.846 3.626-1.732 3.556-2.634 8.647-2.634 8.647h4.761v.007c-.032 1.699.963 2.72 2.64 2.72h.158c1.677 0 2.672-1.021 2.64-2.72v-.007h4.76ZM6.197 15.409c.394-1.73 1.133-4.53 2.183-6.686 1.392-2.86 2.278-2.86 3.62-2.86s2.228 0 3.62 2.86c1.049 2.152 1.788 4.954 2.183 6.686H6.197Zm7.159 1.397c.006.323-.04.763-.296 1.023-.25.254-.671.307-.981.307h-.158c-.31 0-.731-.053-.98-.306-.256-.261-.303-.701-.297-1.024v-.033h2.711v.033Z"></path>
                         </svg>
                     </IconButton>
                 </Box>
                 <Box id="compte"
+                display={"inline-flex"} justifyContent={"center"} alignItems={"center"}
                 marginLeft={"1rem"}
-                color={"white"}>
-                        plup
+                height={"32px"} width={"32px"}
+                bg={"#29282d"} color={"#a9a6aa"} borderRadius={"9999px"}
+                >
+                    S
                 </Box>
             </Flex>
-        </Box>
+        </Flex>
     )
 }
 

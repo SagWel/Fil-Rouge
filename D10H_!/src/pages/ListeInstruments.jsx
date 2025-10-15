@@ -1,11 +1,9 @@
-import React from "react";
+import InstrumentList from "../composants/InstrumentList";
 
 function ListeInstrument() {
     return (
-        <div>
-            <h1>Liste des instruments</h1>
-            <h2>Avec quel instrument tu veux jouer ?</h2>
-        </div>
+       
+        <InstrumentList /> 
     );
 }
 

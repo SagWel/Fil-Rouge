@@ -6,10 +6,11 @@ import BarNav from './composants/BarNav2.jsx';
 import Header from './composants/Header.jsx';
 import Favoris from './pages/Favoris.jsx';
 import PageAcceuil from './pages/PageAcceuil.jsx';
-import PartitionsGuitare from './pages/guitare/PartitionsGuitare.jsx';
 import ListeInstruments from './pages/ListeInstruments.jsx';
 import Morceau from './pages/PageMorceau.jsx';
 import Scorbrary from './pages/PageScorbrary.jsx';
+import Playeur from './composants/playeur.jsx';
+
 import './index.css'; 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
   return (
     <Grid
       
-      bg={"#0F0D13"}
+      bg={"#000000"}
       height="100vh"
       templateRows={`${HEADER_HEIGHT} 1fr ${PLAYER_HEIGHT}`}
       templateColumns={`${NAV_WIDTH} 1fr`}
@@ -31,20 +32,18 @@ function App() {
         "playeur playeur"
       `}
     >
-      <Box gridArea={"nav"}>
+      <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
         <BarNav />
       </Box>
-      <Box gridArea={"header"}>
+      <Box gridArea={"header"} zIndex={"200"}>
         <Header />
       </Box>
-      <Box gridArea={"main"}>
+      <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
         <Routes>
 
           <Route path='/' element={<PageAcceuil />} />
 
           <Route path='/instruments' element={<ListeInstruments />} />
-
-          <Route path='/partitions/guitare' element={<PartitionsGuitare />} />
 
           <Route path='/favoris' element={<Favoris />} />
 
@@ -54,8 +53,8 @@ function App() {
 
         </Routes>
       </Box>
-      <Box gridArea={"playeur"}>
-        
+      <Box gridArea={"playeur"} zIndex={"9999"}>
+        <Playeur />
       </Box>
     </Grid>
   )
