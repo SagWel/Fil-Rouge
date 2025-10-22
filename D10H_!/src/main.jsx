@@ -9,7 +9,6 @@ const root = createRoot(document.getElementById('root'));
 root.render(
     <StrictMode>
         <BrowserRouter>
-            {/* Utilisez ChakraProvider SANS la propriété 'theme' pour prendre le thème par défaut */}
             <ChakraProvider> 
                 <App />
             </ChakraProvider>

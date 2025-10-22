@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Box, Flex, Button, Text, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from "@chakra-ui/react";
 import Cover from '../img/dont-stop-the-party.png';
 
@@ -8,7 +8,6 @@ function playeur () {
         <Flex 
         alignItems={"center"} justifyContent={"space-between"}
         padding={"0 1rem"}
-        position={"fixed"} right={"0"} bottom={"0"} left={"0"} zIndex={"300"}
         minWidth={"768px"} height={"80px"}
         background={"#141216"}
         borderTop={"1px solid #4e4c51"} >

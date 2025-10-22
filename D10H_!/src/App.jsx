@@ -1,15 +1,15 @@
-import React from 'react';
 import { Grid, Box } from '@chakra-ui/react';
 import { Routes, Route } from 'react-router-dom';
 
 import BarNav from './composants/BarNav2.jsx';
 import Header from './composants/Header.jsx';
-import Favoris from './pages/Favoris.jsx';
+import Playeur from './composants/playeur.jsx';
 import PageAcceuil from './pages/PageAcceuil.jsx';
 import ListeInstruments from './pages/ListeInstruments.jsx';
+import Research from './pages/PageResearch.jsx'
 import Morceau from './pages/PageMorceau.jsx';
+import Favoris from './pages/Favoris.jsx';
 import Scorbrary from './pages/PageScorbrary.jsx';
-import Playeur from './composants/playeur.jsx';
 
 import './index.css'; 
 
@@ -45,15 +45,18 @@ function App() {
 
           <Route path='/instruments' element={<ListeInstruments />} />
 
+          <Route path='/partitions/:instrumentId' element={<Research />} />
+
+          <Route path='partitons/:instrumentId/morceauId' element={<Morceau />} />
+
           <Route path='/favoris' element={<Favoris />} />
 
-          <Route path='/scorbrary/:id' element={<Scorbrary />} />
-
-          <Route path='/morceau/:id' element={<Morceau />} />
+          <Route path='/favoris/scorbrary' element={<Scorbrary />} />
 
         </Routes>
       </Box>
-      <Box gridArea={"playeur"} zIndex={"9999"}>
+      <Box gridArea={"playeur"} zIndex={"9999"}
+      position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
         <Playeur />
       </Box>
     </Grid>
