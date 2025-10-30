@@ -96,7 +96,8 @@ function Research () {
                     <Box gridColumn={"span 1"}></Box>
                 </Grid>
             </Box>
-            <Grid>
+            <Grid id="resultZone" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
+            gap={"7"} justifyItems={"center"} p={"4"}>
 
             </Grid>
         </Flex>
