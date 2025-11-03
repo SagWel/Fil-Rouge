@@ -1,9 +1,9 @@
 import { Grid, Box } from '@chakra-ui/react';
 import { Routes, Route } from 'react-router-dom';
 
-import BarNav from './composants/BarNav2.jsx';
+import BarNav from './composants/BarNav.jsx';
 import Header from './composants/Header.jsx';
-import Playeur from './composants/playeur.jsx';
+import Playeur from './composants/Playeur.jsx';
 import PageAcceuil from './pages/PageAcceuil.jsx';
 import ListeInstruments from './pages/ListeInstruments.jsx';
 import Research from './pages/PageResearch.jsx'

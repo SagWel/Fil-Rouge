@@ -1,18 +1,18 @@
 import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, IconButton, Text } from "@chakra-ui/react";
 import { SearchIcon, DisableIcon, NotifIcon } from "./svg";
 
-function Header() {
+function HeaderMin() {
     return(
         <Flex id="header-container" 
         alignItems={"center"}
-        height={"80px"} minWidth={"770px"}
-        padding={"1rem"}
+        height={"40px"} minWidth={"770px"}
+        paddingX={"1rem"} paddingY={"0.3125rem"}
         background={"#000000"}
-        position={"fixed"} left={"272px"} right={"0"} top={"0"}
+        position={"fixed"} right={"0"} top={"0"}
         borderBottom={"1px solid #4e4c51"}>
             <Flex id="header"
             direction={"row"} align={"center"}
-            height={"80px"} width={"100%"}
+            height={"40px"} width={"100%"}
             >
                 <Box id="top-search-bar"
                 marginRight={"auto"}
@@ -24,7 +24,7 @@ function Header() {
                     >
                         <InputLeftElement id="search-icon"
                         margin={"0 0.75rem 0 1rem"} left={"0"}
-                        width={"1.5rem"} height={"3rem"}
+                        width={"1.5rem"} height={"2rem"}
                         display={"flex"} alignItems={"center"} justifyContent={"center"}>
                             <Button type="submit"
                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"baseline"} gap={'0.25rem'}
@@ -41,7 +41,7 @@ function Header() {
                         </InputLeftElement>
                         <Input type="search" aria-label="Rechercher" placeholder="Artistes, titres, Scorbraries ..."
                         padding={"0 2.75rem 0 2.75rem" }
-                        height={"3rem"} width={"100%"}
+                        height={"2rem"} width={"100%"}
                         borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
                         textDecoration={"none"}
                         _placeholder={{
@@ -63,7 +63,7 @@ function Header() {
                         ></Input>
                         <InputRightElement
                         right={"0"}
-                        width={"1.5rem"} height={"3rem"}
+                        width={"1.5rem"} height={"2rem"}
                         margin={"0 0.75rem 0 1rem"}
                         display={"flex"} alignItems={"center"} justifyContent={"center"}
                         >
@@ -107,8 +107,8 @@ function Header() {
                 <Button id="compte"
                 textAlign={"center"}
                 marginLeft={"1rem"} paddingX={"0"}
-                height={"32px"} minWidth={"32px"}
-                bg={"#29282d"} color={"#a9a6aa"} borderRadius={"9999px"}
+                height={"2rem"} minWidth={"2rem"}
+                bg={"#29282d"} color={"#a9a6aa"} borderRadius={"full"}
                 _hover={{
                         opacity: "0.76",
                         transition: "opacity 0.2s ease-in-out",
@@ -123,4 +123,4 @@ function Header() {
     )
 }
 
-export default Header
+export default HeaderMin
