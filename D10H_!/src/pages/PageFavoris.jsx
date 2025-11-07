@@ -1,4 +1,4 @@
-import Favoris from '../composants/FavorisMain'
+import Favoris from '../composants/Favoris'
 
 function favoris() {
     return (

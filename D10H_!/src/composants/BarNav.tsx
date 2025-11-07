@@ -1,4 +1,3 @@
-import "react";
 import { Link } from "react-router-dom";
 import { Flex, Box, Heading, IconButton, Image } from "@chakra-ui/react";
 import Fire from '../img/au-coin-du-feu.png'
@@ -6,7 +5,9 @@ import Rock from '../img/Rock.png'
 import Var from '../img/var.png'
 import { LogoIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon } from "./svg";
 
-function BarNav() {
+export interface IBarNavProps {}
+
+const BarNav: React.FC<IBarNavProps> = () => {
     return (
         <Box id="sideleft"
         paddingBottom={"80px"}
@@ -112,7 +113,7 @@ function BarNav() {
                     direction={"column"} padding={"0 1rem"}
                     fontFamily={"Inter, Arial, sans-serif"} fontSize={"16px"} fontWeight={"400"}
                     color={"#fdfcfeff"}>
-                            <Flex as={Link} to={"/scorbrary/concert-30-09"} id="concert-30/09" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
+                            <Flex as={Link} to={"favoris/scorbraries/concert-30-09"} id="concert-30/09" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
                             _hover={{
                                 bg: "#29282D",
                             }}
@@ -128,7 +129,7 @@ function BarNav() {
                                     Concert 30/09
                                 </Box>
                             </Flex>
-                            <Flex as={Link} to={"/scorbrary/rock"} id="rock" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
+                            <Flex as={Link} to={"favoris/scorbraries/rock"} id="rock" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
                             _hover={{
                                 bg: "#29282D",
                             }}
@@ -144,7 +145,7 @@ function BarNav() {
                                     Rock
                                 </Box>
                             </Flex>
-                            <Flex as={Link} to={"/scorbrary/au-coin-du-feu"} id="au-coin-du-feu" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
+                            <Flex as={Link} to={"favoris/scorbraries/au-coin-du-feu"} id="au-coin-du-feu" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
                             _hover={{
                                 bg: "#29282D",
                             }}

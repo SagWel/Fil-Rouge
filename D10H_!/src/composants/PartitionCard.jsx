@@ -34,7 +34,7 @@ function IconCard () {
 
 function PartitionCard ({partition}) {
     return (
-    <Flex as={"a"} href="partitons/:instrumentId/morceauId" direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
+    <Flex as={"a"} href="/partitions/:instrumentId/morceauId" direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
     backgroundColor={"transparent"} minH={"192px"}>
         <Box id="cardTop" position={"relative"}
         borderRadius={"0.125rem"} maxW={"12rem"}

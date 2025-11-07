@@ -1,4 +1,4 @@
-import InstrumentList from "../composants/InstrumentList";
+import InstrumentList from "../composants/ListInstrument";
 
 function ListeInstrument() {
     return (

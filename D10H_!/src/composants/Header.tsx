@@ -1,7 +1,52 @@
 import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, IconButton, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { SearchIcon, DisableIcon, NotifIcon } from "./svg";
+import { useSearch } from '../context/SearchContext'
 
-function Header() {
+export interface IHeaderProps {
+    userName: string,
+    isLoggedIn: boolean,
+    
+    onSearchSubmit: (query: string) => void
+}
+
+const {
+    searchResults, 
+    setSearchResults, 
+    setIsLoading,
+    setIsSearching,
+} = useSearch()
+const navigate = useNavigate()
+
+const Header: React.FC<IHeaderProps> = () => {
+async function fetchDeeserSuggestions(query: string) {
+    try {
+        setIsLoading(true)
+        
+        const safeQuery = encodeURIComponent(query)
+        const apiURL = `https://api.deezer.com/search?q=${safeQuery}`
+
+        const response = await fetch(apiURL);
+        const responseJson = await response.json() as IDeezerSearchResponse
+
+        setSearchResults(responseJson.data)
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false)
+    }
+}
+
+const hendleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key == 'entrer') {
+        event.preventDefault()
+        
+    }
+
+}
+
     return(
         <Flex id="header-container" 
         alignItems={"center"}
@@ -99,7 +144,6 @@ function Header() {
                         background: "#3A393D",
                         borderRadius: "full"
                     }}
-                    _f
                     >
                         <NotifIcon />
                     </IconButton>

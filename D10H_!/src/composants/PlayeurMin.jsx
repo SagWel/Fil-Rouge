@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Box, Flex, Button, Text, } from "@chakra-ui/react";
+import { Box, Flex, Button, Text, Image } from "@chakra-ui/react";
 import Cover from '../img/dont-stop-the-party.png';
 import { HeartLoveOnIcon, AddIcon, ShuffleIcon, PreviousIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "./svg";
 
@@ -12,13 +12,13 @@ function PlayeurMin () {
         background={"#141216"}
         borderTop={"1px solid #4e4c51"} >
             <Flex id="info-piste"
-            alignItems={"center"} width={"33%"}>
-                <Box id="cover" height={"2.5rem"} width={"3rem"}
-                borderColor={"#3a393d"} borderStyle={"solid"} borderWidth={"0.0625rem"} >
-                    <img src={Cover} alt="Cover" />
+            alignItems={"center"} width={"33%"} height={"100%"}>
+                <Box id="cover" width={"2.5rem"}
+                borderColor={"#3a393d"} borderStyle={"solid"} borderWidth={"0.0625rem"}>
+                    <Image src={Cover} alt="Cover"/>
                 </Box>
                 <Box id="title"
-                fontWeight={"400"}
+                fontWeight={"400"} color={"#fdfcfe"} marginLeft={"0.5rem"}
                 _hover={{
                     textDecoration: "underline"
                 }}
@@ -209,23 +209,23 @@ function PlayeurMin () {
                 </Flex>
             </Flex>
             <Flex id="timline" 
-            alignItems={"center"}
+            alignItems={"center"} justifyContent={"center"}
             paddingY={"0.125rem"}
-            width={"100%"} position={"relative"}>
-                <Box paddingRight={"1rem"}>
+            position={"relative"}>
+                <Box paddingRight={"0.5rem"}>
                     <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
                     margin={"0"}>
                         01:24
                     </Text>
                 </Box>
-                <Box paddingRight={"1rem"}>
+                <Box textAlign={"center"} minWidth={"24px"}>
                     <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
                     margin={"0"}>
                         -----
                     </Text>
                 </Box>
-                <Box paddingLeft={"1rem"}
-                position={"absolute"} right={"0"}>
+                <Box paddingLeft={"0.5rem"}
+                position={"relative"} right={"0"}>
                     <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
                     margin={"0"}>
                         06:07

@@ -27,12 +27,13 @@ function BarNavMin() {
                     fontSize={"1,125rem"} fontWeight={"600"}>
                         <Link to={"/"}>D10H !</Link>
                     </Box>
-                    <Box as="a" id="Deezer_Link" href="https://www.deezer.com/"
+                    <Flex as="a" id="Deezer_Link" href="https://www.deezer.com/"
+                    justifyContent={"center"}
+                    marginTop={"0.0625rem"}
                     height={"32px"}
-                    paddingX={"1rem"}
                     textDecoration={"none"}>
                         <LogoMinIcon />                        
-                    </Box>
+                    </Flex>
                     </Box>
                     <Flex id="NavigationLinks" 
                     paddingX={"0.5rem"}
