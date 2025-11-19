@@ -3,7 +3,9 @@ import { Box, Flex, Button, Text, Slider, SliderTrack, SliderFilledTrack, Slider
 import Cover from '../img/dont-stop-the-party.png';
 import { HeartLoveOnIcon, AddIcon, ShuffleIcon, PreviousIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "./svg";
 
-function playeur () {
+export interface IPlayeurProps {}
+
+const Playeur: React.FC<IPlayeurProps> = () => {
     return (
         <Flex 
         alignItems={"center"} justifyContent={"space-between"}
@@ -26,7 +28,7 @@ function playeur () {
                     }}
                     >
                         <Link
-                        // to={"direction page album de la piste}
+                        to={"direction page album de la piste"}
                         >
                             Don't Stop The Party
                         </Link>
@@ -38,7 +40,7 @@ function playeur () {
                     }}
                     >
                         <Link
-                        // to={"direction page artiste"}
+                        to={"direction page artiste"}
                         >
                             Black Eyed Peas
                         </Link>
@@ -233,7 +235,7 @@ function playeur () {
                         </Text>
                     </Box>
                     <Slider flex={"1"} aria-label="Temps de lecture"
-                    min={"0"} max={"367.41333333333336"} value={"84.594652"} step={"1"}>
+                    min={0} max={367.41333333333336} value={84.594652} step={1}>
                         <SliderTrack 
                         height={"4px"}
                         background={"#29282d"}
@@ -374,4 +376,4 @@ function playeur () {
     )
 }
 
-export default playeur;
+export default Playeur;

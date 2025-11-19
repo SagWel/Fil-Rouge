@@ -6,7 +6,9 @@ import Rock from '../img/Rock.png'
 import Var from '../img/var.png'
 import { LogoMinIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon } from "./svg";
 
-function BarNavMin() {
+export interface IBarNavMinProps {}
+
+const BarNavMin: React.FC<IBarNavMinProps> = () => {
     return (
         <Box id="sideleft"
         paddingBottom={"40px"}
@@ -79,7 +81,7 @@ function BarNavMin() {
                     <Flex id="scorbraries"
                     alignItems={"center"} justifyContent={"center"}
                     marginTop={"1rem"} marginBottom={"0.25rem"}
-                    minHeig={"2.5rem"} width={"100%"}>
+                    minHeight={"2.5rem"} width={"100%"}>
                             <IconButton id="boutoun-new-scorbrary" aria-label="Ajouter un Scorbrary"
                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                             userSelect={"none"}
@@ -118,7 +120,7 @@ function BarNavMin() {
                             >
                                 <Flex
                                 alignItems={"center"} justifyContent={"center"}
-                                Width={"3rem"} height={"3rem"}
+                                width={"3rem"} height={"3rem"}
                                 borderRadius={"0.125rem"} opacity={"1"}>
                                     <Flex
                                     alignItems={"center"} justifyContent={"center"}
@@ -142,7 +144,7 @@ function BarNavMin() {
                             >
                                 <Flex
                                 alignItems={"center"} justifyContent={"center"}
-                                Width={"3rem"} height={"3rem"}
+                                width={"3rem"} height={"3rem"}
                                 borderRadius={"0.125rem"} opacity={"1"}>
                                     <Flex
                                     alignItems={"center"} justifyContent={"center"}
@@ -166,7 +168,7 @@ function BarNavMin() {
                             >
                                 <Flex
                                 alignItems={"center"} justifyContent={"center"}
-                                Width={"3rem"} height={"3rem"}
+                                width={"3rem"} height={"3rem"}
                                 borderRadius={"0.125rem"} opacity={"1"}>
                                     <Flex
                                     alignItems={"center"} justifyContent={"center"}

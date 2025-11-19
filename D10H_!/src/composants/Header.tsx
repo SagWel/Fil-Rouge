@@ -1,51 +1,79 @@
 import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, IconButton, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { SearchIcon, DisableIcon, NotifIcon } from "./svg";
-import { useSearch } from '../context/SearchContext'
+import { useSearch, } from '../context/SearchContext'
+import { IDeezerSearchResponse } from '../types/Deezer'
 
 export interface IHeaderProps {
     userName: string,
     isLoggedIn: boolean,
-    
-    onSearchSubmit: (query: string) => void
 }
-
-const {
-    searchResults, 
-    setSearchResults, 
-    setIsLoading,
-    setIsSearching,
-} = useSearch()
-const navigate = useNavigate()
 
 const Header: React.FC<IHeaderProps> = () => {
-async function fetchDeeserSuggestions(query: string) {
-    try {
-        setIsLoading(true)
-        
-        const safeQuery = encodeURIComponent(query)
-        const apiURL = `https://api.deezer.com/search?q=${safeQuery}`
+    const {
+        searchResults,
+        setSearchResults,
+        setIsLoading,
+        setIsSearching,
+    } = useSearch()
+    const navigate = useNavigate()
+    const [isFocused, setIsFocused] = useState<boolean>(false)
+    const ref = useRef<number | null> (null)
+    const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
+    
 
-        const response = await fetch(apiURL);
-        const responseJson = await response.json() as IDeezerSearchResponse
+    async function fetchDeezerSuggestions(query: string) {
+        try {
+            setIsLoading(true)
+            
+            const safeQuery = encodeURIComponent(query)
+            const apiURL = `/api/search?q=${safeQuery}`
 
-        setSearchResults(responseJson.data)
+            const response = await fetch(apiURL);
+            const responseJson = await response.json() as IDeezerSearchResponse
 
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false)
+            setSearchResults(responseJson.data)
+
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setIsLoading(false)
+        }
     }
-}
 
-const hendleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key == 'entrer') {
-        event.preventDefault()
-        
+    const [query, setQuery] = useState('')
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key == 'Enter') {
+            event.preventDefault()
+            const safeQuery = encodeURIComponent(query)
+            navigate(`/search?q=${safeQuery}`)
+        } else if (event.key == 'Tab') {
+            event.preventDefault()
+            fetchDeezerSuggestions(query)
+            // window.location.href = `https://www.deezer.com/search/${query}`
+        }
+
     }
 
-}
+    function handleSuggestionClick (id: number) {
+        const item = searchResults.find(result => {
+            return result.id == `${id}`
+        }) 
+        console.log(item);
+        
+        if (ref.current != null) {
+            clearTimeout(ref.current)
+            ref.current = null        
+        }
+        if (item != undefined) {
+            setQuery(item.title)
+            setInfoNavigation(true)
+        }
+        setIsFocused(false)
+        setSearchResults([])
+    }
 
     return(
         <Flex id="header-container" 
@@ -61,7 +89,7 @@ const hendleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
             >
                 <Box id="top-search-bar"
                 marginRight={"auto"}
-                width={"375px"}>
+                width={"375px"} position={"relative"}>
                     <InputGroup id="search-zone"
                     bg={"#242326"}
                     color={"#6D6D71"}
@@ -84,7 +112,25 @@ const hendleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
                                 <SearchIcon />
                             </Button>
                         </InputLeftElement>
-                        <Input type="search" aria-label="Rechercher" placeholder="Artistes, titres, Scorbraries ..."
+                        <Input type="search" value={query} aria-label="Rechercher" placeholder="Artistes, titres, Scorbraries ..."
+                        onChange={(e) => {
+                            
+                            setQuery(e.target.value)
+                            
+                            if (e.target.value.length >= 2) {
+                                fetchDeezerSuggestions(e.target.value)                                
+                            } else if (e.target.value.length < 2) {
+                                setSearchResults([])
+                            }}}
+                            onKeyDown={handleKeyDown} 
+                            onFocus={() =>{
+                                {if (ref.current != null) {
+                                    clearTimeout(ref.current)
+                                    ref.current = null
+                                }}
+                                setIsFocused(true)
+                            }}
+                            onBlur={() => {ref.current = setTimeout (() => {setIsFocused(false)}, 250)}}
                         padding={"0 2.75rem 0 2.75rem" }
                         height={"3rem"} width={"100%"}
                         borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
@@ -123,6 +169,26 @@ const hendleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
                             </Button>
                         </InputRightElement>
                     </InputGroup>
+                    {(searchResults.length != 0) && (query != '') && (isFocused) &&
+                        <Box position={"absolute"} left={"0"} right={"3rem"}
+                        background={"#242326"} width={"375px"} zIndex={"900"} color={"white"}>{
+                            searchResults.map((e: object) => {
+                                return (
+                                    <Box key={e.id} paddingStart={1} marginY={1}
+                                    _hover={{
+                                        background: "#2e2c30",}}
+                                    onClick={() => {handleSuggestionClick(e.id)}}>
+                                        <Text as={"p"} fontWeight={"700"}>
+                                            {e.title}
+                                        </Text>
+                                        <Text as={"p"} fontSize={"14px"}>
+                                            {e.artist.name}
+                                        </Text>
+                                    </Box>
+                                )
+                           })
+                        }</Box>
+                        }
                 </Box>
                 <Box id="notif"
                 marginLeft={"1rem"}

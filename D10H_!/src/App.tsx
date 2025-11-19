@@ -16,7 +16,7 @@ import Tools from './composants/Tools.jsx';
 import BarNav from './composants/BarNav.tsx';
 import Header from './composants/Header.tsx';
 import Playeur from './composants/Playeur.jsx';
-import BarNavMin from './composants/BarNavMin.jsx';
+import BarNavMin from './composants/BarNavMin.tsx';
 import HeaderMin from './composants/HeaderMin.jsx';
 import PlayeurMin from './composants/PlayeurMin.jsx';
 
@@ -61,48 +61,48 @@ function App() {
   if (onPageMorceau) {
     return (
     <Grid
-
-      bg={"#000000"}
-      height="100vh"
-      templateRows={`${HEADER_MIN_HEIGHT} 1fr ${PLAYEUR_MIN_HEIGHT}`}
-      templateColumns={`${NAV_MIN_WIDTH} 1fr ${TOOLS_WIDTH}`}
-      templateAreas={`
-        "nav header tools"
-        "nav main tools"
-        "playeur playeur playeur"
-        `}
+    
+    bg={"#000000"}
+    height="100vh"
+    templateRows={`${HEADER_MIN_HEIGHT} 1fr ${PLAYEUR_MIN_HEIGHT}`}
+    templateColumns={`${NAV_MIN_WIDTH} 1fr ${TOOLS_WIDTH}`}
+    templateAreas={`
+      "nav header tools"
+      "nav main tools"
+      "playeur playeur playeur"
+      `}
       >
         <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
           <BarNavMin />
         </Box>
-        <Box gridArea={"header"} zIndex={"200"}>
-          <HeaderMin />
-        </Box>
-        <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
-          <SearchProvider>
-            <Routes>
-    
-              <Route path='/' element={<PageAcceuil />} />
+        <SearchProvider>
+          <Box gridArea={"header"} zIndex={"200"}>
+            <HeaderMin />
+          </Box>
+          <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
+              <Routes>
+      
+                <Route path='/' element={<PageAcceuil />} />
 
-              <Route path='/search/' element={<PageSearchPartitions />} />
-    
-              <Route path='/instruments' element={<ListeInstruments />} />
-    
-              <Route path='/partitions/:instrumentId' element={<PageSearchPartitionsInstrument />} />
-    
-              <Route path='/partitions/:instrumentId/:morceauId' element={<Morceau />} />
-    
-              <Route path='/favoris' element={<Favoris />} />
+                <Route path='/search' element={<PageSearchPartitions />} />
+      
+                <Route path='/instruments' element={<ListeInstruments />} />
+      
+                <Route path='/partitions/:instrumentId' element={<PageSearchPartitionsInstrument />} />
+      
+                <Route path='/partitions/:instrumentId/:morceauId' element={<Morceau />} />
+      
+                <Route path='/favoris' element={<Favoris />} />
 
-              <Route path='/favoris/scorbraries' element={<Scorbraries />} />
-    
-              <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
+                <Route path='/favoris/scorbraries' element={<Scorbraries />} />
+      
+                <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
 
-              <Route path='/favoris/history' element={<History />} />
-    
-            </Routes>
-          </SearchProvider>
-        </Box>
+                <Route path='/favoris/history' element={<History />} />
+      
+              </Routes>
+          </Box>
+        </SearchProvider>
         <Box gridArea={"tools"} zIndex={"200"} marginTop={"2.5rem"} marginBottom={"8rem"} position={"fixed"} right={"0"} overflow={"hidden"}>
           <Tools />
         </Box>
@@ -115,48 +115,48 @@ function App() {
   )} else {
     return (
       <Grid
-        
-        bg={"#000000"}
-        height="100vh"
-        templateRows={`${HEADER_HEIGHT} 1fr ${PLAYER_HEIGHT}`}
-        templateColumns={`${NAV_WIDTH} 1fr`}
-        templateAreas={`
-          "nav header"
-          "nav main"
-          "playeur playeur"
+      
+      bg={"#000000"}
+      height="100vh"
+      templateRows={`${HEADER_HEIGHT} 1fr ${PLAYER_HEIGHT}`}
+      templateColumns={`${NAV_WIDTH} 1fr`}
+      templateAreas={`
+        "nav header"
+        "nav main"
+        "playeur playeur"
         `}
-      >
+        >
         <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
           <BarNav />
         </Box>
-        <Box gridArea={"header"} zIndex={"200"}>
-          <Header userName={"Visiteur"} isLoggedIn={false} onSearchSubmit={handleSearch} />
-        </Box>
-        <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
-          <SearchProvider>
-            <Routes>
-    
-              <Route path='/' element={<PageAcceuil />} />
+        <SearchProvider>
+          <Box gridArea={"header"} zIndex={"200"}>
+            <Header userName={"Visiteur"} isLoggedIn={false} />
+          </Box>
+          <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
+              <Routes>
+      
+                <Route path='/' element={<PageAcceuil />} />
 
-              <Route path='/search/' element={<PageSearchPartitions />} />
-    
-              <Route path='/instruments' element={<ListeInstruments />} />
-    
-              <Route path='/partitions/:instrumentId' element={<PageSearchPartitionsInstrument />} />
-    
-              <Route path='/partitions/:instrumentId/:morceauId' element={<Morceau />} />
-    
-              <Route path='/favoris' element={<Favoris />} />
+                <Route path='/search/' element={<PageSearchPartitions />} />
+      
+                <Route path='/instruments' element={<ListeInstruments />} />
+      
+                <Route path='/partitions/:instrumentId' element={<PageSearchPartitionsInstrument />} />
+      
+                <Route path='/partitions/:instrumentId/:morceauId' element={<Morceau />} />
+      
+                <Route path='/favoris' element={<Favoris />} />
 
-              <Route path='/favoris/scorbraries' element={<Scorbraries />} />
-    
-              <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
+                <Route path='/favoris/scorbraries' element={<Scorbraries />} />
+      
+                <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
 
-              <Route path='/favoris/history' element={<History />} />
-    
-            </Routes>
-          </SearchProvider>
-        </Box>
+                <Route path='/favoris/history' element={<History />} />
+      
+              </Routes>
+          </Box>
+        </SearchProvider>
         <Box gridArea={"playeur"} zIndex={"9999"}
         position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
           <Playeur />

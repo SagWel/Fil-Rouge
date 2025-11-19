@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Button, List, ListItem, chakra } from "@chakra-ui/react";
+import { Box, Flex, Heading, Button, List, ListItem, } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { ShuffleIcon } from "./svg";
 

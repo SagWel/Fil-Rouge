@@ -3,7 +3,9 @@ import { Box, Flex, Button, Text, Image } from "@chakra-ui/react";
 import Cover from '../img/dont-stop-the-party.png';
 import { HeartLoveOnIcon, AddIcon, ShuffleIcon, PreviousIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "./svg";
 
-function PlayeurMin () {
+export interface IPlayeurMinProps {}
+
+const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
     return (
         <Flex 
         alignItems={"center"} justifyContent={"space-between"}
@@ -24,7 +26,7 @@ function PlayeurMin () {
                 }}
                 >
                     <Link
-                    // to={"direction page album de la piste}
+                    to={"direction page album de la piste"}
                     >
                         Don't Stop The Party
                     </Link>
