@@ -49,10 +49,11 @@ const Header: React.FC<IHeaderProps> = () => {
             event.preventDefault()
             const safeQuery = encodeURIComponent(query)
             navigate(`/search?q=${safeQuery}`)
+            setQuery("")
         } else if (event.key == 'Tab') {
             event.preventDefault()
             fetchDeezerSuggestions(query)
-            // window.location.href = `https://www.deezer.com/search/${query}`
+            
         }
 
     }
@@ -72,7 +73,6 @@ const Header: React.FC<IHeaderProps> = () => {
             setInfoNavigation(true)
         }
         setIsFocused(false)
-        setSearchResults([])
     }
 
     return(
@@ -189,6 +189,14 @@ const Header: React.FC<IHeaderProps> = () => {
                            })
                         }</Box>
                         }
+                    {(query.length > 0) && (infoNavigation) &&
+                        <Box position={"absolute"} left={"0"} right={"0"}
+                        background={"#2e2c30"} color={"white"} textAlign={"center"} fontSize={"14px"}>
+                            <Text>
+                                ENTRER : rechercher partition - TAB : lecture morceau
+                            </Text>
+                        </Box>
+                    }
                 </Box>
                 <Box id="notif"
                 marginLeft={"1rem"}

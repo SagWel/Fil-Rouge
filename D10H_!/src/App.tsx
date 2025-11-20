@@ -24,27 +24,27 @@ import './index.css';
 
 function App() {
 
-  const [searchResult, setSearchResult] = useState<IDeezerTrack[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  // const [searchResult, setSearchResult] = useState<IDeezerTrack[]>([]);
+  // const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  async function handleSearch (query: string) {
-    try {
-      setIsLoading(true)
+  // async function handleSearch (query: string) {
+  //   try {
+  //     setIsLoading(true)
 
-      const safeQuery = encodeURIComponent(query)
-      const apiURL = `https://api.deezer.com/search?q=${safeQuery}`
+  //     const safeQuery = encodeURIComponent(query)
+  //     const apiURL = `https://api.deezer.com/search?q=${safeQuery}`
 
-      const response = await fetch(apiURL);
-      const responseJson = await response.json() as IDeezerSearchResponse
+  //     const response = await fetch(apiURL);
+  //     const responseJson = await response.json() as IDeezerSearchResponse
 
-      setSearchResult(responseJson.data)
+  //     setSearchResult(responseJson.data)
 
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
 
   const NAV_WIDTH = "272px";
   const PLAYER_HEIGHT = "80px";

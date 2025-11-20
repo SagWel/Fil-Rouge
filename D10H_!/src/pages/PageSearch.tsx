@@ -1,12 +1,15 @@
 import { Box, Heading, Flex, Input, Grid } from "@chakra-ui/react";
 import Result from "../composants/PartitionsResult";
+import { useSearchParams } from "react-router-dom";
 
 export interface ISearchProps {}
 
 const Search: React.FC<ISearchProps> = () => {
+    const [searchParams] = useSearchParams()
+    const query = searchParams.get('q')
     return(
         <Flex direction={"column"} textAlign={"center"} gap={"2rem"} pt={"2rem"}>
-            <Heading id="headText" color={"#FDFCFE"}> SCORBRARY DE VOTRE RECHERCHE </Heading>
+            <Heading id="headText" color={"#FDFCFE"}> SCORBRARY "{query}" </Heading>
             <Box id="researchZone" border={"0.0625rem solid #4e4c51"} mx={"1.5rem"} padding={"0.5rem"}>
                 <Grid templateColumns={"repeat(5, 1fr)"}>
                     <Flex gridColumn={"span 1"} direction={"column"} background={"#9A36F3"} borderRadius={"0.5rem"}>
