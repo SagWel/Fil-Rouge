@@ -12,13 +12,16 @@ import Favoris from './pages/PageFavoris.jsx';
 import History from './pages/PageHistory.jsx';
 import Scorbraries from './pages/PageScorbaries.jsx'
 import Scorbrary from './pages/PageScorbrary.jsx';
-import Tools from './composants/Tools.jsx';
+
+import Tools from './composants/Tools.tsx';
 import BarNav from './composants/BarNav.tsx';
 import Header from './composants/Header.tsx';
 import Playeur from './composants/Playeur.jsx';
 import BarNavMin from './composants/BarNavMin.tsx';
 import HeaderMin from './composants/HeaderMin.jsx';
 import PlayeurMin from './composants/PlayeurMin.jsx';
+
+import useWindowWidth from './hooks/useWindowWidth.tsx'
 
 import './index.css'; 
 
@@ -53,10 +56,16 @@ function App() {
   const PLAYEUR_MIN_HEIGHT = "40px"
   const HEADER_MIN_HEIGHT = "40px";
   const TOOLS_WIDTH = "50px"
-
+  
   const location = useLocation()
   const pathSegment = location.pathname.split('/').filter(segment => segment.length > 0);
   const onPageMorceau = (pathSegment[0] === "partitions" && pathSegment.length === 3)
+  
+  const width = useWindowWidth()
+  const Breakpoint = 1160
+  const isMinimal = width <= Breakpoint
+
+  const navResponsive = isMinimal ? NAV_MIN_WIDTH : NAV_WIDTH
 
   if (onPageMorceau) {
     return (
@@ -103,7 +112,7 @@ function App() {
               </Routes>
           </Box>
         </SearchProvider>
-        <Box gridArea={"tools"} zIndex={"200"} marginTop={"2.5rem"} marginBottom={"8rem"} position={"fixed"} right={"0"} overflow={"hidden"}>
+        <Box gridArea={"tools"} zIndex={"200"} marginTop={HEADER_MIN_HEIGHT} marginBottom={PLAYEUR_MIN_HEIGHT} position={"fixed"} right={"0"} top={"0"} bottom={"0"}>
           <Tools />
         </Box>
         <Box gridArea={"playeur"} zIndex={"10"}
@@ -119,7 +128,7 @@ function App() {
       bg={"#000000"}
       height="100vh"
       templateRows={`${HEADER_HEIGHT} 1fr ${PLAYER_HEIGHT}`}
-      templateColumns={`${NAV_WIDTH} 1fr`}
+      templateColumns={`${navResponsive} 1fr`}
       templateAreas={`
         "nav header"
         "nav main"
@@ -127,7 +136,7 @@ function App() {
         `}
         >
         <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
-          <BarNav />
+          {isMinimal ? <BarNavMin /> : <BarNav />}
         </Box>
         <SearchProvider>
           <Box gridArea={"header"} zIndex={"200"}>

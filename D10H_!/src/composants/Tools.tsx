@@ -5,16 +5,19 @@ import {
     PianoIcon, ChantIcon, DrumsIcon, BasseIcon
  } from "./svg";
 
-function Tools () {
+export interface IToolsProps {}
+
+const Tools: React.FC<IToolsProps> = () => {
     return (
         <Flex id="RightBarContainer"
         direction={"column"} justifyContent={"start"} alignItems={"center"}
-        marginRight={"0.5rem"} marginY={"0.5rem"}
-        height={"100%"} width={"3rem"}
-        borderRadius={"0.5rem"} backgroundColor={"#141216"}>
+        marginRight={"0.5rem"} marginTop={"0.5rem"} paddingBottom={"1rem"}
+        height={"100%"} width={"3rem"}>
             <Flex id="toolsContainer" 
-            direction={"column"} justifyContent={"center"} alignItems={"center"}
-            paddingBottom={"0.5rem"} marginTop={"0.5rem"}
+            direction={"column"} justifyContent={"space-around"} alignItems={"center"}
+            paddingBottom={"0.5rem"} height={"90%"}
+            backgroundColor={"#141216"}
+            borderTopRadius={"0.5rem"}
             borderBottomColor={"#3a393d"} borderBottomStyle={"solid"} borderBottomWidth={"0.0625rem"}>
                 <Button type="button" id="tunnerBtn"
                 backgroundColor={"transparent"}
@@ -128,8 +131,15 @@ function Tools () {
                 </Button>
             </Flex>
             <Flex id="pistesContainer"
-            direction={"column"} justifyContent={"center"} alignItems={"center"}
-            paddingTop={"0.5rem"}>
+            direction={"column"} justifyContent={"space-around"} alignItems={"center"}
+            paddingY={"0.5rem"} gap={"0.5rem"}
+            backgroundColor={"#141216"}
+            borderBottomRadius={"0.5rem"}
+            overflowY={"auto"} sx={{
+                "&::-webkit-scrollbar": {
+                    display: "none"
+                }
+            }}>
                 <Box as={Link} to={""}
                 height={"38px"} width={"38px"}
                 borderRadius={"full"}

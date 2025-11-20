@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { SearchIcon, DisableIcon, NotifIcon } from "./svg";
 import { useSearch, } from '../context/SearchContext'
 import { IDeezerSearchResponse } from '../types/Deezer'
+import useSearchHistory from '../hooks/useSearchHistory'
 
 export interface IHeaderProps {
     userName: string,
@@ -21,7 +22,8 @@ const Header: React.FC<IHeaderProps> = () => {
     const [isFocused, setIsFocused] = useState<boolean>(false)
     const ref = useRef<number | null> (null)
     const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
-    
+    const [query, setQuery] = useState('')    
+    const [history, _SearchHistory, addToHistory] = useSearchHistory ()
 
     async function fetchDeezerSuggestions(query: string) {
         try {
@@ -42,37 +44,43 @@ const Header: React.FC<IHeaderProps> = () => {
         }
     }
 
-    const [query, setQuery] = useState('')
-
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key == 'Enter') {
             event.preventDefault()
             const safeQuery = encodeURIComponent(query)
+            addToHistory(query)
             navigate(`/search?q=${safeQuery}`)
             setQuery("")
         } else if (event.key == 'Tab') {
             event.preventDefault()
-            fetchDeezerSuggestions(query)
-            
+            setIsFocused(false)
+            setSearchResults([])
         }
-
     }
 
     function handleSuggestionClick (id: number) {
         const item = searchResults.find(result => {
             return result.id == `${id}`
-        }) 
-        console.log(item);
+        })
         
         if (ref.current != null) {
             clearTimeout(ref.current)
-            ref.current = null        
+            ref.current = null
         }
         if (item != undefined) {
             setQuery(item.title)
             setInfoNavigation(true)
         }
         setIsFocused(false)
+    }
+
+    function handelHistoryClick (h: string) {
+        if (ref.current != null) {
+            clearTimeout(ref.current)
+            ref.current = null
+        }
+        setQuery(h)
+        setInfoNavigation(true)
     }
 
     return(
@@ -169,10 +177,21 @@ const Header: React.FC<IHeaderProps> = () => {
                             </Button>
                         </InputRightElement>
                     </InputGroup>
-                    {(searchResults.length != 0) && (query != '') && (isFocused) &&
+                    {(isFocused) &&
                         <Box position={"absolute"} left={"0"} right={"3rem"}
-                        background={"#242326"} width={"375px"} zIndex={"900"} color={"white"}>{
-                            searchResults.map((e: object) => {
+                        background={"#242326"} width={"375px"} zIndex={"900"} color={"white"}>
+                            {(query.length === 0) ? (history.map((h: string) => {
+                                return (
+                                    <Box paddingStart={1} marginY={1}
+                                    _hover={{
+                                        background: "#2e2c30",}}
+                                        onClick={() => {handleSuggestionClick(h)}}>
+                                            <Text as={"p"}>
+                                                {h}
+                                            </Text>
+                                        </Box>
+                                )
+                            })) : (searchResults.map((e: object) => {
                                 return (
                                     <Box key={e.id} paddingStart={1} marginY={1}
                                     _hover={{
@@ -186,8 +205,8 @@ const Header: React.FC<IHeaderProps> = () => {
                                         </Text>
                                     </Box>
                                 )
-                           })
-                        }</Box>
+                           }))
+                       }</Box>
                         }
                     {(query.length > 0) && (infoNavigation) &&
                         <Box position={"absolute"} left={"0"} right={"0"}
