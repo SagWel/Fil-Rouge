@@ -9,4 +9,5 @@ Functional features :
   - Search bar :
     - API Deezer call
     - "Enter" => redirection to the "D10H !" music score search page
+    - Suggestions from previous searches saved in localStorage
   - instrument selection page : fully functional page
