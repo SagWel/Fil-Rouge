@@ -1,7 +1,10 @@
 import { Box, Heading, Text, Image, Icon, Flex} from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
+
+// SVGs import from a unique file
 import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "./svg";
 
+// Displays icons according to the difficulty value
 function difficultyLvl(difficulty) {
   const arrayDiff = Array.from({length:difficulty})
 
@@ -9,6 +12,7 @@ function difficultyLvl(difficulty) {
   <Box key={index}><DifficultyIcon/></Box>))
 }
 
+// Retrieves the id from the URL to identify the icon to display
 function IconCard () {
     const { instrumentId } = useParams()
     let InstruIcon = null
@@ -32,6 +36,7 @@ function IconCard () {
     return InstruIcon
 }
 
+// Card for each scores in search result
 function PartitionCard ({partition}) {
     return (
     <Flex as={"a"} href="/partitions/:instrumentId/morceauId" direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}

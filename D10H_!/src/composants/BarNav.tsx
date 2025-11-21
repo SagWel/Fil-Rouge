@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import { Flex, Box, Heading, IconButton, Image } from "@chakra-ui/react";
+
+// Pictures import as modules
 import Fire from '../img/au-coin-du-feu.png'
 import Rock from '../img/Rock.png'
 import Var from '../img/var.png'
+
+// SVGs import from a unique file
 import { LogoIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon } from "./svg";
+
 
 export interface IBarNavProps {}
 
@@ -14,6 +19,8 @@ const BarNav: React.FC<IBarNavProps> = () => {
         position={"fixed"}
         height={"100%"} w={"271px"}
         >
+
+            {/*Navigation links box*/}
             <Flex id="navigation" 
             p={"1.5rem 0 1rem"} paddingTop={"1rem"}
             direction={"column"} justifyContent={"space-between"} 
@@ -78,6 +85,8 @@ const BarNav: React.FC<IBarNavProps> = () => {
                         </Link>
                     </Flex>
             </Flex>
+
+            {/*List of the user's playlists, named "Scorbrary", of musical scores*/}
             <Box id="sidebar">
                 <Box id="sidebar-visible">
                     <Flex id="scorbraries" 

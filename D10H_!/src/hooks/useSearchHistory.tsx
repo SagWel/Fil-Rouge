@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 
+
 const useSearchHistory = () => {
+
+    // Transforms the data from lacalStorage into an array of those data
     const [history, setHistory] = useState(() => {
         const storedHistory = localStorage.getItem("D10H_!_Search_History")
 
@@ -20,10 +23,11 @@ const useSearchHistory = () => {
         localStorage.setItem("D10H_!_Search_History", jsonHistory)
     }, [history])
 
-
+    // Adds the latest search query in search history
     function addToHistory (query: string) {
         setHistory((prevHistory: Array<string>) => {
-            const updatedHistory = [query, ...prevHistory]
+            const filteredHistory = prevHistory.filter((e: string) => e != query)
+            const updatedHistory = [query, ...filteredHistory]
             const limitedHistory = updatedHistory.slice(0, 10)
             return limitedHistory
         })

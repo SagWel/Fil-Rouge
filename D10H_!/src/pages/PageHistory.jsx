@@ -8,4 +8,4 @@ function HistoryMain () {
     )
 }
 
-export default History
+export default HistoryMain

@@ -1,9 +1,17 @@
 import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, IconButton, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+
+// SVGs import from a unique file
 import { SearchIcon, DisableIcon, NotifIcon } from "./svg";
+
+// Context
 import { useSearch, } from '../context/SearchContext'
+
+// Types
 import { IDeezerSearchResponse } from '../types/Deezer'
+
+// Hooks
 import useSearchHistory from '../hooks/useSearchHistory'
 
 export interface IHeaderProps {
@@ -12,19 +20,16 @@ export interface IHeaderProps {
 }
 
 const Header: React.FC<IHeaderProps> = () => {
+
+    /*Searchs Results management*/
     const {
         searchResults,
         setSearchResults,
         setIsLoading,
         setIsSearching,
     } = useSearch()
-    const navigate = useNavigate()
-    const [isFocused, setIsFocused] = useState<boolean>(false)
-    const ref = useRef<number | null> (null)
-    const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
-    const [query, setQuery] = useState('')    
-    const [history, _SearchHistory, addToHistory] = useSearchHistory ()
 
+    /*Calling the Deezer API for search suggestions*/
     async function fetchDeezerSuggestions(query: string) {
         try {
             setIsLoading(true)
@@ -44,13 +49,29 @@ const Header: React.FC<IHeaderProps> = () => {
         }
     }
 
+    /*Variables*/
+    const [query, setQuery] = useState('')    
+
+    const navigate = useNavigate()
+
+    const [isFocused, setIsFocused] = useState<boolean>(false)
+
+    const ref = useRef<number | null> (null)
+
+    const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
+
+    const [history, _SearchHistory, addToHistory] = useSearchHistory ()
+
+    
+    /*search choice management*/
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key == 'Enter') {
             event.preventDefault()
             const safeQuery = encodeURIComponent(query)
             addToHistory(query)
-            navigate(`/search?q=${safeQuery}`)
+            setIsFocused(false)
             setQuery("")
+            navigate(`/search?q=${safeQuery}`)
         } else if (event.key == 'Tab') {
             event.preventDefault()
             setIsFocused(false)
@@ -58,6 +79,7 @@ const Header: React.FC<IHeaderProps> = () => {
         }
     }
 
+    /*Sends suggestion selected to query*/
     function handleSuggestionClick (id: number) {
         const item = searchResults.find(result => {
             return result.id == `${id}`
@@ -74,6 +96,7 @@ const Header: React.FC<IHeaderProps> = () => {
         setIsFocused(false)
     }
 
+    /*Sends history selected to query*/
     function handelHistoryClick (h: string) {
         if (ref.current != null) {
             clearTimeout(ref.current)
@@ -121,6 +144,8 @@ const Header: React.FC<IHeaderProps> = () => {
                             </Button>
                         </InputLeftElement>
                         <Input type="search" value={query} aria-label="Rechercher" placeholder="Artistes, titres, Scorbraries ..."
+
+                        /*API call update*/
                         onChange={(e) => {
                             
                             setQuery(e.target.value)
@@ -130,15 +155,21 @@ const Header: React.FC<IHeaderProps> = () => {
                             } else if (e.target.value.length < 2) {
                                 setSearchResults([])
                             }}}
-                            onKeyDown={handleKeyDown} 
-                            onFocus={() =>{
-                                {if (ref.current != null) {
-                                    clearTimeout(ref.current)
-                                    ref.current = null
-                                }}
-                                setIsFocused(true)
+
+                        /*Search choice management triggering*/
+                        onKeyDown={handleKeyDown}
+
+                        /*setTimeout clearing*/
+                        onFocus={() =>{
+                            {if (ref.current != null) {
+                                clearTimeout(ref.current)
+                                ref.current = null
                             }}
-                            onBlur={() => {ref.current = setTimeout (() => {setIsFocused(false)}, 250)}}
+                            setIsFocused(true)
+                        }}
+                        
+                        /*Hide the suggestions after selection*/
+                        onBlur={() => {ref.current = setTimeout (() => {setIsFocused(false)}, 250)}}
                         padding={"0 2.75rem 0 2.75rem" }
                         height={"3rem"} width={"100%"}
                         borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
@@ -180,17 +211,21 @@ const Header: React.FC<IHeaderProps> = () => {
                     {(isFocused) &&
                         <Box position={"absolute"} left={"0"} right={"3rem"}
                         background={"#242326"} width={"375px"} zIndex={"900"} color={"white"}>
+                            
+                            {/*Display searh history before query*/}
                             {(query.length === 0) ? (history.map((h: string) => {
                                 return (
-                                    <Box paddingStart={1} marginY={1}
+                                    <Box key={h} paddingStart={1} marginY={1}
                                     _hover={{
                                         background: "#2e2c30",}}
-                                        onClick={() => {handleSuggestionClick(h)}}>
+                                        onClick={() => {handelHistoryClick(h)}}>
                                             <Text as={"p"}>
                                                 {h}
                                             </Text>
                                         </Box>
                                 )
+
+                                /*Displays suggestions list*/
                             })) : (searchResults.map((e: object) => {
                                 return (
                                     <Box key={e.id} paddingStart={1} marginY={1}
@@ -208,6 +243,8 @@ const Header: React.FC<IHeaderProps> = () => {
                            }))
                        }</Box>
                         }
+
+                    {/*Displays searchs informations*/}
                     {(query.length > 0) && (infoNavigation) &&
                         <Box position={"absolute"} left={"0"} right={"0"}
                         background={"#2e2c30"} color={"white"} textAlign={"center"} fontSize={"14px"}>

@@ -1,5 +1,6 @@
 import { createContext, useState, useContext } from 'react';
 
+// Data handling and hook functions
 export interface ISearchContextType {
     searchResults: IDeezerTrack[];
     selectedTrack: IDeezerTrack | null;
@@ -13,17 +14,21 @@ export interface ISearchContextType {
     setSelectedTrack: (track: IDeezerTrack | null) => void;
 }
 
+// context init et typing
 export const SearchContext = createContext< ISearchContextType | (undefined)>(undefined)
 
+// Props types declaration
 type SearchProviderProps = React.PropsWithChildren<{}>
 
 const SearchProvider = ({ children }: SearchProviderProps) => {
     
+    // Variables init
     const [searchResults, setSearchResults] = useState<IDeezerTrack[]>([]);
     const [selectedTrack, setSelectedTrack] = useState<IDeezerTrack>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSearching, setIsSearching] = useState<boolean>(false);
 
+    // Varables integrations
     const value = {
         searchResults,
         selectedTrack,
@@ -37,6 +42,8 @@ const SearchProvider = ({ children }: SearchProviderProps) => {
     }
 
     return(
+
+        // Accessibility to variables for children
         <SearchContext.Provider value={value}>
             {children}
         </SearchContext.Provider>
@@ -45,6 +52,7 @@ const SearchProvider = ({ children }: SearchProviderProps) => {
 
 export default SearchProvider
 
+// Allows the use of received data
 export function useSearch () {
     const resultSearchContext = useContext(SearchContext)
 

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import  { Image, Text, Box } from "@chakra-ui/react";
 
+// Card for each instrument in database
 function InstrumentCard ({instrument}) {
     return (
         <Box as={Link} to={instrument.linkTo} role="group"

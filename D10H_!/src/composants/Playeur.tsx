@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import { Box, Flex, Button, Text, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from "@chakra-ui/react";
+
+// Pictures import as modules
 import Cover from '../img/dont-stop-the-party.png';
+
+// SVGs import from a unique file
 import { HeartLoveOnIcon, AddIcon, ShuffleIcon, PreviousIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "./svg";
 
 export interface IPlayeurProps {}
@@ -13,6 +17,8 @@ const Playeur: React.FC<IPlayeurProps> = () => {
         minWidth={"768px"} height={"80px"}
         background={"#141216"}
         borderTop={"1px solid #4e4c51"} >
+
+            {/*Current track information*/}
             <Flex id="info-piste"
             alignItems={"center"} width={"33%"}>
                 <Box id="cover" height={"3rem"} width={"3rem"}
@@ -101,8 +107,12 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                     </Box>
                 </Flex>
             </Flex>
+
+            {/*Current track management*/}
             <Flex id="-center-control"
             direction={"column"} width={"33%"} gap={"0.25rem"} padding={"0 1rem"}>
+
+                {/*Current track controllers*/}
                 <Flex justifyContent={"center"} alignItems={"center"}>
                     <Flex display={"inline-flex"} gap={"0.5rem"}>
                         <Button type="button" aria-label="activer le mode aléatoire"
@@ -225,6 +235,8 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         </Button>
                     </Flex>
                 </Flex>
+
+                {/*Current track state*/}
                 <Flex alignItems={"center"}
                 paddingTop={"0.125rem"} paddingBottom={"0.125rem"}
                 width={"100%"} position={"relative"}>
@@ -253,6 +265,8 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                     </Box>
                 </Flex>
             </Flex>
+
+            {/*General controllers*/}
             <Box id="other-control" display={"inline-flex"} justifyContent={"flex-end"} alignItems={"center"}
             width={"33%"}>
                 <Button type="button" aria-label="Afficher les paroles"

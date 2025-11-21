@@ -9,8 +9,12 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
 
     return(
         <Flex direction={"column"} textAlign={"center"} gap={"2rem"} pt={"2rem"}>
+
+            {/*Title containing the instrument name*/}
             <Heading id="headText" color={"#FDFCFE"}> SCORBRARY {instrumentId.toUpperCase()} </Heading>
-            <Box id="researchZone" border={"0.0625rem solid #4e4c51"} mx={"1.5rem"} padding={"0.5rem"}>
+
+            {/*Search filters*/}
+            <Box id="filtersZone" border={"0.0625rem solid #4e4c51"} mx={"1.5rem"} padding={"0.5rem"}>
                 <Grid templateColumns={"repeat(5, 1fr)"}>
                     <Flex gridColumn={"span 1"} direction={"column"} background={"#9A36F3"} borderRadius={"0.5rem"}>
                         <Heading color={"#fdfcfe"} 
@@ -99,6 +103,8 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
                     <Box gridColumn={"span 1"}></Box>
                 </Grid>
             </Box>
+
+            {/*Search results*/}
             <Result />
         </Flex>
     )

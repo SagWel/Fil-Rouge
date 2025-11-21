@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import SearchProvider from './context/SearchContext.tsx'
 
+// Pages imports
 import PageAcceuil from './pages/PageAcceuil.jsx';
 import PageSearchPartitions from './pages/PageSearch.tsx'
 import ListeInstruments from './pages/PageListeInstruments.jsx';
@@ -13,6 +14,7 @@ import History from './pages/PageHistory.jsx';
 import Scorbraries from './pages/PageScorbaries.jsx'
 import Scorbrary from './pages/PageScorbrary.jsx';
 
+// Components imports
 import Tools from './composants/Tools.tsx';
 import BarNav from './composants/BarNav.tsx';
 import Header from './composants/Header.tsx';
@@ -21,34 +23,14 @@ import BarNavMin from './composants/BarNavMin.tsx';
 import HeaderMin from './composants/HeaderMin.jsx';
 import PlayeurMin from './composants/PlayeurMin.jsx';
 
+// Hooks imports
 import useWindowWidth from './hooks/useWindowWidth.tsx'
 
 import './index.css'; 
 
 function App() {
 
-  // const [searchResult, setSearchResult] = useState<IDeezerTrack[]>([]);
-  // const [isLoading, setIsLoading] = useState<boolean>(false)
-
-  // async function handleSearch (query: string) {
-  //   try {
-  //     setIsLoading(true)
-
-  //     const safeQuery = encodeURIComponent(query)
-  //     const apiURL = `https://api.deezer.com/search?q=${safeQuery}`
-
-  //     const response = await fetch(apiURL);
-  //     const responseJson = await response.json() as IDeezerSearchResponse
-
-  //     setSearchResult(responseJson.data)
-
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
-
+  // Variables for grid dimensions
   const NAV_WIDTH = "272px";
   const PLAYER_HEIGHT = "80px";
   const HEADER_HEIGHT = "80px";
@@ -57,16 +39,18 @@ function App() {
   const HEADER_MIN_HEIGHT = "40px";
   const TOOLS_WIDTH = "50px"
   
+  // Variables for Scores page identification
   const location = useLocation()
   const pathSegment = location.pathname.split('/').filter(segment => segment.length > 0);
   const onPageMorceau = (pathSegment[0] === "partitions" && pathSegment.length === 3)
   
+  //Viariables for responsive
   const width = useWindowWidth()
   const Breakpoint = 1160
   const isMinimal = width <= Breakpoint
-
   const navResponsive = isMinimal ? NAV_MIN_WIDTH : NAV_WIDTH
 
+  // Scores page template
   if (onPageMorceau) {
     return (
     <Grid
@@ -122,6 +106,8 @@ function App() {
       </Grid>
 
   )} else {
+
+    // Others pages template
     return (
       <Grid
       

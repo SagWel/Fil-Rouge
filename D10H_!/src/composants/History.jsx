@@ -1,10 +1,18 @@
 import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+
+// SVGs import from a unique file
 import { ShuffleIcon } from "./svg";
+
+// Card for each scores in the database
 import PartitionCard from './PartitionCard'
+
+// Pictures import as modules
 import PartitionImg from '../img/Partition.jpeg'
 
 function Main () {
+
+    /*Mock database*/
     const mockPartitons = [
         {
             title : "Zombie",
@@ -53,6 +61,8 @@ function Main () {
     return (
         <Box id="main"
         overflowY={"auto"} height={"100%"}>
+
+            {/*Favoris page content header*/}
             <Box id="header-container" marginBottom={"12px"} boxShadow={"0 2px 2px"}>
                 <Box id="container" padding={"24px 24px 0"} marginX={"49px"}>
                     <Box display={"flex"} gap={"2rem"}>
@@ -142,6 +152,8 @@ function Main () {
                     </chakra.nav>
                 </Box>
             </Box>
+
+            {/*History page content*/}
             <Box position={"relative"}>
                 <Box id="catalog-content">
                     <Box role="tebpanel">

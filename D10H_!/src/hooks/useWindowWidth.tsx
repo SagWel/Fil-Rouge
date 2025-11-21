@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// Allows calculation of window's width for responsive
 const useWindowWidth = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 

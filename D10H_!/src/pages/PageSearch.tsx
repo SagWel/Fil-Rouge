@@ -9,16 +9,20 @@ const Search: React.FC<ISearchProps> = () => {
     const query = searchParams.get('q')
     return(
         <Flex direction={"column"} textAlign={"center"} gap={"2rem"} pt={"2rem"}>
+
+            {/*Title containing the query*/}
             <Heading id="headText" color={"#FDFCFE"}> SCORBRARY "{query}" </Heading>
-            <Box id="researchZone" border={"0.0625rem solid #4e4c51"} mx={"1.5rem"} padding={"0.5rem"}>
+
+            {/*Search filters*/}
+            <Box id="filtersZone" border={"0.0625rem solid #4e4c51"} mx={"1.5rem"} padding={"0.5rem"}>
                 <Grid templateColumns={"repeat(5, 1fr)"}>
                     <Flex gridColumn={"span 1"} direction={"column"} background={"#9A36F3"} borderRadius={"0.5rem"}>
                         <Heading color={"#fdfcfe"} 
                         fontSize={"1.25rem"} fontWeight={"500"}>Artiste</Heading>
                         <Box>
-                            <Input mb={"0.75rem"} mx={"auto"} 
+                            <Input mb={"0.75rem"} mx={"auto"}
                             height={"1.25rem"} width={"75%"}
-                            border={"none"} borderRadius={"none"} 
+                            border={"none"} borderRadius={"none"}
                             background={"#141216"} color={"#fdfcfe"}
                             _focusVisible={{
                                 zIndex: "1",
@@ -30,7 +34,7 @@ const Search: React.FC<ISearchProps> = () => {
                     </Flex>
                     <Box gridColumn={"span 1"}></Box>
                     <Flex gridColumn={"span 1"} direction={"column"} background={"#9A36F3"} borderRadius={"0.5rem"}>
-                        <Heading color={"#fdfcfe"} 
+                        <Heading color={"#fdfcfe"}
                         fontSize={"1.25rem"} fontWeight={"500"}>Difficultée</Heading>
                         <Box>
                             <Input mb={"0.75rem"} mx={"auto"} 
@@ -99,6 +103,8 @@ const Search: React.FC<ISearchProps> = () => {
                     <Box gridColumn={"span 1"}></Box>
                 </Grid>
             </Box>
+
+            {/*Search results*/}
             <Result />
         </Flex>
     )

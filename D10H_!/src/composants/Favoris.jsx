@@ -1,11 +1,15 @@
 import { Box, Flex, Heading, Button, List, ListItem, chakra } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+
+// SVGs import from a unique file
 import { ShuffleIcon } from "./svg";
 
 function Main () {
     return (
         <Box id="main"
         overflowY={"auto"} height={"100%"}>
+
+            {/*Favoris page content header*/}
             <Box id="header-container" marginBottom={"12px"} boxShadow={"0 2px 2px"}>
                 <Box id="container" padding={"24px 24px 0"} marginX={"49px"}>
                     <Box display={"flex"} gap={"2rem"}>
@@ -95,20 +99,32 @@ function Main () {
                     </chakra.nav>
                 </Box>
             </Box>
+            
+            {/*Favoris page content*/}
             <Box position={"relative"}>
+
+                {/*Carousels container*/}
                 <Box id="catalog-content">
                     <Box>
                         <chakra.section display={"block"}>
-                            {/* CARROUSEL */}
+
+                            {/* future CAROUSEL */}
+
                         </chakra.section>
                         <chakra.section display={"block"}>
-                            {/* CARROUSEL */}
+
+                            {/* future CAROUSEL */}
+
                         </chakra.section>
                         <chakra.section display={"block"}>
-                            {/* CARROUSEL */}
+
+                            {/* future CAROUSEL */}
+
                         </chakra.section>
                         <chakra.section display={"block"}>
-                            {/* CARROUSEL */}
+
+                            {/* future CAROUSEL */}
+
                         </chakra.section>
                     </Box>
                 </Box>

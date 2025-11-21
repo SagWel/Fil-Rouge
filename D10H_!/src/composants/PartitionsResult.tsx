@@ -1,9 +1,14 @@
 import { Grid } from "@chakra-ui/react";
+
+
 import PartitionCard from './PartitionCard';
+
+// Pictures import as modules
 import PartitionImg from '../img/Partition.jpeg';
 
 export interface IPartitionsResult {}
 
+/*Mock database*/
 const mockPartitons = [
     {
         title : "Zombie",
@@ -56,6 +61,7 @@ const Result: React.FC<IPartitionsResult> = () => {
         overflow={"visible"}
         marginTop={"2rem"} marginBottom={"5rem"}>
             
+            {/*Creats a card for each scores in search result*/}
             {mockPartitons.map((partition) => (
                 <PartitionCard key={partition.id} partition={partition} />
             ))}

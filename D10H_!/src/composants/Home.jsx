@@ -1,25 +1,33 @@
-import { Link } from "react-router-dom";
-import { Box, Flex, Heading, Button } from "@chakra-ui/react"
-import { LeftCarouselIcon, RightCarouselIcon } from "./svg";
+import { Box } from "@chakra-ui/react"
 
 function Home () {
     return(
         <Box id="main"
         overflowY={"auto"} height={"100%"}>
             <Box as="section" id="recents" display={"block"}>
-                {/* CARROUSEL */}
+
+                {/* future CAROUSEL */}
+
             </Box>
             <Box as="section" id="suggestions" display={"block"}>
-                {/* CARROUSEL */}
+
+                {/* future CAROUSEL */}
+
             </Box>
             <Box as="section" id="news" display={"block"}>
-                {/* CARROUSEL */}
+
+                {/* future CAROUSEL */}
+
             </Box>
             <Box as="section" id="tops" display={"block"}>
-                {/* CARROUSEL */}
+
+                {/* future CAROUSEL */}
+
             </Box>
             <Box as="section" id="listen" display={"block"}>
-                {/* CARROUSEL */}
+
+                {/* future CAROUSEL */}
+
             </Box>
         </Box>
     )

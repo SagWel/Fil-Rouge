@@ -1,5 +1,8 @@
 import { Grid } from "@chakra-ui/react";
+
 import InstrumentCard from './InstrumentCard'
+
+// Pictures import as modules
 import Guitare from '../img/Guitare.png';
 import Basse from '../img/Basse.png';
 import Piano from '../img/Piano.png';
@@ -8,7 +11,7 @@ import Chant from '../img/Chant.png';
 import Ukulele from '../img/Ukulele.png';
 import Saxo from '../img/Saxo.png';
 
-
+// Instruments data is located here, but it will be moved to the database.
 let instrumentData = [
     { id: 'guitare' , name: 'Guitare' ,  imgsrc: Guitare, linkTo: '/partitions/guitare'},
     { id: 'basse' , name: 'Basse' ,  imgsrc: Basse , linkTo: '/partitions/basse'},
@@ -31,6 +34,7 @@ function InstrumentList () {
     }} columnGap={"3rem"} rowGap={"6rem"}
     px={"12"}>
         
+        {/*Creats a card for each instrument in database*/}
         {instrumentData.map((instrument) => (
             <InstrumentCard key={instrument.id} instrument={instrument} />
         ))}

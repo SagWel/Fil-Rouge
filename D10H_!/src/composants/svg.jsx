@@ -1,3 +1,5 @@
+// All SVGs icons 
+
 export const LogoIcon = (props) => (
     <svg {...props} viewBox="0 0 127 20"
     width={props.size || "127px"} height={props.size || "20px"} 

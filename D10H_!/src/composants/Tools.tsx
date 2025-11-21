@@ -1,5 +1,7 @@
 import { Flex, Button, Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+
+// SVGs import from a unique file
 import { 
     TunnerIcon, CountdownIcon, MetronomeIcon, TempoIcon, LearningModeIcon,LooperIcon,SoloIcon,MuteIcon, AnnotationsIcon, ImpressionIcon, ChordsIcon,
     PianoIcon, ChantIcon, DrumsIcon, BasseIcon
@@ -13,6 +15,8 @@ const Tools: React.FC<IToolsProps> = () => {
         direction={"column"} justifyContent={"start"} alignItems={"center"}
         marginRight={"0.5rem"} marginTop={"0.5rem"} paddingBottom={"1rem"}
         height={"100%"} width={"3rem"}>
+
+            {/*Scores management tools*/}
             <Flex id="toolsContainer" 
             direction={"column"} justifyContent={"space-around"} alignItems={"center"}
             paddingBottom={"0.5rem"} height={"90%"}
@@ -130,6 +134,8 @@ const Tools: React.FC<IToolsProps> = () => {
                     <ChordsIcon size="24px"/>
                 </Button>
             </Flex>
+
+            {/*Others scores from current track*/}
             <Flex id="pistesContainer"
             direction={"column"} justifyContent={"space-around"} alignItems={"center"}
             paddingY={"0.5rem"} gap={"0.5rem"}
