@@ -46,24 +46,6 @@ const Header: React.FC<IHeaderProps> = () => {
         }
     }
 
-    async function fetchDeezerHistory(h: string) {
-        try {
-            setIsLoading(true)
-
-            const safeQuery = encodeURIComponent(h)
-            const apiURL = `/api/search?q=${safeQuery}`
-
-            const response = await fetch(apiURL)
-            const responseJson = await response.json() as IDeezerSearchResponse
-
-            setHistoryInfos(responseJson.data)
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
     /*Variables*/
     const [query, setQuery] = useState('')    
 
@@ -77,9 +59,6 @@ const Header: React.FC<IHeaderProps> = () => {
 
     const [history, _SearchHistory, addToHistory] = useSearchHistory ()
 
-    const [historyInfos, setHistoryInfos] = useState<object>()
-
-    
     /*search choice management*/
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key == 'Enter') {
