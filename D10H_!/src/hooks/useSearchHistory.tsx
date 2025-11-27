@@ -24,9 +24,9 @@ const useSearchHistory = () => {
     }, [history])
 
     // Adds the latest search query in search history
-    function addToHistory (query: string) {
-        setHistory((prevHistory: Array<string>) => {
-            const filteredHistory = prevHistory.filter((e: string) => e != query)
+    function addToHistory (query: object) {
+        setHistory((prevHistory: Array<object>) => {
+            const filteredHistory = prevHistory.filter((e: object) => e != query)
             const updatedHistory = [query, ...filteredHistory]
             const limitedHistory = updatedHistory.slice(0, 10)
             return limitedHistory

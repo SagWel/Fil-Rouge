@@ -1,15 +1,12 @@
-import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, IconButton, Text } from "@chakra-ui/react";
+import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, IconButton, Text, Heading, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 // SVGs import from a unique file
-import { SearchIcon, DisableIcon, NotifIcon } from "./svg";
+import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon } from "./svg";
 
 // Context
 import { useSearch, } from '../context/SearchContext'
-
-// Types
-import { IDeezerSearchResponse } from '../types/Deezer'
 
 // Hooks
 import useSearchHistory from '../hooks/useSearchHistory'
@@ -49,6 +46,24 @@ const Header: React.FC<IHeaderProps> = () => {
         }
     }
 
+    async function fetchDeezerHistory(h: string) {
+        try {
+            setIsLoading(true)
+
+            const safeQuery = encodeURIComponent(h)
+            const apiURL = `/api/search?q=${safeQuery}`
+
+            const response = await fetch(apiURL)
+            const responseJson = await response.json() as IDeezerSearchResponse
+
+            setHistoryInfos(responseJson.data)
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     /*Variables*/
     const [query, setQuery] = useState('')    
 
@@ -61,6 +76,8 @@ const Header: React.FC<IHeaderProps> = () => {
     const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
 
     const [history, _SearchHistory, addToHistory] = useSearchHistory ()
+
+    const [historyInfos, setHistoryInfos] = useState<object>()
 
     
     /*search choice management*/
@@ -97,7 +114,7 @@ const Header: React.FC<IHeaderProps> = () => {
     }
 
     /*Sends history selected to query*/
-    function handelHistoryClick (h: string) {
+    function handleHistoryClick (h: string) {
         if (ref.current != null) {
             clearTimeout(ref.current)
             ref.current = null
@@ -209,24 +226,78 @@ const Header: React.FC<IHeaderProps> = () => {
                         </InputRightElement>
                     </InputGroup>
                     {(isFocused) &&
-                        <Box position={"absolute"} left={"0"} right={"3rem"}
-                        background={"#242326"} width={"375px"} zIndex={"900"} color={"white"}>
-                            
+                        <Box position={"absolute"} top={"0px"} left={"0px"}
+                        paddingTop={"10px"}
+                        transform={"translate3d(-1px, 48px, 0px)"} willChange={"transform"}
+                        width={"100%"}>
+                            <Box position={"relative"}
+                            padding={"0"} width={"375px"} maxHeight={"calc(100vh - 150px)"}
+                            backgroundColor={"#141216"} borderRadius={"10px"}
+                            boxShadow={"0 4px 20px 0 #0000003d"}
+                            color={"#ffffff"}
+                            overflow={"auto"}>
+                                <Flex direction={"column"}
+                                maxHeight={"440px"}
+                                overflowY={"auto"}>
+                                    <Flex direction={"column"}
+                                    maxHeight={"385px"}>
+
                             {/*Display searh history before query*/}
-                            {(query.length === 0) ? (history.map((h: string) => {
-                                return (
-                                    <Box key={h} paddingStart={1} marginY={1}
-                                    _hover={{
-                                        background: "#2e2c30",}}
-                                        onClick={() => {handelHistoryClick(h)}}>
-                                            <Text as={"p"}>
-                                                {h}
-                                            </Text>
+                            {(query.length === 0) ? (
+                                <Flex direction={"column"}
+                                maxHeight={"385px"}>
+                                    <Flex direction={"row"} alignItems={"center"} justifyContent={"space-between"}
+                                    paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"} paddingY={"0.5rem"}>
+                                        <Heading as={"h2"}
+                                        fontFamily={"Inter,Arial,sans-serif"} fontWeight={"700"} fontSize={"18px"}
+                                        lineHeight={"24px"} textDecoration={"none"}>
+                                            Dernières recherches
+                                        </Heading>
+                                        <Button type="button" display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
+                                        minHeight={"2rem"} minWidth={"2rem"} height={"auto"}
+                                        paddingInline={"0px"} paddingY={"0px"}
+                                        position={"relative"} verticalAlign={"middle"}
+                                        color={"#ffffff"}
+                                        background={"transparent"} borderRadius={"full"}
+                                        appearance={"none"} userSelect={"none"} whiteSpace={"nowrap"}
+                                        outline={"transparent solid 2px"} outlineOffset={"0px"} lineHeight={"20px"}
+                                        fontWeight={"600"} fontSize={"14px"} fontFamily={"Inter,Arial,sans-serif"} textDecoration={"none"}
+                                        _hover={{
+                                            background: "#3A393D",
+                                        }}>
+                                            <DeleteButtonIcon lineHeight={"1rem"} flexShrink={"0"} verticalAlign={"middle"} display={"block"} />
+                                        </Button>
+                                    </Flex>
+                                    <Box overflow={"auto"}>
+                                        <Box>
+                                    {history.map((h: string) => {
+                                        return (
+                                            <Box key={h} paddingInlineStart={"1rem"} paddingInlineEnd={"0"} paddingY={"0.5rem"}
+                                            onClick={() => {handleHistoryClick(h)}}>
+                                                <Flex alignItems={"center"} gap={"0.5rem"}>
+                                                    <Box 
+                                                    minWidth={"3rem"} height={"3rem"} width={"3rem"}
+                                                    borderRadius={"0.125px"}>
+                                                        <Flex alignItems={"center"} justifyContent={"center"}
+                                                        position={"relative"}
+                                                        height={"100%"} width={"100%"}
+                                                        borderStyle={"solid"} borderWidth={"0.0625rem"} borderRadius={"0.125rem"}
+                                                        overflow={"hidden"}>
+                                                            <Image src={""} objectFit={"cover"} width={"100%"} height={"100%"} opacity={"1"}/>
+                                                            <Flex alignItems={"center"} gap={"0.25rem"}
+                                                            position={"absolute"} bottom={"0.75rem"} left={"50%"} top={"50%"}
+                                                            transform={"translate(-50%, -50%)"}></Flex>
+                                                        </Flex>
+                                                    </Box>
+                                                </Flex>
+                                            </Box>
+                                        )})}
                                         </Box>
-                                )
+                                    </Box>
+                                </Flex>
 
                                 /*Displays suggestions list*/
-                            })) : (searchResults.map((e: object) => {
+                            ) : (searchResults.map((e: object) => {
                                 return (
                                     <Box key={e.id} paddingStart={1} marginY={1}
                                     _hover={{
@@ -240,8 +311,11 @@ const Header: React.FC<IHeaderProps> = () => {
                                         </Text>
                                     </Box>
                                 )
-                           }))
-                       }</Box>
+                            }))}
+                                    </Flex>
+                                </Flex>
+                            </Box>
+                        </Box>
                         }
 
                     {/*Displays searchs informations*/}
