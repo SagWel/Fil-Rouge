@@ -201,6 +201,11 @@ const Header: React.FC<IHeaderProps> = () => {
                         height={"3rem"} width={"100%"}
                         borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
                         textDecoration={"none"}
+                        sx={{
+                            "&::-webkit-search-cancel-button": {
+                                display: "none"
+                            }
+                        }}
                         _placeholder={{
                             color: "#6F6D6A",
                             fontWeight: "425",
