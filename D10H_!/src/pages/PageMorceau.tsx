@@ -1,6 +1,6 @@
-import React from "react";
+export interface IPageMorceauProps {}
 
-function PageMorceau() {
+const PageMorceau: React.FC<IPageMorceauProps> = () => {
     return (
         <div>
             <h1>Partiton</h1>

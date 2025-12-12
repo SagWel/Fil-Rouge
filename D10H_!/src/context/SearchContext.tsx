@@ -24,7 +24,7 @@ const SearchProvider = ({ children }: SearchProviderProps) => {
     
     // Variables init
     const [searchResults, setSearchResults] = useState<IDeezerTrack[]>([]);
-    const [selectedTrack, setSelectedTrack] = useState<IDeezerTrack>(null);
+    const [selectedTrack, setSelectedTrack] = useState<IDeezerTrack | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSearching, setIsSearching] = useState<boolean>(false);
 

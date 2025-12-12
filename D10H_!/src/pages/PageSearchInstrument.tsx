@@ -1,4 +1,4 @@
-import Result from "../composants/PartitionsResultInstrument"
+import Result from "../components/PartitionsResultInstrument"
 import { Box, Heading, Flex, Input, Grid } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 

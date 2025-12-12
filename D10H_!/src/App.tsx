@@ -4,29 +4,27 @@ import { useState } from 'react';
 import SearchProvider from './context/SearchContext.tsx'
 
 // Pages imports
-import PageAcceuil from './pages/PageAcceuil.jsx';
+import PageAcceuil from './pages/PageAcceuil.tsx';
 import PageSearchPartitions from './pages/PageSearch.tsx'
-import ListeInstruments from './pages/PageListeInstruments.jsx';
+import ListeInstruments from './pages/PageListeInstruments.tsx';
 import PageSearchPartitionsInstrument from './pages/PageSearchInstrument.tsx'
-import Morceau from './pages/PageMorceau.jsx';
-import Favoris from './pages/PageFavoris.jsx';
-import History from './pages/PageHistory.jsx';
-import Scorbraries from './pages/PageScorbaries.jsx'
-import Scorbrary from './pages/PageScorbrary.jsx';
+import Morceau from './pages/PageMorceau.tsx';
+import Favoris from './pages/PageFavoris.tsx';
+import History from './pages/PageHistory.tsx';
+import Scorbraries from './pages/PageScorbaries.tsx'
+import Scorbrary from './pages/PageScorbrary.tsx';
 
 // Components imports
-import Tools from './composants/Tools.tsx';
-import BarNav from './composants/BarNav.tsx';
-import Header from './composants/Header.tsx';
-import Playeur from './composants/Playeur.jsx';
-import BarNavMin from './composants/BarNavMin.tsx';
-import HeaderMin from './composants/HeaderMin.jsx';
-import PlayeurMin from './composants/PlayeurMin.jsx';
+import Tools from './components/Tools.tsx';
+import BarNav from './components/BarNav.tsx';
+import Header from './components/Header.tsx';
+import Playeur from './components/Playeur.tsx';
+import BarNavMin from './components/BarNavMin.tsx';
+import HeaderMin from './components/HeaderMin.jsx';
+import PlayeurMin from './components/PlayeurMin.tsx';
 
 // Hooks imports
 import useWindowWidth from './hooks/useWindowWidth.tsx'
-
-import './index.css'; 
 
 function App() {
 

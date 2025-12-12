@@ -1,56 +1,49 @@
 import { Box, Heading, Text, Image, Icon, Flex} from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { type IPartitions, InstrumentType } from "../types/partitions";
 
 // SVGs import from a unique file
 import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "./svg";
 
 // Displays icons according to the difficulty value
-function difficultyLvl(difficulty) {
+function difficultyLvl(difficulty: number): React.JSX.Element[] {
   const arrayDiff = Array.from({length:difficulty})
 
-  return arrayDiff.map((_, index) => (
+  return arrayDiff.map((_, index: number) => (
   <Box key={index}><DifficultyIcon/></Box>))
 }
 
 // Retrieves the id from the URL to identify the icon to display
-function IconCard () {
-    const { instrumentId } = useParams()
-    let InstruIcon = null
+function IconCard (instrumentKey: InstrumentType): React.JSX.Element | null {
 
-    if (instrumentId == "guitare") {
-        InstruIcon = <GuitarIcon />
-    } else if (instrumentId == "batterie") {
-        InstruIcon = <DrumsIcon />
-    } else if (instrumentId == "piano") {
-        InstruIcon = <PianoIcon />
-    } else if (instrumentId == "basse") {
-        InstruIcon = <BasseIcon />
-    } else if (instrumentId == "chant") {
-        InstruIcon = <ChantIcon />
-    } else if (instrumentId == "ukulele") {
-        InstruIcon = <UkuleleIcon />
-    } else if (instrumentId == "saxo") {
-        InstruIcon = <SaxoIcon />
+    switch (instrumentKey) {
+        case 'guitare': return <GuitarIcon />
+        case 'batterie': return <BasseIcon />
+        case 'piano': return <PianoIcon />
+        case 'basse': return <BasseIcon />
+        case 'chant': return <ChantIcon />
+        case 'ukulele': return <UkuleleIcon />
+        case 'saxo': return <SaxoIcon />
+        default: return null
     }
-
-    return InstruIcon
 }
 
+export interface IPartitionCardProps { partition: IPartitions }
+
 // Card for each scores in search result
-function PartitionCard ({partition}) {
+const PartitionCard: React.FC<IPartitionCardProps> = ({partition}) => {
     return (
     <Flex as={"a"} href="/partitions/:instrumentId/morceauId" direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
     backgroundColor={"transparent"} minH={"192px"}>
         <Box id="cardTop" position={"relative"}
-        borderRadius={"0.125rem"} maxW={"12rem"}
+        borderRadius={"0.125rem"} maxW={"12rem"} overflow={"visible"}
         _hover={{
             filter: "brightness(120%)"
         }}>
             <Image src={partition.preview} id="preview" maxW={"12rem"} minH={"13rem"}></Image>
-            <Icon position={"absolute"} bottom={"0"} right={"0"}
-            zIndex={"300"} maxHeight={"4.125rem"} maxWidth={"4.125Rem"}>
-                <IconCard />
-            </Icon>
+            <Flex position={"absolute"} bottom={"-0.5rem"} right={"-33px"} boxSize={"4.125rem"} 
+            zIndex={"100"} maxHeight={"4.125rem"} maxWidth={"4.125Rem"}>
+                {IconCard(partition.instrument)}
+            </Flex>
         </Box>
         <Box id="cardInfos">
             <Box color={"#FDFCFE"}>

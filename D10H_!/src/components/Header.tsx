@@ -3,13 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 // SVGs import from a unique file
-import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon } from "./svg";
+import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon } from "./svg";
 
 // Context
 import { useSearch, } from '../context/SearchContext'
 
 // Hooks
-import useSearchHistory from '../hooks/useSearchHistory'
+import useSearchHistory, { IHistoryItem } from '../hooks/useSearchHistory'
+
+// Type
+import { IDeezerSearchResponse, IDeezerTrack } from '../types/Deezer'
 
 export interface IHeaderProps {
     userName: string,
@@ -23,7 +26,7 @@ const Header: React.FC<IHeaderProps> = () => {
         searchResults,
         setSearchResults,
         setIsLoading,
-        setIsSearching,
+        // setIsSearching,
     } = useSearch()
 
     /*Calling the Deezer API for search suggestions*/
@@ -47,27 +50,47 @@ const Header: React.FC<IHeaderProps> = () => {
     }
 
     /*Variables*/
-    const [query, setQuery] = useState('')    
+    const [query, setQuery] = useState<string>('')    
 
     const navigate = useNavigate()
 
     const [isFocused, setIsFocused] = useState<boolean>(false)
 
-    const ref = useRef<number | null> (null)
+    type TimerId = ReturnType<typeof setTimeout>
+
+    const ref = useRef<TimerId | undefined> (undefined)
 
     const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
 
-    const [history, _SearchHistory, addToHistory] = useSearchHistory ()
+    const [history, _, addToHistory] = useSearchHistory()
+
+    const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (isInternalUpdate) {
+            setSearchResults([])
+            setIsInternalUpdate(false)
+        }else if (query && query.length < 2) {
+            setSearchResults([])
+            return
+        } else {
+            ref.current = setTimeout( () => {fetchDeezerSuggestions(query)}, 300)
+        }
+        return () => {
+            clearTimeout(ref.current)
+        }
+    }, [query, isInternalUpdate])
+
 
     /*search choice management*/
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key == 'Enter') {
             event.preventDefault()
             const safeQuery = encodeURIComponent(query)
-            addToHistory(query)
+
+            navigate(`/search?q=${safeQuery}`)
             setIsFocused(false)
             setQuery("")
-            navigate(`/search?q=${safeQuery}`)
         } else if (event.key == 'Tab') {
             event.preventDefault()
             setIsFocused(false)
@@ -77,28 +100,42 @@ const Header: React.FC<IHeaderProps> = () => {
 
     /*Sends suggestion selected to query*/
     function handleSuggestionClick (id: number) {
+
         const item = searchResults.find(result => {
             return result.id == `${id}`
         })
+
+        if (item != undefined ) {
+                const historyItem = {
+                    query: item.title,
+                    title: item.title,
+                    artistName: item.artist.name,
+                    coverUrl: item.album.cover_small,
+                    type: item.type
+                }
+                
+                addToHistory(historyItem)
+
+                setQuery(`${item.title} - ${item.artist.name}`)
+                setInfoNavigation(true)
+            }
         
-        if (ref.current != null) {
+        if (ref.current != undefined) {
             clearTimeout(ref.current)
-            ref.current = null
+            ref.current = undefined
         }
-        if (item != undefined) {
-            setQuery(item.title)
-            setInfoNavigation(true)
-        }
+
         setIsFocused(false)
     }
 
     /*Sends history selected to query*/
-    function handleHistoryClick (h: string) {
-        if (ref.current != null) {
+    function handleHistoryClick (h: IHistoryItem) {
+        if (ref.current != undefined) {
             clearTimeout(ref.current)
-            ref.current = null
+            ref.current = undefined
         }
-        setQuery(h)
+        setIsInternalUpdate(true)
+        setQuery(`${h.title} - ${h.artistName}`)
         setInfoNavigation(true)
     }
 
@@ -127,7 +164,7 @@ const Header: React.FC<IHeaderProps> = () => {
                         width={"1.5rem"} height={"3rem"}
                         display={"flex"} alignItems={"center"} justifyContent={"center"}>
                             <Button type="submit"
-                            display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"baseline"} gap={'0.25rem'}
+                            display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={'0.25rem'}
                             padding={"0"}
                             appearance={"none"} userSelect={"none"} whiteSpace={"nowrap"} outline={"transparent solid 2px"} pointerEvents={"none"}
                             textDecoration={"none"} 
@@ -139,27 +176,21 @@ const Header: React.FC<IHeaderProps> = () => {
                                 <SearchIcon />
                             </Button>
                         </InputLeftElement>
-                        <Input type="search" value={query} aria-label="Rechercher" placeholder="Artistes, titres, Scorbraries ..."
+                        <Input type="search" value={query ?? ''} aria-label="Rechercher" placeholder="Artistes, titres, Scorbraries ..."
 
-                        /*API call update*/
+                        /*query update*/
                         onChange={(e) => {
-                            
                             setQuery(e.target.value)
-                            
-                            if (e.target.value.length >= 2) {
-                                fetchDeezerSuggestions(e.target.value)                                
-                            } else if (e.target.value.length < 2) {
-                                setSearchResults([])
-                            }}}
+                            }}
 
                         /*Search choice management triggering*/
                         onKeyDown={handleKeyDown}
 
                         /*setTimeout clearing*/
                         onFocus={() =>{
-                            {if (ref.current != null) {
+                            {if (ref.current != undefined) {
                                 clearTimeout(ref.current)
-                                ref.current = null
+                                ref.current = undefined
                             }}
                             setIsFocused(true)
                         }}
@@ -222,7 +253,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                     maxHeight={"385px"}>
 
                             {/*Display searh history before query*/}
-                            {(query.length === 0) ? (
+                            {((query || '').length === 0 && history && history.length > 0) ? (
                                 <Flex direction={"column"}
                                 maxHeight={"385px"}>
                                     <Flex direction={"row"} alignItems={"center"} justifyContent={"space-between"}
@@ -244,31 +275,92 @@ const Header: React.FC<IHeaderProps> = () => {
                                         _hover={{
                                             background: "#3A393D",
                                         }}>
-                                            <DeleteButtonIcon lineHeight={"1rem"} flexShrink={"0"} verticalAlign={"middle"} display={"block"} />
+                                            <DeleteButtonIcon />
                                         </Button>
                                     </Flex>
                                     <Box overflow={"auto"}>
                                         <Box>
-                                    {history.map((h: string) => {
+                                    {history.map((h: IHistoryItem) => {
                                         return (
-                                            <Box key={h} paddingInlineStart={"1rem"} paddingInlineEnd={"0"} paddingY={"0.5rem"}
-                                            onClick={() => {handleHistoryClick(h)}}>
-                                                <Flex alignItems={"center"} gap={"0.5rem"}>
-                                                    <Box 
-                                                    minWidth={"3rem"} height={"3rem"} width={"3rem"}
-                                                    borderRadius={"0.125px"}>
-                                                        <Flex alignItems={"center"} justifyContent={"center"}
-                                                        position={"relative"}
-                                                        height={"100%"} width={"100%"}
-                                                        borderStyle={"solid"} borderWidth={"0.0625rem"} borderRadius={"0.125rem"}
+                                            <Box key={h.title}>
+                                                <Box paddingInlineStart={"1rem"} paddingInlineEnd={"0"} paddingY={"0.5rem"}
+                                                onClick={() => {handleHistoryClick(h)}}>
+                                                    <Flex alignItems={"center"} gap={"0.5rem"}>
+                                                        <Box id="image" 
+                                                        minWidth={"3rem"} height={"3rem"} width={"3rem"}
+                                                        borderRadius={"0.125px"}>
+                                                            <Flex alignItems={"center"} justifyContent={"center"}
+                                                            position={"relative"}
+                                                            height={"100%"} width={"100%"}
+                                                            borderStyle={"solid"} borderWidth={"0.0625rem"} borderRadius={"0.125rem"}
+                                                            overflow={"hidden"}>
+                                                                <Image src={h.coverUrl} objectFit={"cover"} width={"100%"} height={"100%"} opacity={"1"}/>
+                                                                <Flex alignItems={"center"} gap={"0.25rem"}
+                                                                position={"absolute"} bottom={"0.75rem"} left={"50%"} top={"50%"}
+                                                                transform={"translate(-50%, -50%)"}></Flex>
+                                                            </Flex>
+                                                        </Box>
+                                                        <Flex role="button" direction={"column"} justifyContent={"center"} flex={"1 1 0%"}
+                                                        width={"fit-content"}
+                                                        color={"#ffffff"} textAlign={"left"}
                                                         overflow={"hidden"}>
-                                                            <Image src={""} objectFit={"cover"} width={"100%"} height={"100%"} opacity={"1"}/>
-                                                            <Flex alignItems={"center"} gap={"0.25rem"}
-                                                            position={"absolute"} bottom={"0.75rem"} left={"50%"} top={"50%"}
-                                                            transform={"translate(-50%, -50%)"}></Flex>
+                                                            <Box overflow={"hidden"} position={"relative"} whiteSpace={"nowrap"}>
+                                                                <Flex>
+                                                                    <Box>
+                                                                        <Text as={"p"} 
+                                                                        fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                                                        color={"#ffffff"} lineHeight={"24px"} textDecoration={"none"} textOverflow={"ellipsis"}
+                                                                        overflow={"hidden"} margin={0}>
+                                                                            {h.title}
+                                                                        </Text>
+                                                                    </Box>
+                                                                </Flex>
+                                                            </Box>
+                                                            <Box overflow={"hidden"} position={"relative"} whiteSpace={"nowrap"} 
+                                                            style={{
+                                                                maskImage: "linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 2.42%, rgb(0, 0, 0) 23.26%)"
+                                                            }}>
+                                                                <Flex
+                                                                style={{
+                                                                    transform: "translate3d(0px, 0px, 0px",
+                                                                    willChange: "transform"
+                                                                }}>
+                                                                    <Box>
+                                                                        <Text
+                                                                        marginTop={"0.125rem"}
+                                                                        fontSize={"14px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
+                                                                        color={"#a19fa4"} lineHeight={"20px"} textDecoration={"none"}
+                                                                        overflow={"hidden"} textOverflow={"ellipsis"}>
+                                                                            <Text as={"span"} marginEnd={1}>
+                                                                                {h.type}
+                                                                            </Text> 
+                                                                            •
+                                                                            <Text as={"span"} color={"#ffffff"} marginStart={1}>
+                                                                                {h.artistName}
+                                                                            </Text>
+                                                                        </Text>
+                                                                    </Box>
+                                                                </Flex>
+                                                            </Box>
                                                         </Flex>
-                                                    </Box>
-                                                </Flex>
+                                                        <Flex direction={"column"} justifyContent={"center"} overflow={"hidden"} width={"fit-content"} color={"#ffffff"}>
+                                                            <Button type="button"
+                                                            display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
+                                                            position={"relative"} whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                                            paddingInline={0} paddingY={0}
+                                                            minHeight={"2rem"} minWidth={"2rem"} height={"auto"} 
+                                                            outline={"tranparent solid 2px"} outlineOffset={"0px"}
+                                                            lineHeight={"20px"} fontWeight={"600"} fontSize={"14px"} fontFamily={"Inter,Arial,sans-serif"} textDecoration={"none"} color={"#ffffff"}
+                                                            background={"transparent"} borderRadius={"full"}
+                                                            userSelect={"none"}
+                                                            _hover={{
+                                                                background: "#3A393D"
+                                                            }}>
+                                                                <HeartIcon />
+                                                            </Button>
+                                                        </Flex>
+                                                    </Flex>
+                                                </Box>
                                             </Box>
                                         )})}
                                         </Box>
@@ -276,7 +368,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                 </Flex>
 
                                 /*Displays suggestions list*/
-                            ) : (searchResults.map((e: object) => {
+                            ) : ((searchResults || []).map((e: IDeezerTrack) => {
                                 return (
                                     <Box key={e.id} paddingStart={1} marginY={1}
                                     _hover={{
@@ -298,7 +390,7 @@ const Header: React.FC<IHeaderProps> = () => {
                         }
 
                     {/*Displays searchs informations*/}
-                    {(query.length > 0) && (infoNavigation) &&
+                    {((query || '').length > 0) && (infoNavigation) &&
                         <Box position={"absolute"} left={"0"} right={"0"}
                         background={"#2e2c30"} color={"white"} textAlign={"center"} fontSize={"14px"}>
                             <Text>

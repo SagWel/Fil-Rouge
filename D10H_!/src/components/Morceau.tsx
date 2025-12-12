@@ -1,6 +1,8 @@
 import { Flex } from "@chakra-ui/react";
 
-function MorceauContainer () {
+export interface IMorceauProps {}
+
+const Morceau: React.FC<IMorceauProps> = () => {
     return (
         <Flex overflowY={"auto"} justifyContent={"center"} width={"100%"} height={"100%"}>
 
@@ -8,4 +10,4 @@ function MorceauContainer () {
     )
 }
 
-export default MorceauContainer
+export default Morceau

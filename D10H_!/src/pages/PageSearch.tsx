@@ -1,5 +1,5 @@
 import { Box, Heading, Flex, Input, Grid } from "@chakra-ui/react";
-import Result from "../composants/PartitionsResult";
+import Result from "../components/PartitionsResult";
 import { useSearchParams } from "react-router-dom";
 
 export interface ISearchProps {}

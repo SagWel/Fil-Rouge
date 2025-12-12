@@ -1,7 +1,9 @@
 import { Box, Heading } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 
-function Scorbrary () {
+export interface IPageScorbaryProps {}
+
+const Scorbrary: React.FC<IPageScorbaryProps> = () => {
 
     const { scorbraryId } = useParams();
 

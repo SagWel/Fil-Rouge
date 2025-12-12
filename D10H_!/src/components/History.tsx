@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { type IPartitions } from "../types/partitions";
 
 // SVGs import from a unique file
 import { ShuffleIcon } from "./svg";
@@ -10,10 +11,12 @@ import PartitionCard from './PartitionCard'
 // Pictures import as modules
 import PartitionImg from '../img/Partition.jpeg'
 
-function Main () {
+export interface IHistoryProps {}
+
+const History: React.FC<IHistoryProps> = () => {
 
     /*Mock database*/
-    const mockPartitons = [
+    const mockPartitons: IPartitions[] = [
         {
             title : "Zombie",
             artist : "The Cranberries",
@@ -27,7 +30,7 @@ function Main () {
             title : "Smells Like Teen Spirit",
             artist : "Nirvanna",
             difficulty : 2,
-            instrument : "guitare",
+            instrument : "batterie",
             preview : PartitionImg,
             audioPreviewUrl : "https://fake_url.com",
             id : "2",
@@ -36,6 +39,7 @@ function Main () {
             title : "Comme Des Connards",
             artist : "Mickael Youn",
             difficulty : 2,
+            instrument : "piano",
             preview : PartitionImg,
             audioPreviewUrl : "https://fake_url.com",
             id : "3",
@@ -44,6 +48,7 @@ function Main () {
             title : "Still Waiting",
             artist : "Sum 41",
             difficulty : 4,
+            instrument : "basse",
             preview : PartitionImg,
             audioPreviewUrl : "https://fake_url.com",
             id : "4",
@@ -52,10 +57,29 @@ function Main () {
             title : "Pretty Fly (For A White Guy)",
             artist : "The Offspring",
             difficulty : 3,
+            instrument : "chant",
             preview : PartitionImg,
             audioPreviewUrl : "https://fake_url.com",
             id : "5",
-        }
+        },
+        {
+            title : "Over The Rainbow",
+            artist : "Israel Kamakawiwo'ole",
+            difficulty : 2,
+            instrument : "ukulele",
+            preview : PartitionImg,
+            audioPreviewUrl : "https://fake_url.com",
+            id : "6",
+        },
+        {
+            title : "Baker Street",
+            artist : "Gerry Rafferty",
+            difficulty : 2,
+            instrument : "saxo",
+            preview : PartitionImg,
+            audioPreviewUrl : "https://fake_url.com",
+            id : "7",
+        },
     ]
 
     return (
@@ -172,7 +196,7 @@ function Main () {
                             overflow={"visible"}
                             marginTop={"2rem"} marginBottom={"5rem"}>
 
-                                {mockPartitons.map((partition) => (
+                                {mockPartitons.map((partition: IPartitions) => (
                                     <PartitionCard key={partition.id} partition={partition} />
                                 ))}
 
@@ -185,4 +209,4 @@ function Main () {
     )
 }
 
-export default Main
+export default History

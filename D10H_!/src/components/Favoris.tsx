@@ -1,10 +1,12 @@
-import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
+import { Box, Flex, Heading, Button, List, ListItem, chakra } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 // SVGs import from a unique file
 import { ShuffleIcon } from "./svg";
 
-function Main () {
+export interface IFavorisProps {}
+
+const Favoris: React.FC<IFavorisProps> = () => {
     return (
         <Box id="main"
         overflowY={"auto"} height={"100%"}>
@@ -66,9 +68,10 @@ function Main () {
                                 <ListItem 
                                 listStyleType={"none"} margin={0} padding={0}
                                 color={"#a19fa4"} display={"inline-block"} position={"relative"} >
-                                    <Box as={Link} to={"/favoris"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
+                                    <Box as={Link} to={"/favoris"} borderBottom={"#ad47ff solid 2px"} color={"#ffffff"}
+                                    paddingBottom={"16px"}
                                     display={"block"}
-                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
+                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"600"}
                                     lineHeight={"24px"} textDecoration={"none"}>
                                         Vue d'ensemble
                                     </Box>
@@ -76,10 +79,9 @@ function Main () {
                                 <ListItem 
                                 listStyleType={"none"} margin={0} padding={0}
                                 color={"#a19fa4"} display={"inline-block"} position={"relative"} paddingLeft={"44px"}>
-                                    <Box as={Link} to={"/favoris/scorbraries"} borderBottom={"#ad47ff solid 2px"} color={"#ffffff"}
-                                    paddingBottom={"16px"}
+                                    <Box as={Link} to={"/favoris/scorbraries"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
                                     display={"block"}
-                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"600"}
+                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
                                     lineHeight={"24px"} textDecoration={"none"}>
                                         Scorbraries
                                     </Box>
@@ -99,22 +101,32 @@ function Main () {
                     </chakra.nav>
                 </Box>
             </Box>
-
-            {/*Scorbraries page content*/}
+            
+            {/*Favoris page content*/}
             <Box position={"relative"}>
+
+                {/*Carousels container*/}
                 <Box id="catalog-content">
                     <Box>
                         <chakra.section display={"block"}>
-                            <Box id="search-container" 
-                            padding={"24px"} marginX={"auto"} position={"relative"}>
-                                <Box>
-                                    
-                                </Box>
-                            </Box>
-                            <Box id="result-container" 
-                            padding={"24px"} marginX={"auto"} position={"relative"}>
 
-                            </Box>
+                            {/* future CAROUSEL */}
+
+                        </chakra.section>
+                        <chakra.section display={"block"}>
+
+                            {/* future CAROUSEL */}
+
+                        </chakra.section>
+                        <chakra.section display={"block"}>
+
+                            {/* future CAROUSEL */}
+
+                        </chakra.section>
+                        <chakra.section display={"block"}>
+
+                            {/* future CAROUSEL */}
+
                         </chakra.section>
                     </Box>
                 </Box>
@@ -123,4 +135,4 @@ function Main () {
     )
 }
 
-export default Main 
+export default Favoris

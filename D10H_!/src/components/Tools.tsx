@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 // SVGs import from a unique file
 import { 
     TunnerIcon, CountdownIcon, MetronomeIcon, TempoIcon, LearningModeIcon,LooperIcon,SoloIcon,MuteIcon, AnnotationsIcon, ImpressionIcon, ChordsIcon,
-    PianoIcon, ChantIcon, DrumsIcon, BasseIcon
- } from "./svg";
+    PianoIcon, ChantIcon, DrumsIcon, BasseIcon, GuitarIcon
+} from "./svg";
 
 export interface IToolsProps {}
 
@@ -138,7 +138,7 @@ const Tools: React.FC<IToolsProps> = () => {
             {/*Others scores from current track*/}
             <Flex id="pistesContainer"
             direction={"column"} justifyContent={"space-around"} alignItems={"center"}
-            paddingY={"0.5rem"} gap={"0.5rem"}
+            paddingY={"0.5rem"} gap={"0.5rem"} minW={"38px"}
             backgroundColor={"#141216"}
             borderBottomRadius={"0.5rem"}
             overflowY={"auto"} sx={{
@@ -147,40 +147,49 @@ const Tools: React.FC<IToolsProps> = () => {
                 }
             }}>
                 <Box as={Link} to={""}
-                height={"38px"} width={"38px"}
-                borderRadius={"full"}
+                height={"fit-content"} width={"fit-content"}
+                borderRadius={"full"} padding={"0.185rem"}
                 _hover={{
                                 bg: "#29282D"
                             }}
                 >
-                    <ChantIcon size="32px" />
+                    <ChantIcon size="32px" viewBox={"5 0 5 45"}/>
                 </Box>
                 <Box as={Link} to={""}
-                height={"38px"} width={"38px"}
-                borderRadius={"full"}
+                height={"fit-content"} width={"fit-content"}
+                borderRadius={"full"} padding={"0.185rem"}
                 _hover={{
                                 bg: "#29282D"
                             }}
                 >
-                    <DrumsIcon size="32px" />
+                    <DrumsIcon size="32px" viewBox={"5 0 450 550"}/>
                 </Box>
                 <Box as={Link} to={""}
-                height={"38px"} width={"38px"}
-                borderRadius={"full"}
+                height={"fit-content"} width={"fit-content"}
+                borderRadius={"full"} padding={"0.185rem"}
                 _hover={{
                                 bg: "#29282D"
                             }}
                 >
-                    <BasseIcon size="32px" />
+                    <BasseIcon size="32px" viewBox={"-10 0 65 70"}/>
                 </Box>
                 <Box as={Link} to={""}
-                height={"38px"} width={"38px"}
-                borderRadius={"full"}
+                height={"fit-content"} width={"fit-content"}
+                borderRadius={"full"} padding={"0.185rem"}
                 _hover={{
                                 bg: "#29282D"
                             }}
                 >
-                    <PianoIcon size="32px" />
+                    <PianoIcon size="32px" viewBox={"-2 0 25 25"}/>
+                </Box>
+                <Box as={Link} to={""}
+                height={"fit-content"} width={"fit-content"}
+                borderRadius={"full"} padding={"0.185rem"}
+                _hover={{
+                                bg: "#29282D"
+                            }}
+                >
+                    <GuitarIcon size="32px" viewBox={"-5 -15 90 90"}/>
                 </Box>
             </Flex>
         </Flex>

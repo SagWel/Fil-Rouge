@@ -1,6 +1,8 @@
 import { Box } from "@chakra-ui/react"
 
-function Home () {
+export interface IHomeProps {}
+
+const Home: React.FC<IHomeProps> = () => {
     return(
         <Box id="main"
         overflowY={"auto"} height={"100%"}>
