@@ -3,9 +3,9 @@ import { Box, Flex, Button, Text, Image } from "@chakra-ui/react";
 import Cover from '../img/dont-stop-the-party.png';
 import { HeartLoveOnIcon, AddIcon, ShuffleIcon, PreviousIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "./svg";
 
-export interface IPlayeurMinProps {}
+export interface IPlayeurMinProps {onClick: () => void}
 
-const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
+const PlayeurMin: React.FC<IPlayeurMinProps> = ({onClick}) => {
     return (
         <Flex 
         alignItems={"center"} justifyContent={"space-between"}
@@ -143,6 +143,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
                     marginLeft={"0"} padding={"0"}
                     minHeight={"2rem"} height={"2rem"} minWidth={"2rem"}
                     background={"#a238ff"} borderRadius={"full"}
+                    onClick={onClick}
                     _active={{
                         color: "#e2dfe6",
                         background: "#ca97ff"

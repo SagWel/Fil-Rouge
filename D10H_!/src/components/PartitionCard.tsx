@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Image, Icon, Flex} from "@chakra-ui/react";
+import { Box, Heading, Text, Image, Flex} from "@chakra-ui/react";
 import { type IPartitions, InstrumentType } from "../types/partitions";
 
 // SVGs import from a unique file
@@ -12,12 +12,12 @@ function difficultyLvl(difficulty: number): React.JSX.Element[] {
   <Box key={index}><DifficultyIcon/></Box>))
 }
 
-// Retrieves the id from the URL to identify the icon to display
+// 
 function IconCard (instrumentKey: InstrumentType): React.JSX.Element | null {
 
     switch (instrumentKey) {
         case 'guitare': return <GuitarIcon />
-        case 'batterie': return <BasseIcon />
+        case 'batterie': return <DrumsIcon />
         case 'piano': return <PianoIcon />
         case 'basse': return <BasseIcon />
         case 'chant': return <ChantIcon />

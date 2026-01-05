@@ -1,11 +1,10 @@
-export interface IPageMorceauProps {}
+import Morceau from "../components/Morceau";
 
-const PageMorceau: React.FC<IPageMorceauProps> = () => {
+export interface IPageMorceauProps {onPlay: boolean}
+
+const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
     return (
-        <div>
-            <h1>Partiton</h1>
-            <h2>Bon jeu</h2>
-        </div>
+       <Morceau onPlay={onPlay}/>
     );
 }
 

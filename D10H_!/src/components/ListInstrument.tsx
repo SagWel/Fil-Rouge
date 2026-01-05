@@ -4,26 +4,26 @@ import InstrumentCard from './InstrumentCard'
 import { IInstrument } from "../types/instrument";
 
 // Pictures import as modules
-import Guitare from '../img/Guitare.png';
-import Basse from '../img/Basse.png';
-import Piano from '../img/Piano.png';
-import Batterie from '../img/Batterie.png';
-import Chant from '../img/Chant.png';
-import Ukulele from '../img/Ukulele.png';
-import Saxo from '../img/Saxo.png';
+import Guitare from '../../public/img/Guitare.png';
+import Basse from '../../public/img/Basse.png';
+import Piano from '../../public/img/Piano.png';
+import Batterie from '../../public/img/Batterie.png';
+import Chant from '../../public/img/Chant.png';
+import Ukulele from '../../public/img/Ukulele.png';
+import Saxo from '../../public/img/Saxo.png';
 
 export interface IListInstrumentsProps {}
 
 const ListInstruments: React.FC<IListInstrumentsProps> = () => {
     // Instruments data is located here, but it will be moved to the database.
 const instrumentData: IInstrument[] = [
-    { id: 'guitare' , name: 'Guitare' ,  imgSrc: Guitare, linkTo: '/partitions/guitare'},
-    { id: 'basse' , name: 'Basse' ,  imgSrc: Basse , linkTo: '/partitions/basse'},
-    { id: 'piano' , name: 'Piano' ,  imgSrc: Piano , linkTo: '/partitions/piano'},
-    { id: 'batterie' , name: 'Batterie' ,  imgSrc: Batterie , linkTo: '/partitions/batterie'},
-    { id: 'chant' , name: 'Chant' ,  imgSrc: Chant , linkTo: '/partitions/chant'},
-    { id: 'ukulele' , name: 'Ukulele' ,  imgSrc: Ukulele , linkTo: '/partitions/ukulele'},
-    { id: 'saxo' , name: 'Saxo' ,  imgSrc: Saxo , linkTo: '/partitions/saxo'},
+    { id: 'guitare' , name: 'guitare' ,  imgSrc: Guitare, linkToSearch: '/partitions/guitare'},
+    { id: 'basse' , name: 'basse' ,  imgSrc: Basse , linkToSearch: '/partitions/basse'},
+    { id: 'piano' , name: 'piano' ,  imgSrc: Piano , linkToSearch: '/partitions/piano'},
+    { id: 'batterie' , name: 'batterie' ,  imgSrc: Batterie , linkToSearch: '/partitions/batterie'},
+    { id: 'chant' , name: 'chant' ,  imgSrc: Chant , linkToSearch: '/partitions/chant'},
+    { id: 'ukulele' , name: 'ukulele' ,  imgSrc: Ukulele , linkToSearch: '/partitions/ukulele'},
+    { id: 'saxo' , name: 'saxo' ,  imgSrc: Saxo , linkToSearch: '/partitions/saxo'},
 ]
 
     return (

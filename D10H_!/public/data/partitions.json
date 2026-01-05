@@ -1,0 +1,243 @@
+{
+    "partitions": [
+        {
+            "id": 116348264,
+            "title": "Michelle",
+            "artist": {
+                "id": 1,
+                "name": "The Beatles",
+                "deezer_link": "https://www.deezer.com/artist/1",
+                "picture": "https://api.deezer.com/artist/1/image",
+                "picture_small": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/56x56-000000-80-0-0.jpg",
+                "picture_medium": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/250x250-000000-80-0-0.jpg",
+                "picture_big": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/500x500-000000-80-0-0.jpg",
+                "picture_xl": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/1000x1000-000000-80-0-0.jpg"
+            },
+            "album": {
+                "id": 12047936,
+                "title": "Rubber Soul",
+                "deezer_link": "https://www.deezer.com/fr/album/12047936",
+                "cover": "https://api.deezer.com/album/12047936/image",
+                "cover_small": "https://cdn-images.dzcdn.net/images/cover/da80520440d5d29876b9df3e375793b5/56x56-000000-80-0-0.jpg",
+                "cover_medium": "https://cdn-images.dzcdn.net/images/cover/da80520440d5d29876b9df3e375793b5/250x250-000000-80-0-0.jpg",
+                "cover_big": "https://cdn-images.dzcdn.net/images/cover/da80520440d5d29876b9df3e375793b5/500x500-000000-80-0-0.jpg",
+                "cover_xl": "https://cdn-images.dzcdn.net/images/cover/da80520440d5d29876b9df3e375793b5/1000x1000-000000-80-0-0.jpg",
+                "artist": {
+                    "id": 1,
+                    "name": "The Beatles",
+                    "deezer_link": "https://www.deezer.com/artist/1",
+                    "picture": "https://api.deezer.com/artist/1/image",
+                    "picture_small": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/56x56-000000-80-0-0.jpg",
+                    "picture_medium": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/250x250-000000-80-0-0.jpg",
+                    "picture_big": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/500x500-000000-80-0-0.jpg",
+                    "picture_xl": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/1000x1000-000000-80-0-0.jpg"
+                }
+            },
+            "difficulty": 3,
+            "genre": "Baroque Pop",
+            "instruments": {
+                "currentInstrument": {
+                    "id": "chant",
+                    "name": "chant",
+                    "imgSrc": "/img/Chant.png"
+                },
+                "othersInstruments": [
+                    {
+                        "id": "guitareRythm",
+                        "name": "guitare",
+                        "imgSrc": "/img/Guitare.png",
+                        "linkToPartition": "/partitions/guitare/116348264"
+                    },
+                    {
+                        "id": "guitarSolo",
+                        "name": "guitare",
+                        "imgSrc":"/img/Guitare.png",
+                        "linkToPartition": "/partitions/guitare/116348264_2"
+                    },
+                    {
+                        "id": "basse",
+                        "name": "basse",
+                        "imgSrc": "/img/Basse.png",
+                        "linkToPartition": "/partitions/basse/116348264"
+                    },
+                    {
+                        "id": "batterie",
+                        "name": "batterie",
+                        "imgSrc":"/img/Batterie.png",
+                        "linkToPartition": "/partitions/batterie/116348264"
+                    },
+                    {
+                        "id": "choeurs",
+                        "name": "chant",
+                        "imgSrc": "/img/Chant.png",
+                        "linkToPartition": "/partitions/chant/116348264_2"
+                    }
+                ]
+            },
+            "bpm": 108,
+            "time_signature": "4/4",
+            "clef": "treble",
+            "key_signature": "F",
+            "measures": [
+                {
+                    "id": 1,
+                    "notes": [
+                        {
+                            "keys": ["b/4"],
+                            "duration": "w",
+                            "isRest": true                            
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "notes": [
+                        {
+                            "keys": ["b/4"],
+                            "duration": "w",
+                            "isRest": true                            
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "notes": [
+                        {
+                            "keys": ["b/4"],
+                            "duration": "w",
+                            "isRest": true                            
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "notes": [
+                        {
+                            "keys": ["b/4"],
+                            "duration": "w",
+                            "isRest": true                            
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "notes": [
+                        {
+                            "keys": ["c/4"],
+                            "duration": "h",
+                            "lyrics": "Mi"
+                        },
+                        {
+                            "keys": ["c/4"],
+                            "duration": "h",
+                            "lyrics": "chelle,"
+                        }
+                    ]
+                },
+                {
+                    "id": 6,
+                    "notes": [
+                        {
+                            "keys": ["b/4"],
+                            "duration": "q",
+                            "isRest": true
+                        },
+                        {
+                            "keys":["d/4"],
+                            "duration": "q",
+                            "lyrics": "ma"
+                        },
+                        {
+                            "keys":["a/3"],
+                            "duration": "h",
+                            "lyrics": "belle,"
+                        }
+                    ]
+                },
+                {
+                    "id": 7,
+                    "notes": [
+                        {
+                            "keys": ["g/3"],
+                            "duration": "q",
+                            "lyrics": "these"
+                        },
+                        {
+                            "keys": ["c/4"],
+                            "duration": "q",
+                            "lyrics": "are"
+                        },
+                        {
+                            "keys": ["g/3"],
+                            "duration": "q",
+                            "lyrics": "words"
+                        },
+                        {
+                            "keys": ["g/3"],
+                            "duration": "q",
+                            "lyrics": "that"
+                        }
+                    ]
+                },
+                {
+                    "id": 8,
+                    "notes": [
+                        {
+                            "keys": ["f/3"],
+                            "duration": "q",
+                            "lyrics": "go"
+                        },
+                        {
+                            "keys": ["a/3"],
+                            "duration": "q",
+                            "lyrics": "to"
+                        },
+                        {
+                            "keys": ["b/3"],
+                            "duration": "q",
+                            "accidental": "#",
+                            "lyrics": "geth"
+                        },
+                        {
+                            "keys": ["a/3"],
+                            "duration":"q",
+                            "lyrics": "er"
+                        }
+                    ]
+                },
+                {
+                    "id": 9,
+                    "notes": [
+                        {
+                            "keys": ["g/3"],
+                            "duration": "h",
+                            "lyrics": "well,"
+                        },
+                        {
+                            "keys": ["f/3"],
+                            "duration": "q",
+                            "lyrics": "my"
+                        },
+                        {
+                            "keys": ["a/3"],
+                            "duration": "8",
+                            "beam": "start",
+                            "lyrics": "Mi"
+                        },
+                        {
+                            "keys": ["g/3"],
+                            "duration": "8",
+                            "beam": "end",
+                            "tie" : "start",
+                            "lyrics": "chelle."
+                        }
+                    ]
+                }
+            ],
+            "deezer_link": "https://www.deezer.com/track/116348264",
+            "audioPreview": "https://cdnt-preview.dzcdn.net/api/1/1/8/2/a/0/82aed4ff815e92629fbd193688e8de2b.mp3?hdnea=exp=1766499911~acl=/api/1/1/8/2/a/0/82aed4ff815e92629fbd193688e8de2b.mp3*~data=user_id=0,application_id=42~hmac=13cbcab1d1f0d0318a15f8ea197715bb03df69e0774a7c45969a2db8092eb6dd",
+            "partitionPreview": "/img/Partition.jpeg",
+            "duration": 161
+        }
+    ]
+}

@@ -1,11 +1,77 @@
-export type InstrumentType = "guitare" | "batterie" | "piano" | "basse" | "chant" | "ukulele" | "saxo"
+import { IInstrument } from "./instrument"
+
+export interface INoteData {
+    keys: string[],
+    duration: string,
+    isRest?: boolean,
+    dots?: number,
+    accidental?: string,
+    beam?: "start" | "continue" | "end" | "none",
+    tie?: "start" | "end",
+    lyrics?: string,
+    bpm?: number
+}
+
+export interface IGenre {
+    id: number,
+    name: string,
+    picture: string,
+    picture_small?: string,
+    picture_medium?: string,
+    picture_big?: string,
+    picture_xl?: string
+}
+
+export interface IMeasure {
+    id: number,
+    notes: INoteData[]
+    shortText?: string
+    bpm?: number
+}
+
+export interface IArtist {
+    id: number,
+    name: string,
+    deezer_link?: string,
+    partitions?: IPartitions[]
+    albums?: IAlbum[]
+    picture: string,
+    picture_small?: string,
+    picture_medium?: string,
+    picture_big?: string,
+    picture_xl?: string
+}
+
+export interface IAlbum {
+    id: number,
+    title: string,
+    deezer_link: string,
+    cover: string,
+    cover_small?: string,
+    cover_medium?: string,
+    cover_big?: string,
+    cover_xl?: string,
+    partitions?: IPartitions[]
+    artist: IArtist
+}
 
 export interface IPartitions {
-    title: string;
-    artist: string;
-    difficulty: number;
-    instrument: InstrumentType;
-    preview: any;
-    audioPreviewUrl: string;
-    id: string;
+    id: number,
+    title: string,
+    artist: IArtist,
+    album?: IAlbum,
+    difficulty: number,
+    genre: IGenre,
+    instruments: {
+        currentInstrument : IInstrument,
+        othersInstruments : IInstrument[] }
+    bpm: number,
+    time_signature: string,
+    clef: string,
+    key_signature: string,
+    measures: IMeasure[],
+    deezer_link: string,
+    audioPreview: string,
+    partitionPreview: string,
+    duration: number
 }
