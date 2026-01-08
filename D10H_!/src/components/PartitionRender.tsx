@@ -21,8 +21,8 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         title: "Test Technique",
         artist: { id: 101, name: "Gemini", picture: "", partitions: [], albums: [] },
         difficulty: 3,
-        instrument: "piano",
-        bpm: 200,
+        instruments: { currentInstrument: { id: "piano", name: "piano", imgSrc: "../../public/img/Piano.png" }, othersInstruments: [] } ,
+        bpm: 90,
         time_signature: "4/4",
         clef: "treble",
         key_signature: "G",
@@ -135,7 +135,7 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
 
         if (currentNote && currentNote.id !== lastNoteId) {
             if (lastNoteId) {
-                notesMapRef.current.get(lastNoteId as string)?.setStyle({
+                notesMapRef.current.get(lastNoteId)?.setStyle({
                     fillStyle: "black",
                     strokeStyle: "black"
                 })
@@ -237,7 +237,7 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
             const tickables = m.voice.getTickables();
             const y = m.stave.getY();
             
-            tickables.forEach((note) => {
+            tickables.forEach((note: StaveNote) => {
                 const durationMs = (note.getTicks().numerator / 4096) * msPerTrick;
                 const id = `${(note as StaveNote).getKeys()}_${Math.round(runningTimeMs)}`;
                 const x = (note as StaveNote).getAbsoluteX();

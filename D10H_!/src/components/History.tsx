@@ -9,7 +9,7 @@ import { ShuffleIcon } from "./svg";
 import PartitionCard from './PartitionCard'
 
 // Pictures import as modules
-import PartitionImg from '../img/Partition.jpeg'
+import PartitionImg from '../../public/img/Partition.jpeg'
 
 export interface IHistoryProps {}
 

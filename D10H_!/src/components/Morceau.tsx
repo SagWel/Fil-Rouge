@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
 import PartitionRender from "./PartitionRender";
 
-import Chant from '../img/Chant.png';
+import Chant from '../../public/img/Chant.png';
 import Fond from '../img/FondPart.jpg'
 
 export interface IMorceauProps {onPlay: boolean}

@@ -4,7 +4,7 @@ import PartitionCard from "./PartitionCard";
 import { IPartitions } from "../types/partitions";
 
 // Pictures import as modules
-import PartitionImg from '../img/Partition.jpeg';
+import PartitionImg from '../../public/img/Partition.jpeg';
 
 // SVGs import from a unique file
 import { LeftCarouselIcon, RightCarouselIcon } from './svg'
