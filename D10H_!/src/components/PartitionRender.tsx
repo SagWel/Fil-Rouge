@@ -37,7 +37,7 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
             { id: 2, notes: [{ keys: ["b/4"], duration: "q", dots: 1 }, { keys: ["g/4"], duration: "8" }, { keys: ["b/4"], duration: "h", isRest: true }] },
             { id: 3, notes: [{ keys: ["a/4"], duration: "8", beam: "start" }, { keys: ["g/4"], duration: "8", beam: "end" }, { keys: ["f/4"], duration: "8", beam: "start" }, { keys: ["e/4"], duration: "8", beam: "end" }, { keys: ["d/4"], duration: "h" }] },
             { id: 4, notes: [{ keys: ["e/4", "g/4"], duration: "w" }] },
-            { id: 5, notes: [{ keys: ["f/4"], duration: "q" }, { keys: ["b/4"], duration: "q", isRest: true }, { keys: ["g/4"], duration: "q" }, { keys: ["b/4"], duration: "qr", isRest: true }] },
+            { id: 5, notes: [{ keys: ["f/4"], duration: "q" }, { keys: ["b/4"], duration: "q", isRest: true }, { keys: ["g/4"], duration: "q" }, { keys: ["b/4"], duration: "q", isRest: true }] },
             { id: 6, notes: [{ keys: ["a/4"], duration: "16", beam: "start" }, { keys: ["b/4"], duration: "16", beam: "continue" }, { keys: ["c/5"], duration: "16", beam: "continue" }, { keys: ["d/5"], duration: "16", beam: "end" }, { keys: ["c/5"], duration: "h", dots: 1 }] },
 
             // LIGNE 2

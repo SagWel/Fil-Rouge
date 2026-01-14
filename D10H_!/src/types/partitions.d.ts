@@ -1,15 +1,23 @@
 import { IInstrument } from "./instrument"
 
+export type TieStatus = "start" | "end"
+export type Durations = "w" | "h" | "q" | "8" | "16" | "32"
+
 export interface INoteData {
     keys: string[],
-    duration: string,
-    isRest?: boolean,
+    duration: Durations,
     dots?: number,
+    bpm?: number,
+    isRest?: boolean,
     accidental?: string,
     beam?: "start" | "continue" | "end" | "none",
-    tie?: "start" | "end",
+    ties?: TieStatus[],
+    tuplet?: {
+        type: "start" | "mid" | "end",
+        num?: number,
+        occupied?: number
+    },
     lyrics?: string,
-    bpm?: number
 }
 
 export interface IGenre {
