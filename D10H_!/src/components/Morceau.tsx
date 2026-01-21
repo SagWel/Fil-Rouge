@@ -16,8 +16,11 @@ const Morceau: React.FC<IMorceauProps> = ({onPlay}) => {
                 </Flex>
                 <Image position={"absolute"} borderRadius={"full"} src={Chant} h={"4rem"} w={"4rem"} right={"10px"} top={"7px"}/>
             </Box>
-            <Box backgroundImage={Fond} backgroundRepeat={"no-repeat"} backgroundPosition={"center"} backgroundSize={"cover"} height={"100%"} marginY={"10px"} marginX={"20px"} overflowY={"auto"}>
-            <PartitionRender onPlay={onPlay}/>
+            <Box backgroundImage={Fond} backgroundRepeat={"no-repeat"} backgroundPosition={"center"} backgroundSize={"cover"} 
+            height={"100%"} width={"97%"} 
+            marginY={"10px"} marginInlineStart={"20px"} 
+            overflowY={"auto"}>
+                <PartitionRender onPlay={onPlay}/>
             </Box>
         </Flex>
     )

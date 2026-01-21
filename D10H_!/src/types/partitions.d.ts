@@ -68,18 +68,18 @@ export interface IPartitions {
     title: string,
     artist: IArtist,
     album?: IAlbum,
-    difficulty: number,
     genre: IGenre,
+    difficulty: number,
     instruments: {
         currentInstrument : IInstrument,
         othersInstruments : IInstrument[] }
     bpm: number,
     time_signature: string,
     clef: string,
-    key_signature: string,
+    clef_signature?: string,
     measures: IMeasure[],
-    deezer_link: string,
-    audioPreview: string,
-    partitionPreview: string,
     duration: number
+    deezer_link: string,
+    audio_preview: string,
+    partition_preview: string,
 }

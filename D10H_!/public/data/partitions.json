@@ -76,7 +76,7 @@
             },
             "bpm": 108,
             "time_signature": "4/4",
-            "clef": "treble",
+            "key": "treble",
             "key_signature": "F",
             "measures": [
                 {
