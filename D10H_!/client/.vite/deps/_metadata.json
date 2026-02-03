@@ -1,0 +1,49 @@
+{
+  "hash": "3a00564d",
+  "configHash": "ec77a999",
+  "lockfileHash": "290caa47",
+  "browserHash": "7b778d35",
+  "optimized": {
+    "@chakra-ui/react": {
+      "src": "../../node_modules/@chakra-ui/react/dist/esm/index.mjs",
+      "file": "@chakra-ui_react.js",
+      "fileHash": "368ad8f3",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "cf433351",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "23f95a74",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "3a87302b",
+      "needsInterop": false
+    },
+    "vexflow": {
+      "src": "../../node_modules/vexflow/build/esm/entry/vexflow.js",
+      "file": "vexflow.js",
+      "fileHash": "8ff6a243",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-DPJPKJB6": {
+      "file": "chunk-DPJPKJB6.js"
+    },
+    "chunk-27Z6VNDM": {
+      "file": "chunk-27Z6VNDM.js"
+    },
+    "chunk-V4OQ3NZ2": {
+      "file": "chunk-V4OQ3NZ2.js"
+    }
+  }
+}

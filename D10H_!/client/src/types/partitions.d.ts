@@ -4,6 +4,7 @@ export type TieStatus = "start" | "end"
 export type Durations = "w" | "h" | "q" | "8" | "16" | "32"
 
 export interface INoteData {
+    id?: string,
     keys: string[],
     duration: Durations,
     dots?: number,

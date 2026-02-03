@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 import React, { useRef, useEffect } from "react";
 import { INoteData, IPartitions } from "../types/partitions";
 import * as Vex from 'vexflow'
+import '../style.css'
 
 export interface INoteSynchro {
     startTimeMs: number,
@@ -102,7 +103,7 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
                     beam.setContext(context);
                     beam.draw();
                 })}
-            if (ties && ties.lenght > 0) {
+            if (ties && ties.length > 0) {
                 ties.forEach((tie : Vex.Flow.StaveTie) => {
                     tie.setContext(context)
                     tie.draw()
@@ -166,19 +167,18 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
 
     const onTimeUpdate = (currentNote: INoteSynchro | undefined) => {
         const lastNoteId: string | null = lastNoteIdRef.current
-
-        if (currentNote && currentNote.id !== lastNoteId) {
+        const lastElement = document.getElementById(`${lastNoteId}`)
+        const currentElement = document.getElementById(`${currentNote?.id}`)
+        
+        
+        if (currentNote && currentNote.id !== lastNoteId && currentElement) {
             if (lastNoteId) {
-                notesMapRef.current.get(lastNoteId)?.setStyle({
-                    fillStyle: "black",
-                    strokeStyle: "black"
-                })
+                if (lastElement) {
+                    lastElement.classList.remove('note-active')
+                }
+                currentElement.classList.add('note-active')
+                lastNoteIdRef.current = currentNote.id
             }
-            notesMapRef.current.get(currentNote.id)?.setStyle({
-                fillStyle: "#7328b5",
-                strokeStyle: "#7328b5"
-            })
-            lastNoteIdRef.current = currentNote.id
         } else if (!currentNote) {return}
     }
 
@@ -198,9 +198,12 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         }
     }
 
-    const moveCursor = (context: Vex.Flow.SVGContext, cursor: HTMLElement, positionX: number, positionY: number, stave: Vex.Flow.Stave) => {
+    const moveCursor = (cursor: HTMLElement, positionX: number, positionY: number) => {
         cursor.style.transform = `translate(${positionX}px, ${positionY}px)`
     }
+
+    const synchronizationData: INoteSynchro[] = [];
+    const measuresToRender: any[] = [];
 
     useEffect(() => {
         if (!svgPartitionRef.current || !svgCursorRef.current|| !containerRef) return;
@@ -217,8 +220,8 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         const rendererPartition = new Renderer(svgPartitionRef.current, Renderer.Backends.SVG);
         const rendererCursor = new Renderer(svgCursorRef.current, Renderer.Backends.SVG);
         
-        rendererPartition.resize(containerWidth, dynamicHeight);
-        rendererCursor.resize(containerWidth, dynamicHeight);
+        rendererPartition.resize(Math.round(containerWidth as number), Math.round(dynamicHeight));
+        rendererCursor.resize(Math.round(containerWidth as number), Math.round(dynamicHeight));
 
         const contextPartition = rendererPartition.getContext();
         const contextCursor = rendererCursor.getContext();
@@ -228,22 +231,21 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
 
         if (contextCursorRef.current && staveRef.current) {
             drawCursor(contextCursorRef.current, staveRef.current, svgCursorRef.current);
-        }
+        }        
         
-        const synchronizationData: INoteSynchro[] = [];
         const notesMap = new Map();
 
         notesMapRef.current = notesMap;
 
         let currentX = 20;
         let currentY = 0;
-        const measuresToRender: any[] = [];
+        
         const availableWidth: number = Number(containerWidth) - 40;
         const fixedMeasureWidth: number = availableWidth / measurePerLine;
 
         // Staves and Voices generation
         mockPartition.measures.forEach((measure, index) => {
-            const { allNotes: measureNotes, beams: measureBeams } = mapToVexFlow(measure.notes, mockPartition.clef);
+            const { allNotes: measureNotes, beams: measureBeams, ties: measureTies } = mapToVexFlow(measure.notes, mockPartition.clef);
             
             if (index > 0 && index % measurePerLine === 0) {
                 currentX = 20;
@@ -260,22 +262,21 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
             }
 
             const [numBeats, beatValue] = mockPartition.time_signature.split('/').map(Number);
-            const voice = new Voice({ num_beats:numBeats, beat_value:beatValue }).setStrict(true);
+            const voice = new Voice({ num_beats:numBeats, beat_value:beatValue });
             voice.addTickables(measureNotes);
 
+            console.log(voice);
+            
             // Uniform formatting to prevent acceleration
             const startPadding = (index % measurePerLine === 0) ? 80 : 15;
             stave.setNoteStartX(stave.getX() + startPadding);
             
             const formattingWidth = fixedMeasureWidth - startPadding - 30;
-            new Formatter().joinVoices([voice]).format([voice], formattingWidth, {softmaxFactor: 100} as any);
+            new Formatter().joinVoices([voice]).format([voice], formattingWidth);
 
-            measuresToRender.push({ stave, voice, beams: measureBeams });
+            measuresToRender.push({ stave, voice, beams: measureBeams, ties: measureTies });
             currentX += fixedMeasureWidth;
         });
-
-        measuresToRenderRef.current = measuresToRender;
-        renderAllMeasures(contextPartition, measuresToRender);
 
         // Data synchro generation
         let runningTimeMs = 0;
@@ -283,16 +284,15 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
             const tickables = m.voice.getTickables();
             
             const y = m.stave.getY();
-
-            tickables.forEach((note: any) => {
-                
+            
+            tickables.forEach((note: Vex.Flow.StaveNote) => {
+                                
                 const durationMs = (note.getTicks().value() / 4096) * msPerTrick;
 
                 const x = note.getAbsoluteX();
 
-                const id = `${note.getKeys()}_${Math.round(runningTimeMs)}`;
-                if (note.attrs) note.attrs.id = id
-                
+                const id = `note_${mIndex}_${Math.round(runningTimeMs)}`.replaceAll(/[^a-zA-Z0-9]/g, "_");
+                                
                 synchronizationData.push({
                     startTimeMs: runningTimeMs,
                     durationMs: durationMs,
@@ -318,18 +318,25 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
                     y: y
                 });
             }
-        });
 
+        });
+        
+        measuresToRenderRef.current = measuresToRender;
+        renderAllMeasures(contextPartition, measuresToRender);
+
+    },[]);
+
+    useEffect(() => {
         // animation
         if(onPlay) {
             const Timer = setInterval(() => {
                 const now = currentTimeRef.current;
                 const currentId = findCurrentNoteIndex(now, synchronizationData);
-                
+                    
                 if (currentId !== undefined) {
                     const currentNote = synchronizationData[currentId];
                     const nextNote = synchronizationData[currentId + 1];
-    
+
                     if (nextNote && contextCursorRef.current) {
                         const ratio = Math.min((now - currentNote.startTimeMs) / (currentNote.durationMs || 1), 1);
                         
@@ -337,29 +344,29 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
                         if (nextNote.y === currentNote.y) {
                             posX = currentNote.x + (nextNote.x - currentNote.x) * ratio;
                         }
-    
+
                         const cursor = document.getElementById("music-cursor")
 
                         if (cursor) {
-                            moveCursor(contextCursorRef.current, cursor, posX, currentNote.y, staveRef.current || measuresToRender[0].stave);
+                            moveCursor(cursor, posX, currentNote.y);
                         }
                     }
                     onTimeUpdate(currentNote);
                     if (containerRef.current && nextNote) {
                         const container = containerRef.current;
                         const targetY = nextNote.y;
-    
+
                         if (targetY !== lastScrolledYRef.current) {
                             
                             const isChangingLine = targetY > currentNote.y;
                             const isTooLow = targetY > (container.scrollTop + container.offsetHeight * 0.5);
-    
+
                             if (isChangingLine || isTooLow) {
                                 container.scrollTo({ 
                                     top: targetY - 50,
-                                    behavior: 'smooth' 
+                                    behavior: 'smooth'
                                 });
-    
+
                                 lastScrolledYRef.current = targetY;
                             }
                         }
@@ -367,10 +374,10 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({onPlay}) => {
                 }
                 currentTimeRef.current += 16;
             }, 16);
-    
+
             return () => clearInterval(Timer);
         }
-}, [onPlay]);
+    },[onPlay])
 
     return (
         <Box position={"relative"} w={"100%"} h={"600px"} ref={containerRef} overflowY={"auto"}

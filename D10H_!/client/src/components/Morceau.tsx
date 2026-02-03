@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
-import PartitionRender from "./PartitionRender";
+import PartitionRender from "./PartitionRender2";
 
 import Chant from '../../public/img/Chant.png';
 import Fond from '../img/FondPart.jpg'
