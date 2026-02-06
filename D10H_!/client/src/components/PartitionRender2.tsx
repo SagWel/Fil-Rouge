@@ -534,7 +534,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         return <Box textAlign={"center"}><Text color={"black"}>Chargement de la partition ...</Text></Box>
     }
     return (
-            <Box position={"relative"} w={"100%"} h={"600px"} ref={containerRef} overflowY={"auto"}
+            <Box position={"relative"} w={"100%"} maxH={"800px"} ref={containerRef} overflowY={"auto"}
             sx={hideScrollbarStyle}>
                 <Box id="partition-container" ref={svgPartitionRef} sx={{ display: "block", height: "auto"}}/>
                 <Box id="cursor-container" ref={svgCursorRef} sx={{ position: "absolute", top: "0", left: "0", pointerEvents: "none", width:"100%", background: "transparent"}}/>
