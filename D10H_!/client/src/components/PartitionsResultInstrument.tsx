@@ -1,15 +1,17 @@
-import { Grid } from "@chakra-ui/react";
+import { Grid, Box, Text } from "@chakra-ui/react";
 
 import PartitionCard from './PartitionCard';
 import { IPartitions } from "../types/partitions";
 
 // Pictures import as modules
 import PartitionImg from '../../public/img/Partition.jpeg';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export interface IResultProps {}
 
 /*Mock database*/
-const mockPartitons: IPartitions[] = [
+const mockPartitons = [
         {
             title : "Zombie",
             artist : "The Cranberries",
@@ -76,6 +78,37 @@ const mockPartitons: IPartitions[] = [
     ]
 
 const Result: React.FC<IResultProps> = () => {
+
+    const { instrumentName } = useParams()
+
+    const [partitions, setPartitions] = useState<IPartitions[] | []>([])
+
+    const fetchPartitions = async (URL: string) => {
+        try {
+            const res = await fetch(`${URL}`)
+
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`);                
+            }
+
+            const data = await res.json()
+            setPartitions(data)
+        } catch (error) {
+            console.error('Impossible de récupérer les donnée de la partition:', error);
+        }
+    }
+
+    useEffect(() => {
+        if (instrumentName) {
+            fetchPartitions(`http://localhost/D10h_server/public/api/get_all_partitions.php?instrumentName=${instrumentName}`)
+        } else {
+            console.error('Instrument manquant ...')
+        }
+    },[instrumentName])
+
+    if (partitions.length === 0) {
+            return <Box textAlign={"center"}><Text color={"white"}>Aucune partition trouvée pour {instrumentName}</Text></Box>
+        }
     return(
         <Grid id="resultZone" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
         gap={"7"} justifyItems={"center"} p={"4"}
@@ -83,8 +116,8 @@ const Result: React.FC<IResultProps> = () => {
         marginTop={"2rem"} marginBottom={"5rem"}>
             
             {/*Creats a card for each scores in search result*/}
-            {mockPartitons.map((partition) => (
-                <PartitionCard key={partition.id} partition={partition} />
+            {partitions.map((partition) => (
+                <PartitionCard key={partition.id} partition={partition} currentInstrument={instrumentName as string}/>
             ))}
 
         </Grid>

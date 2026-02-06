@@ -1,6 +1,6 @@
 import { IInstrument } from "./instrument"
 
-export type TieStatus = "start" | "end"
+export type TieStatus = "start" | "end" | "null"
 export type Durations = "w" | "h" | "q" | "8" | "16" | "32"
 
 export interface INoteData {
@@ -21,6 +21,13 @@ export interface INoteData {
     lyrics?: string,
 }
 
+export interface IMeasure {
+    id: number,
+    notes: INoteData[]
+    shortText?: string
+    bpm?: number
+}
+
 export interface IGenre {
     id: number,
     name: string,
@@ -29,13 +36,6 @@ export interface IGenre {
     picture_medium?: string,
     picture_big?: string,
     picture_xl?: string
-}
-
-export interface IMeasure {
-    id: number,
-    notes: INoteData[]
-    shortText?: string
-    bpm?: number
 }
 
 export interface IArtist {

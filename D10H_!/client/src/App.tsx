@@ -89,9 +89,9 @@ function App() {
       
                 <Route path='/instruments' element={<ListeInstruments />} />
       
-                <Route path='/partitions/:instrumentId' element={<PageSearchPartitionsInstrument />} />
+                <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
       
-                <Route path='/partitions/:instrumentId/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+                <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
       
                 <Route path='/favoris' element={<Favoris />} />
 
@@ -145,9 +145,9 @@ function App() {
       
                 <Route path='/instruments' element={<ListeInstruments />} />
       
-                <Route path='/partitions/:instrumentId' element={<PageSearchPartitionsInstrument />} />
+                <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
       
-                <Route path='/partitions/:instrumentId/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+                <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
       
                 <Route path='/favoris' element={<Favoris />} />
 

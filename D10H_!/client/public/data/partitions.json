@@ -123,12 +123,12 @@
                     "id": 5,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "Mi"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "chelle,"
                         }
@@ -143,12 +143,12 @@
                             "isRest": true
                         },
                         {
-                            "keys":["d/4"],
+                            "keys":["d/5"],
                             "duration": "q",
                             "lyrics": "ma"
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration": "h",
                             "lyrics": "belle,"
                         }
@@ -158,22 +158,22 @@
                     "id": 7,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "these"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "are"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "words"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "that"
                         }
@@ -183,23 +183,23 @@
                     "id": 8,
                     "notes": [
                         {
-                            "keys": ["f/3"],
+                            "keys": ["f/4"],
                             "duration": "q",
                             "lyrics": "go"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "lyrics": "to"
                         },
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration": "q",
-                            "accidental": "#",
+                            "accidental": "n",
                             "lyrics": "geth"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration":"q",
                             "lyrics": "er"
                         }
@@ -209,23 +209,23 @@
                     "id": 9,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "h",
                             "lyrics": "well,"
                         },
                         {
-                            "keys": ["f/3"],
+                            "keys": ["f/4"],
                             "duration": "q",
                             "lyrics": "my"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "8",
                             "beam": "start",
                             "lyrics": "Mi"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "8",
                             "beam": "end",
                             "ties" : ["start"],
@@ -237,7 +237,7 @@
                     "id": 10,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "w",
                             "ties": ["end"],
                             "lyrics":"_"
@@ -248,12 +248,12 @@
                     "id": 11,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "Mi"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "chelle,"
                         }
@@ -268,12 +268,12 @@
                             "isRest": true
                         },
                         {
-                            "keys":["d/4"],
+                            "keys":["d/5"],
                             "duration": "q",
                             "lyrics": "ma"
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration": "h",
                             "lyrics": "belle,"
                         }
@@ -283,22 +283,22 @@
                     "id": 13,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "sont"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "des"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "mots"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "qui"
                         }
@@ -308,23 +308,23 @@
                     "id": 14,
                     "notes": [
                         {
-                            "keys": ["f/3"],
+                            "keys": ["f/4"],
                             "duration": "q",
                             "lyrics": "vont"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "lyrics": "trés"
                         },
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration": "q",
-                            "accidental": "#",
+                            "accidental": "n",
                             "lyrics": "bien"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "lyrics": "en"
                         }
@@ -334,22 +334,20 @@
                     "id": 15,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "h",
                             "lyrics": "semble"
                         },
                         {
-                            "keys": ["f/3"],
+                            "keys": ["f/4"],
                             "duration":"q",
                             "tuplet": {
-                                "type": "start",
-                                "num": 3,
-                                "occupied": 2
+                                "type": "start"
                             },
                             "lyrics": "trés"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "tuplet": {
                                 "type": "mid"
@@ -357,10 +355,12 @@
                             "lyrics": "bien"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "end"
+                                "type": "end",
+                                "num": 3,
+                                "occupied": 2
                             },
                             "lyrics": "en"
                         }
@@ -370,7 +370,7 @@
                     "id": 16,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "h",
                             "dots": 1,
                             "lyrics": "semble."
@@ -381,7 +381,7 @@
                             "isRest": true
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration":"8",
                             "lyrics": "I"
                         }
@@ -391,17 +391,15 @@
                     "id": 17,
                     "notes": [
                         {
-                            "keys": ["f/4"],
+                            "keys": ["f/5"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "start",
-                                "num": 3,
-                                "occupied": 2
+                                "type": "start"
                             },
                             "lyrics": "love"
                         },
                         {
-                            "keys": ["e/4"],
+                            "keys": ["e/5"],
                             "duration": "q",
                             "tuplet": {
                                 "type": "mid"
@@ -409,25 +407,25 @@
                             "lyrics": "you,"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "end"
+                                "type": "end",
+                                "num": 3,
+                                "occupied": 2
                             },
                             "lyrics": "I"
                         },
                         {
-                            "keys": ["f/4"],
+                            "keys": ["f/5"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "start",
-                                "num": 3,
-                                "occupied": 2
+                                "type": "start"
                             },
                             "lyrics": "love"
                         },
                         {
-                            "keys": ["e/4"],
+                            "keys": ["e/5"],
                             "duration": "q",
                             "tuplet": {
                                 "type": "mid"
@@ -435,10 +433,12 @@
                             "lyrics": "you,"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "end"
+                                "type": "end",
+                                "num": 3,
+                                "occupied": 2
                             },
                             "lyrics": "I"
                         }
@@ -448,12 +448,12 @@
                     "id": 18,
                     "notes": [
                         {
-                            "keys": ["g/4"],
+                            "keys": ["g/5"],
                             "duration": "q",
                             "lyrics": "love"
                         },
                         {
-                            "keys": ["f/4"],
+                            "keys": ["f/5"],
                             "duration": "h",
                             "dots": 1,
                             "lyrics": "you,"
@@ -469,30 +469,30 @@
                             "isRest": true
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "8",
                             "lyrics": "that's"
                         },
                         {
-                            "keys": ["d/4"],
+                            "keys": ["d/5"],
                             "duration":"8",
                             "beam": "start",
                             "lyrics": "all"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "8",
                             "beam": "end",
                             "lyrics": "I"
                         },
                         {
-                            "keys": ["d/4"],
+                            "keys": ["d/5"],
                             "duration": "q",
                             "dots": 1,
                             "lyrics": "want"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "8",
                             "lyrics": "to"
                         }
@@ -502,7 +502,7 @@
                     "id": 20,
                     "notes": [
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "w",
                             "lyrics": "say,"
                         }
@@ -517,35 +517,35 @@
                             "isRest": true
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration":"8",
                             "lyrics": "Un"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration":"8",
                             "beam":"start",
                             "lyrics": "til"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration":"8",
                             "beam":"end",
                             "lyrics": "I"
                         },
                         {
-                            "keys":["f/4"],
+                            "keys":["f/5"],
                             "duration":"q",
                             "lyrics": "find"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration":"8",
                             "beam":"start",
                             "lyrics": "a"
                         },
                         {
-                            "keys":["b/3"],
+                            "keys":["b/4"],
                             "duration": "8",
                             "beam": "end",
                             "ties":["start", "start"],
@@ -557,33 +557,33 @@
                     "id": 22,
                     "notes": [
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration": "8",
                             "ties": ["end"],
                             "lyrics": "_"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "dots":1,
                             "ties": ["start"],
                             "lyrics": "_"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration":"8",
                             "beam":"start",
                             "ties":["end","end"],
                             "lyrics": "_"
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"8",
                             "beam":"end",
                             "lyrics":"I"
                         },
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration":"q",
                             "lyrics": "will"
                         }
@@ -593,22 +593,22 @@
                     "id": 23,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "say"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "the"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "on"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "ly"
                         }
@@ -618,22 +618,22 @@
                     "id": 24,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "words"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "I"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "know"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "that"
                         }
@@ -643,17 +643,17 @@
                     "id": 25,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "you'll"
                         },
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration": "q",
                             "lyrics": "un"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration":"q",
                             "lyrics": "der"
                         }
@@ -663,7 +663,7 @@
                     "id": 26,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "w",
                             "lyrics": "stand."
                         }
@@ -673,12 +673,12 @@
                     "id": 27,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "Mi"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "chelle,"
                         }
@@ -693,12 +693,12 @@
                             "isRest": true
                         },
                         {
-                            "keys":["d/4"],
+                            "keys":["d/5"],
                             "duration": "q",
                             "lyrics": "ma"
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration": "h",
                             "lyrics": "belle,"
                         }
@@ -708,22 +708,22 @@
                     "id": 29,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "sont"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "des"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "mots"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "qui"
                         }
@@ -733,23 +733,23 @@
                     "id": 30,
                     "notes": [
                         {
-                            "keys": ["f/3"],
+                            "keys": ["f/4"],
                             "duration": "q",
                             "lyrics": "vont"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "lyrics": "trés"
                         },
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration": "q",
-                            "accidental": "#",
+                            "accidental": "n",
                             "lyrics": "bien"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "lyrics": "en"
                         }
@@ -759,22 +759,20 @@
                     "id": 31,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "h",
                             "lyrics": "semble"
                         },
                         {
-                            "keys": ["f/3"],
+                            "keys": ["f/4"],
                             "duration":"q",
                             "tuplet": {
-                                "type": "start",
-                                "num": 3,
-                                "occupied": 2
+                                "type": "start"
                             },
                             "lyrics": "trés"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "tuplet": {
                                 "type": "mid"
@@ -782,10 +780,12 @@
                             "lyrics": "bien"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "end"
+                                "type": "end",
+                                "num": 3,
+                                "occupied": 2
                             },
                             "lyrics": "en"
                         }
@@ -795,7 +795,7 @@
                     "id": 32,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "h",
                             "dots": 1,
                             "lyrics": "semble."
@@ -806,7 +806,7 @@
                             "isRest": true
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration":"8",
                             "lyrics": "I"
                         }
@@ -816,17 +816,15 @@
                     "id": 33,
                     "notes": [
                         {
-                            "keys": ["f/4"],
+                            "keys": ["f/5"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "start",
-                                "num": 3,
-                                "occupied": 2
+                                "type": "start"
                             },
                             "lyrics": "need"
                         },
                         {
-                            "keys": ["e/4"],
+                            "keys": ["e/5"],
                             "duration": "q",
                             "tuplet": {
                                 "type": "mid"
@@ -834,25 +832,25 @@
                             "lyrics": "to,"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "end"
+                                "type": "end",
+                                "num": 3,
+                                "occupied": 2
                             },
                             "lyrics": "I"
                         },
                         {
-                            "keys": ["f/4"],
+                            "keys": ["f/5"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "start",
-                                "num": 3,
-                                "occupied": 2
+                                "type": "start"
                             },
                             "lyrics": "need"
                         },
                         {
-                            "keys": ["e/4"],
+                            "keys": ["e/5"],
                             "duration": "q",
                             "tuplet": {
                                 "type": "mid"
@@ -860,10 +858,12 @@
                             "lyrics": "to,"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "end"
+                                "type": "end",
+                                "num": 3,
+                                "occupied": 2
                             },
                             "lyrics": "I"
                         }
@@ -873,12 +873,12 @@
                     "id": 34,
                     "notes": [
                         {
-                            "keys": ["g/4"],
+                            "keys": ["g/5"],
                             "duration": "q",
                             "lyrics": "need"
                         },
                         {
-                            "keys": ["f/4"],
+                            "keys": ["f/5"],
                             "duration": "h",
                             "dots": 1,
                             "lyrics": "to,"
@@ -894,30 +894,30 @@
                             "isRest": true
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "8",
                             "lyrics": "I"
                         },
                         {
-                            "keys": ["d/4"],
+                            "keys": ["d/5"],
                             "duration":"8",
                             "beam": "start",
                             "lyrics": "need"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "8",
                             "beam": "end",
                             "lyrics": "to"
                         },
                         {
-                            "keys": ["d/4"],
+                            "keys": ["d/5"],
                             "duration": "q",
                             "dots": 1,
                             "lyrics": "make"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "8",
                             "lyrics": "you"
                         }
@@ -927,7 +927,7 @@
                     "id": 36,
                     "notes": [
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "w",
                             "lyrics": "see,"
                         }
@@ -942,28 +942,28 @@
                             "isRest": true
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration":"8",
                             "lyrics": "oh,"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration":"q",
                             "lyrics": "what"
                         },
                         {
-                            "keys":["f/4"],
+                            "keys":["f/5"],
                             "duration":"q",
                             "lyrics": "you"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration":"8",
                             "beam":"start",
                             "lyrics": "mean"
                         },
                         {
-                            "keys":["b/3"],
+                            "keys":["b/4"],
                             "duration": "8",
                             "beam": "end",
                             "ties":["start"],
@@ -975,25 +975,25 @@
                     "id": 38,
                     "notes": [
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration": "8",
                             "ties": ["end"],
                             "lyrics": "me."
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "dots":1,
                             "ties":["start"],
                             "lyrics": "_"
                         },
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration": "q",
                             "ties": ["end"]
                         },
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration":"q",
                             "lyrics": "Un"
                         }
@@ -1003,22 +1003,22 @@
                     "id": 39,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "til"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "I"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "do,"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "I'm"
                         }
@@ -1028,22 +1028,22 @@
                     "id": 40,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "hop"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "ing"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "you"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "will"
                         }
@@ -1053,17 +1053,17 @@
                     "id": 41,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "know"
                         },
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration": "q",
                             "lyrics": "what"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration":"q",
                             "lyrics": "I"
                         }
@@ -1073,7 +1073,7 @@
                     "id": 42,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "w",
                             "lyrics": "mean."
                         }
@@ -1088,17 +1088,17 @@
                             "isRest":true
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "lyrics": "I"
                         },
                         {
-                            "keys": ["e/4"],
+                            "keys": ["e/5"],
                             "duration":"8",
                             "lyrics": "love"
                         },
                         {
-                            "keys": ["f/4"],
+                            "keys": ["f/5"],
                             "duration":"q",
                             "dots":1,
                             "ties":["start","start"],
@@ -1110,7 +1110,7 @@
                     "id": 44,
                     "notes": [
                         {
-                            "keys":["f/4"],
+                            "keys":["f/5"],
                             "duration":"w",
                             "ties":["end"]
                         }
@@ -1120,7 +1120,7 @@
                     "id": 45,
                     "notes": [
                         {
-                            "keys":["f/4"],
+                            "keys":["f/5"],
                             "duration":"w",
                             "ties":["end"]
                         }
@@ -1165,7 +1165,7 @@
                             "isRest":true
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"8",
                             "lyrics": "I"
                         }
@@ -1175,17 +1175,15 @@
                     "id": 49,
                     "notes":[
                         {
-                            "keys":["f/4"],
+                            "keys":["f/5"],
                             "duration":"q",
                             "tuplet": {
-                                "type": "start",
-                                "num": 3,
-                                "occupied":2
+                                "type": "start"
                             },
                             "lyrics": "want"
                         },
                         {
-                            "keys":["e/4"],
+                            "keys":["e/5"],
                             "duration":"q",
                             "tuplet":{
                                 "type":"mid"
@@ -1193,25 +1191,25 @@
                             "lyrics": "you,"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "tuplet": {
-                                "type":"end"
+                                "type":"end",
+                                "num": 3,
+                                "occupied":2
                             },
                             "lyrics": "I"
                         },
                         {
-                            "keys":["f/4"],
+                            "keys":["f/5"],
                             "duration":"q",
                             "tuplet": {
-                                "type": "start",
-                                "num": 3,
-                                "occupied":2
+                                "type": "start"
                             },
                             "lyrics": "want"
                         },
                         {
-                            "keys":["e/4"],
+                            "keys":["e/5"],
                             "duration":"q",
                             "tuplet":{
                                 "type":"mid"
@@ -1219,10 +1217,12 @@
                             "lyrics": "you,"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "tuplet": {
-                                "type":"end"
+                                "type":"end",
+                                "num": 3,
+                                "occupied":2
                             },
                             "lyrics": "I"
                         }
@@ -1232,26 +1232,26 @@
                     "id": 50,
                     "notes":[
                         {
-                            "keys":["g/4"],
+                            "keys":["g/5"],
                             "duration":"q",
                             "dots":1,
                             "ties":["start"],
                             "lyrics":"want"
                         },
                         {
-                            "keys":["a/4"],
+                            "keys":["a/5"],
                             "duration": "16",
                             "beam": "start",
                             "lyrics":"_"
                         },
                         {
-                            "keys":["g/4"],
+                            "keys":["g/5"],
                             "duration":"16",
                             "beam":"end",
                             "ties":["end"]
                         },
                         {
-                            "keys":["f/4"],
+                            "keys":["f/5"],
                             "duration":"h",
                             "lyrics":"you,"
                         }
@@ -1266,29 +1266,29 @@
                             "isRest":true
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"8",
                             "lyrics": "I"
                         },
                         {
-                            "keys":["d/4"],
+                            "keys":["d/5"],
                             "duration": "8",
                             "beam":"start",
                             "lyrics":"think"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"8",
                             "beam":"end",
                             "lyrics":"you"
                         },
                         {
-                            "keys":["d/4"],
+                            "keys":["d/5"],
                             "duration":"q",
                             "lyrics":"know"
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"q",
                             "lyrics":"by"
                         }
@@ -1298,7 +1298,7 @@
                     "id": 52,
                     "notes": [
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"w",
                             "lyrics":"now,"
                         }
@@ -1313,29 +1313,29 @@
                             "isRest":true
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"8",
                             "lyrics":"I'll"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"8",
                             "beam":"start",
                             "lyrics":"get"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"8",
                             "beam":"end",
                             "lyrics":"to"
                         },
                         {
-                            "keys":["f/4"],
+                            "keys":["f/5"],
                             "duration":"q",
                             "lyrics":"you"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "lyrics":"some"
                         }
@@ -1345,26 +1345,25 @@
                     "id": 54,
                     "notes":[
                         {
-                            "keys":["b/3"],
+                            "keys":["b/4"],
                             "duration":"8",
                             "beam":"start",
-                            "ties":["start"],
                             "lyrics":"how."
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"8",
                             "beam":"end",
-                            "ties":["end","start"],
+                            "ties":["start"],
                             "lyrics":"_"
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"h",
-                            "ties":["end","end"]
+                            "ties":["end"]
                         },
                         {
-                            "keys":["b/3"],
+                            "keys":["b/4"],
                             "duration":"q",
                             "lyrics":"Un"
                         }
@@ -1374,22 +1373,22 @@
                     "id": 55,
                     "notes":[
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "lyrics":"til"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "lyrics":"I"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "lyrics":"do"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "lyrics":"I'm"
                         }
@@ -1399,23 +1398,23 @@
                     "id": 56,
                     "notes":[
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "lyrics":"tell"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "lyrics":"ing"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"q",
                             "dots":1,
                             "lyrics":"you,"
                         },
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"8",
                             "lyrics":"so"
                         }
@@ -1425,17 +1424,17 @@
                     "id": 57,
                     "notes":[
                         {
-                            "keys":["c/4"],
+                            "keys":["c/5"],
                             "duration":"h",
                             "lyrics":"you'll"
                         },
                         {
-                            "keys":["b/3"],
+                            "keys":["b/4"],
                             "duration":"q",
                             "lyrics":"un"
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"q",
                             "lyrics":"der"
                         }
@@ -1445,7 +1444,7 @@
                     "id": 58,
                     "notes":[
                         {
-                            "keys":["g/3"],
+                            "keys":["g/4"],
                             "duration":"w",
                             "lyrics":"stand."
                         }
@@ -1455,12 +1454,12 @@
                     "id": 59,
                     "notes": [
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "Mi"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "h",
                             "lyrics": "chelle,"
                         }
@@ -1475,12 +1474,12 @@
                             "isRest": true
                         },
                         {
-                            "keys":["d/4"],
+                            "keys":["d/5"],
                             "duration": "q",
                             "lyrics": "ma"
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration": "h",
                             "lyrics": "belle,"
                         }
@@ -1490,22 +1489,22 @@
                     "id": 61,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "sont"
                         },
                         {
-                            "keys": ["c/4"],
+                            "keys": ["c/5"],
                             "duration": "q",
                             "lyrics": "des"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "mots"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "lyrics": "qui"
                         }
@@ -1515,23 +1514,23 @@
                     "id": 62,
                     "notes": [
                         {
-                            "keys": ["f/3"],
+                            "keys": ["f/4"],
                             "duration": "q",
                             "lyrics": "vont"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "lyrics": "trés"
                         },
                         {
-                            "keys": ["b/3"],
+                            "keys": ["b/4"],
                             "duration": "q",
-                            "accidental": "#",
+                            "accidental": "n",
                             "lyrics": "bien"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "lyrics": "en"
                         }
@@ -1541,22 +1540,20 @@
                     "id": 63,
                     "notes": [
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "h",
                             "lyrics": "semble"
                         },
                         {
-                            "keys": ["f/3"],
+                            "keys": ["f/4"],
                             "duration":"q",
                             "tuplet": {
-                                "type": "start",
-                                "num": 3,
-                                "occupied": 2
+                                "type": "start"
                             },
                             "lyrics": "trés"
                         },
                         {
-                            "keys": ["g/3"],
+                            "keys": ["g/4"],
                             "duration": "q",
                             "tuplet": {
                                 "type": "mid"
@@ -1564,10 +1561,12 @@
                             "lyrics": "bien"
                         },
                         {
-                            "keys": ["a/3"],
+                            "keys": ["a/4"],
                             "duration": "q",
                             "tuplet": {
-                                "type": "end"
+                                "type": "end",
+                                "num": 3,
+                                "occupied": 2
                             },
                             "lyrics": "en"
                         }
@@ -1577,7 +1576,7 @@
                     "id": 64,
                     "notes":[
                         {
-                            "keys":["g/3"],
+                            "keys":["g/4"],
                             "duration":"h",
                             "lyrics":"semble."
                         },
@@ -1588,18 +1587,18 @@
                             "isRest":true
                         },
                         {
-                            "keys":["f/3"],
+                            "keys":["f/4"],
                             "duration":"16",
                             "lyrics":"And"
                         },
                         {
-                            "keys":["f/3"],
+                            "keys":["f/4"],
                             "duration":"8",
                             "beam":"start",
                             "lyrics":"I"
                         },
                         {
-                            "keys":["g/3"],
+                            "keys":["g/4"],
                             "duration":"8",
                             "beam":"end",
                             "lyrics":"will"
@@ -1610,28 +1609,28 @@
                     "id": 65,
                     "notes":[
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"q",
                             "lyrics":"say"
                         },
                         {
-                            "keys":["f/3"],
+                            "keys":["f/4"],
                             "duration":"q",
                             "lyrics":"the"
                         },
                         {
-                            "keys":["b/3"],
+                            "keys":["b/4"],
                             "duration":"q",
                             "lyrics":"on"
                         },
                         {
-                            "keys":["g/3"],
+                            "keys":["g/4"],
                             "duration":"8",
                             "beam":"start",
                             "lyrics":"ly"
                         },
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"8",
                             "beam":"end",
                             "ties":["start"],
@@ -1643,18 +1642,18 @@
                     "id": 66,
                     "notes":[
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"q",
                             "ties":["end"],
                             "lyrics":"_"
                         },
                         {
-                            "keys":["f/3"],
+                            "keys":["f/4"],
                             "duration":"q",
                             "lyrics":"I"
                         },
                         {
-                            "keys":["b/3"],
+                            "keys":["b/4"],
                             "duration":"q",
                             "lyrics":"know"
                         },
@@ -1664,7 +1663,7 @@
                             "isRest":true
                         },
                         {
-                            "keys":["g/3"],
+                            "keys":["g/4"],
                             "duration":"8",
                             "lyrics":"that"
                         }
@@ -1674,17 +1673,17 @@
                     "id": 67,
                     "notes":[
                         {
-                            "keys":["a/3"],
+                            "keys":["a/4"],
                             "duration":"h",
                             "lyrics":"you'll"
                         },
                         {
-                            "keys":["g/3"],
+                            "keys":["g/4"],
                             "duration":"q",
                             "lyrics":"un"
                         },
                         {
-                            "keys":["f/3"],
+                            "keys":["f/4"],
                             "duration":"q",
                             "lyrics":"der"
                         }
@@ -1694,18 +1693,18 @@
                     "id": 68,
                     "notes":[
                         {
-                            "keys":["e/3"],
+                            "keys":["e/4"],
                             "duration":"h",
-                            "accidental":"#",
+                            "accidental":"n",
                             "lyrics":"stand,"
                         },
                         {
-                            "keys":["f/3"],
+                            "keys":["f/4"],
                             "duration":"q",
                             "lyrics":"my"
                         },
                         {
-                            "keys":["g/3"],
+                            "keys":["g/4"],
                             "duration":"q",
                             "lyrics":"Mi"
                         }
@@ -1715,7 +1714,7 @@
                     "id": 69,
                     "notes":[
                         {
-                            "keys":["g/3"],
+                            "keys":["g/4"],
                             "duration":"w",
                             "lyrics":"chelle"
                         }

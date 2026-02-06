@@ -1,14 +1,29 @@
-import { Box } from "@chakra-ui/react";
-import React, { useRef, useEffect } from "react";
+import { Box, Text } from "@chakra-ui/react";
+import React, { useRef, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { INoteData, IPartitions } from "../types/partitions";
-import * as Vex from 'vexflow'
+import { Renderer, 
+        Stave, 
+        StaveNote, 
+        Voice, 
+        Formatter, 
+        Beam, 
+        Dot, 
+        Accidental, 
+        StaveTie, 
+        SVGContext,
+        Tickable,
+        Tuplet
+    } from 'vexflow'
+
 import '../style.css'
 
 export interface IMeasureObject {
-    stave: Vex.Flow.Stave;
-    voice: Vex.Flow.Voice;
-    beams: Vex.Flow.Beam[];
-    ties: Vex.Flow.StaveTie[];
+    stave: Stave;
+    voice: Voice;
+    beams: Beam[];
+    ties: StaveTie[];
+    tuplets: Tuplet[];
 }
 
 export interface INoteSynchro {
@@ -99,35 +114,26 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         ]
     };
 
-    const Flow = (Vex as any).Flow || Vex;
-    const { 
-        Renderer, 
-        Stave, 
-        StaveNote, 
-        Voice, 
-        Formatter, 
-        Beam, 
-        Dot, 
-        Accidental, 
-        StaveTie 
-    } = Flow;
-
+    // Refs
     const svgPartitionRef = useRef<HTMLDivElement | null>(null)
-    const contextPartitionRef = useRef(null)
+    const contextPartitionRef = useRef<SVGContext | null>(null)
 
     const svgCursorRef = useRef<HTMLDivElement | null>(null)
-    const contextCursorRef = useRef(null)
+    const contextCursorRef = useRef<SVGContext | null>(null)
 
     const measuresToRenderRef = useRef<any[]>([])
     const lastNoteIdRef = useRef<HTMLElement | null>(null)
-    const notesMapRef = useRef<Map<string, Vex.Flow.StaveNote>>(new Map());
-    const staveRef = useRef<Vex.Flow.Stave | null>(null)
+    const notesMapRef = useRef<Map<string, StaveNote>>(new Map());
+    const staveRef = useRef<Stave | null>(null)
     const dataArrayRef = useRef<INoteSynchro[]>([])
 
     const currentTimeRef = useRef<number>(0)
 
     const containerRef = useRef<HTMLDivElement | null>(null)
     const lastScrolledYRef = useRef<number>(-1)
+
+    //States
+    const [partition, setPartition] = useState<IPartitions | undefined>(undefined)
 
     const hideScrollbarStyle = {
         '&::WebkitScrollbar': {
@@ -137,21 +143,36 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         'scrollbarWidth': 'none', 
     };
 
+    const fetchPartition = async (URL: string) => {
+        try {
+            const res = await fetch(`${URL}`)
+
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`);                
+            }
+
+            const data = await res.json()
+            setPartition(data)
+        } catch (error) {
+            console.error('Impossible de récupérer les donnée de la partition:', error);
+        }
+    }
+
     //Draw beams on Stave
-    const drawBeams = (context: Vex.Flow.SVGContext, beams: Vex.Flow.Beam[]) => {
-        beams.forEach((beam: Vex.Flow.Beam) => {
+    const drawBeams = (context: SVGContext, beams: Beam[]) => {
+        beams.forEach((beam: Beam) => {
             beam.setContext(context);
             beam.draw();
         });
     };
 
-    const findBeamForNote = (note: Vex.Flow.StaveNote, beams: Vex.Flow.Beam[]) => {
+    const findBeamForNote = (note: StaveNote, beams: Beam[]) => {
         return beams.find(b => b.getNotes().includes(note)) || null
     }
 
     //Draw ties on Staves
-    const drawTies = (context: Vex.Flow.SVGContext, ties: Vex.Flow.StaveTie[]) => {
-        ties.forEach((tie: Vex.Flow.StaveTie) => {
+    const drawTies = (context: SVGContext, ties: StaveTie[]) => {
+        ties.forEach((tie: StaveTie) => {
             tie.setContext(context);
             tie.draw();
         });
@@ -159,19 +180,24 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
 
     //
     const mapToVexFlow = (notes: INoteData[], clef: string, tieGroup: any) => {
-        const beams: Vex.Flow.Beam[] = []
-        let currentBeamGroup: Vex.Flow.StaveNote[] = []
+        const beams: Beam[] = []
+        let currentBeamGroup: StaveNote[] = []
 
-        const ties: Vex.Flow.StaveTie[] = []
+        const ties: StaveTie[] = []
 
-        const allNotes: Vex.Flow.StaveNote[] = []
+        const tuplets: Tuplet[] = []
+        let currentTupletGroup: StaveNote[] = []
+
+        const allNotes: StaveNote[] = []
 
         notes.forEach(n => {
             let duration = n.duration
             if (n.dots) duration += "d"
             if (n.isRest) duration += "r"
 
-            const note: Vex.Flow.StaveNote = new StaveNote({keys: n.keys, duration: duration, clef: clef} )
+            console.log(n.keys);
+            
+            const note: StaveNote = new StaveNote({keys: n.keys, duration: duration, clef: clef} )
 
             if (n.dots) note.addModifier(new Dot(), 0)
             if (n.accidental) note.addModifier(new Accidental(n.accidental), 0)
@@ -224,29 +250,40 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
                     ties.push(new StaveTie({
                         firstNote: tieGroup.second[0],
                         lastNote: tieGroup.second[1]
-                    }))                    
+                    }).setDirection(2))
                 }
                 tieGroup.second = []
-            }            
+            }
+
+            if (n.tuplet?.type === "start") currentTupletGroup.push(note)
+            if (n.tuplet?.type === "mid") currentTupletGroup.push(note)
+            if (n.tuplet?.type === "end") {
+                currentTupletGroup.push(note)
+                tuplets.push(new Tuplet(currentTupletGroup, {numNotes: n.tuplet.num, notesOccupied: n.tuplet.occupied, location: Tuplet.LOCATION_TOP}))
+                currentTupletGroup = []
+            }
             allNotes.push(note)
             
         })
-        return { allNotes, beams, ties}
+        return { allNotes, beams, ties, tuplets }
     }
 
     //
-    const renderAllMeasures = (context: Vex.Flow.SVGContext , measures: IMeasureObject[]) => {
-            measures.forEach(({ stave, voice, beams, ties}) => {
+    const renderAllMeasures = (context: SVGContext , measures: IMeasureObject[]) => {
+            measures.forEach(({ stave, voice, beams, ties, tuplets}) => {
                 stave.setContext(context).draw()
                 voice.draw(context, stave)
     
                 if (beams?.length > 0) drawBeams(context, beams)
                 if (ties?.length > 0) drawTies(context, ties)
+                if (tuplets?.length > 0) {
+                    tuplets.forEach(t => t.setContext(context).draw())
+                }
             })
             staveRef.current = measures[0].stave
         }
 
-    const drawCursor = (context: Vex.Flow.SVGContext, stave: Vex.Flow.Stave, svg: HTMLElement) => {
+    const drawCursor = (context: SVGContext, stave: Stave, svg: HTMLElement) => {
         context.beginPath()
         context.setLineWidth(5)
         context.setStrokeStyle("rgba(255, 129, 92, 0.7)")
@@ -282,24 +319,39 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         }
     }
 
+    //Params
+    const { morceauId } = useParams()
     
+    //fetch MySQL DataBase
     useEffect(() => {
+        if (morceauId) {
+            fetchPartition(`http://localhost/D10h_server/public/api/get_partition.php?id=${morceauId}`)
+        } else {
+            console.error('ID manquant ...')
+        }
+    },[morceauId])
+
+    useEffect(() => {
+
+        if (!partition) return
+
         if (!svgPartitionRef.current || !svgCursorRef.current|| !containerRef) return console.error('Erreur lors du chargement de la partition ...');
 
         if (svgPartitionRef.current) svgPartitionRef.current.innerHTML = "";
         
-        const containerWidth = containerRef.current?.offsetWidth ?? 0;
+        const containerWidth: number = containerRef.current?.offsetWidth ?? 800;
         const measurePerLine: number = 4;
-        const totalLines: number = Math.ceil(mockPartition.measures.length / measurePerLine);
+        const totalLines: number = Math.ceil(partition.measures.length / measurePerLine);
+        const firstMeasureExtraWidth = 80
         const dynamicHeight: number = totalLines * 160 + 50;
 
         const rendererPartition = new Renderer(svgPartitionRef.current, Renderer.Backends.SVG);
         rendererPartition.resize(Math.round(containerWidth), Math.round(dynamicHeight));
 
-        const contextPartition = rendererPartition.getContext();
+        const contextPartition = (rendererPartition.getContext() as SVGContext);
         contextPartitionRef.current = contextPartition;
 
-        const availableWidth: number = Number(containerWidth) - 40;
+        const availableWidth: number = containerWidth - 40 - firstMeasureExtraWidth;
         const fixedMeasureWidth: number = availableWidth / measurePerLine;
 
         let currentX = 20;
@@ -307,43 +359,56 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
 
         
         const tieGroups = {
-            first: [] as Vex.Flow.StaveNote[],
-            second: [] as Vex.Flow.StaveNote[]
+            first: [] as StaveNote[],
+            second: [] as StaveNote[]
         }
 
         const measuresToRender: IMeasureObject[] = [];
 
-        mockPartition.measures.forEach((measure, index) => {
+        console.log(partition.clef);
+        
 
-            const { allNotes: measureNotes, beams: measureBeams, ties: measureTies } = mapToVexFlow(measure.notes, mockPartition.clef, tieGroups)
+        partition.measures.forEach((measure, index) => {
+
+            const { allNotes: measureNotes, beams: measureBeams, ties: measureTies, tuplets: measureTuplets } = mapToVexFlow(measure.notes, partition.clef, tieGroups)
 
             if (index > 0 && index % measurePerLine === 0) {
                 currentX = 20;
                 currentY += 160;
             }
 
-            const stave: Vex.Flow.Stave = new Stave(currentX, currentY, fixedMeasureWidth)
+            const stave: Stave = new Stave(currentX, currentY, fixedMeasureWidth)
 
             if (index % measurePerLine === 0) {
-                stave.addClef(mockPartition.clef)
-                stave.addTimeSignature(mockPartition.time_signature)
-                if (mockPartition.clef_signature) stave.addKeySignature(mockPartition.clef_signature)
+                stave.addClef(partition.clef)
+                stave.addTimeSignature(partition.time_signature)
+                if (partition.clef_signature) stave.addKeySignature(partition.clef_signature)
+                stave.setWidth(stave.getBoundingBox().getW() + 50)
+                currentX += 50
+            } else {
+                stave.setNoteStartX(stave.getX() + 10);
             }
 
-            const startPadding = 80
 
-            stave.setNoteStartX(stave.getX() + startPadding);
+            try {
+                const [numBeats, beatValue] = partition.time_signature.split('/').map(Number);
+                const voice = new Voice({ numBeats:numBeats, beatValue:beatValue });
 
-            const [numBeats, beatValue] = mockPartition.time_signature.split('/').map(Number);
-            const voice = new Voice({ num_beats:numBeats, beat_value:beatValue });
+                voice.addTickables(measureNotes);          
 
-            voice.addTickables(measureNotes);          
+                const formattingWidth = stave.getWidth() - (stave.getNoteStartX() - stave.getX()) - 10;
 
-            const formattingWidth: number = fixedMeasureWidth - startPadding - 30;
-
-            new Formatter().joinVoices([voice]).format([voice], formattingWidth);
-           
-            measuresToRender.push({ stave, voice, beams: measureBeams, ties: measureTies });
+                new Formatter().joinVoices([voice]).format([voice], formattingWidth);
+                
+                measuresToRender.push({ stave, voice, beams: measureBeams, ties: measureTies, tuplets : measureTuplets });
+            } catch (error) {
+                console.error(`%c 🚨 ERREUR VEXFLOW - Mesure n°${index + 1} `, 'background: #222; color: #ff0000; font-size: 14px; font-weight: bold;');
+                console.warn("Détails de l'erreur :", error);
+                console.log("Contenu JSON de cette mesure :", measure);
+                
+                const emptyVoice = new Voice({ numBeats: 4, beatValue: 4 }).setStrict(false);
+                measuresToRender.push({ stave, voice: emptyVoice, beams: measureBeams, ties: measureTies, tuplets : measureTuplets });
+            }
             currentX += fixedMeasureWidth;
         })
 
@@ -358,12 +423,12 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         notesMapRef.current = notesMap;
 
         measuresToRender.forEach((m, mIndex) => {
-            const tickables: Vex.Flow.Tickable[] = m.voice.getTickables()
+            const tickables: Tickable[] = m.voice.getTickables()
             const y: number = m.stave.getYForLine(0)
 
-            tickables.forEach((tickable: Vex.Flow.Tickable) => {
-                const note = tickable as Vex.Flow.StaveNote
-                const durationMs: number = (note.getTicks().value() / 4096) * (60000 / mockPartition.bpm)               
+            tickables.forEach((tickable: Tickable) => {
+                const note = tickable as StaveNote
+                const durationMs: number = (note.getTicks().value() / 4096) * (60000 / partition.bpm)               
                 
                 const x: number = note.getAbsoluteX()
                 const id: string | undefined = note.getAttribute('id') ?? `note_${mIndex}_${Math.round(runningTimeMs)}`.replaceAll(/[^a-zA-Z0-9]/g, "_")
@@ -402,10 +467,11 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
 
         const rendererCursor = new Renderer(svgCursorRef.current, Renderer.Backends.SVG);
         rendererCursor.resize(Math.round(containerWidth), Math.round(dynamicHeight));
-        const contextCursor = rendererCursor.getContext();
 
+        const contextCursor = rendererCursor.getContext() as SVGContext;
         contextCursorRef.current = contextCursor;
-    },[])
+
+    },[partition])
 
     useEffect(() => {
         if (onPlay) {
@@ -464,6 +530,9 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         }
     },[onPlay])
 
+    if (!partition) {
+        return <Box textAlign={"center"}><Text color={"black"}>Chargement de la partition ...</Text></Box>
+    }
     return (
             <Box position={"relative"} w={"100%"} h={"600px"} ref={containerRef} overflowY={"auto"}
             sx={hideScrollbarStyle}>

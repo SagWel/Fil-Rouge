@@ -5,13 +5,13 @@ import { useParams } from "react-router-dom";
 export interface ISearchPartitionsInstrumentProps {}
 
 const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
-    const { instrumentId } = useParams();
+    const { instrumentName } = useParams();
 
     return(
         <Flex direction={"column"} textAlign={"center"} gap={"2rem"} pt={"2rem"}>
 
             {/*Title containing the instrument name*/}
-            <Heading id="headText" color={"#FDFCFE"}> SCORBRARY {instrumentId.toUpperCase()} </Heading>
+            <Heading id="headText" color={"#FDFCFE"}> SCORBRARY {instrumentName?.toUpperCase()} </Heading>
 
             {/*Search filters*/}
             <Box id="filtersZone" border={"0.0625rem solid #4e4c51"} mx={"1.5rem"} padding={"0.5rem"}>
