@@ -1,6 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import React, { useRef, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useRef, useEffect } from "react";
 import { INoteData, IPartitions } from "../types/partitions";
 import { Renderer, 
         Stave, 
@@ -35,84 +34,9 @@ export interface INoteSynchro {
     y: number
 }
 
-export interface IPartitionRenderProps {onPlay: boolean}
+export interface IPartitionRenderProps {onPlay: boolean, data: IPartitions | undefined}
 
-const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
-
-    const mockPartition: IPartitions = {
-        id: 2,
-        title: "L'Éveil Musical",
-        artist: { id: 102, name: "Studio Gemini", picture: "", partitions: [], albums: [] },
-        difficulty: 2,
-        instruments: { 
-            currentInstrument: { id: "piano", name: "piano", imgSrc: "../../public/img/Piano.png" }, 
-            othersInstruments: [] 
-        },
-        bpm: 105, // Tempo un peu plus rapide
-        time_signature: "4/4",
-        clef: "treble",
-        clef_signature: "C", // Do Majeur (pas d'altérations à la clé)
-        deezer_link: "",
-        audio_preview: "",
-        partition_preview: "",
-        duration: 45,
-        genre: { id: 1, name: "Étude", picture: "", picture_small: "", picture_medium: "", picture_big: "", picture_xl: "" },
-        measures: [
-            // MESURE 1 : Arpège ascendant simple
-            { id: 1, notes: [
-                { keys: ["c/4"], duration: "q" }, 
-                { keys: ["e/4"], duration: "q" }, 
-                { keys: ["g/4"], duration: "q" }, 
-                { keys: ["c/5"], duration: "q" }
-            ]},
-            // MESURE 2 : Rythme varié (Croches et noire)
-            { id: 2, notes: [
-                { keys: ["d/5"], duration: "8", beam: "start" }, 
-                { keys: ["c/5"], duration: "8", beam: "end" }, 
-                { keys: ["b/4"], duration: "8", beam: "start" }, 
-                { keys: ["a/4"], duration: "8", beam: "end" }, 
-                { keys: ["g/4"], duration: "h" }
-            ]},
-            // MESURE 3 : Silence et accords
-            { id: 3, notes: [
-                { keys: ["b/4"], duration: "q", isRest: true }, 
-                { keys: ["f/4", "a/4"], duration: "q" }, 
-                { keys: ["e/4", "g/4"], duration: "h" }
-            ]},
-            // MESURE 4 : Syncopes légères
-            { id: 4, notes: [
-                { keys: ["f/4"], duration: "q" }, 
-                { keys: ["a/4"], duration: "8", beam: "start" }, 
-                { keys: ["c/5"], duration: "8", beam: "end" }, 
-                { keys: ["b/4"], duration: "q" }, 
-                { keys: ["g/4"], duration: "q" }
-            ]},
-            // MESURE 5 : Double-croches (pour tester les beams serrés)
-            { id: 5, notes: [
-                { keys: ["c/5"], duration: "16", beam: "start" }, 
-                { keys: ["b/4"], duration: "16", beam: "continue" }, 
-                { keys: ["a/4"], duration: "16", beam: "continue" }, 
-                { keys: ["g/4"], duration: "16", beam: "end" }, 
-                { keys: ["f/4"], duration: "q" },
-                { keys: ["d/4"], duration: "q" },
-                { keys: ["g/4"], duration: "q" }
-            ]},
-            // MESURE 6 MODIFIÉE : Lance une liaison vers la mesure 7
-            { id: 6, notes: [
-                { keys: ["c/4", "e/4", "g/4"], duration: "w", ties: ["start"] }
-            ]}, 
-            // MESURE 7 : Test de liaison simple entre deux notes
-            { id: 7, notes: [
-                { keys: ["g/4"], duration: "h", ties: ["end"] }, // Reçoit la liaison de la mesure précédente ou interne
-                { keys: ["g/4"], duration: "h" }
-            ]},
-            // MESURE 8 : Test de liaisons sur un accord complet (plus complexe)
-            { id: 8, notes: [
-                { keys: ["c/4", "e/4", "g/4"], duration: "h", ties: ["start"] },
-                { keys: ["c/4", "e/4", "g/4"], duration: "h", ties: ["end"] }
-            ]}
-        ]
-    };
+const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => {
 
     // Refs
     const svgPartitionRef = useRef<HTMLDivElement | null>(null)
@@ -132,9 +56,6 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
     const containerRef = useRef<HTMLDivElement | null>(null)
     const lastScrolledYRef = useRef<number>(-1)
 
-    //States
-    const [partition, setPartition] = useState<IPartitions | undefined>(undefined)
-
     const hideScrollbarStyle = {
         '&::WebkitScrollbar': {
         display: 'none',
@@ -142,21 +63,6 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         'msOverflowStyle': 'none',
         'scrollbarWidth': 'none', 
     };
-
-    const fetchPartition = async (URL: string) => {
-        try {
-            const res = await fetch(`${URL}`)
-
-            if (!res.ok) {
-                throw new Error(`Erreur HTTP: ${res.status}`);                
-            }
-
-            const data = await res.json()
-            setPartition(data)
-        } catch (error) {
-            console.error('Impossible de récupérer les donnée de la partition:', error);
-        }
-    }
 
     //Draw beams on Stave
     const drawBeams = (context: SVGContext, beams: Beam[]) => {
@@ -194,8 +100,6 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
             let duration = n.duration
             if (n.dots) duration += "d"
             if (n.isRest) duration += "r"
-
-            console.log(n.keys);
             
             const note: StaveNote = new StaveNote({keys: n.keys, duration: duration, clef: clef} )
 
@@ -319,21 +223,9 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         }
     }
 
-    //Params
-    const { morceauId } = useParams()
-    
-    //fetch MySQL DataBase
-    useEffect(() => {
-        if (morceauId) {
-            fetchPartition(`http://localhost/D10h_server/public/api/get_partition.php?id=${morceauId}`)
-        } else {
-            console.error('ID manquant ...')
-        }
-    },[morceauId])
-
     useEffect(() => {
 
-        if (!partition) return
+        if (!data) return
 
         if (!svgPartitionRef.current || !svgCursorRef.current|| !containerRef) return console.error('Erreur lors du chargement de la partition ...');
 
@@ -341,7 +233,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         
         const containerWidth: number = containerRef.current?.offsetWidth ?? 800;
         const measurePerLine: number = 4;
-        const totalLines: number = Math.ceil(partition.measures.length / measurePerLine);
+        const totalLines: number = Math.ceil(data.measures.length / measurePerLine);
         const firstMeasureExtraWidth = 80
         const dynamicHeight: number = totalLines * 160 + 50;
 
@@ -363,14 +255,11 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
             second: [] as StaveNote[]
         }
 
-        const measuresToRender: IMeasureObject[] = [];
+        const measuresToRender: IMeasureObject[] = [];        
 
-        console.log(partition.clef);
-        
+        data.measures.forEach((measure, index) => {
 
-        partition.measures.forEach((measure, index) => {
-
-            const { allNotes: measureNotes, beams: measureBeams, ties: measureTies, tuplets: measureTuplets } = mapToVexFlow(measure.notes, partition.clef, tieGroups)
+            const { allNotes: measureNotes, beams: measureBeams, ties: measureTies, tuplets: measureTuplets } = mapToVexFlow(measure.notes, data.clef, tieGroups)
 
             if (index > 0 && index % measurePerLine === 0) {
                 currentX = 20;
@@ -380,9 +269,9 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
             const stave: Stave = new Stave(currentX, currentY, fixedMeasureWidth)
 
             if (index % measurePerLine === 0) {
-                stave.addClef(partition.clef)
-                stave.addTimeSignature(partition.time_signature)
-                if (partition.clef_signature) stave.addKeySignature(partition.clef_signature)
+                stave.addClef(data.clef)
+                stave.addTimeSignature(data.time_signature)
+                if (data.clef_signature) stave.addKeySignature(data.clef_signature)
                 stave.setWidth(stave.getBoundingBox().getW() + 50)
                 currentX += 50
             } else {
@@ -391,7 +280,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
 
 
             try {
-                const [numBeats, beatValue] = partition.time_signature.split('/').map(Number);
+                const [numBeats, beatValue] = data.time_signature.split('/').map(Number);
                 const voice = new Voice({ numBeats:numBeats, beatValue:beatValue });
 
                 voice.addTickables(measureNotes);          
@@ -428,7 +317,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
 
             tickables.forEach((tickable: Tickable) => {
                 const note = tickable as StaveNote
-                const durationMs: number = (note.getTicks().value() / 4096) * (60000 / partition.bpm)               
+                const durationMs: number = (note.getTicks().value() / 4096) * (60000 / data.bpm)               
                 
                 const x: number = note.getAbsoluteX()
                 const id: string | undefined = note.getAttribute('id') ?? `note_${mIndex}_${Math.round(runningTimeMs)}`.replaceAll(/[^a-zA-Z0-9]/g, "_")
@@ -458,8 +347,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
                 })
             }
         })
-
-        console.log(synchronizationData);        
+       
         dataArrayRef.current = synchronizationData
 
         // Cursor
@@ -471,7 +359,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         const contextCursor = rendererCursor.getContext() as SVGContext;
         contextCursorRef.current = contextCursor;
 
-    },[partition])
+    },[data])
 
     useEffect(() => {
         if (onPlay) {
@@ -530,7 +418,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({onPlay}) => {
         }
     },[onPlay])
 
-    if (!partition) {
+    if (!data) {
         return <Box textAlign={"center"}><Text color={"black"}>Chargement de la partition ...</Text></Box>
     }
     return (
