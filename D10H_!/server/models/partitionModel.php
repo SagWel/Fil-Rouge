@@ -1,9 +1,7 @@
 <?php
 
-function getPartitionById($id)
+function getPartitionById($pdo, $id)
 {
-    global $pdo;
-
     $sql = $pdo->prepare(
         'SELECT
             p.*, a.name AS artist_name,
@@ -19,13 +17,11 @@ function getPartitionById($id)
         LEFT JOIN genres g ON p.genre_id = g.id
         LEFT JOIN partition_instruments pi ON p.id = pi.partition_id
         LEFT JOIN instruments i ON pi.instrument_id = i.id
-        WHERE p.id = :id
+        WHERE p.id = ?
         GROUP BY p.id'
     );
 
-    $sql->execute([
-        'id' => $id
-    ]);
+    $sql->execute([$id]);
 
     return $sql->fetch(PDO::FETCH_ASSOC);
 }

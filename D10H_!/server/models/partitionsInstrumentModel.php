@@ -1,9 +1,7 @@
 <?php
 
-function getPartitonsByInstrument($instrument)
+function getPartitonsByInstrument($pdo, $instrumentId)
 {
-    global $pdo;
-
     $sql = $pdo->prepare(
         'SELECT
             p.*,
@@ -19,20 +17,17 @@ function getPartitonsByInstrument($instrument)
         LEFT JOIN genres g ON p.genre_id = g.id
         LEFT JOIN partition_instruments pi ON p.id = pi.partition_id
         LEFT JOIN instruments i ON pi.instrument_id = i.id
-        -- La partie cruciale est ici :
         WHERE p.id IN (
-            SELECT pi2.partition_id 
+            SELECT pi2.partition_id
             FROM partition_instruments pi2
             JOIN instruments i2 ON pi2.instrument_id = i2.id
-            WHERE i2.name = :instrumentName
+            WHERE i2.id = ?
             AND pi2.is_current = 1
         )
         GROUP BY p.id'
     );
 
-    $sql->execute([
-        'instrumentName' => $instrument
-    ]);
+    $sql->execute([$instrumentId]);
 
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }

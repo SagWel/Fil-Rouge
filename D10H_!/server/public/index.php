@@ -31,6 +31,15 @@ if ($ressource && file_exists($controlerFile)) {
     if ($id) {
         $_GET['id'] = $id;
     }
+
+    switch ($ressource) {
+        case 'partition':
+            require_once '../middlewares/CheckNumericId.php';
+            break;
+        case 'partitionsInstrument':
+            require_once '../middlewares/CheckInstrument.php';
+            break;
+    }
     require_once $controlerFile;
 } else {
     http_response_code(404);

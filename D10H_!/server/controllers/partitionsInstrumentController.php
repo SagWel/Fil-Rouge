@@ -2,10 +2,11 @@
 
 require_once '../models/partitionsInstrumentModel.php';
 
+$instrumentId = $_GET['instrument_id'] ?? null;
 $instrument = $_GET['id'];
 
-if ($id) {
-    $rows = getPartitonsByInstrument($instrument);
+if ($instrumentId) {
+    $rows = getPartitonsByInstrument($pdo, $instrumentId);
     $partitions = [];
 
     foreach ($rows as $row) {

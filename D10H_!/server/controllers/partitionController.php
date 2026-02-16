@@ -7,7 +7,7 @@ $id = $_GET['id'];
 if ($id && ctype_digit($id)) {
     $id = (int)$id;
 
-    $row = getPartitionById($id);
+    $row = getPartitionById($pdo, $id);
 
     if ($row) {
 
