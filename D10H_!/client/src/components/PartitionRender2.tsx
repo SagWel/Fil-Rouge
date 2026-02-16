@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import React, { useRef, useEffect } from "react";
-import { INoteData, IPartitions } from "../types/partitions";
+import { type INoteData, type IPartitions } from "../types/partitions";
 import { Renderer, 
         Stave, 
         StaveNote, 

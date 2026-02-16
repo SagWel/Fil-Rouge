@@ -2,7 +2,7 @@ import { Grid } from "@chakra-ui/react";
 
 
 import PartitionCard from './PartitionCard';
-import { IPartitions } from "../types/partitions";
+import { type IPartitions } from "../types/partitions";
 
 // Pictures import as modules
 import PartitionImg from '../../public/img/Partition.jpeg';

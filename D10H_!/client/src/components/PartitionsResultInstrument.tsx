@@ -1,81 +1,13 @@
 import { Grid, Box, Text } from "@chakra-ui/react";
 
 import PartitionCard from './PartitionCard';
-import { IPartitions } from "../types/partitions";
+import { type IPartitions } from "../types/partitions";
 
 // Pictures import as modules
-import PartitionImg from '../../public/img/Partition.jpeg';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export interface IResultProps {}
-
-/*Mock database*/
-const mockPartitons = [
-        {
-            title : "Zombie",
-            artist : "The Cranberries",
-            difficulty : 1,
-            instrument : "guitare",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "1",
-        },
-        {
-            title : "Smells Like Teen Spirit",
-            artist : "Nirvanna",
-            difficulty : 2,
-            instrument : "batterie",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "2",
-        },
-        {
-            title : "Comme Des Connards",
-            artist : "Mickael Youn",
-            difficulty : 2,
-            instrument : "piano",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "3",
-        },
-        {
-            title : "Still Waiting",
-            artist : "Sum 41",
-            difficulty : 4,
-            instrument : "basse",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "4",
-        },
-        {
-            title : "Pretty Fly (For A White Guy)",
-            artist : "The Offspring",
-            difficulty : 3,
-            instrument : "chant",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "5",
-        },
-        {
-            title : "Over The Rainbow",
-            artist : "Israel Kamakawiwo'ole",
-            difficulty : 2,
-            instrument : "ukulele",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "6",
-        },
-        {
-            title : "Baker Street",
-            artist : "Gerry Rafferty",
-            difficulty : 2,
-            instrument : "saxo",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "7",
-        },
-    ]
 
 const Result: React.FC<IResultProps> = () => {
 
@@ -84,9 +16,10 @@ const Result: React.FC<IResultProps> = () => {
     const [partitions, setPartitions] = useState<IPartitions[] | []>([])
 
     const fetchPartitions = async (URL: string) => {
-        try {
-            const res = await fetch(`${URL}`)
-
+        const host = import.meta.env.VITE_HOST
+        const port = import.meta.env.VITE_SERVER_PORT
+        try {            
+            const res = await fetch(`http://${host}:${port}${URL}`)
             if (!res.ok) {
                 throw new Error(`Erreur HTTP: ${res.status}`);                
             }
@@ -100,7 +33,10 @@ const Result: React.FC<IResultProps> = () => {
 
     useEffect(() => {
         if (instrumentName) {
-            fetchPartitions(`http://localhost/D10h_server/public/api/get_all_partitions.php?instrumentName=${instrumentName}`)
+            const urlFetch = import.meta.env.VITE_URL_FETCH_ALLPARTITIONS_INSTRUMENT
+            console.log();
+            
+            fetchPartitions(`${urlFetch}${instrumentName}`)
         } else {
             console.error('Instrument manquant ...')
         }

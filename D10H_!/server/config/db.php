@@ -1,16 +1,23 @@
 <?php
 
-const MYSQL_HOST = "localhost";
-const MYSQL_PORT = "3306";
-const MYSQL_NAME = "d10h_!";
-const MYSQL_USER = "root";
-const MYSQL_PDW = "";
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+$dbHost = $_ENV['MYSQL_HOST'];
+$dbPort = $_ENV['MYSQL_PORT'];
+$dbName = $_ENV['MYSQL_NAME'];
+$dbuser = $_ENV['MYSQL_USER'];
+$dbPwd = $_ENV['MYSQL_PWD'];
 
 try {
     $pdo = new PDO(
-        sprintf('mysql:host=%s;dbname=%s;port=%s;charset=utf8', MYSQL_HOST, MYSQL_NAME, MYSQL_PORT),
-        MYSQL_USER,
-        MYSQL_PDW
+        sprintf('mysql:host=%s;dbname=%s;port=%s;charset=utf8', $dbHost, $dbName, $dbPort),
+        $dbuser,
+        $dbPwd
     );
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (Exception $e) {

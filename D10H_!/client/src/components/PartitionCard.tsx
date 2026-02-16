@@ -3,7 +3,7 @@ import { type IPartitions } from "../types/partitions";
 
 // SVGs import from a unique file
 import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "./svg";
-import { InstrumentType } from "../types/instrument";
+import { type InstrumentType } from "../types/instrument";
 
 // Displays icons according to the difficulty value
 function difficultyLvl(difficulty: number): React.JSX.Element[] {

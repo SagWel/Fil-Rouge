@@ -3,7 +3,7 @@ import PartitionRender from "../components/PartitionRender2";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { IPartitions } from "../types/partitions";
+import { type IPartitions } from "../types/partitions";
 
 import Fond from '../img/FondPart.jpg'
 
@@ -15,23 +15,27 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
     const { morceauId } = useParams()
 
     const fetchPartition = async (URL: string) => {
-            try {
-                const res = await fetch(`${URL}`)
-    
-                if (!res.ok) {
-                    throw new Error(`Erreur HTTP: ${res.status}`);                
-                }
-    
-                const data = await res.json()
-                setPartition(data)
-            } catch (error) {
-                console.error('Impossible de récupérer les donnée de la partition:', error);
+        const host = import.meta.env.VITE_HOST
+        const port = import.meta.env.VITE_SERVER_PORT
+
+        try {
+            const res = await fetch(`http://${host}:${port}${URL}`)
+
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`);                
             }
+
+            const data = await res.json()
+            setPartition(data)
+        } catch (error) {
+            console.error('Impossible de récupérer les donnée de la partition:', error);
         }
+    }
         
     useEffect(() => {
             if (morceauId) {
-                fetchPartition(`http://localhost/D10h_server/public/api/get_partition.php?id=${morceauId}`)
+                const urlFetch = import.meta.env.VITE_URL_FETCH_PARTITION
+                fetchPartition(`${urlFetch}${morceauId}`)
             } else {
                 console.error('ID manquant ...')
             }

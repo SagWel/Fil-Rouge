@@ -9,10 +9,10 @@ import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon } from 
 import { useSearch, } from '../context/SearchContext'
 
 // Hooks
-import useSearchHistory, { IHistoryItem } from '../hooks/useSearchHistory'
+import useSearchHistory, { type IHistoryItem } from '../hooks/useSearchHistory'
 
 // Type
-import { IDeezerSearchResponse, IDeezerTrack } from '../types/Deezer'
+import { type IDeezerSearchResponse, type IDeezerTrack } from '../types/Deezer'
 
 export interface IHeaderProps {
     userName: string,

@@ -1,7 +1,7 @@
 import { Grid } from "@chakra-ui/react";
 
 import InstrumentCard from './InstrumentCard'
-import { IInstrument } from "../types/instrument";
+import { type IInstrument } from "../types/instrument";
 
 // Pictures import as modules
 import Guitare from '../../public/img/Guitare.png';
