@@ -34,7 +34,6 @@ const Result: React.FC<IResultProps> = () => {
     useEffect(() => {
         if (instrumentName) {
             const urlFetch = import.meta.env.VITE_URL_FETCH_ALLPARTITIONS_INSTRUMENT
-            console.log();
             
             fetchPartitions(`${urlFetch}${instrumentName}`)
         } else {
