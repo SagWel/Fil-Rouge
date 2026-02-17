@@ -1,81 +1,49 @@
-import { Grid } from "@chakra-ui/react";
+import { Grid, Box, Text } from "@chakra-ui/react";
 
 import PartitionCard from './PartitionCard';
-import { IPartitions } from "../types/partitions";
+import { type IPartitions } from "../types/partitions";
 
 // Pictures import as modules
-import PartitionImg from '../img/Partition.jpeg';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export interface IResultProps {}
 
-/*Mock database*/
-const mockPartitons: IPartitions[] = [
-        {
-            title : "Zombie",
-            artist : "The Cranberries",
-            difficulty : 1,
-            instrument : "guitare",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "1",
-        },
-        {
-            title : "Smells Like Teen Spirit",
-            artist : "Nirvanna",
-            difficulty : 2,
-            instrument : "batterie",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "2",
-        },
-        {
-            title : "Comme Des Connards",
-            artist : "Mickael Youn",
-            difficulty : 2,
-            instrument : "piano",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "3",
-        },
-        {
-            title : "Still Waiting",
-            artist : "Sum 41",
-            difficulty : 4,
-            instrument : "basse",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "4",
-        },
-        {
-            title : "Pretty Fly (For A White Guy)",
-            artist : "The Offspring",
-            difficulty : 3,
-            instrument : "chant",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "5",
-        },
-        {
-            title : "Over The Rainbow",
-            artist : "Israel Kamakawiwo'ole",
-            difficulty : 2,
-            instrument : "ukulele",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "6",
-        },
-        {
-            title : "Baker Street",
-            artist : "Gerry Rafferty",
-            difficulty : 2,
-            instrument : "saxo",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "7",
-        },
-    ]
-
 const Result: React.FC<IResultProps> = () => {
+
+    const { instrumentName } = useParams()
+
+    const [partitions, setPartitions] = useState<IPartitions[] | []>([])
+
+    const fetchPartitions = async (URL: string) => {
+        const host = import.meta.env.VITE_HOST
+        const port = import.meta.env.VITE_SERVER_PORT
+        try {            
+            const res = await fetch(`http://${host}:${port}${URL}`)
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`);                
+            }
+
+            const data = await res.json()
+            setPartitions(data)
+        } catch (error) {
+            console.error('Impossible de récupérer les donnée de la partition:', error);
+        }
+    }
+
+    useEffect(() => {
+        if (instrumentName) {
+            const urlFetch = import.meta.env.VITE_URL_FETCH_ALLPARTITIONS_INSTRUMENT
+            
+            fetchPartitions(`${urlFetch}${instrumentName}`)
+        } else {
+            console.error('Instrument manquant ...')
+        }
+    },[instrumentName])
+
+    if (partitions.length === 0) {
+            return <Box textAlign={"center"}><Text color={"white"}>Aucune partition trouvée pour {instrumentName}</Text></Box>
+        }
     return(
         <Grid id="resultZone" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
         gap={"7"} justifyItems={"center"} p={"4"}
@@ -83,8 +51,8 @@ const Result: React.FC<IResultProps> = () => {
         marginTop={"2rem"} marginBottom={"5rem"}>
             
             {/*Creats a card for each scores in search result*/}
-            {mockPartitons.map((partition) => (
-                <PartitionCard key={partition.id} partition={partition} />
+            {partitions.map((partition) => (
+                <PartitionCard key={partition.id} partition={partition} currentInstrument={instrumentName as string}/>
             ))}
 
         </Grid>

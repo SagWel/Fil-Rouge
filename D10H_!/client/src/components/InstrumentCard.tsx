@@ -7,7 +7,7 @@ export interface IInstrumentCardProps { instrument: IInstrument }
 // Card for each instrument in database
 const InstrumentCard: React.FC<IInstrumentCardProps> = ({instrument}) => {
     return (
-        <Box as={Link} to={instrument.linkTo} role="group"
+        <Box as={Link} to={instrument.linkToSearch} role="group"
         display={"flex"} justifyContent={"center"} alignItems={"center"}
         position={"relative"}
         height={"16rem"} width={"16rem"}

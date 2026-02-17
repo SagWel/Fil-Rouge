@@ -2,14 +2,15 @@ import { Grid } from "@chakra-ui/react";
 
 
 import PartitionCard from './PartitionCard';
+import { type IPartitions } from "../types/partitions";
 
 // Pictures import as modules
-import PartitionImg from '../img/Partition.jpeg';
+import PartitionImg from '../../public/img/Partition.jpeg';
 
 export interface IPartitionsResult {}
 
 /*Mock database*/
-const mockPartitons = [
+const mockPartitons: IPartitions[] = [
     {
         title : "Zombie",
         artist : "The Cranberries",
@@ -54,7 +55,7 @@ const mockPartitons = [
     }
 ]
 
-const Result: React.FC<IPartitionsResult> = () => {
+const PartitionsResult: React.FC<IPartitionsResult> = () => {
     return(
         <Grid id="resultZone" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
         gap={"7"} justifyItems={"center"} p={"4"}
@@ -70,4 +71,4 @@ const Result: React.FC<IPartitionsResult> = () => {
     )
 }
 
-export default Result
+export default PartitionsResult

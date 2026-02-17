@@ -37,6 +37,8 @@ function App() {
   const HEADER_MIN_HEIGHT = "40px";
   const TOOLS_WIDTH = "50px"
   
+  const [onPlay, setOnPlay] = useState<boolean>(false)
+  
   // Variables for Scores page identification
   const location = useLocation()
   const pathSegment = location.pathname.split('/').filter(segment => segment.length > 0);
@@ -47,6 +49,14 @@ function App() {
   const Breakpoint = 1160
   const isMinimal = width <= Breakpoint
   const navResponsive = isMinimal ? NAV_MIN_WIDTH : NAV_WIDTH
+
+  const handleOnPlay = () => {
+    if (onPlay) {
+      setOnPlay(false)
+    } else {
+      setOnPlay(true)
+    }
+  }
 
   // Scores page template
   if (onPageMorceau) {
@@ -79,9 +89,9 @@ function App() {
       
                 <Route path='/instruments' element={<ListeInstruments />} />
       
-                <Route path='/partitions/:instrumentId' element={<PageSearchPartitionsInstrument />} />
+                <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
       
-                <Route path='/partitions/:instrumentId/:morceauId' element={<Morceau />} />
+                <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
       
                 <Route path='/favoris' element={<Favoris />} />
 
@@ -99,7 +109,7 @@ function App() {
         </Box>
         <Box gridArea={"playeur"} zIndex={"10"}
         position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
-          <PlayeurMin />
+          <PlayeurMin onClick={handleOnPlay}/>
         </Box>
       </Grid>
 
@@ -135,9 +145,9 @@ function App() {
       
                 <Route path='/instruments' element={<ListeInstruments />} />
       
-                <Route path='/partitions/:instrumentId' element={<PageSearchPartitionsInstrument />} />
+                <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
       
-                <Route path='/partitions/:instrumentId/:morceauId' element={<Morceau />} />
+                <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
       
                 <Route path='/favoris' element={<Favoris />} />
 

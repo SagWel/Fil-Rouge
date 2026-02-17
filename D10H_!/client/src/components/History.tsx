@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { type IPartitions } from "../types/partitions";
+import type { IPartitions } from "../types/partitions";
 
 // SVGs import from a unique file
 import { ShuffleIcon } from "./svg";
@@ -9,7 +9,7 @@ import { ShuffleIcon } from "./svg";
 import PartitionCard from './PartitionCard'
 
 // Pictures import as modules
-import PartitionImg from '../img/Partition.jpeg'
+import PartitionImg from '../../public/img/Partition.jpeg'
 
 export interface IHistoryProps {}
 
@@ -17,70 +17,114 @@ const History: React.FC<IHistoryProps> = () => {
 
     /*Mock database*/
     const mockPartitons: IPartitions[] = [
+  {
+    "id": 1,
+    "title": "Michelle",
+    "artist": {
+      "id": 101,
+      "name": "The Beatles",
+      "picture": "https://e-cdns-images.dzcdn.net/images/artist/072461/500x500.jpg",
+      "deezer_link": "https://www.deezer.com/artist/1"
+    },
+    "album": {
+      "id": 201,
+      "title": "Rubber Soul",
+      "deezer_link": "https://www.deezer.com/album/201",
+      "cover": "https://e-cdns-images.dzcdn.net/images/cover/123/500x500.jpg",
+      "artist": { "id": 101, "name": "The Beatles", "picture": "..." }
+    },
+    "genre": {
+      "id": 1,
+      "name": "Pop/Rock",
+      "picture": "https://img.com/rock.jpg"
+    },
+    "difficulty": 3,
+    "instruments": {
+      "currentInstrument": {
+        "id": "1",
+        "name": "guitare",
+        "imgSrc": "assets/instruments/guitar-icon.png"
+      },
+      "othersInstruments": [
         {
-            title : "Zombie",
-            artist : "The Cranberries",
-            difficulty : 1,
-            instrument : "guitare",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "1",
+          "id": "2",
+          "name": "basse",
+          "imgSrc": "assets/instruments/bass-icon.png"
         },
         {
-            title : "Smells Like Teen Spirit",
-            artist : "Nirvanna",
-            difficulty : 2,
-            instrument : "batterie",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "2",
-        },
-        {
-            title : "Comme Des Connards",
-            artist : "Mickael Youn",
-            difficulty : 2,
-            instrument : "piano",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "3",
-        },
-        {
-            title : "Still Waiting",
-            artist : "Sum 41",
-            difficulty : 4,
-            instrument : "basse",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "4",
-        },
-        {
-            title : "Pretty Fly (For A White Guy)",
-            artist : "The Offspring",
-            difficulty : 3,
-            instrument : "chant",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "5",
-        },
-        {
-            title : "Over The Rainbow",
-            artist : "Israel Kamakawiwo'ole",
-            difficulty : 2,
-            instrument : "ukulele",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "6",
-        },
-        {
-            title : "Baker Street",
-            artist : "Gerry Rafferty",
-            difficulty : 2,
-            instrument : "saxo",
-            preview : PartitionImg,
-            audioPreviewUrl : "https://fake_url.com",
-            id : "7",
-        },
+          "id": "3",
+          "name": "chant",
+          "imgSrc": "assets/instruments/vocals-icon.png"
+        }
+      ]
+    },
+    "bpm": 117,
+    "time_signature": "4/4",
+    "clef": "treble",
+    "clef_signature": "Ab",
+    "duration": 162,
+    "deezer_link": "https://www.deezer.com/track/123",
+    "audio_preview": "https://preview.dz.com/123.mp3",
+    "partition_preview": "https://img.com/michelle-preview.png",
+    "measures": [
+      {
+        "id": 1,
+        "notes": [
+          { "keys": ["f/4"], "duration": "q" },
+          { "keys": ["e/4"], "duration": "q", "accidental": "b" },
+          { "keys": ["db/4"], "duration": "q" },
+          { "keys": ["c/4"], "duration": "q" }
+        ],
+        "shortText": "Intro"
+      }
     ]
+  },
+  {
+    "id": 2,
+    "title": "Fly Me To The Moon",
+    "artist": {
+      "id": 102,
+      "name": "Frank Sinatra",
+      "picture": "https://img.com/sinatra.jpg"
+    },
+    "genre": {
+      "id": 2,
+      "name": "Jazz",
+      "picture": "https://img.com/jazz.jpg"
+    },
+    "difficulty": 4,
+    "instruments": {
+      "currentInstrument": {
+        "id": "4",
+        "name": "piano",
+        "imgSrc": "assets/instruments/piano-icon.png"
+      },
+      "othersInstruments": [
+        {
+          "id": "5",
+          "name": "saxo",
+          "imgSrc": "assets/instruments/sax-icon.png"
+        }
+      ]
+    },
+    "bpm": 120,
+    "time_signature": "4/4",
+    "clef": "treble",
+    "clef_signature": "C",
+    "duration": 147,
+    "deezer_link": "https://www.deezer.com/track/456",
+    "audio_preview": "https://preview.dz.com/456.mp3",
+    "partition_preview": "https://img.com/flyme-preview.png",
+    "measures": [
+      {
+        "id": 1,
+        "notes": [
+          { "keys": ["c/4"], "duration": "w", "lyrics": "Fly" }
+        ]
+      }
+    ]
+  }
+]
 
     return (
         <Box id="main"

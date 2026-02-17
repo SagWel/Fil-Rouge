@@ -3,6 +3,7 @@ import { type IPartitions, type InstrumentType } from "../types/partitions";
 
 // SVGs import from a unique file
 import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "./svg";
+import { type InstrumentType } from "../types/instrument";
 
 // Displays icons according to the difficulty value
 function difficultyLvl(difficulty: number): React.JSX.Element[] {
@@ -12,7 +13,7 @@ function difficultyLvl(difficulty: number): React.JSX.Element[] {
   <Box key={index}><DifficultyIcon/></Box>))
 }
 
-// Retrieves the id from the URL to identify the icon to display
+// 
 function IconCard (instrumentKey: InstrumentType): React.JSX.Element | null {
 
     switch (instrumentKey) {
@@ -27,28 +28,35 @@ function IconCard (instrumentKey: InstrumentType): React.JSX.Element | null {
     }
 }
 
-export interface IPartitionCardProps { partition: IPartitions }
+
+export interface IPartitionCardProps { partition: IPartitions, currentInstrument: string }
 
 // Card for each scores in search result
-const PartitionCard: React.FC<IPartitionCardProps> = ({partition}) => {
+const PartitionCard: React.FC<IPartitionCardProps> = ({partition, currentInstrument}) => {
+    console.log(partition);
+        
     return (
+<<<<<<< HEAD
     <Flex as={"a"} href="/partitions/:instrumentId/morceauId" direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"} flexShrink={0}
+=======
+    <Flex as={"a"} href={`/partitions/${currentInstrument}/${partition.id}`} direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
+>>>>>>> origin
     backgroundColor={"transparent"} minH={"192px"}>
         <Box id="cardTop" position={"relative"}
         borderRadius={"0.125rem"} maxW={"12rem"} overflow={"visible"}
         _hover={{
             filter: "brightness(120%)"
         }}>
-            <Image src={partition.preview} id="preview" maxW={"12rem"} minH={"13rem"}></Image>
+            <Image src={partition.partition_preview} id="preview" maxW={"12rem"} minH={"13rem"}></Image>
             <Flex position={"absolute"} bottom={"-0.5rem"} right={"-33px"} boxSize={"4.125rem"} 
             zIndex={"100"} maxHeight={"4.125rem"} maxWidth={"4.125Rem"}>
-                {IconCard(partition.instrument)}
+                {IconCard(partition.instruments.currentInstrument.name)}
             </Flex>
         </Box>
         <Box id="cardInfos">
             <Box color={"#FDFCFE"}>
             <Heading as={"h3"} fontSize={"1.5rem"}>{partition.title}</Heading>
-            <Text>{partition.artist}</Text>
+            <Text>{partition.artist.name}</Text>
             </Box>
             <Flex id="difficultyLvl" 
             direction={"row"} justifyContent={"center"} alignItems={"center"} 
