@@ -1,5 +1,5 @@
 import { Box, Heading, Text, Image, Icon, Flex} from "@chakra-ui/react";
-import { type IPartitions, InstrumentType } from "../types/partitions";
+import { type IPartitions, type InstrumentType } from "../types/partitions";
 
 // SVGs import from a unique file
 import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "./svg";
@@ -17,7 +17,7 @@ function IconCard (instrumentKey: InstrumentType): React.JSX.Element | null {
 
     switch (instrumentKey) {
         case 'guitare': return <GuitarIcon />
-        case 'batterie': return <BasseIcon />
+        case 'batterie': return <DrumsIcon />
         case 'piano': return <PianoIcon />
         case 'basse': return <BasseIcon />
         case 'chant': return <ChantIcon />
@@ -32,7 +32,7 @@ export interface IPartitionCardProps { partition: IPartitions }
 // Card for each scores in search result
 const PartitionCard: React.FC<IPartitionCardProps> = ({partition}) => {
     return (
-    <Flex as={"a"} href="/partitions/:instrumentId/morceauId" direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
+    <Flex as={"a"} href="/partitions/:instrumentId/morceauId" direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"} flexShrink={0}
     backgroundColor={"transparent"} minH={"192px"}>
         <Box id="cardTop" position={"relative"}
         borderRadius={"0.125rem"} maxW={"12rem"} overflow={"visible"}
