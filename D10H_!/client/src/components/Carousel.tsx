@@ -18,23 +18,20 @@ const Carousel: React.FC<ICarouselProps> = ({ data, renderItem, id, title }) => 
     const carouselContainerRef = useRef<HTMLDivElement>(null)
     const listRef = useRef<HTMLUListElement>(null)
 
-    const scroll = (direction: "left" | "right") => {
-        
+    const scroll = (direction: "left" | "right") => {        
         const currentContainerWidth = carouselContainerRef.current?.clientWidth || 0;        
         const currentScrollWidth = listRef.current?.scrollWidth || 0;        
         const currentMaxScroll = currentContainerWidth - currentScrollWidth
               
         setMaxScroll(currentMaxScroll);
-        
-    
-            if(direction === "left") {
-                const newTranslate = translate + currentContainerWidth
-                setTranslate(Math.min(0, newTranslate))
-            } else {            
-                const newTranslate = translate - currentContainerWidth
-                setTranslate(Math.max(currentMaxScroll, newTranslate))                
-            }
 
+        if(direction === "left") {
+            const newTranslate = translate + currentContainerWidth
+            setTranslate(Math.min(0, newTranslate))
+        } else {            
+            const newTranslate = translate - currentContainerWidth
+            setTranslate(Math.max(currentMaxScroll, newTranslate))                
+        }
     }
 
     const cursor = (direction: "left" | "right") => {
