@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { 
     Flex, Box, Heading, IconButton, Image, Modal, ModalBody, ModalHeader, ModalCloseButton, ModalContent, 
-    ModalOverlay, useDisclosure, Text, Input, FormControl, FormLabel, Switch, Icon
+    ModalOverlay, useDisclosure, Text, Input, FormControl, FormLabel, Switch
  } from "@chakra-ui/react";
 
 // Pictures import as modules

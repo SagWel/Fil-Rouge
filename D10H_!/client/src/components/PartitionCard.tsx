@@ -1,9 +1,8 @@
-import { Box, Heading, Text, Image, Icon, Flex} from "@chakra-ui/react";
-import { type IPartitions, type InstrumentType } from "../types/partitions";
+import { Box, Heading, Text, Image, Flex} from "@chakra-ui/react";
+import { type IPartitions } from "../types/partitions";
 
 // SVGs import from a unique file
 import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "./svg";
-import { type InstrumentType } from "../types/instrument";
 
 // Displays icons according to the difficulty value
 function difficultyLvl(difficulty: number): React.JSX.Element[] {
@@ -14,7 +13,7 @@ function difficultyLvl(difficulty: number): React.JSX.Element[] {
 }
 
 // 
-function IconCard (instrumentKey: InstrumentType): React.JSX.Element | null {
+function IconCard (instrumentKey: string): React.JSX.Element | null {
 
     switch (instrumentKey) {
         case 'guitare': return <GuitarIcon />
@@ -32,15 +31,9 @@ function IconCard (instrumentKey: InstrumentType): React.JSX.Element | null {
 export interface IPartitionCardProps { partition: IPartitions, currentInstrument: string }
 
 // Card for each scores in search result
-const PartitionCard: React.FC<IPartitionCardProps> = ({partition, currentInstrument}) => {
-    console.log(partition);
-        
+const PartitionCard: React.FC<IPartitionCardProps> = ({partition, currentInstrument}) => {        
     return (
-<<<<<<< HEAD
-    <Flex as={"a"} href="/partitions/:instrumentId/morceauId" direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"} flexShrink={0}
-=======
     <Flex as={"a"} href={`/partitions/${currentInstrument}/${partition.id}`} direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
->>>>>>> origin
     backgroundColor={"transparent"} minH={"192px"}>
         <Box id="cardTop" position={"relative"}
         borderRadius={"0.125rem"} maxW={"12rem"} overflow={"visible"}
