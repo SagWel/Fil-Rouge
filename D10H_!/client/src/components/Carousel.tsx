@@ -98,7 +98,7 @@ const Carousel: React.FC<ICarouselProps> = ({ data, renderItem, id, title }) => 
                             </Flex>
                             <Flex display={"inline-flex"}
                             ps={"8px"}>
-                                <IconButton type="button" aria-label="suivant" isDisabled={translate === maxScroll || data.length === 0} cursor={cursor("right")}
+                                <IconButton type="button" aria-label="suivant" isDisabled={translate === maxScroll || data.length <= 4} cursor={cursor("right")}
                                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0,25rem"}
                                 position={"relative"} whiteSpace={"nowrap"} verticalAlign={"middle"}
                                 minH={"3rem"} minW={"3rem"} height={"auto"}

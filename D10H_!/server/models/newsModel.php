@@ -1,6 +1,6 @@
 <?php
 
-function getPartitionById($pdo, $id)
+function getNewsPartitions($pdo)
 {
     $sql = $pdo->prepare(
         'SELECT
@@ -10,13 +10,12 @@ function getPartitionById($pdo, $id)
             s.audio_preview,
             s.duration,
             a.name AS artist_name,
-            a.id AS artist_id,
+            a.id As artist_id,
             al.title AS album_title,
             al.id AS album_id,
             g.name AS genre_name,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
-            GROUP_CONCAT(i.imgSrc) AS all_instruments_images,
             GROUP_CONCAT(pi.is_current) AS all_is_current
         FROM partitions p
         JOIN songs s ON p.song_id = s.id
@@ -25,11 +24,12 @@ function getPartitionById($pdo, $id)
         LEFT JOIN genres g ON s.genre_id = g.id
         LEFT JOIN partition_instruments pi ON p.id = pi.partition_id
         LEFT JOIN instruments i ON pi.instrument_id = i.id
-        WHERE p.id = ?
-        GROUP BY p.id'
+        GROUP BY p.id
+        ORDER BY p.created_at DESC
+        LIMIT 12;'
     );
 
-    $sql->execute([$id]);
+    $sql->execute();
 
-    return $sql->fetch(PDO::FETCH_ASSOC);
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
 }

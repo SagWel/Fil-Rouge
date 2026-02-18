@@ -27,7 +27,7 @@ const Result: React.FC<IResultProps> = () => {
             const data = await res.json()
             setPartitions(data)
         } catch (error) {
-            console.error('Impossible de récupérer les donnée de la partition:', error);
+            console.error('Impossible de récupérer les données des partitions:', error);
         }
     }
 

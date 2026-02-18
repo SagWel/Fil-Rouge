@@ -4,7 +4,7 @@ import { useState } from 'react';
 import SearchProvider from './context/SearchContext.tsx'
 
 // Pages imports
-import PageAcceuil from './pages/PageAcceuil.tsx';
+import PageHome from './pages/PageHome.tsx';
 import PageSearchPartitions from './pages/PageSearch.tsx'
 import ListeInstruments from './pages/PageListeInstruments.tsx';
 import PageSearchPartitionsInstrument from './pages/PageSearchInstrument.tsx'
@@ -20,7 +20,7 @@ import BarNav from './components/BarNav.tsx';
 import Header from './components/Header.tsx';
 import Playeur from './components/Playeur.tsx';
 import BarNavMin from './components/BarNavMin.tsx';
-import HeaderMin from './components/HeaderMin.jsx';
+import HeaderMin from './components/HeaderMin.tsx';
 import PlayeurMin from './components/PlayeurMin.tsx';
 
 // Hooks imports
@@ -83,7 +83,7 @@ function App() {
           <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
               <Routes>
       
-                <Route path='/' element={<PageAcceuil />} />
+                <Route path='/' element={<PageHome />} />
 
                 <Route path='/search' element={<PageSearchPartitions />} />
       
@@ -139,7 +139,7 @@ function App() {
           <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
               <Routes>
       
-                <Route path='/' element={<PageAcceuil />} />
+                <Route path='/' element={<PageHome />} />
 
                 <Route path='/search/' element={<PageSearchPartitions />} />
       
