@@ -1,7 +1,7 @@
 export type InstrumentType = "guitare" | "batterie" | "piano" | "basse" | "chant" | "ukulele" | "saxo"
 
 export interface IInstrument {
-    id: string
+    id: number
     name: InstrumentType,
     imgSrc: string,
     linkToSearch?: string,

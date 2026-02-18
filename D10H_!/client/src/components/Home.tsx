@@ -1,131 +1,454 @@
-import { Box, Button, Flex, Heading } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 
-import PartitionCard from "./PartitionCard";
+import Carousel from "./Carousel"
 import { type IPartitions } from "../types/partitions";
+import PartitionCard from "./PartitionCard";
+import Img from '../../public/img/Partition.jpeg'
+import Chant from '../../public/img/Chant.png'
 
-// Pictures import as modules
-import PartitionImg from '../../public/img/Partition.jpeg';
+const MOCK_PARTITIONS1: IPartitions[] = [
+    {
+        id: 1, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img,
+    },
+    {
+        id: 2, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 3, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 4, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 5, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 6, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 7, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 8, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 9, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 10, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 11, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+    {
+        id: 12, // Dans ton .ts c'est un number
+        title: "Stairway to Heaven",
+        artist: {
+            id: 101,
+            name: "Led Zeppelin",
+            picture: "https://e-cdns-images.dzcdn.net/images/artist/6dc40ad177e302c12946f0b7418f49e6/500x500-000000-80-0-0.jpg",
+        },
+        album: {
+            id: 201,
+            title: "Led Zeppelin IV",
+            cover: "https://e-cdns-images.dzcdn.net/images/cover/610078330746e39860b77821c97a73a3/500x500-000000-80-0-0.jpg",
+            deezer_link: "https://www.deezer.com/album/78245",
+            artist: { id: 101, name: "Led Zeppelin", picture: "" } // Nécessaire selon ton interface
+        },
+        genre: {
+            id: 1,
+            name: "Rock",
+            picture: ""
+        },
+        measures: [],
+        difficulty: 3,
+        instruments: {
+            currentInstrument: { id: 1, name: "guitare", imgSrc: Chant },
+            othersInstruments: []
+        },
+        bpm: 82,
+        time_signature: "4/4",
+        clef: "G",
+        duration: 482,
+        deezer_link: "https://www.deezer.com/track/674640",
+        audio_preview: "",
+        partition_preview: Img, // Ton import local
+    },
+];
 
-// SVGs import from a unique file
-import { LeftCarouselIcon, RightCarouselIcon } from './svg'
-
-/*Mock database*/
-const mockPartitons: IPartitions[] = [
-    {
-        title : "Zombie",
-        artist : "The Cranberries",
-        difficulty : 1,
-        instrument : "guitare",
-        preview : PartitionImg,
-        audioPreviewUrl : "https://fake_url.com",
-        id : "1",
-    },
-    {
-        title : "Smells Like Teen Spirit",
-        artist : "Nirvanna",
-        difficulty : 2,
-        instrument : "guitare",
-        preview : PartitionImg,
-        audioPreviewUrl : "https://fake_url.com",
-        id : "2",
-    },
-    {
-        title : "Comme Des Connards",
-        artist : "Mickael Youn",
-        difficulty : 2,
-        preview : PartitionImg,
-        audioPreviewUrl : "https://fake_url.com",
-        id : "3",
-    },
-    {
-        title : "Still Waiting",
-        artist : "Sum 41",
-        difficulty : 4,
-        preview : PartitionImg,
-        audioPreviewUrl : "https://fake_url.com",
-        id : "4",
-    },
-    {
-        title : "Pretty Fly (For A White Guy)",
-        artist : "The Offspring",
-        difficulty : 3,
-        preview : PartitionImg,
-        audioPreviewUrl : "https://fake_url.com",
-        id : "5",
-    }
-]
+const MOCK_PARTITIONS2: IPartitions[] = []
 
 export interface IHomeProps {}
 
 const Home: React.FC<IHomeProps> = () => {
     return(
-        <Box className="channel"
-        overflowY={"auto"} height={"100%"}>
-            <Box as="section" id="recents" className="channet-section" 
-            display={"block"}>
-                <Box className="carousel">
-                    <Box className="container">
-                        <Flex className="channel-heading" 
-                        direction={"column"} justifyContent={"center"}
-                        position={"relative"}
-                        minH={"32px"}>
-                            <Box flex={"1 1 0%"}>
-                                <Heading
-                                fontFamily={"Inter,Arial,sans-serif"} fontWeight={"700"} fontSize={"20px"} lineHeight={"24px"}>
-                                    Écouté récemment
-                                </Heading>
-                            </Box>
-                            <Box className="carousel-controls"
-                            position={"absolute"} right={0} top={"50%"}
-                            transform={"translateY(-50%"}>
-                                <Flex className="carousel-control carousel-prev"
-                                display={"inline-flex"}
-                                paddingLeft={"8px"}>
-                                    <Button type="button" aria-label="Précédent"
-                                    gap={"0.25rem"}
-                                    minH={"3rem"} minW={"3rem"} 
-                                    padding={0}
-                                    color={"#706e73"}
-                                    background={"transparent"}
-                                    borderRadius={"full"}
-                                    boxShadow={"none"}
-                                    outline={"transparent solid 2px"} outlineOffset={0}
-                                    opacity={"0.4"}
-                                    cursor={"not-allowed"} tabIndex={-1}
-                                    transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"} transitionDuration={"200ms"}
-                                    _hover={{
-                                        background: "transparent"
-                                    }}
-                                    _active={{
-                                        backgroundColor: "#706e73"
-                                    }}
-                                    >
-                                        <LeftCarouselIcon color="rgb(112, 110, 115)"/>
-                                    </Button>
-                                </Flex>
-                            </Box>
-                        </Flex>
-                    </Box>
-                    <Box>
+        <Box id="main"
+        overflowY={"auto"} height={"100%"} mb={"70px"}>
+            <Carousel id="recents-carousel" 
+            data={MOCK_PARTITIONS2} title="Partitions joués récement"
+            renderItem={(item:IPartitions) => (
+                <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
+            )} />
 
-                    </Box>
-                </Box>
-            </Box>
-            <Box as="section" id="suggestions" display={"block"}>
+            <Carousel id="suggestions-carousel"
+            data={MOCK_PARTITIONS1} title="Suggestions"
+            renderItem={(item:IPartitions) => (
+                <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
+            )}/>
 
-                {/* future CAROUSEL */}
+            <Carousel id="news-carousel"
+            data={MOCK_PARTITIONS2} title="nouveautés"
+            renderItem={(item:IPartitions) => (
+                <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
+            )}/>
 
-            </Box>
-            <Box as="section" id="news" display={"block"}>
+            <Carousel id="popular-carousel"
+            data={MOCK_PARTITIONS1} title="Partitions populaires"
+            renderItem={(item:IPartitions) => (
+                <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
+            )}/>
 
-                {/* future CAROUSEL */}
-
-            </Box>
-            <Box as="section" id="tops" display={"block"}>
-
-                {/* future CAROUSEL */}
-
-            </Box>
             <Box as="section" id="listen" display={"block"}>
 
                 {/* future CAROUSEL */}

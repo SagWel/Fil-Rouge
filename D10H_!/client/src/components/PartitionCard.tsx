@@ -3,7 +3,6 @@ import { type IPartitions } from "../types/partitions";
 
 // SVGs import from a unique file
 import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "./svg";
-import { type InstrumentType } from "../types/instrument";
 
 // Displays icons according to the difficulty value
 function difficultyLvl(difficulty: number): React.JSX.Element[] {
@@ -14,7 +13,7 @@ function difficultyLvl(difficulty: number): React.JSX.Element[] {
 }
 
 // 
-function IconCard (instrumentKey: InstrumentType): React.JSX.Element | null {
+function IconCard (instrumentKey: string): React.JSX.Element | null {
 
     switch (instrumentKey) {
         case 'guitare': return <GuitarIcon />
@@ -32,9 +31,7 @@ function IconCard (instrumentKey: InstrumentType): React.JSX.Element | null {
 export interface IPartitionCardProps { partition: IPartitions, currentInstrument: string }
 
 // Card for each scores in search result
-const PartitionCard: React.FC<IPartitionCardProps> = ({partition, currentInstrument}) => {
-    console.log(partition);
-        
+const PartitionCard: React.FC<IPartitionCardProps> = ({partition, currentInstrument}) => {        
     return (
     <Flex as={"a"} href={`/partitions/${currentInstrument}/${partition.id}`} direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
     backgroundColor={"transparent"} minH={"192px"}>
