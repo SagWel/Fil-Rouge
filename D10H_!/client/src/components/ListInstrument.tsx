@@ -15,15 +15,14 @@ import Saxo from '../../public/img/Saxo.png';
 export interface IListInstrumentsProps {}
 
 const ListInstruments: React.FC<IListInstrumentsProps> = () => {
-    // Instruments data is located here, but it will be moved to the database.
 const instrumentData: IInstrument[] = [
-    { id: 'guitare' , name: 'guitare' ,  imgSrc: Guitare, linkToSearch: '/partitions/guitare'},
-    { id: 'basse' , name: 'basse' ,  imgSrc: Basse , linkToSearch: '/partitions/basse'},
-    { id: 'piano' , name: 'piano' ,  imgSrc: Piano , linkToSearch: '/partitions/piano'},
-    { id: 'batterie' , name: 'batterie' ,  imgSrc: Batterie , linkToSearch: '/partitions/batterie'},
-    { id: 'chant' , name: 'chant' ,  imgSrc: Chant , linkToSearch: '/partitions/chant'},
-    { id: 'ukulele' , name: 'ukulele' ,  imgSrc: Ukulele , linkToSearch: '/partitions/ukulele'},
-    { id: 'saxo' , name: 'saxo' ,  imgSrc: Saxo , linkToSearch: '/partitions/saxo'},
+    { id: 1 , name: 'guitare' ,  imgSrc: Guitare, linkToSearch: '/partitions/guitare'},
+    { id: 2 , name: 'basse' ,  imgSrc: Basse , linkToSearch: '/partitions/basse'},
+    { id: 3 , name: 'piano' ,  imgSrc: Piano , linkToSearch: '/partitions/piano'},
+    { id: 4 , name: 'batterie' ,  imgSrc: Batterie , linkToSearch: '/partitions/batterie'},
+    { id: 5 , name: 'chant' ,  imgSrc: Chant , linkToSearch: '/partitions/chant'},
+    { id: 6 , name: 'ukulele' ,  imgSrc: Ukulele , linkToSearch: '/partitions/ukulele'},
+    { id: 7 , name: 'saxo' ,  imgSrc: Saxo , linkToSearch: '/partitions/saxo'},
 ]
 
     return (

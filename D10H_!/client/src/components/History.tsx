@@ -8,9 +8,6 @@ import { ShuffleIcon } from "./svg";
 // Card for each scores in the database
 import PartitionCard from './PartitionCard'
 
-// Pictures import as modules
-import PartitionImg from '../../public/img/Partition.jpeg'
-
 export interface IHistoryProps {}
 
 const History: React.FC<IHistoryProps> = () => {
@@ -241,7 +238,7 @@ const History: React.FC<IHistoryProps> = () => {
                             marginTop={"2rem"} marginBottom={"5rem"}>
 
                                 {mockPartitons.map((partition: IPartitions) => (
-                                    <PartitionCard key={partition.id} partition={partition} />
+                                    <PartitionCard key={partition.id} partition={partition} currentInstrument={partition.instruments.currentInstrument.name} />
                                 ))}
 
                             </Grid>

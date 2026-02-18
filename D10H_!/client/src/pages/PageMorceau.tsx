@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
-import PartitionRender from "../components/PartitionRender2";
+import PartitionRender from "../components/PartitionRender";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
