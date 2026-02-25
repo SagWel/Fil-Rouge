@@ -1,0 +1,816 @@
+import { Stack, chakra, Box, Flex, Link, Heading, FormControl, Button, FormLabel, Input, Text, Wrap, Image, FormErrorMessage, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Select } from "@chakra-ui/react"
+import { LogoTempo, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon } from "../components/svg"
+import '../style.css'
+import { useState } from "react"
+import { useSearchParams, useNavigate, type NavigateFunction } from "react-router-dom"
+
+export interface IPageSignupProps {}
+
+const PageSignup: React.FC<IPageSignupProps> = () => {
+    const navigate: NavigateFunction = useNavigate()
+    
+    const isError: boolean = false
+    const [searchParams, setSearchParams] = useSearchParams()
+    const currentStep = parseInt(searchParams.get("step") || "0")
+
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [username, setUsername] = useState<string>('')
+    const [age, setAge] = useState<number>(0)
+    const [identity, setidentity] = useState<string>('')
+        
+    const handleOnClickNext = () => {
+        const nextStep: number = currentStep + 1
+        setSearchParams({step: nextStep.toString()})
+    }
+
+    const handleOnClickPrev = () => {
+        const prevStep: number = currentStep - 1
+        setSearchParams({step: prevStep.toString()})
+    }
+
+    const handleOnClickCreatProfil = async (data) => {
+        try {
+        } catch (error) {
+        }
+    }
+
+    return (
+        <Stack alignItems={"center"} gap={"1.5rem"}
+        pb={"3rem"}
+        minH={"100vh"} w={"100%"}>
+            <chakra.nav w={"100%"}>
+                <Box display={"none"}
+                alignItems={"center"}
+                paddingInline={"0.5rem"}
+                py={"1.5rem"}
+                w={"100%"}
+                borderBottom={0} borderBottomColor={"#38373b !important"}>
+                    <Flex alignItems={"center"} w={"100%"}>
+                        <Flex justifyContent={"left"}
+                        marginInlineEnd={0}
+                        w={"100%"}>
+                            <Link href="/"
+                            color={"inherit"}
+                            textDecor={"inherit"}>
+                                <LogoTempo />
+                            </Link>
+                        </Flex>
+                    </Flex>
+                </Box>
+                <Box display={"inherit"} alignItems={"center"}
+                w={"100%"}
+                paddingInline={"0.5rem"}
+                py={"1.5rem"}
+                borderBottom={0} borderColor={"#38373b !important"}>
+                    <Flex alignItems={"center"} w={"100%"}>
+                        <Flex justifyContent={"left"}
+                        marginInlineEnd={0}
+                        w={"100%"}>
+                            <Link href="/"
+                            color={"inherit"}
+                            textDecor={"inherit"}>
+                                <LogoTempo />
+                            </Link>
+                        </Flex>
+                    </Flex>
+                </Box>
+            </chakra.nav>
+            <Stack alignItems={"center"} gap={"1rem"} flexGrow={1}
+            h={"100%"} w={"100%"}>
+                <Stack alignItems={"center"} gap={"0.5rem"} flexGrow={1}
+                pos={"relative"}
+                p={"1rem"}
+                width={"100%"}
+                bg={"#000000"}>
+                    {currentStep === 0 && (
+                    <Stack alignItems={"center"} gap={"0.5rem"}
+                    marginInline={"auto"}
+                    maxW={"512px"} w={"100%"}>
+                        <Stack alignItems={"center"} gap={"1.5rem"} w={"100%"}>
+                            <Stack gap={"1.5rem"}
+                            paddingInline={"0"}
+                            w={"100%"} maxW={"512px"}
+                            color={"#ffffff"}>
+                                <Heading as={"h2"}
+                                fontWeight={"700"} fontSize={"46px"} lineHeight={"48px"} maxW={"100ch"}>
+                                    Entre ton adresse email
+                                </Heading>
+                            </Stack>
+                            <chakra.form style={{width: "100%"}}>
+                                <Stack alignItems={"center"} gap={"1rem"}
+                                marginInline={"auto"}
+                                maxW={"512px"} w={"100%"}>
+                                    <FormControl w={"100%"} pos={"relative"} isInvalid={isError}>
+                                        <FormLabel display={"block"}
+                                        marginInlineEnd={"0.75rem"}
+                                        mb={"0.5rem"}
+                                        fontWeight={"500"} fontSize={"0.875rem"}
+                                        color={"#a19fa4"}
+                                        textAlign={"start"}
+                                        opacity={1}
+                                        transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}>
+                                            Email
+                                        </FormLabel>
+                                        <Input name="email" type="email" id="email" autoComplete="email" placeholder="Adresse email" required value={email}
+                                        position={"relative"}
+                                        paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
+                                        w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
+                                        fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                        color={"#ffffff"} lineHeight={"24px"} textDecor={"none"}
+                                        bg={"#242326"}
+                                        borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
+                                        outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                        transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                        appearance={"none"}
+                                        _placeholder={{color: "#5D6E73"}}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        _active={{
+                                            borderColor: "#ad47ff"
+                                        }}
+                                        _focus={{
+                                            borderColor: "#ad47ff"
+                                        }}
+                                        _focusVisible={{
+                                            borderColor: "transparent"
+                                        }}
+                                        _hover={{
+                                            bg: "#2e2c30",
+                                            color : "#f5f2f8"
+                                        }}/>
+                                        {isError && (
+                                        <FormErrorMessage display={"flex"} alignItems={"center"}
+                                        mt={"0.5rem"}
+                                        fontSize={"0.875rem"}
+                                        lineHeight={"normal"} textAlign={"start"}
+                                        color={"#E53E3E"}>
+                                            <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                            mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                            Le champ ne doit pas être vide.
+                                        </FormErrorMessage>)}
+                                    </FormControl>
+                                    <Button type="submit" onClick={(e) => {
+                                        e.preventDefault()
+                                        handleOnClickNext()}}
+                                    display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                    whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                    pos={"relative"}
+                                    paddingInline={"1.5rem"}
+                                    py={"0.75rem"} p={0}
+                                    minH={"3rem"} minW={"3rem"} h={"auto"} w={"100%"}
+                                    fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                    lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                    bg={"#ad47ff"}
+                                    borderRadius={"0.75rem"}
+                                    outline={"transparent solid 2px"} outlineOffset={0}
+                                    transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                    userSelect={"none"}
+                                    _active={{
+                                        color: "#e2dfe6",
+                                        bg : "#ca97ff"
+                                    }}
+                                    _focusVisible={{
+                                        boxShadow: "none",
+                                        outlineColor: "#f5f2f8"
+                                    }}
+                                    _hover={{
+                                        color: "#f5f2f8",
+                                        bg: "#bb73ff"
+                                    }}>
+                                        <span>Continuer</span>
+                                    </Button>
+                                    <Text as={"p"} color={"#a19fa4"}>ou</Text>
+                                    <Wrap flexShrink={0} justifyContent={"center"}>
+                                        <Flex pos={"relative"}>
+                                            <Button type="button" aria-label="facebook"
+                                            display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                            whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                            pos={"relative"}
+                                            paddingInline={0}
+                                            py={0} p={0}
+                                            minH={"3rem"} minW={"3rem"} h={"auto"}
+                                            fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                            lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                            bg={"transparent"}
+                                            border={"#4e4c51 solid 0.0625rem"} borderRadius={"full"}
+                                            outline={"transparent solid 1px"} outlineOffset={0}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                            userSelect={"none"}
+                                            _active={{
+                                                bg: "#38373b",
+                                                borderColor: "#656367",
+                                                color: "#e2dfe6"
+                                            }}
+                                            _focusVisible={{
+                                                boxShadow: "none",
+                                                borderColor: "#ad47ff",
+                                                outlineColor: "#ad47ff"
+                                            }}
+                                            _hover={{
+                                                bg: "#2e2c30",
+                                                borderColor: "#59575c",
+                                                color: "#f5f2f8"
+                                            }}>
+                                                <FacebookIcon 
+                                                lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
+                                            </Button>
+                                        </Flex>
+                                        <Flex pos={"relative"}>
+                                            <Button type="button" aria-label="google"
+                                            display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                            whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                            pos={"relative"}
+                                            paddingInline={0}
+                                            py={0} p={0}
+                                            minH={"3rem"} minW={"3rem"} h={"auto"}
+                                            fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                            lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                            bg={"transparent"}
+                                            border={"#4e4c51 solid 0.0625rem"} borderRadius={"full"}
+                                            outline={"transparent solid 1px"} outlineOffset={0}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                            userSelect={"none"}
+                                            _active={{
+                                                bg: "#38373b",
+                                                borderColor: "#656367",
+                                                color: "#e2dfe6"
+                                            }}
+                                            _focusVisible={{
+                                                boxShadow: "none",
+                                                borderColor: "#ad47ff",
+                                                outlineColor: "#ad47ff"
+                                            }}
+                                            _hover={{
+                                                bg: "#2e2c30",
+                                                borderColor: "#59575c",
+                                                color: "#f5f2f8"
+                                            }}>
+                                                <GoogleIcon 
+                                                lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
+                                            </Button>
+                                        </Flex>
+                                        <Flex pos={"relative"}>
+                                            <Button type="button" aria-label="apple"
+                                            display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                            whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                            pos={"relative"}
+                                            paddingInline={0}
+                                            py={0} p={0}
+                                            minH={"3rem"} minW={"3rem"} h={"auto"}
+                                            fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                            lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                            bg={"transparent"}
+                                            border={"#4e4c51 solid 0.0625rem"} borderRadius={"full"}
+                                            outline={"transparent solid 1px"} outlineOffset={0}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                            userSelect={"none"}
+                                            _active={{
+                                                bg: "#38373b",
+                                                borderColor: "#656367",
+                                                color: "#e2dfe6"
+                                            }}
+                                            _focusVisible={{
+                                                boxShadow: "none",
+                                                borderColor: "#ad47ff",
+                                                outlineColor: "#ad47ff"
+                                            }}
+                                            _hover={{
+                                                bg: "#2e2c30",
+                                                borderColor: "#59575c",
+                                                color: "#f5f2f8"
+                                            }}>
+                                                <AppleIcon 
+                                                lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
+                                            </Button>
+                                        </Flex>
+                                    </Wrap>
+                                </Stack>
+                            </chakra.form>
+                            <Stack alignItems={"center"} gap={"0.75rem"}>
+                                <Link href="https://www.deezer.com/fr/activate"
+                                display={"block"}
+                                paddingInline={"2rem"}
+                                py={"1rem"}
+                                maxW={"100%"}
+                                color={"inherit"}
+                                textDecor={"inherit"}
+                                _focusVisible={{
+                                    outlineColor: "#ad47ff"
+                                }}>
+                                    <Stack alignItems={"center"} flexDir={"row"} gap={"0.5rem"}>
+                                        <Image alt="Orange" src="https://cdn-images.dzcdn.net/images/misc/ca4c4a56fa60322f150f0f3a57547956/48x0-none-90-1-1.png" 
+                                        h={"24px"} borderStyle={"none"}/>
+                                        <Image alt="SFR" src="https://cdn-images.dzcdn.net/images/misc/03b7777a67b9a2e38bcdded22b3f5573/48x0-none-90-1-1.png" 
+                                        h={"24px"} borderStyle={"none"}/>
+                                        <Image alt="Bouygues Telecom" src="https://cdn-images.dzcdn.net/images/misc/912bd5209924e7d14782dc1040afa749/48x0-none-90-1-1.png" 
+                                        h={"24px"} borderStyle={"none"}/>
+                                        <Text as={"p"}
+                                        pl={"0.75rem"}
+                                        fontSize={"14px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                        lineHeight={"20px"} textDecor={"none"} color={"#a19fa4"}>
+                                            Offres partenaires
+                                        </Text>
+                                        <RightCarouselIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"} color="#a19fa4" display={"block"}/>
+                                    </Stack>
+                                </Link>
+                            </Stack>
+                        </Stack>
+                    </Stack>
+                    )}
+                    {currentStep === 1 && (
+                        <Stack alignItems={"center"} gap={"0.5rem"}
+                        marginInline={"auto"}
+                        maxW={"512px"} w={"100%"}>
+                            <Stack onClick={() => {handleOnClickPrev()}}
+                            alignItems={"center"} justifyContent={"flex-start"} gap={"0.125rem"} flexDir={"row"}
+                            maxW={"512px"} w={"100%"}
+                            textAlign={"start"}
+                            cursor={"pointer"}>
+                                <LeftCarouselIcon lineHeight={"1rem"} flexShrink={0} color="#a19fa4" verticalAlign={"middle"} display={"block"}/>
+                                <Text
+                                fontSize={"14px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                lineHeight={"20px"} textDecor={"none"} color={"#a19fa4"}>
+                                    Étape 2 sur 3
+                                </Text>
+                            </Stack>
+                            <Stack alignItems={"center"} gap={"1.5rem"} w={"100%"}>
+                                <Stack gap={"1.5rem"}
+                                paddingInline={"0"}
+                                w={"100%"} maxW={"512px"}
+                                color={"#ffffff"}>
+                                    <Heading as={"h2"}
+                                    fontWeight={"700"} fontSize={"46px"} lineHeight={"48px"} maxW={"100ch"}>
+                                        Créer un mot de passe
+                                    </Heading>
+                                </Stack>
+                                <chakra.form style={{width: "100%"}}>
+                                    <Stack alignItems={"center"} gap={"1rem"}
+                                    marginInline={"auto"}
+                                    maxW={"512px"} w={"100%"}>
+                                        <FormControl w={"100%"} pos={"relative"} isInvalid={isError}>
+                                            <FormLabel display={"block"}
+                                            marginInlineEnd={"0.75rem"}
+                                            mb={"0.5rem"}
+                                            fontWeight={"500"} fontSize={"0.875rem"}
+                                            color={"#a19fa4"}
+                                            textAlign={"start"}
+                                            opacity={1}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}>
+                                                Mot de passe
+                                            </FormLabel>
+                                            <Input name="password" type="password" id="password" autoComplete="password" placeholder="Mot de passe" required value={password}
+                                            position={"relative"}
+                                            paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
+                                            w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
+                                            fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                            color={"#ffffff"} lineHeight={"24px"} textDecor={"none"}
+                                            bg={"#242326"}
+                                            borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
+                                            outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                            appearance={"none"}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            _placeholder={{color: "#5D6E73"}}
+                                            _active={{
+                                                borderColor: "#ad47ff"
+                                            }}
+                                            _focus={{
+                                                borderColor: "#ad47ff"
+                                            }}
+                                            _hover={{
+                                                bg: "#2e2c30",
+                                                color : "#f5f2f8"
+                                            }}/>
+                                            {isError && (
+                                            <FormErrorMessage display={"flex"} alignItems={"center"}
+                                            mt={"0.5rem"}
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"normal"} textAlign={"start"}
+                                            color={"#E53E3E"}>
+                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                Le champ ne doit pas être vide.
+                                            </FormErrorMessage>)}
+                                        </FormControl>
+                                        <Button type="submit" onClick={(e) => {
+                                            e.preventDefault()
+                                            /*logique backend*/                                            
+                                            const usernameSuggestion: string = email.split('@')[0].split([/[.\-_]/]).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
+                                            setUsername(usernameSuggestion)
+                                            handleOnClickNext()}}
+                                        display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                        whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                        pos={"relative"}
+                                        paddingInline={"1.5rem"}
+                                        py={"0.75rem"} p={0}
+                                        minH={"3rem"} minW={"3rem"} h={"auto"} w={"100%"}
+                                        fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                        lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                        bg={"#ad47ff"}
+                                        borderRadius={"0.75rem"}
+                                        outline={"transparent solid 2px"} outlineOffset={0}
+                                        transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                        userSelect={"none"}
+                                        _active={{
+                                            color: "#e2dfe6",
+                                            bg : "#ca97ff"
+                                        }}
+                                        _focusVisible={{
+                                            boxShadow: "none",
+                                            outlineColor: "#f5f2f8"
+                                        }}
+                                        _hover={{
+                                            color: "#f5f2f8",
+                                            bg: "#bb73ff"
+                                        }}>
+                                            <span>Continuer</span>
+                                        </Button>
+                                        <Text as={"p"} color={"#a19fa4"}>ou</Text>
+                                        <Wrap flexShrink={0} justifyContent={"center"}>
+                                            <Flex pos={"relative"}>
+                                                <Button type="button" aria-label="facebook"
+                                                display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                                whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                                pos={"relative"}
+                                                paddingInline={0}
+                                                py={0} p={0}
+                                                minH={"3rem"} minW={"3rem"} h={"auto"}
+                                                fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                                lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                                bg={"transparent"}
+                                                border={"#4e4c51 solid 0.0625rem"} borderRadius={"full"}
+                                                outline={"transparent solid 1px"} outlineOffset={0}
+                                                transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                userSelect={"none"}
+                                                _active={{
+                                                    bg: "#38373b",
+                                                    borderColor: "#656367",
+                                                    color: "#e2dfe6"
+                                                }}
+                                                _focusVisible={{
+                                                    boxShadow: "none",
+                                                    borderColor: "#ad47ff",
+                                                    outlineColor: "#ad47ff"
+                                                }}
+                                                _hover={{
+                                                    bg: "#2e2c30",
+                                                    borderColor: "#59575c",
+                                                    color: "#f5f2f8"
+                                                }}>
+                                                    <FacebookIcon 
+                                                    lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
+                                                </Button>
+                                            </Flex>
+                                            <Flex pos={"relative"}>
+                                                <Button type="button" aria-label="google"
+                                                display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                                whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                                pos={"relative"}
+                                                paddingInline={0}
+                                                py={0} p={0}
+                                                minH={"3rem"} minW={"3rem"} h={"auto"}
+                                                fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                                lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                                bg={"transparent"}
+                                                border={"#4e4c51 solid 0.0625rem"} borderRadius={"full"}
+                                                outline={"transparent solid 1px"} outlineOffset={0}
+                                                transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                userSelect={"none"}
+                                                _active={{
+                                                    bg: "#38373b",
+                                                    borderColor: "#656367",
+                                                    color: "#e2dfe6"
+                                                }}
+                                                _focusVisible={{
+                                                    boxShadow: "none",
+                                                    borderColor: "#ad47ff",
+                                                    outlineColor: "#ad47ff"
+                                                }}
+                                                _hover={{
+                                                    bg: "#2e2c30",
+                                                    borderColor: "#59575c",
+                                                    color: "#f5f2f8"
+                                                }}>
+                                                    <GoogleIcon 
+                                                    lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
+                                                </Button>
+                                            </Flex>
+                                            <Flex pos={"relative"}>
+                                                <Button type="button" aria-label="apple"
+                                                display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                                whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                                pos={"relative"}
+                                                paddingInline={0}
+                                                py={0} p={0}
+                                                minH={"3rem"} minW={"3rem"} h={"auto"}
+                                                fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                                lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                                bg={"transparent"}
+                                                border={"#4e4c51 solid 0.0625rem"} borderRadius={"full"}
+                                                outline={"transparent solid 1px"} outlineOffset={0}
+                                                transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                userSelect={"none"}
+                                                _active={{
+                                                    bg: "#38373b",
+                                                    borderColor: "#656367",
+                                                    color: "#e2dfe6"
+                                                }}
+                                                _focusVisible={{
+                                                    boxShadow: "none",
+                                                    borderColor: "#ad47ff",
+                                                    outlineColor: "#ad47ff"
+                                                }}
+                                                _hover={{
+                                                    bg: "#2e2c30",
+                                                    borderColor: "#59575c",
+                                                    color: "#f5f2f8"
+                                                }}>
+                                                    <AppleIcon 
+                                                    lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
+                                                </Button>
+                                            </Flex>
+                                        </Wrap>
+                                    </Stack>
+                                </chakra.form>
+                                <Stack alignItems={"center"} gap={"0.75rem"}>
+                                    <Link href="https://www.deezer.com/fr/activate"
+                                    display={"block"}
+                                    paddingInline={"2rem"}
+                                    py={"1rem"}
+                                    maxW={"100%"}
+                                    color={"inherit"}
+                                    textDecor={"inherit"}
+                                    _focusVisible={{
+                                        outlineColor: "#ad47ff"
+                                    }}>
+                                        <Stack alignItems={"center"} flexDir={"row"} gap={"0.5rem"}>
+                                            <Image alt="Orange" src="https://cdn-images.dzcdn.net/images/misc/ca4c4a56fa60322f150f0f3a57547956/48x0-none-90-1-1.png" 
+                                            h={"24px"} borderStyle={"none"}/>
+                                            <Image alt="SFR" src="https://cdn-images.dzcdn.net/images/misc/03b7777a67b9a2e38bcdded22b3f5573/48x0-none-90-1-1.png" 
+                                            h={"24px"} borderStyle={"none"}/>
+                                            <Image alt="Bouygues Telecom" src="https://cdn-images.dzcdn.net/images/misc/912bd5209924e7d14782dc1040afa749/48x0-none-90-1-1.png" 
+                                            h={"24px"} borderStyle={"none"}/>
+                                            <Text as={"p"}
+                                            pl={"0.75rem"}
+                                            fontSize={"14px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                            lineHeight={"20px"} textDecor={"none"} color={"#a19fa4"}>
+                                                Offres partenaires
+                                            </Text>
+                                            <RightCarouselIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"} color="#a19fa4" display={"block"}/>
+                                        </Stack>
+                                    </Link>
+                                </Stack>
+                            </Stack>
+                        </Stack>
+                    )}
+                    {currentStep === 2 && (
+                        <Stack alignItems={"center"} gap={"0.5rem"}
+                        marginInline={"auto"}
+                        maxW={"512px"} w={"100%"}>
+                            <Stack onClick={() => {handleOnClickPrev()}}
+                            alignItems={"center"} justifyContent={"flex-start"} gap={"0.125rem"} flexDir={"row"}
+                            maxW={"512px"} w={"100%"}
+                            textAlign={"start"}
+                            cursor={"pointer"}>
+                                <LeftCarouselIcon lineHeight={"1rem"} flexShrink={0} color="#a19fa4" verticalAlign={"middle"} display={"block"}/>
+                                <Text
+                                fontSize={"14px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                lineHeight={"20px"} textDecor={"none"} color={"#a19fa4"}>
+                                    Étape 3 sur 3
+                                </Text>
+                            </Stack>
+                            <Stack alignItems={"center"} gap={"1.5rem"} w={"100%"}>
+                                <Stack gap={"1.5rem"}
+                                paddingInline={"0"}
+                                w={"100%"} maxW={"512px"}
+                                color={"#ffffff"}>
+                                    <Heading as={"h2"}
+                                    fontWeight={"700"} fontSize={"46px"} lineHeight={"48px"} maxW={"100ch"}>
+                                        Entre tes informations personnelles
+                                    </Heading>
+                                </Stack>
+                                <chakra.form style={{width: "100%"}}>
+                                    <Stack alignItems={"center"} gap={"1rem"}
+                                    marginInline={"auto"}
+                                    maxW={"512px"} w={"100%"}>
+                                        <FormControl w={"100%"} pos={"relative"} isInvalid={isError}>
+                                            <FormLabel display={"block"}
+                                            marginInlineEnd={"0.75rem"}
+                                            mb={"0.5rem"}
+                                            fontWeight={"500"} fontSize={"0.875rem"}
+                                            color={"#a19fa4"}
+                                            textAlign={"start"}
+                                            opacity={1}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}>
+                                                Pseudo
+                                            </FormLabel>
+                                            <Input name="username" type="username" id="username" autoComplete="username" placeholder="Pseudo" required value={username}
+                                            position={"relative"}
+                                            paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
+                                            w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
+                                            fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                            color={"#ffffff"} lineHeight={"24px"} textDecor={"none"}
+                                            bg={"#242326"}
+                                            borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
+                                            outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                            appearance={"none"}
+                                            onChange={(e) => setUsername(e.target.value)}
+                                            _placeholder={{color: "#5D6E73"}}
+                                            _active={{
+                                                borderColor: "#ad47ff"
+                                            }}
+                                            _focus={{
+                                                borderColor: "#ad47ff"
+                                            }}
+                                            _hover={{
+                                                bg: "#2e2c30",
+                                                color : "#f5f2f8"
+                                            }}/>
+                                            {isError && (
+                                            <FormErrorMessage display={"flex"} alignItems={"center"}
+                                            mt={"0.5rem"}
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"normal"} textAlign={"start"}
+                                            color={"#E53E3E"}>
+                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                Le champ ne doit pas être vide.
+                                            </FormErrorMessage>)}
+                                        </FormControl>
+                                        <FormControl w={"100%"} pos={"relative"} isInvalid={isError}>
+                                            <FormLabel display={"block"}
+                                            marginInlineEnd={"0.75rem"}
+                                            mb={"0.5rem"}
+                                            fontWeight={"500"} fontSize={"0.875rem"}
+                                            color={"#a19fa4"}
+                                            textAlign={"start"}
+                                            opacity={1}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}>
+                                                Âge
+                                            </FormLabel>
+                                            <NumberInput name="age" id="age" value={age > 0 ? age : ''}
+                                            step={1} min={0} max={9007199254740991} zIndex={0}>
+                                                <NumberInputField 
+                                                paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
+                                                w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
+                                                fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                                color={"#ffffff"} lineHeight={"24px"} textDecor={"none"}
+                                                bg={"#242326"}
+                                                borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
+                                                outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                                transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                appearance={"none"}
+                                                onChange={(e) => setAge(parseInt(e.target.value))}
+                                                _placeholder={{color: "#5D6E73"}}
+                                                _active={{
+                                                    borderColor: "#ad47ff"
+                                                }}
+                                                _focus={{
+                                                    borderColor: "#ad47ff"
+                                                }}
+                                                _hover={{
+                                                    bg: "#2e2c30",
+                                                    color : "#f5f2f8"
+                                                }}/>
+                                                <NumberInputStepper right={"2px"} top={"2px"} bottom={"2px"}
+                                                alignItems={"center"} justifyContent={"center"}
+                                                marginInline={0}
+                                                m={"auto 1px"} py={"2px"}
+                                                h={"100%"}
+                                                borderInlineStart={"1px solid #4e4c51"}>
+                                                    <NumberIncrementStepper 
+                                                    h={"100%"} w={"100%"}
+                                                    maxH={"1.5rem"} maxW={"1.5rem"}
+                                                    color={"inherit"}
+                                                    border={0} borderInlineStart={"1px solid inherit"}
+                                                    children={<IncrementIcon size="20px"/>}/>
+                                                    <NumberDecrementStepper 
+                                                    h={"100%"} w={"100%"}
+                                                    maxH={"1.5rem"} maxW={"1.5rem"}
+                                                    color={"inherit"}
+                                                    border={0} borderInlineStart={"1px solid inherit"}
+                                                    children={<DecrementIcon size="20px"/>}/>
+                                                </NumberInputStepper>
+                                            </NumberInput>
+                                            {isError && (
+                                            <FormErrorMessage display={"flex"} alignItems={"center"}
+                                            mt={"0.5rem"}
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"normal"} textAlign={"start"}
+                                            color={"#E53E3E"}>
+                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                Le champ ne doit pas être vide.
+                                            </FormErrorMessage>)}
+                                        </FormControl>
+                                        <FormControl w={"100%"} pos={"relative"} isInvalid={isError}>
+                                            <FormLabel display={"block"}
+                                            marginInlineEnd={"0.75rem"}
+                                            mb={"0.5rem"}
+                                            fontWeight={"500"} fontSize={"0.875rem"}
+                                            color={"#a19fa4"}
+                                            textAlign={"start"}
+                                            opacity={1}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}>
+                                                Identité
+                                            </FormLabel>
+                                            <Select name="identity" id="identity" placeholder="Identité" required value={identity}
+                                            pos={"relative"}
+                                            pb={"1px"}
+                                            w={"100%"} h={"3rem"} minW={0} minH={"3rem"}
+                                            fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                            lineHeight={"24px"} color={"#ffffff"} textDecor={"none"}
+                                            bg={"#242326"}
+                                            borderRadius={"0.5rem"} border={"transparent solid 0.125rem"}
+                                            outline={"transparent solid 2px"} outlineOffset={"none"}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                            appearance={"none"}
+                                            onChange={(e) => setidentity(e.target.value)}
+                                            sx={{
+                                                paddingInlineStart: "1rem",
+                                                paddingInlineEnd: "2rem",
+                                                "> option": { bg: "#4e4c51"}
+                                            }}
+                                            _placeholder={{color: "#5D6E73"}}
+                                            _active={{
+                                                borderColor: "#ad47ff"
+                                            }}
+                                            _focus={{
+                                                borderColor: "#ad47ff"
+                                            }}
+                                            _hover={{
+                                                bg: "#2e2c30",
+                                                color : "#f5f2f8"
+                                            }}>
+                                                <option value={'F'}>Femme</option>
+                                                <option value={'M'}>Homme</option>
+                                                <option value={'NB'}>Non-binaire</option>
+                                                <option value={'P'}>Private</option>
+                                            </Select>
+                                            {isError && (
+                                            <FormErrorMessage display={"flex"} alignItems={"center"}
+                                            mt={"0.5rem"}
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"normal"} textAlign={"start"}
+                                            color={"#E53E3E"}>
+                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                Le champ ne doit pas être vide.
+                                            </FormErrorMessage>)}
+                                        </FormControl>
+                                        <Text as={"p"}
+                                        fontSize={"12px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
+                                        lineHeight={"16px"} textDecor={"none"} textAlign={"center"} opacity={"0.9"} color={"#a19fa4"} m={0}>
+                                            En cliquant sur "Inscris-toi gratuitement", tu acceptes de créer un compte ainsi que les
+                                            <Link href="https://www.deezer.com/legal/cgu" target="_blank" textDecor={"underline"}>
+                                                Conditions générales d'utilisation
+                                            </Link>
+                                            et la
+                                            <Link href="https://www.deezer.com/legal/personal-datas" target="_blanket" textDecor={"underline"}>
+                                                Politique de protection des données
+                                            </Link>
+                                        </Text>
+                                        <Button type="submit" onClick={(e) => {
+                                            e.preventDefault()
+                                            /*logique backend*/
+                                            navigate('/login')}}
+                                        display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                        whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                        pos={"relative"}
+                                        paddingInline={"1.5rem"}
+                                        py={"0.75rem"} p={0}
+                                        minH={"3rem"} minW={"3rem"} h={"auto"} w={"100%"}
+                                        fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                        lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                        bg={"#ad47ff"}
+                                        borderRadius={"0.75rem"}
+                                        outline={"transparent solid 2px"} outlineOffset={0}
+                                        transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                        userSelect={"none"}
+                                        _active={{
+                                            color: "#e2dfe6",
+                                            bg : "#ca97ff"
+                                        }}
+                                        _focusVisible={{
+                                            boxShadow: "none",
+                                            outlineColor: "#f5f2f8"
+                                        }}
+                                        _hover={{
+                                            color: "#f5f2f8",
+                                            bg: "#bb73ff"
+                                        }}>
+                                            <span>Inscris-toi gratuitement</span>
+                                        </Button>
+                                    </Stack>
+                                </chakra.form>
+                            </Stack>
+                        </Stack>
+                    )}
+                </Stack>
+            </Stack>
+        </Stack>
+    )
+}
+
+export default PageSignup

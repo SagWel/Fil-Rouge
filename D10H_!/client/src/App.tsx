@@ -13,6 +13,10 @@ import Favoris from './pages/PageFavoris.tsx';
 import History from './pages/PageHistory.tsx';
 import Scorbraries from './pages/PageScorbaries.tsx'
 import Scorbrary from './pages/PageScorbrary.tsx';
+import PageInfos from './pages/PageInfos.tsx';
+import PageLogin from './pages/PageLogin.tsx';
+import PageSignup from './pages/PageSignup.tsx';
+import PageResetPassword from './pages/PageResetPassword.tsx'
 
 // Components imports
 import Tools from './components/Tools.tsx';
@@ -38,6 +42,7 @@ function App() {
   const TOOLS_WIDTH = "50px"
   
   const [onPlay, setOnPlay] = useState<boolean>(false)
+  const [iSAuthenticate, setIsAuthticate] = useState<boolean>(true)
   
   // Variables for Scores page identification
   const location = useLocation()
@@ -59,7 +64,7 @@ function App() {
   }
 
   // Scores page template
-  if (onPageMorceau) {
+  if (onPageMorceau && iSAuthenticate) {
     return (
     <Grid
     
@@ -113,7 +118,7 @@ function App() {
         </Box>
       </Grid>
 
-  )} else {
+  )} else if (iSAuthenticate) {
 
     // Others pages template
     return (
@@ -165,6 +170,20 @@ function App() {
           <Playeur />
         </Box>
       </Grid>
+    )
+  } else {
+    return (
+      <Box bg={"#000000"} width={"100%"}>
+        <Routes>
+          <Route path='/' element={<PageInfos />} />
+
+          <Route path='/login' element={<PageLogin />} />
+
+          <Route path='/resetpassword' element={<PageResetPassword />} />
+
+          <Route path='/signup/' element={<PageSignup />}/>
+        </Routes>
+      </Box>
     )
   }
 }
