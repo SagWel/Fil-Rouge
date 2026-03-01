@@ -18,9 +18,12 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                 flexGrow={0}
                 textAlign={"center"} color={"#fdfcfe"} textDecor={"none"}
                 w={'fit-content'}
+                fontSize={"1,125rem"} fontWeight={"600"}
                 outline={0}
-                zIndex={"201"} cursor={"pointer"}>
+                zIndex={"201"} cursor={"pointer"}
+                _hover={{textDecor: "none"}}>
                     <LogoTempo />
+                    &nbsp;D10H !
                 </Link>
                 <Flex className='tempo-topbar-exposed-links' display={"none"} flexDir={"row"} flexGrow={1}
                 ml={"112px"} mr={"calc(14px*2)"}>
@@ -104,7 +107,7 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                     }}>
                         Connexion
                     </Link>
-                    <Link id='topbar-register-button' href='/signup' className='topbar-action'
+                    <Link id='topbar-register-button' href='/signup/?step=0' className='topbar-action'
                     display={"none"} alignItems={"center"} gap={"14px"} justifyContent={"space-evenly"}
                     position={"relative"}
                     padding={"9px 20px"}
@@ -148,7 +151,7 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                         fontSize={"140px"} fontWeight={"800"}
                         lineHeight={".9"} textTransform={"uppercase"}
                         sx={{textWrap: 'balance'}}>
-                            Là où ta musique prend vie
+                            Là où ta partition prend vie
                         </Heading>
                         <Text as={"p"} display={"block"}
                         marginBlock={"1em"} marginInline={0}
@@ -156,7 +159,15 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                         fontSize={"35px"} fontWeight={"700"}
                         color={"#0f0d13"}
                         lineHeight={"1.2"} textAlign={"center"}>
-                            Le streaming musical par Deezer
+                            La lecture musical par D10H !
+                        </Text>
+                        <Text as={"p"} display={"block"}
+                        marginBlock={"1em"} marginInline={0}
+                        pb={"14px"} m={0}
+                        fontSize={"24px"} fontWeight={"700"}
+                        color={"#a238ff"}
+                        lineHeight={"1.2"} textAlign={"center"}>
+                            Une extension Deezer
                         </Text>
                         <Link href='/signup/?step=0'
                         display={"inline-flex"} alignItems={"center"} gap={"14px"} justifyContent={"space-evenly"}

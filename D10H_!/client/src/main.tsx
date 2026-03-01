@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import {BrowserRouter} from 'react-router-dom'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
+import { AuthProvider } from './context/AuthContext.tsx'
 import theme from './theme.ts'
 
 
@@ -12,10 +13,12 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(
-    <BrowserRouter>
-        <ChakraProvider theme={theme}> 
-            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-            <App />
-        </ChakraProvider>
-    </BrowserRouter>
+    <AuthProvider>
+        <BrowserRouter>
+            <ChakraProvider theme={theme}> 
+                <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+                <App />
+            </ChakraProvider>
+        </BrowserRouter>
+    </AuthProvider>
 )

@@ -12,6 +12,7 @@ $dbPort = $_ENV['MYSQL_PORT'];
 $dbName = $_ENV['MYSQL_NAME'];
 $dbuser = $_ENV['MYSQL_USER'];
 $dbPwd = $_ENV['MYSQL_PWD'];
+$secretKey = $_ENV['MA_SUPER_CLEF_SECRETE'];
 
 try {
     $pdo = new PDO(

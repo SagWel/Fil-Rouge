@@ -1,0 +1,105 @@
+import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { type JwtPayload } from "jwt-decode";
+
+interface DecodedUser extends JwtPayload {
+    id: number,
+    username: string;
+    email: string
+}
+
+
+interface AuthContextType {
+    isAuthenticated: boolean,
+    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+    user: DecodedUser | null,
+    isFirstLogin: boolean
+    setUser: React.Dispatch<React.SetStateAction<DecodedUser | null>>,
+    setIsFirstLogin: React.Dispatch<React.SetStateAction<boolean>>,
+    logout: () => void,
+    loading: boolean
+}
+
+const AuthContext: React.Context<AuthContextType | undefined> = createContext<AuthContextType | undefined>(undefined)
+
+interface AuthProviderProps {
+  children: ReactNode
+}
+
+const AuthProvider = ({ children } : AuthProviderProps) => {
+    const [user, setUser] = useState<DecodedUser | null>(null);
+    const [isFirstLogin, setIsFirstLogin] = useState<boolean>(true)
+    const [loading, setLoading] = useState<boolean>(true)
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+
+    const host: string = import.meta.env.VITE_HOST
+    const port: string = import.meta.env.VITE_SERVER_PORT
+    const urlFecthAuthContext = import.meta.env.VITE_URL_FETCH_AUTHCONTEXT
+    const urlFetchLogout = import.meta.env.VITE_URL_FETCH_LOGOUT
+
+
+    const fetchAuthcontext = async () => {
+        try {
+            const res = await fetch(`http://${host}:${port}${urlFecthAuthContext}`, {credentials: 'include'})
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`)
+            }
+            
+            const data = await res.json()
+            setUser(data.user)
+            setIsFirstLogin(data.isFirstLogin)
+            setIsAuthenticated(data.isAuthenticated)
+        }  catch (err) {
+            logout()
+            console.error(err)
+        }          
+        setLoading(false)
+        }
+
+    const fetchLogout = async () => {
+        try {
+            const res = await fetch(`http://${host}:${port}${urlFetchLogout}`, {credentials: 'include'})
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`)
+            }
+
+            const data = await res.json()
+            setUser(data.user)
+            setIsFirstLogin(data.isFirstLogin)
+            setIsAuthenticated(data.isAuthenticated)
+        } catch (error) {
+        setUser(null)
+        setIsFirstLogin(true)
+        setLoading(false)
+        setIsAuthenticated(false)
+        console.error(error)
+        }
+    }
+
+    useEffect(() => {       
+        fetchAuthcontext()
+    }, [])
+
+    const logout = useCallback(() => {
+        fetchLogout()
+    }, [])
+
+    const contextValue = useMemo(() => ({
+        isAuthenticated,
+        setIsAuthenticated,
+        user, 
+        setUser,
+        isFirstLogin,
+        setIsFirstLogin,
+        logout,
+        loading
+    }), [user, logout, loading])
+
+
+    return (
+        <AuthContext.Provider value={contextValue}>
+            {children}
+        </AuthContext.Provider>
+    )
+}
+
+export {AuthContext, AuthProvider, type DecodedUser}

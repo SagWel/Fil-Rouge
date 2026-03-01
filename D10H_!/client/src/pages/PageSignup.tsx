@@ -3,13 +3,15 @@ import { LogoTempo, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, Left
 import '../style.css'
 import { useState } from "react"
 import { useSearchParams, useNavigate, type NavigateFunction } from "react-router-dom"
+import { useAuth } from "../hooks/useAuth"
+
 
 export interface IPageSignupProps {}
 
 const PageSignup: React.FC<IPageSignupProps> = () => {
     const navigate: NavigateFunction = useNavigate()
     
-    const isError: boolean = false
+    const [isError, setIsError] = useState<boolean>(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const currentStep = parseInt(searchParams.get("step") || "0")
 
@@ -18,6 +20,14 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
     const [username, setUsername] = useState<string>('')
     const [age, setAge] = useState<number>(0)
     const [identity, setidentity] = useState<string>('')
+    const [message, setMessage] = useState<string | null>(null)
+
+    const host: string = import.meta.env.VITE_HOST
+    const port: string = import.meta.env.VITE_SERVER_PORT
+    const urlFetchFindByEmail = import.meta.env.VITE_URL_FETCH_FINDBYEMAIL
+    const urlFetchCreatUser = import.meta.env.VITE_URL_FETCH_CREATUSER
+
+    const { setUser, setIsAuthenticated, setIsFirstLogin } = useAuth()
         
     const handleOnClickNext = () => {
         const nextStep: number = currentStep + 1
@@ -29,9 +39,51 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
         setSearchParams({step: prevStep.toString()})
     }
 
-    const handleOnClickCreatProfil = async (data) => {
+    const handleOnClickEmail = async () => {
         try {
+            const res: Response = await fetch(`http://${host}:${port}${urlFetchFindByEmail}${email}`, {credentials: 'include'})
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`)
+            }
+
+            const data = await res.json()
+            const isFounded: boolean = data.isFounded
+            setMessage(`${data.message}`)
+            setIsError(isFounded)
+            return isFounded
         } catch (error) {
+            console.error(error);
+            setMessage("Erreur lors du test de l'email")
+            return true
+        }
+    }
+
+    const handleOnClickCreatUser = async () => {
+        try {
+            const res: Response = await fetch(`http://${host}:${port}${urlFetchCreatUser}${email}`, {
+                method : 'POST',
+                headers : {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    username: username,
+                    age: age,
+                    identity: identity
+                }),
+                credentials: 'include'})
+
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`);
+            }
+            
+            const data = await res.json()
+            setUser(data.user)
+            setIsAuthenticated(data.isAuthenticated)
+            setIsFirstLogin(data.isFirstLogin)
+            navigate('/')
+        } catch (error) {
+            console.error("Impossible de créer l'utilisateur: ", error)
+            setIsError(true)
         }
     }
 
@@ -51,9 +103,12 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                         marginInlineEnd={0}
                         w={"100%"}>
                             <Link href="/"
-                            color={"inherit"}
-                            textDecor={"inherit"}>
+                            fontSize={"1,125rem"} fontWeight={"600"}
+                            color={"#ffffff"}
+                            textDecor={"inherit"}
+                            _hover={{textDecor: "none"}}>
                                 <LogoTempo />
+                                &nbsp;D10H !
                             </Link>
                         </Flex>
                     </Flex>
@@ -146,12 +201,15 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         color={"#E53E3E"}>
                                             <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                             mr={"0.5rem"} color="#E53E3E" display={"block"}/>
-                                            Le champ ne doit pas être vide.
+                                            {message ? message : "Le champ ne doit pas être vide."}
                                         </FormErrorMessage>)}
                                     </FormControl>
-                                    <Button type="submit" onClick={(e) => {
+                                    <Button type="submit" 
+                                    onClick={(e) => {
                                         e.preventDefault()
-                                        handleOnClickNext()}}
+                                        if (handleOnClickEmail){
+                                        handleOnClickNext()}}}
+                                        onBlur={handleOnClickEmail}
                                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
                                     whiteSpace={"nowrap"} verticalAlign={"middle"}
                                     pos={"relative"}
@@ -321,7 +379,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                         <Stack alignItems={"center"} gap={"0.5rem"}
                         marginInline={"auto"}
                         maxW={"512px"} w={"100%"}>
-                            <Stack onClick={() => {handleOnClickPrev()}}
+                            <Stack onClick={handleOnClickPrev}
                             alignItems={"center"} justifyContent={"flex-start"} gap={"0.125rem"} flexDir={"row"}
                             maxW={"512px"} w={"100%"}
                             textAlign={"start"}
@@ -394,8 +452,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         </FormControl>
                                         <Button type="submit" onClick={(e) => {
                                             e.preventDefault()
-                                            /*logique backend*/                                            
-                                            const usernameSuggestion: string = email.split('@')[0].split([/[.\-_]/]).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
+                                            const usernameSuggestion: string = email.split('@')[0].split(/[.\-_]/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
                                             setUsername(usernameSuggestion)
                                             handleOnClickNext()}}
                                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
@@ -567,7 +624,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                         <Stack alignItems={"center"} gap={"0.5rem"}
                         marginInline={"auto"}
                         maxW={"512px"} w={"100%"}>
-                            <Stack onClick={() => {handleOnClickPrev()}}
+                            <Stack onClick={handleOnClickPrev}
                             alignItems={"center"} justifyContent={"flex-start"} gap={"0.125rem"} flexDir={"row"}
                             maxW={"512px"} w={"100%"}
                             textAlign={"start"}
@@ -762,19 +819,19 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         <Text as={"p"}
                                         fontSize={"12px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
                                         lineHeight={"16px"} textDecor={"none"} textAlign={"center"} opacity={"0.9"} color={"#a19fa4"} m={0}>
-                                            En cliquant sur "Inscris-toi gratuitement", tu acceptes de créer un compte ainsi que les
+                                            En cliquant sur "Inscris-toi gratuitement", tu acceptes de créer un compte ainsi que les&nbsp;
                                             <Link href="https://www.deezer.com/legal/cgu" target="_blank" textDecor={"underline"}>
                                                 Conditions générales d'utilisation
                                             </Link>
-                                            et la
+                                            et la&nbsp;
                                             <Link href="https://www.deezer.com/legal/personal-datas" target="_blanket" textDecor={"underline"}>
                                                 Politique de protection des données
                                             </Link>
                                         </Text>
                                         <Button type="submit" onClick={(e) => {
                                             e.preventDefault()
-                                            /*logique backend*/
-                                            navigate('/login')}}
+                                            handleOnClickCreatUser()
+                                        }}
                                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
                                         whiteSpace={"nowrap"} verticalAlign={"middle"}
                                         pos={"relative"}

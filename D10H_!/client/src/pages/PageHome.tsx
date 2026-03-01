@@ -20,7 +20,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         const port = import.meta.env.VITE_SERVER_PORT
 
         try {
-            const res = await fetch(`http://${host}:${port}${URL}`)
+            const res = await fetch(`http://${host}:${port}${URL}`, {credentials: 'include'})
 
             if (!res.ok) {
                 throw new Error(`Erreur HTTP: ${res.status}`);                

@@ -1,7 +1,8 @@
-import { Grid, Box } from '@chakra-ui/react';
+import { Grid, Box} from '@chakra-ui/react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import SearchProvider from './context/SearchContext.tsx'
+import { useAuth } from './hooks/useAuth.tsx';
 
 // Pages imports
 import PageHome from './pages/PageHome.tsx';
@@ -42,7 +43,6 @@ function App() {
   const TOOLS_WIDTH = "50px"
   
   const [onPlay, setOnPlay] = useState<boolean>(false)
-  const [iSAuthenticate, setIsAuthticate] = useState<boolean>(true)
   
   // Variables for Scores page identification
   const location = useLocation()
@@ -63,8 +63,10 @@ function App() {
     }
   }
 
+  const {isAuthenticated, user, loading} = useAuth()
+
   // Scores page template
-  if (onPageMorceau && iSAuthenticate) {
+  if (onPageMorceau && isAuthenticated) {
     return (
     <Grid
     
@@ -83,30 +85,30 @@ function App() {
         </Box>
         <SearchProvider>
           <Box gridArea={"header"} zIndex={"200"}>
-            <HeaderMin />
+            <HeaderMin/>
           </Box>
           <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
-              <Routes>
+             <Routes>
       
-                <Route path='/' element={<PageHome />} />
+              <Route path='/' element={<PageHome />} />
 
-                <Route path='/search' element={<PageSearchPartitions />} />
-      
-                <Route path='/instruments' element={<ListeInstruments />} />
-      
-                <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
-      
-                <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
-      
-                <Route path='/favoris' element={<Favoris />} />
+              <Route path='/search' element={<PageSearchPartitions />} />
+    
+              <Route path='/instruments' element={<ListeInstruments />} />
+    
+              <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
+    
+              <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+    
+              <Route path='/favoris' element={<Favoris />} />
 
-                <Route path='/favoris/scorbraries' element={<Scorbraries />} />
-      
-                <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
+              <Route path='/favoris/scorbraries' element={<Scorbraries />} />
+    
+              <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
 
-                <Route path='/favoris/history' element={<History />} />
-      
-              </Routes>
+              <Route path='/favoris/history' element={<History />} />
+    
+            </Routes>
           </Box>
         </SearchProvider>
         <Box gridArea={"tools"} zIndex={"200"} marginTop={HEADER_MIN_HEIGHT} marginBottom={PLAYEUR_MIN_HEIGHT} position={"fixed"} right={"0"} top={"0"} bottom={"0"}>
@@ -116,9 +118,9 @@ function App() {
         position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
           <PlayeurMin onClick={handleOnPlay}/>
         </Box>
-      </Grid>
+    </Grid>
 
-  )} else if (iSAuthenticate) {
+  )} else if (isAuthenticated) {
 
     // Others pages template
     return (
@@ -135,34 +137,34 @@ function App() {
         `}
         >
         <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
-          {isMinimal ? <BarNavMin /> : <BarNav />}
+          {isMinimal ? <BarNavMin  /> : <BarNav  />}
         </Box>
         <SearchProvider>
           <Box gridArea={"header"} zIndex={"200"}>
-            <Header userName={"Visiteur"} isLoggedIn={false} />
+            <Header />
           </Box>
           <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
-              <Routes>
+            <Routes>
       
-                <Route path='/' element={<PageHome />} />
+              <Route path='/' element={<PageHome />} />
 
-                <Route path='/search/' element={<PageSearchPartitions />} />
-      
-                <Route path='/instruments' element={<ListeInstruments />} />
-      
-                <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
-      
-                <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
-      
-                <Route path='/favoris' element={<Favoris />} />
+              <Route path='/search/' element={<PageSearchPartitions />} />
+    
+              <Route path='/instruments' element={<ListeInstruments />} />
+    
+              <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
+    
+              <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+    
+              <Route path='/favoris' element={<Favoris />} />
 
-                <Route path='/favoris/scorbraries' element={<Scorbraries />} />
-      
-                <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
+              <Route path='/favoris/scorbraries' element={<Scorbraries />} />
+    
+              <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
 
-                <Route path='/favoris/history' element={<History />} />
+              <Route path='/favoris/history' element={<History />} />
       
-              </Routes>
+            </Routes>
           </Box>
         </SearchProvider>
         <Box gridArea={"playeur"} zIndex={"9999"}
@@ -171,7 +173,12 @@ function App() {
         </Box>
       </Grid>
     )
-  } else {
+  } else if (loading) {
+    return (
+      <Box h={"100%"} w={"100%"} bg={"#000000"}>
+      </Box>
+    )
+  } else if (!user || !isAuthenticated) {
     return (
       <Box bg={"#000000"} width={"100%"}>
         <Routes>

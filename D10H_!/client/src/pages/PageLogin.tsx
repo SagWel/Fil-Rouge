@@ -2,12 +2,46 @@ import { Box, Flex, Link, chakra, Stack, FormControl, FormLabel, Input, Heading,
 import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon } from "../components/svg"
 import '../style.css'
 import { useState } from "react"
+import { useNavigate, type NavigateFunction } from "react-router-dom"
+import { useAuth } from "../hooks/useAuth"
 
 export interface IPageLoginProps {}
 
 const PageLogin: React.FC<IPageLoginProps> = () => {
+    const navigate: NavigateFunction = useNavigate()
+    const { setUser, setIsAuthenticated, setIsFirstLogin } = useAuth()
+
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+
+    const onSubmit = async () => {
+        const host: string = import.meta.env.VITE_HOST
+        const port: string = import.meta.env.VITE_SERVER_PORT
+        const urlFetchLogin: string = import.meta.env.VITE_URL_FETCH_LOGIN
+        
+        try {
+            const res: Response = await fetch(`http://${host}:${port}${urlFetchLogin}`, {
+                method: 'POST',
+                headers : {'Content-Type': 'application/json'},
+                body: JSON.stringify ({
+                    email: email,
+                    password: password
+                }),
+                credentials: 'include'})
+
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`);
+            }
+
+            const data = await res.json()
+            setUser(data.user)
+            setIsAuthenticated(data.isAuthenticated)
+            setIsFirstLogin(data.isFirstLogin)
+            navigate('/')
+        } catch (error) {
+            console.error("Impossible de trouver l'utilisateur: ", error);
+        }
+    }
 
     return (
         <Stack alignItems={"center"} gap={"1.5rem"}
@@ -22,12 +56,18 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                         borderBottom={0} borderBottomColor={"#38373b !important"}>
                             <Flex alignItems={"center"} w={"100%"}>
                                 <Flex justifyContent={"left"}
-                                marginInlineEnd={0}
+                                marginInlineEnd={0} gap={8}
                                 w={"100%"}>
-                                    <Link href="/"
+                                    <Link href="https://www.deezer.com/" target="_blanket"
                                     color={"inherit"}
                                     textDecor={"inherit"}>
                                         <LogoTempo />
+                                    </Link>
+                                    <Link href="/"
+                                    fontSize={"1,125rem"} fontWeight={"600"}
+                                    color={"#fdfcfe"}
+                                    _hover={{textDecor: "none", color: "#a238ff"}}>
+                                    D10H !
                                     </Link>
                                 </Flex>
                             </Flex>
@@ -59,7 +99,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                         maxW={"100ch"}
                         color={"#ffffff"}
                         lineHeight={"1.33"}>
-                            Connect-toi
+                            Connecte-toi
                         </Heading>
                     </Stack>
                     <Stack alignItems={"center"} gap={"1rem"} flexGrow={1}
@@ -98,6 +138,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                         outline={"transparent solid 2px"} outlineOffset={"2px"}
                                         transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                         appearance={"none"}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         _active={{
                                             borderColor: "#ad47ff"
                                         }}
@@ -135,6 +176,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                             outline={"transparent solid 2px"} outlineOffset={"2px"}
                                             transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                             appearance={"none"}
+                                            onChange={(e) => setPassword(e.target.value)}
                                             _active={{
                                                 borderColor: "#ad47ff"
                                             }}
@@ -199,6 +241,10 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                     outline={"transparent solid 2px"} outlineOffset={0}
                                     transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                     userSelect={"none"}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        onSubmit()
+                                    }}
                                     _active={{
                                         color: "#e2dfe6",
                                         bg: "#ca97ff"

@@ -15,8 +15,6 @@ import useSearchHistory, { type IHistoryItem } from '../hooks/useSearchHistory'
 import { type IDeezerSearchResponse, type IDeezerTrack } from '../types/Deezer'
 
 export interface IHeaderProps {
-    userName: string,
-    isLoggedIn: boolean,
 }
 
 const Header: React.FC<IHeaderProps> = () => {

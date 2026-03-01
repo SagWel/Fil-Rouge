@@ -2,10 +2,16 @@
 
 require_once '../config/db.php';
 
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
 $requestUri = $_SERVER['REQUEST_URI'] ?? '';
 
@@ -38,6 +44,15 @@ if ($ressource && file_exists($controlerFile)) {
             break;
         case 'partitionsInstrument':
             require_once '../middlewares/CheckInstrument.php';
+            break;
+        case 'auth':
+            require_once '../middlewares/CheckLogin.php';
+            break;
+        case 'foundbyemail':
+            require_once '../middlewares/Checkemail.php';
+            break;
+        case 'creatuser':
+            require_once '../middlewares/CheckCreatUser.php';
             break;
     }
     require_once $controlerFile;
