@@ -24,7 +24,6 @@ const Header: React.FC<IHeaderProps> = () => {
         searchResults,
         setSearchResults,
         setIsLoading,
-        // setIsSearching,
     } = useSearch()
 
     /*Calling the Deezer API for search suggestions*/
