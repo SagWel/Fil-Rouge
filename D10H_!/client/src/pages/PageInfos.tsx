@@ -148,14 +148,14 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                         maxW={"900px"}
                         marginBlock={"0.67em"} marginInline={0}
                         mx={"auto"} my={0}
-                        fontSize={"140px"} fontWeight={"800"}
+                        fontSize={"120px"} fontWeight={"800"}
                         lineHeight={".9"} textTransform={"uppercase"}
                         sx={{textWrap: 'balance'}}>
-                            Là où ta partition prend vie
+                            Là où tu donnes vie à la Musique
                         </Heading>
                         <Text as={"p"} display={"block"}
                         marginBlock={"1em"} marginInline={0}
-                        pb={"14px"} m={0}
+                        pb={"14px"} m={0} mt={1}
                         fontSize={"35px"} fontWeight={"700"}
                         color={"#0f0d13"}
                         lineHeight={"1.2"} textAlign={"center"}>

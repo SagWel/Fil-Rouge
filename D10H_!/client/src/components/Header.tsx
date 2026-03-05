@@ -1,4 +1,4 @@
-import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, Avatar, IconButton, Text, Heading, Image, Link } from "@chakra-ui/react";
+import { Box, chakra, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, Avatar, IconButton, Text, Heading, Image, Link, List, ListItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
@@ -49,27 +49,25 @@ const Header: React.FC<IHeaderProps> = () => {
     }
 
     /*Variables*/
-    const [query, setQuery] = useState<string>('')    
-
     const navigate = useNavigate()
-
-    const [isFocused, setIsFocused] = useState<boolean>(false)
-
+    
+    
+    
     type TimerId = ReturnType<typeof setTimeout>
-
-    const TimerRef = useRef<TimerId | undefined> (undefined)
-
+    
+    
+    const [query, setQuery] = useState<string>('')    
+    const [isFocused, setIsFocused] = useState<boolean>(false)
     const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
-
+    const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
+    const [user, setUser] = useState< Users | null>(null)
+    const [isDisplayed, setIsDisplayed] = useState<boolean>(false)
+    
+    const timerRef = useRef<TimerId | undefined> (undefined)
+    
     const [history, _, addToHistory] = useSearchHistory()
 
-    const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
-
-    const { user: userToken } = useAuth()
-
-    const [user, setUser] = useState< Users | null>(null)
-
-    const [isDisplayed, setIsDisplayed] = useState<boolean>(false)
+    const { user: userToken, logout } = useAuth()
 
     const userInfos = async () => {
         const host = import.meta.env.VITE_HOST
@@ -98,10 +96,10 @@ const Header: React.FC<IHeaderProps> = () => {
             setSearchResults([])
             return
         } else {
-            TimerRef.current = setTimeout( () => {fetchDeezerSuggestions(query)}, 300)
+            timerRef.current = setTimeout( () => {fetchDeezerSuggestions(query)}, 300)
         }
         return () => {
-            clearTimeout(TimerRef.current)
+            clearTimeout(timerRef.current)
         }
     }, [query, isInternalUpdate])
 
@@ -158,9 +156,9 @@ const Header: React.FC<IHeaderProps> = () => {
 
     /*Sends history selected to query*/
     function handleHistoryClick (h: IHistoryItem) {
-        if (TimerRef.current != undefined) {
-            clearTimeout(TimerRef.current)
-            TimerRef.current = undefined
+        if (timerRef.current != undefined) {
+            clearTimeout(timerRef.current)
+            timerRef.current = undefined
         }
         setIsInternalUpdate(true)
         setQuery(`${h.title} - ${h.artistName}`)
@@ -226,15 +224,15 @@ const Header: React.FC<IHeaderProps> = () => {
 
                         /*setTimeout clearing*/
                         onFocus={() =>{
-                            {if (ref.current != undefined) {
-                                clearTimeout(ref.current)
-                                ref.current = undefined
+                            {if (timerRef.current != undefined) {
+                                clearTimeout(timerRef.current)
+                                timerRef.current = undefined
                             }}
                             setIsFocused(true)
                         }}
                         
                         /*Hide the suggestions after selection*/
-                        onBlur={() => {ref.current = setTimeout (() => {setIsFocused(false)}, 250)}}
+                        onBlur={() => {timerRef.current = setTimeout (() => {setIsFocused(false)}, 250)}}
                         padding={"0 2.75rem 0 2.75rem" }
                         height={"3rem"} width={"100%"}
                         borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
@@ -499,7 +497,13 @@ const Header: React.FC<IHeaderProps> = () => {
                             bg={"transparent"}
                             outline={"transparent solid 2px"} outlineOffset={"2px"}
                             transitionDuration={".15s"} transitionProperty={"background-color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
-                            cursor={"pointer"} transform={"translateZ(0)"}>
+                            cursor={"pointer"} transform={"translateZ(0)"}
+                            _hover={{
+                                        backgroundColor: "#242326",
+                                        color: "#ffffff",
+                                        textDecor: "none"
+                                    }}
+                            >
                                 <Avatar as={"span"} name={userToken?.username} src={user?.avatarUrl}
                                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                                 pos={"relative"} verticalAlign={"top"}
@@ -517,8 +521,110 @@ const Header: React.FC<IHeaderProps> = () => {
                                 </Box>
                                 <RightCarouselIcon size="16px" lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
                             </Flex>
-
+                            <List borderTop={"1px solid #38373b"} fontSize={"14px"} m={0} p={"8px 0"} listStyleType={"none"}>
+                                <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
+                                    <Flex as={Link} role="button"
+                                    alignItems={"center"}
+                                    p={"12px"} 
+                                    color={"#ffffff"} textDecor={"inherit"}
+                                    backgroundColor={"transparent"}
+                                    borderRadius={"4px"} 
+                                    outline={"0 none"}
+                                    transition={"015s"} transitionProperty={"background-color, color"}
+                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    _hover={{
+                                        backgroundColor: "#242326",
+                                        color: "#ffffff",
+                                        textDecor: "none"
+                                    }}
+                                    >
+                                        <chakra.span flex={1}>Membres</chakra.span>
+                                        <RightCarouselIcon size="16px" lineHeight={"1rem"} flexShrink={0} color="currentcolor" verticalAlign={"middle"} display={"block"}/>
+                                    </Flex>
+                                </ListItem>
+                                <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
+                                    <Flex as={Link} href="/account"
+                                    alignItems={"center"}
+                                    p={"12px"} 
+                                    color={"#ffffff"} textDecor={"inherit"}
+                                    backgroundColor={"transparent"}
+                                    borderRadius={"4px"} 
+                                    outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    _hover={{
+                                        backgroundColor: "#242326",
+                                        color: "#ffffff",
+                                        textDecor: "none"
+                                    }}
+                                    >
+                                        <chakra.span flex={1}>Paramètre de compte</chakra.span>
+                                        <RightCarouselIcon size="16px" lineHeight={"1rem"} flexShrink={0} color="currentcolor" verticalAlign={"middle"} display={"block"}/>
+                                    </Flex>
+                                </ListItem>
+                                <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
+                                    <Flex as={Link} role="button"
+                                    alignItems={"center"}
+                                    p={"12px"} 
+                                    color={"#ffffff"} textDecor={"inherit"}
+                                    backgroundColor={"transparent"}
+                                    borderRadius={"4px"} 
+                                    outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    _hover={{
+                                        backgroundColor: "#242326",
+                                        color: "#ffffff",
+                                        textDecor: "none"
+                                    }}>
+                                        <chakra.span flex={1}>Gérer mon abonnement</chakra.span>
+                                        <RightCarouselIcon size="16px" lineHeight={"1rem"} flexShrink={0} color="currentcolor" verticalAlign={"middle"} display={"block"}/>
+                                    </Flex>
+                                </ListItem>
+                                <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
+                                    <Flex as={Link} role="button"
+                                    alignItems={"center"}
+                                    p={"12px"} 
+                                    color={"#ffffff"} textDecor={"inherit"}
+                                    backgroundColor={"transparent"}
+                                    borderRadius={"4px"} 
+                                    outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    _hover={{
+                                        backgroundColor: "#242326",
+                                        color: "#ffffff",
+                                        textDecor: "none"
+                                    }}>
+                                        <chakra.span flex={1}>Gérer mes recommandations</chakra.span>
+                                        <RightCarouselIcon size="16px" lineHeight={"1rem"} flexShrink={0} color="currentcolor" verticalAlign={"middle"} display={"block"}/>
+                                    </Flex>
+                                </ListItem>
+                                <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
+                                    <Flex as={Link} role="button"
+                                    alignItems={"center"}
+                                    p={"12px"} 
+                                    color={"#ffffff"} textDecor={"inherit"}
+                                    backgroundColor={"transparent"}
+                                    borderRadius={"4px"} 
+                                    outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    onClick={logout}
+                                    _hover={{
+                                        backgroundColor: "#242326",
+                                        color: "#ffffff",
+                                        textDecor: "none"
+                                    }}>
+                                        Déconnexion
+                                    </Flex>
+                                </ListItem>
+                            </List>
                         </Box>
+                        <Box pos={"absolute"} left={"343px"} top={"4px"}
+                        my={0}
+                        h={0} w={0}
+                        border={"6px solid #0000"} borderBottomColor={"#141216"} borderTopWidth={0} />
                     </Box>
                 </Box>
             </Flex>

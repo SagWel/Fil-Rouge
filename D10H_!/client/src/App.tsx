@@ -90,23 +90,23 @@ function App() {
           <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
              <Routes>
       
-              <Route path='/' element={<PageHome />} />
+                <Route path='/' element={<PageHome />} />
 
-              <Route path='/search' element={<PageSearchPartitions />} />
-    
-              <Route path='/instruments' element={<ListeInstruments />} />
-    
-              <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
-    
-              <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
-    
-              <Route path='/favoris' element={<Favoris />} />
+                <Route path='/search' element={<PageSearchPartitions />} />
+      
+                <Route path='/instruments' element={<ListeInstruments />} />
+      
+                <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
+      
+                <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+      
+                <Route path='/favoris' element={<Favoris />} />
 
-              <Route path='/favoris/scorbraries' element={<Scorbraries />} />
-    
-              <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
+                <Route path='/favoris/scorbraries' element={<Scorbraries />} />
+      
+                <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
 
-              <Route path='/favoris/history' element={<History />} />
+                <Route path='/favoris/history' element={<History />} />
     
             </Routes>
           </Box>
