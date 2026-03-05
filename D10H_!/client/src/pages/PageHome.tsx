@@ -63,7 +63,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         fetchPartitions(urlFetchPopular, setPopularPartitions)
         fetchPartitions(urlFetchNews, setNewsPartitions)
         fetchPartitions(urlFetchSuggestions, setSuggestionsPartitions)
-    })
+    },[])
 
     return(
         <Box id="homeUser"

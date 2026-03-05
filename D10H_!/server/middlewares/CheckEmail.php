@@ -2,7 +2,7 @@
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-$email = $data['email'];
+$email = $data['email'] ?? $_GET['id'];
 
 if ($email) {
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {

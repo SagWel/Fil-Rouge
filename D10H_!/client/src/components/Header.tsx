@@ -1,18 +1,20 @@
-import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, IconButton, Text, Heading, Image } from "@chakra-ui/react";
+import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, Avatar, IconButton, Text, Heading, Image, Link } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 // SVGs import from a unique file
-import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon } from "./svg";
+import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon, RightCarouselIcon } from "./svg";
 
 // Context
-import { useSearch, } from '../context/SearchContext'
+import { useSearch } from '../context/SearchContext'
 
 // Hooks
 import useSearchHistory, { type IHistoryItem } from '../hooks/useSearchHistory'
+import { useAuth } from "../hooks/useAuth";
 
 // Type
 import { type IDeezerSearchResponse, type IDeezerTrack } from '../types/Deezer'
+import { type Users } from "../types/user";
 
 export interface IHeaderProps {
 }
@@ -55,13 +57,38 @@ const Header: React.FC<IHeaderProps> = () => {
 
     type TimerId = ReturnType<typeof setTimeout>
 
-    const ref = useRef<TimerId | undefined> (undefined)
+    const TimerRef = useRef<TimerId | undefined> (undefined)
 
     const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
 
     const [history, _, addToHistory] = useSearchHistory()
 
     const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
+
+    const { user: userToken } = useAuth()
+
+    const [user, setUser] = useState< Users | null>(null)
+
+    const [isDisplayed, setIsDisplayed] = useState<boolean>(false)
+
+    const userInfos = async () => {
+        const host = import.meta.env.VITE_HOST
+        const port = import.meta.env.VITE_SERVER_PORT
+        const urlFetchUserInfos = import.meta.env.VITE_URL_FETCH_FINDBYEMAIL
+
+        try {
+            const res: Response = await fetch(`http://${host}:${port}${urlFetchUserInfos}${userToken?.email}`, {credentials: 'include'})
+
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`);                
+            }
+
+            const data = await res.json()
+            setUser(data.user)
+        } catch (err) {
+            console.error("Impossible de récuperer les informations de l'utilisateur connecté : ", err)
+        }
+    } 
 
     useEffect(() => {
         if (isInternalUpdate) {
@@ -71,13 +98,17 @@ const Header: React.FC<IHeaderProps> = () => {
             setSearchResults([])
             return
         } else {
-            ref.current = setTimeout( () => {fetchDeezerSuggestions(query)}, 300)
+            TimerRef.current = setTimeout( () => {fetchDeezerSuggestions(query)}, 300)
         }
         return () => {
-            clearTimeout(ref.current)
+            clearTimeout(TimerRef.current)
         }
     }, [query, isInternalUpdate])
 
+    useEffect(() => {
+        userInfos()
+        console.log(user);        
+    },[userToken])
 
     /*search choice management*/
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -127,13 +158,23 @@ const Header: React.FC<IHeaderProps> = () => {
 
     /*Sends history selected to query*/
     function handleHistoryClick (h: IHistoryItem) {
-        if (ref.current != undefined) {
-            clearTimeout(ref.current)
-            ref.current = undefined
+        if (TimerRef.current != undefined) {
+            clearTimeout(TimerRef.current)
+            TimerRef.current = undefined
         }
         setIsInternalUpdate(true)
         setQuery(`${h.title} - ${h.artistName}`)
         setInfoNavigation(true)
+    }
+
+    const display = () => {
+        if (isDisplayed) return "block"
+        return "none"
+    }
+
+    const handleAvatarClick = () => {
+        if (isDisplayed) return setIsDisplayed(false)
+        return setIsDisplayed(true)        
     }
 
     return(
@@ -425,20 +466,61 @@ const Header: React.FC<IHeaderProps> = () => {
                         <NotifIcon />
                     </IconButton>
                 </Box>
-                <Button id="compte"
-                textAlign={"center"}
-                marginLeft={"1rem"} paddingX={"0"}
-                height={"32px"} minWidth={"32px"}
-                bg={"#29282d"} color={"#a9a6aa"} borderRadius={"9999px"}
-                _hover={{
-                        opacity: "0.76",
-                        transition: "opacity 0.2s ease-in-out",
-                }}
-                _active={{}}
-                _focusVisible={{}}
-                >
-                    <Text>S</Text>
-                </Button>
+                <Box h={"32px"} pos={"relative"} w={"32px"} ml={"16px"}>
+                    <Avatar as={Button} id="compte" name={userToken?.username} src={user?.avatarUrl}
+                    textAlign={"center"} verticalAlign={"top"}
+                    padding={0}
+                    w={"2rem"} h={"2rem"} minW={"2rem"}
+                    fontWeight={"500"}
+                    bg={"#29282d"} color={"#a9a6aa"} borderRadius={"full"} textTransform={"uppercase"}
+                    onClick={handleAvatarClick}
+                    _hover={{
+                            opacity: "0.76",
+                            transition: "opacity 0.2s ease-in-out",
+                            background: "#29282d"
+                    }}
+                    />
+                    <Box display={display()}
+                    pos={"absolute"} top={0} left={0}
+                    pt={"10px"}
+                    transform={"translate3d(-332px, 32px, 0px)"} willChange={"tranform"}>
+                        <Box 
+                        pos={"relative"}
+                        p={0} 
+                        w={"375px"} maxH={"calc(100vh - 150px)"}
+                        bg={"#141216"}
+                        color={"#ffffff"}
+                        borderRadius={"10px"}
+                        boxShadow={"0 4px 20px 0 #0000003d"}
+                        overflowY={"auto"}>
+                            <Flex as={Link} alignItems={"center"}
+                            p={"12px 20px"}
+                            color={"#ffffff"} textDecor={"none"}
+                            bg={"transparent"}
+                            outline={"transparent solid 2px"} outlineOffset={"2px"}
+                            transitionDuration={".15s"} transitionProperty={"background-color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                            cursor={"pointer"} transform={"translateZ(0)"}>
+                                <Avatar as={"span"} name={userToken?.username} src={user?.avatarUrl}
+                                display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
+                                pos={"relative"} verticalAlign={"top"}
+                                w={"2.5rem"} h={"2.5rem"}
+                                fontWeight={"500"}
+                                textAlign={"center"} textTransform={"uppercase"} color={"#a19fa4"}
+                                bg={"#242326"}
+                                borderRadius={"16rem"} borderColor={"black"}
+                                flexShrink={0}/>
+                                <Box color={"#ffffff"} flex={1}
+                                fontSize={"16px"} ml={"12px"}
+                                textOverflow={"ellipsis"} whiteSpace={"nowrap"}
+                                overflow={"hidden"}>
+                                    <span>{user?.username}</span>
+                                </Box>
+                                <RightCarouselIcon size="16px" lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
+                            </Flex>
+
+                        </Box>
+                    </Box>
+                </Box>
             </Flex>
         </Flex>
     )

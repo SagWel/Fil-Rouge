@@ -5,10 +5,24 @@ require_once '../models/userModel.php';
 $email = $_GET['email'];
 
 $user = getUserByEmail($pdo, $email);
+$profiUser = getUserProfil($pdo, $user['id']);
 
 if ($user) {
     http_response_code(200);
-    echo json_encode(["message" => "utilisateur déjà existant", "isFounded" => true]);
+    echo json_encode([
+        "message" => "utilisateur déjà existant",
+        "isFounded" => true,
+        "user" => [
+            "id" => $user['id'],
+            "email" => $user['email'],
+            "username" => $user['username'],
+            "avatarUrl" => $profiUser['avatar_url'],
+            "age" => $profiUser['age'],
+            "birthday" => $profiUser['birthday'],
+            "gender" => $profiUser['gender'],
+            "visibility" => $profiUser['visibility']
+        ]
+    ]);
     exit;
 }
 

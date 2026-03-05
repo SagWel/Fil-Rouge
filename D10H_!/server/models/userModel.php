@@ -11,6 +11,17 @@ function getUserByEmail($pdo, $email)
     return $sql->fetch(PDO::FETCH_ASSOC);
 }
 
+function getUserProfil($pdo, $userId)
+{
+    $sql = $pdo->prepare(
+        'SELECT * FROM user_profiles WHERE user_id = ?'
+    );
+
+    $sql->execute([$userId]);
+
+    return $sql->fetch(PDO::FETCH_ASSOC);
+}
+
 function creatUser($pdo, $email, $passwordHash, $username = null, $age = null, $identity = 'Private')
 {
     $explodedEmail = explode('@', $email)[0];
