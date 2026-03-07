@@ -1,6 +1,6 @@
 <?php
 
-require_once '../models/popularModel.php';
+require_once '../models/partitionsModel.php';
 require_once '../utils/mapperPartitions.php';
 
 $rows = getPopularPartitions($pdo);

@@ -7,3 +7,8 @@ export interface IInstrument {
     linkToSearch?: string,
     linkToPartition?: string,
 }
+
+export interface IInstrumentLvl {
+    instrument: IInstrument,
+    lvl: number
+}

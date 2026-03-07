@@ -1,6 +1,6 @@
 <?php
 
-require_once '../models/partitionsInstrumentModel.php';
+require_once '../models/partitionsModel.php';
 require_once '../utils/mapperPartitions.php';
 
 $instrumentId = $_GET['instrument_id'] ?? null;

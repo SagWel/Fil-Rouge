@@ -1,6 +1,6 @@
 <?php
 
-require_once '../models/partitionModel.php';
+require_once '../models/partitionsModel.php';
 
 $id = $_GET['id'];
 

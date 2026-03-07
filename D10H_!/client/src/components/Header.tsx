@@ -14,7 +14,7 @@ import { useAuth } from "../hooks/useAuth";
 
 // Type
 import { type IDeezerSearchResponse, type IDeezerTrack } from '../types/Deezer'
-import { type Users } from "../types/user";
+import { type IUsers } from "../types/user";
 
 export interface IHeaderProps {
 }
@@ -60,7 +60,7 @@ const Header: React.FC<IHeaderProps> = () => {
     const [isFocused, setIsFocused] = useState<boolean>(false)
     const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
     const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
-    const [user, setUser] = useState< Users | null>(null)
+    const [user, setUser] = useState< IUsers | null>(null)
     const [isDisplayed, setIsDisplayed] = useState<boolean>(false)
     
     const timerRef = useRef<TimerId | undefined> (undefined)
@@ -104,8 +104,7 @@ const Header: React.FC<IHeaderProps> = () => {
     }, [query, isInternalUpdate])
 
     useEffect(() => {
-        userInfos()
-        console.log(user);        
+        userInfos()       
     },[userToken])
 
     /*search choice management*/
