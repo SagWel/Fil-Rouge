@@ -456,6 +456,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
                                                     </FormControl>
                                                     <Button bg={"#4d4c50"} color={"#ffffff"}
                                                     onClick={handleSubmitUserInstruments}
+                                                    isDisabled={userInstruments.length === 0}
                                                     _hover={{
                                                         bg: "#434344",
                                                         color : "#f5f2f8"
