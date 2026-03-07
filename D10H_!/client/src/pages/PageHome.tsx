@@ -10,8 +10,7 @@ import { Box,
     Stack, 
     FormControl, 
     FormLabel, 
-    Center, 
-    Input,
+    Center,
     Image,
     Flex,
     Text,
@@ -23,8 +22,8 @@ import Carousel from "../components/Carousel"
 import { type IPartitions } from "../types/partitions";
 import PartitionCard from "../components/PartitionCard";
 import { useAuth } from "../hooks/useAuth";
-import { CameraIcon, AddCircleIcon, DifficultyIcon, DisableIcon } from "../components/svg";
-import type { IInstrument, IInstrumentLvl, InstrumentType } from "../types/instrument";
+import { AddCircleIcon, DifficultyIcon, DisableIcon } from "../components/svg";
+import type { IInstrument, IInstrumentLvl } from "../types/instrument";
 
 export interface IPageAcceuilProps {}
 
