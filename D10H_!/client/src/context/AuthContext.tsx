@@ -30,6 +30,7 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
     const [isFirstLogin, setIsFirstLogin] = useState<boolean>(true)
     const [loading, setLoading] = useState<boolean>(true)
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+    const [resetContext, setResetContext] = useState<boolean>(false)
 
     const host: string = import.meta.env.VITE_HOST
     const port: string = import.meta.env.VITE_SERVER_PORT
@@ -77,7 +78,7 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
 
     useEffect(() => {       
         fetchAuthcontext()
-    }, [])
+    }, [resetContext])
 
     const logout = useCallback(() => {
         fetchLogout()
@@ -91,8 +92,10 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
         isFirstLogin,
         setIsFirstLogin,
         logout,
-        loading
-    }), [user, logout, loading])
+        loading,
+        resetContext,
+        setResetContext
+    }), [user, logout, loading, resetContext])
 
 
     return (

@@ -43,6 +43,16 @@
         --title-fontsize: 140px !important;
         --subtitle-fontsize: 35px !important;
     }
+    
+    .css-rpfvsj, .css-hptv2g {
+        width: 716px;
+    }
+}
+
+@media screen and (min-width: 940px) {
+    .css-rpfvsj, .css-hptv2g {
+        width: 826px;
+    }
 }
 
 @media screen and (min-width: 1024px) {
@@ -104,5 +114,28 @@
     .css-es59od {
         padding-inline-start: 192px !important;
         padding-inline-end: 192px !important;
+    }
+
+    .css-rpfvsj, .css-hptv2g {
+        width: 902px;
+    }
+}
+
+@media screen and (min-width: 1310px) {
+
+    .css-rpfvsj, .css-hptv2g {
+        width: 1304px;
+    }
+}
+
+@media screen and (min-width: 1430px) {
+    .css-rpfvsj, .css-hptv2g {
+        width: 1154px;
+    }
+}
+
+@media screen and (min-width: 1728px) {
+    .css-rpfvsj, .css-hptv2g {
+        width: 1425px;
     }
 }

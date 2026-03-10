@@ -17,6 +17,7 @@ import { Box,
     Button,
     Select} from "@chakra-ui/react"
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Carousel from "../components/Carousel"
 import { type IPartitions } from "../types/partitions";
@@ -37,10 +38,9 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
     const [displayDiv, setDisplayDiv] = useState<"block" | "none">("none")
     const [currentInstrument, setCurrentInstrument] = useState<IInstrument | undefined>(undefined)
     const [currentLvl, setCurrentLvl] = useState<1 | 2 | 3| 4 | 5 | undefined>(undefined)
-
-    const fileInputRef = useRef<HTMLInputElement | null>(null)
     
     const { isFirstLogin, user, setIsFirstLogin } = useAuth()
+    const navigate = useNavigate()
 
     const host = import.meta.env.VITE_HOST
     const port = import.meta.env.VITE_SERVER_PORT
@@ -131,10 +131,10 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
                 }
     
                 setIsFirstLogin(false)
+                navigate(0)
             }
         } catch (error) {
             console.error("Impossible d'associer les instruments et leur niveau au profil de l'utilisateur : ", error)
-            setIsFirstLogin(true)
         }
     }
 
@@ -207,7 +207,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
                         <Heading as={"h2"} 
                         fontFamily={"Inter,Arial,sans-serif"} fontWeight={"700"} fontSize={"20px"} lineHeight={"24px"} textDecoration={"none"} color={"#ffffff"}
                         margin={0}>
-                            Configuration de votre Profil
+                            Configuration de ton Profil
                         </Heading>
                     </ModalHeader>
                     <ModalBody width={"100%"}
@@ -362,7 +362,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
                                                                 </Flex>
                                                                 <Stack flexDir={"row"}>
                                                                     <Select name="instrument" id="identity" value={currentInstrument?.id ?? ""} placeholder="Selectionner un instrument" required
-                                                                    pos={"relative"}
+                                                                    pos={"relative"} textTransform={"capitalize"}
                                                                     pb={"1px"}
                                                                     w={"50%"} h={"3rem"} minW={0} minH={"3rem"}
                                                                     fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
@@ -391,7 +391,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
                                                                     }}>
                                                                         { Array.isArray(instruments) &&
                                                                         instruments.filter(i => !userInstruments.some(ui => ui.instrument.id === i.id)).map((i, index) => (
-                                                                                <option value={i.id} key={index}>{i.name}</option>
+                                                                                <chakra.option textTransform={"capitalize"} value={i.id} key={index}>{i.name}</chakra.option>
                                                                             )
                                                                         )}
                                                                     </Select>

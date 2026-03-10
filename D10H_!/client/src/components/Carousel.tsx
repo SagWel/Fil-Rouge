@@ -51,7 +51,6 @@ const Carousel: React.FC<ICarouselProps> = ({ data, renderItem, id, title }) => 
                 <Box 
                 p={"24px"} mx={"auto"}
                 position={"relative"}
-                width={"1154px"}
                 boxSizing="border-box">
                     <Flex flexDir={"column"} justifyContent={"center"}
                     minH={"32px"}
@@ -135,7 +134,6 @@ const Carousel: React.FC<ICarouselProps> = ({ data, renderItem, id, title }) => 
                 <Box 
                 p={"24px"} pt={0} mx={"auto"}
                 position={"relative"}
-                w={"1154px"}
                 boxSizing="border-box">
                     <Box m={"-2px"} overflow={"hidden"} p={"2px"} ref={carouselContainerRef}>
                         <Box 

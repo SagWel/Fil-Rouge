@@ -49,7 +49,7 @@ setcookie(
         'path' => '/',
         'secure' => false,
         'httponly' => true,
-        'samesite' => 'Lax'
+        'samesite' => 'true'
     ]
 );
 
