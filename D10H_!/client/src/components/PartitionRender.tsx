@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { type INoteData, type IPartitions } from "../types/partitions";
 import { Renderer, 
         Stave, 
@@ -55,6 +55,8 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
 
     const containerRef = useRef<HTMLDivElement | null>(null)
     const lastScrolledYRef = useRef<number>(-1)
+
+    const [containerHeight, setContainerHeight] = useState<number>(800)
 
     const hideScrollbarStyle = {
         '&::WebkitScrollbar': {
@@ -184,6 +186,8 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
                     tuplets.forEach(t => t.setContext(context).draw())
                 }
             })
+            console.log(measures);
+            
             staveRef.current = measures[0].stave
         }
 
@@ -232,6 +236,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
         if (svgPartitionRef.current) svgPartitionRef.current.innerHTML = "";
         
         const containerWidth: number = containerRef.current?.offsetWidth ?? 800;
+        
         const measurePerLine: number = 4;
         const totalLines: number = Math.ceil(data.measures.length / measurePerLine);
         const firstMeasureExtraWidth = 80
@@ -255,7 +260,10 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
             second: [] as StaveNote[]
         }
 
-        const measuresToRender: IMeasureObject[] = [];        
+        const measuresToRender: IMeasureObject[] = [];   
+        
+        console.log(data);
+        
 
         data.measures.forEach((measure, index) => {
 
@@ -300,6 +308,8 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
             }
             currentX += fixedMeasureWidth;
         })
+        console.log(measuresToRender);
+        
 
         measuresToRenderRef.current = measuresToRender;
         renderAllMeasures(contextPartition, measuresToRender);
@@ -422,7 +432,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
         return <Box textAlign={"center"}><Text color={"black"}>Chargement de la partition ...</Text></Box>
     }
     return (
-            <Box position={"relative"} w={"100%"} maxH={"800px"} ref={containerRef} overflowY={"auto"}
+            <Box position={"relative"} w={"100%"} ref={containerRef} overflowY={"auto"} maxH={"800px"}
             sx={hideScrollbarStyle}>
                 <Box id="partition-container" ref={svgPartitionRef} sx={{ display: "block", height: "auto"}}/>
                 <Box id="cursor-container" ref={svgCursorRef} sx={{ position: "absolute", top: "0", left: "0", pointerEvents: "none", width:"100%", background: "transparent"}}/>

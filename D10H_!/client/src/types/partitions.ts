@@ -1,4 +1,5 @@
 import { type IInstrument } from "./instrument"
+import type { IUsers } from "./user"
 
 export type TieStatus = "start" | "end" | "null"
 export type Durations = "w" | "h" | "q" | "8" | "16" | "32"
@@ -42,7 +43,6 @@ export interface IArtist {
     id: number,
     name: string,
     deezer_link?: string,
-    partitions?: IPartitions[]
     albums?: IAlbum[]
     picture: string,
     picture_small?: string,
@@ -61,15 +61,23 @@ export interface IAlbum {
     cover_big?: string,
     cover_xl?: string,
     partitions?: IPartitions[]
-    artist: IArtist
+    artist: IArtist,
+    songs: ISong[]
+}
+
+export interface ISong {
+    id: number,
+    title: string,
+    deezer_link: string,
+    audio_preview: string,
+    duration: number,
+    artist: IArtist,
+    album: IAlbum,
+    genre: IGenre,
 }
 
 export interface IPartitions {
     id: number,
-    title: string,
-    artist: IArtist,
-    album?: IAlbum,
-    genre: IGenre,
     difficulty: number,
     instruments: {
         currentInstrument : IInstrument,
@@ -79,8 +87,14 @@ export interface IPartitions {
     clef: string,
     clef_signature?: string,
     measures: IMeasure[],
-    duration: number
-    deezer_link: string,
-    audio_preview: string,
+    song: ISong,
     partition_preview: string,
+}
+
+export interface IScorbrarie {
+    id: number,
+    name: string,
+    description?: string,
+    user: IUsers,
+    partitions?: IPartitions[]
 }

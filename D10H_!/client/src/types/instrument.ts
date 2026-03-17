@@ -4,8 +4,7 @@ export interface IInstrument {
     id: number
     name: InstrumentType,
     imgSrc: string,
-    linkToSearch?: string,
-    linkToPartition?: string,
+    linkToSearch: string,
 }
 
 export interface IInstrumentLvl {

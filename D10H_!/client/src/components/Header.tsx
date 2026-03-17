@@ -51,8 +51,6 @@ const Header: React.FC<IHeaderProps> = () => {
     /*Variables*/
     const navigate = useNavigate()
     
-    
-    
     type TimerId = ReturnType<typeof setTimeout>
     
     
@@ -609,7 +607,10 @@ const Header: React.FC<IHeaderProps> = () => {
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
                                     transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
-                                    onClick={logout}
+                                    onClick={() => {
+                                        logout()
+                                        navigate('/')
+                                    }}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",

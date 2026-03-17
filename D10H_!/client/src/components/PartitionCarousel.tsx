@@ -4,14 +4,14 @@ import { LeftCarouselIcon, RightCarouselIcon } from "./svg"
 import { useState, useRef, useEffect, type ReactNode } from "react"
 import type { IPartitions } from "../types/partitions"
 
-export interface ICarouselProps {
+export interface IPartitionCarouselProps {
     data: IPartitions[],
     renderItem(e: IPartitions): ReactNode,
     id: string,
     title: string
 }
 
-const Carousel: React.FC<ICarouselProps> = ({ data, renderItem, id, title }) => {
+const PartitionCarousel: React.FC<IPartitionCarouselProps> = ({ data, renderItem, id, title }) => {
     const [translate, setTranslate] = useState<number>(0)
     const [maxScroll, setMaxScroll] = useState<number>(0)
 
@@ -45,8 +45,9 @@ const Carousel: React.FC<ICarouselProps> = ({ data, renderItem, id, title }) => 
             setMaxScroll(carouselContainerRef.current.clientWidth - listRef.current.scrollWidth);            
         }
     }, [data])
+
     return (
-        <Box as="section" id={id} display={"block"}>
+        <Box as="section" id={id}>
             <Box>
                 <Box 
                 p={"24px"} mx={"auto"}
@@ -164,4 +165,4 @@ const Carousel: React.FC<ICarouselProps> = ({ data, renderItem, id, title }) => 
     )
 }
 
-export default Carousel
+export default PartitionCarousel

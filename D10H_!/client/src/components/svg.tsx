@@ -487,6 +487,24 @@ export const RightCarouselIcon: React.FC<SvgProps> = ({ size, color, ...rest }) 
     </Icon>
 )
 
+export const UpChevronIcon: React.FC<SvgProps> = ({ w, h, color, ... rest}) => (
+    <Icon viewBox="0 0 24 24"
+    w={w || "24px"} h={h || "16px"}
+    fill={"#fdfcfe"} color={color || "transparent"} {...rest}>
+        <path d="M1.3335 17.3334L13.3335 1.33337L25.3335 17.3334">
+        </path>
+    </Icon>
+)
+
+export const DownChevronIcon: React.FC<SvgProps> = ({ w, h, color, ... rest}) => (
+    <Icon viewBox="0 0 24 24"
+    w={w || "24px"} h={h || "16px"}
+    fill={"currentColor"} color={color || "#fdfcfe"} {...rest}>
+        <path d="M25.3334 1.33344L13.3334 17.3334L1.33337 1.33344">
+        </path>
+    </Icon>
+)
+
 export const DrumsIcon: React.FC<SvgProps> = ({ size, color, overflow, viewBox, ...rest }) => (
     <Icon viewBox={ viewBox || "0 0 500 500"}
     w={size || "72px"} h={size || "72px"}

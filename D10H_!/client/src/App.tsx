@@ -7,7 +7,7 @@ import { useAuth } from './hooks/useAuth.tsx';
 // Pages imports
 import PageHome from './pages/PageHome.tsx';
 import PageSearchPartitions from './pages/PageSearch.tsx'
-import ListeInstruments from './pages/PageListeInstruments.tsx';
+import AllInstruments from './pages/PageAllInstruments.tsx';
 import PageSearchPartitionsInstrument from './pages/PageSearchInstrument.tsx'
 import Morceau from './pages/PageMorceau.tsx';
 import Favoris from './pages/PageFavoris.tsx';
@@ -18,6 +18,7 @@ import PageInfos from './pages/PageInfos.tsx';
 import PageLogin from './pages/PageLogin.tsx';
 import PageSignup from './pages/PageSignup.tsx';
 import PageResetPassword from './pages/PageResetPassword.tsx'
+import PageUserInstruments from './pages/PageUserInstruments.tsx'
 
 // Components imports
 import Tools from './components/Tools.tsx';
@@ -65,13 +66,16 @@ function App() {
 
   const {isAuthenticated, user, loading} = useAuth()
 
+  console.log(isAuthenticated);
+  
+
   // Scores page template
   if (onPageMorceau && isAuthenticated) {
     return (
     <Grid
     
     bg={"#000000"}
-    height="100vh"
+    minH="100vh"
     templateRows={`${HEADER_MIN_HEIGHT} 1fr ${PLAYEUR_MIN_HEIGHT}`}
     templateColumns={`${NAV_MIN_WIDTH} 1fr ${TOOLS_WIDTH}`}
     templateAreas={`
@@ -94,7 +98,9 @@ function App() {
 
                 <Route path='/search' element={<PageSearchPartitions />} />
       
-                <Route path='/instruments' element={<ListeInstruments />} />
+                <Route path='/instruments/user' element={<PageUserInstruments />} />
+
+                <Route path='/instruments/all' element={<AllInstruments />} />
       
                 <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
       
@@ -127,7 +133,7 @@ function App() {
       <Grid
       
       bg={"#000000"}
-      height="100vh"
+      minH="100vh"
       templateRows={`${HEADER_HEIGHT} 1fr ${PLAYER_HEIGHT}`}
       templateColumns={`${navResponsive} 1fr`}
       templateAreas={`
@@ -150,7 +156,9 @@ function App() {
 
               <Route path='/search/' element={<PageSearchPartitions />} />
     
-              <Route path='/instruments' element={<ListeInstruments />} />
+              <Route path='/instruments/user' element={<PageUserInstruments />} />
+
+              <Route path='/instruments/all' element={<AllInstruments />} />
     
               <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
     

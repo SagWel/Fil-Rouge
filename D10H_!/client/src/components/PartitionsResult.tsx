@@ -4,9 +4,6 @@ import { Grid } from "@chakra-ui/react";
 import PartitionCard from './PartitionCard';
 import { type IPartitions } from "../types/partitions";
 
-// Pictures import as modules
-import PartitionImg from '../../public/img/Partition.jpeg';
-
 export interface IPartitionsResult {}
 
 /*Mock database*/
@@ -16,7 +13,7 @@ const mockPartitons: IPartitions[] = [
         artist : "The Cranberries",
         difficulty : 1,
         instrument : "guitare",
-        preview : PartitionImg,
+        preview : "",
         audioPreviewUrl : "https://fake_url.com",
         id : "1",
     },
@@ -25,7 +22,7 @@ const mockPartitons: IPartitions[] = [
         artist : "Nirvanna",
         difficulty : 2,
         instrument : "guitare",
-        preview : PartitionImg,
+        preview : "",
         audioPreviewUrl : "https://fake_url.com",
         id : "2",
     },
@@ -33,7 +30,7 @@ const mockPartitons: IPartitions[] = [
         title : "Comme Des Connards",
         artist : "Mickael Youn",
         difficulty : 2,
-        preview : PartitionImg,
+        preview : "",
         audioPreviewUrl : "https://fake_url.com",
         id : "3",
     },
@@ -41,7 +38,7 @@ const mockPartitons: IPartitions[] = [
         title : "Still Waiting",
         artist : "Sum 41",
         difficulty : 4,
-        preview : PartitionImg,
+        preview : "",
         audioPreviewUrl : "https://fake_url.com",
         id : "4",
     },
@@ -49,7 +46,7 @@ const mockPartitons: IPartitions[] = [
         title : "Pretty Fly (For A White Guy)",
         artist : "The Offspring",
         difficulty : 3,
-        preview : PartitionImg,
+        preview : "",
         audioPreviewUrl : "https://fake_url.com",
         id : "5",
     }

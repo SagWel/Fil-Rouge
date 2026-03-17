@@ -16,10 +16,10 @@ import { Box,
     Text,
     Button,
     Select} from "@chakra-ui/react"
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Carousel from "../components/Carousel"
+import Carousel from "../components/PartitionCarousel"
 import { type IPartitions } from "../types/partitions";
 import PartitionCard from "../components/PartitionCard";
 import { useAuth } from "../hooks/useAuth";
@@ -61,7 +61,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
     }
 
     const fetchInstruments = async () => {
-        const urlFetchInstruments = import.meta.env.VITE_URL_FETCH_INSTRUMENTS
+        const urlFetchInstruments = import.meta.env.VITE_URL_FETCH_ALLINSTRUMENTS
         try {
             const res: Response = await fetch(`http://${host}:${port}${urlFetchInstruments}`, {credentials: 'include'})
 

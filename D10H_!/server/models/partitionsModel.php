@@ -5,15 +5,10 @@ function getPartitionById($pdo, $id)
     $sql = $pdo->prepare(
         'SELECT
             p.*,
-            s.title,
-            s.deezer_link,
-            s.audio_preview,
-            s.duration,
-            a.name AS artist_name,
-            a.id AS artist_id,
-            al.title AS album_title,
-            al.id AS album_id,
-            g.name AS genre_name,
+            s.id AS song_id, s.title, s.deezer_link, s.audio_preview, s.duration,
+            a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
+            al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
+            g.id AS genre_id, g.name AS genre_name,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
             GROUP_CONCAT(i.imgSrc) AS all_instruments_images,
@@ -39,17 +34,13 @@ function getNewsPartitions($pdo)
     $sql = $pdo->prepare(
         'SELECT
             p.*,
-            s.title,
-            s.deezer_link,
-            s.audio_preview,
-            s.duration,
-            a.name AS artist_name,
-            a.id As artist_id,
-            al.title AS album_title,
-            al.id AS album_id,
-            g.name AS genre_name,
+            s.id AS song_id, s.title, s.deezer_link, s.audio_preview, s.duration,
+            a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
+            al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
+            g.id AS genre_id, g.name AS genre_name,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
+            GROUP_CONCAT(i.imgSrc) AS all_instruments_images,
             GROUP_CONCAT(pi.is_current) AS all_is_current
         FROM partitions p
         JOIN songs s ON p.song_id = s.id
@@ -73,19 +64,15 @@ function getPopularPartitions($pdo)
     $sql = $pdo->prepare(
         'SELECT
             p.*,
-            s.title,
-            s.deezer_link,
-            s.audio_preview,
-            s.duration,
-            a.name AS artist_name,
-            a.id AS artist_id,
-            al.title AS album_title,
-            al.id AS album_id,
-            g.name AS genre_name,
+            s.id AS song_id, s.title, s.deezer_link, s.audio_preview, s.duration,
+            a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
+            al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
+            g.id AS genre_id, g.name AS genre_name,
+            COUNT(pv.id) AS recent_views,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
-            GROUP_CONCAT(pi.is_current) AS all_is_current,
-            COUNT(pv.id) AS recent_views
+            GROUP_CONCAT(i.imgSrc) AS all_instruments_images,
+            GROUP_CONCAT(pi.is_current) AS all_is_current
         FROM partitions p
         JOIN songs s ON p.song_id = s.id
         LEFT JOIN artists a ON s.artist_id = a.id
@@ -110,17 +97,13 @@ function getSuggestionsPartitions($pdo)
     $sql = $pdo->prepare(
         'SELECT
             p.*,
-            s.title,
-            s.deezer_link,
-            s.audio_preview,
-            s.duration,
-            a.name AS artist_name,
-            a.id AS artist_id,
-            al.title AS album_title,
-            al.id AS album_id,
-            g.name AS genre_name,
+            s.id AS song_id, s.title, s.deezer_link, s.audio_preview, s.duration,
+            a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
+            al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
+            g.id AS genre_id, g.name AS genre_name,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
+            GROUP_CONCAT(i.imgSrc) AS all_instruments_images,
             GROUP_CONCAT(pi.is_current) AS all_is_current
         FROM partitions p
         JOIN songs s ON p.song_id = s.id
@@ -145,17 +128,13 @@ function getPartitonsByInstrument($pdo, $instrumentId)
     $sql = $pdo->prepare(
         'SELECT
             p.*,
-            s.title,
-            s.deezer_link,
-            s.audio_preview,
-            s.duration,
-            a.name AS artist_name,
-            a.id AS artist_id,
-            al.title AS album_title,
-            al.id AS album_id,
-            g.name AS genre_name,
+            s.id AS song_id, s.title, s.deezer_link, s.audio_preview, s.duration,
+            a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
+            al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
+            g.id AS genre_id, g.name AS genre_name,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
+            GROUP_CONCAT(i.imgSrc) AS all_instruments_images,
             GROUP_CONCAT(pi.is_current) AS all_is_current
         FROM partitions p
         JOIN songs s ON p.song_id = s.id

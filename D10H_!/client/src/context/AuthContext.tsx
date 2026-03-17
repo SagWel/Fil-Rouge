@@ -1,5 +1,6 @@
 import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { type JwtPayload } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 interface DecodedUser extends JwtPayload {
     id: number,
@@ -26,6 +27,7 @@ interface AuthProviderProps {
 }
 
 const AuthProvider = ({ children } : AuthProviderProps) => {
+
     const [user, setUser] = useState<DecodedUser | null>(null);
     const [isFirstLogin, setIsFirstLogin] = useState<boolean>(true)
     const [loading, setLoading] = useState<boolean>(true)

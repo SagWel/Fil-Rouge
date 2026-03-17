@@ -7,6 +7,7 @@ function mapperPartition(array $rows, ?string $searchedInstrument = null)
     foreach ($rows as $row) {
         $instrumentsNames = explode(',', $row['all_instruments_names']);
         $instrumentsIds = explode(',', $row['all_instruments_ids']);
+        $instrumentsImages = isset($row['all_instruments_images']) ? explode(',', $row['all_instruments_images']) : [];
         $instrumentsCurrent = explode(',', $row['all_is_current']);
 
         $currentInstrument = null;
@@ -15,7 +16,9 @@ function mapperPartition(array $rows, ?string $searchedInstrument = null)
         foreach ($instrumentsNames as $index => $instrumentName) {
             $instrumentData = [
                 "id" => (int)$instrumentsIds[$index],
-                "name" => $instrumentName
+                "name" => $instrumentName,
+                "imgSrc" => $instrumentsImages[$index],
+                "linkToSearch" => "/partitions/" . strtolower($instrumentName)
             ];
 
             if ($searchedInstrument && $instrumentName === $searchedInstrument) {
@@ -42,31 +45,48 @@ function mapperPartition(array $rows, ?string $searchedInstrument = null)
             return;
         }
 
+        $artist = [
+            "id" => (int)$row['artist_id'],
+            "name" => $row['artist_name'],
+            "picture" => $row['artist_picture'],
+        ];
+
+        $album = [
+            "id" => (int)$row['album_id'],
+            "title" => $row['album_title'],
+            "cover" => $row['album_cover'],
+            "artist" => $artist,
+            "deezer_link" => $row['album_deezer_link'],
+        ];
+
+        $song = [
+            "id" => (int)($row['song_id'] ?? 0),
+            "title" => $row['title'],
+            "deezer_link" => $row['deezer_link'],
+            "audio_preview" => $row['audio_preview'],
+            "duration" => (int)$row['duration'],
+            "artist" => $artist,
+            "album" => $album,
+            "genre" => [
+                "id" => (int)($row['genre_id'] ?? 0),
+                "name" => $row['genre_name'] ?? "",
+                "picture" => ""
+            ]
+        ];
+
         $partitions[] = [
             "id" => (int)$row['id'],
-            "title" => $row['title'],
-            "artist" => [
-                "id" => $row['artist_id'],
-                "name" => $row['artist_name']
-            ],
-            "album" => $row['album_id'] ? [
-                "id" => $row['album_id'],
-                "title" => $row['album_title']
-            ] : null,
-            "genre" => $row['genre_name'],
             "difficulty" => (int)$row['difficulty'],
             "instruments" => [
                 "currentInstrument" => $currentInstrument,
                 "othersInstruments" => $othersInstruments
             ],
+            "song" => $song,
             "bpm" => (int)$row['bpm'],
             "time_signature" => $row['time_signature'],
             "clef" => $row['clef'],
             "clef_signature" => $row['clef_signature'] ? $row['clef_signature'] : null,
-            "measures" => [],
-            "duration" => (int)$row['duration'],
-            "deezer_link" => $row['deezer_link'],
-            "audio_preview" => $row['audio_preview'],
+            "measures" => json_decode($row['measures']),
             "partition_preview" => $row['partition_preview']
         ];
     }

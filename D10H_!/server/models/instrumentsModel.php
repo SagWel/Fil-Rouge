@@ -3,7 +3,7 @@
 function getAllInstruments($pdo)
 {
     $sql = $pdo->prepare(
-        'SELECT * FROM instruments'
+        'SELECT i.id, i.name, i.imgSrc, i.link_to_search AS linkToSearch FROM instruments i'
     );
 
     $sql->execute();
@@ -18,4 +18,18 @@ function creatUserInstruments($pdo, $userId, $instrument, $level)
     );
 
     return $sql->execute([$userId, $instrument['id'], $level]);
+}
+
+function getUserInstruments($pdo, $userId)
+{
+    $sql = $pdo->prepare(
+        'SELECT i.id, i.name, i.imgSrc, i.link_to_search AS linkToSearch, ui.level AS lvl
+         FROM instruments i
+         JOIN user_instruments ui ON i.id = ui.instrument_id
+         WHERE ui.user_id = ?'
+    );
+
+    $sql->execute([$userId]);
+
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
