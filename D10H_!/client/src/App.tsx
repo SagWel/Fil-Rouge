@@ -2,6 +2,7 @@ import { Grid, Box} from '@chakra-ui/react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import SearchProvider from './context/SearchContext.tsx'
+import { PartitionProvider } from './context/PartitionContext.tsx';
 import { useAuth } from './hooks/useAuth.tsx';
 
 // Pages imports
@@ -72,114 +73,116 @@ function App() {
   // Scores page template
   if (onPageMorceau && isAuthenticated) {
     return (
-    <Grid
-    
-    bg={"#000000"}
-    minH="100vh"
-    templateRows={`${HEADER_MIN_HEIGHT} 1fr ${PLAYEUR_MIN_HEIGHT}`}
-    templateColumns={`${NAV_MIN_WIDTH} 1fr ${TOOLS_WIDTH}`}
-    templateAreas={`
-      "nav header tools"
-      "nav main tools"
-      "playeur playeur playeur"
-      `}
-      >
-        <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
-          <BarNavMin />
-        </Box>
-        <SearchProvider>
-          <Box gridArea={"header"} zIndex={"200"}>
-            <HeaderMin/>
-          </Box>
-          <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
-             <Routes>
-      
-                <Route path='/' element={<PageHome />} />
+    <SearchProvider>
+      <PartitionProvider>
+        <Grid
+        bg={"#000000"}
+        minH="100vh"
+        templateRows={`${HEADER_MIN_HEIGHT} 1fr ${PLAYEUR_MIN_HEIGHT}`}
+        templateColumns={`${NAV_MIN_WIDTH} 1fr ${TOOLS_WIDTH}`}
+        templateAreas={`
+          "nav header tools"
+          "nav main tools"
+          "playeur playeur playeur"
+          `}
+          >
+            <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
+              <BarNavMin />
+            </Box>
+              <Box gridArea={"header"} zIndex={"200"}>
+                <HeaderMin/>
+              </Box>
+              <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
+                <Routes>
+          
+                    <Route path='/' element={<PageHome />} />
 
-                <Route path='/search' element={<PageSearchPartitions />} />
-      
-                <Route path='/instruments/user' element={<PageUserInstruments />} />
+                    <Route path='/search' element={<PageSearchPartitions />} />
+          
+                    <Route path='/instruments/user' element={<PageUserInstruments />} />
 
-                <Route path='/instruments/all' element={<AllInstruments />} />
-      
-                <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
-      
-                <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
-      
-                <Route path='/favoris' element={<Favoris />} />
+                    <Route path='/instruments/all' element={<AllInstruments />} />
+          
+                    <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
+          
+                    <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+          
+                    <Route path='/favoris' element={<Favoris />} />
 
-                <Route path='/favoris/scorbraries' element={<Scorbraries />} />
-      
-                <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
+                    <Route path='/favoris/scorbraries' element={<Scorbraries />} />
+          
+                    <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
 
-                <Route path='/favoris/history' element={<History />} />
-    
-            </Routes>
-          </Box>
-        </SearchProvider>
-        <Box gridArea={"tools"} zIndex={"200"} marginTop={HEADER_MIN_HEIGHT} marginBottom={PLAYEUR_MIN_HEIGHT} position={"fixed"} right={"0"} top={"0"} bottom={"0"}>
-          <Tools />
-        </Box>
-        <Box gridArea={"playeur"} zIndex={"10"}
-        position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
-          <PlayeurMin onClick={handleOnPlay}/>
-        </Box>
-    </Grid>
+                    <Route path='/favoris/history' element={<History />} />
+        
+                </Routes>
+              </Box>
+            <Box gridArea={"tools"} zIndex={"200"} marginTop={HEADER_MIN_HEIGHT} marginBottom={PLAYEUR_MIN_HEIGHT} position={"fixed"} right={"0"} top={"0"} bottom={"0"}>
+              <Tools />
+            </Box>
+            <Box gridArea={"playeur"} zIndex={"10"}
+            position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
+              <PlayeurMin onClick={handleOnPlay}/>
+            </Box>
+        </Grid>
+      </PartitionProvider>
+    </SearchProvider>
 
   )} else if (isAuthenticated) {
 
     // Others pages template
     return (
-      <Grid
-      
-      bg={"#000000"}
-      minH="100vh"
-      templateRows={`${HEADER_HEIGHT} 1fr ${PLAYER_HEIGHT}`}
-      templateColumns={`${navResponsive} 1fr`}
-      templateAreas={`
-        "nav header"
-        "nav main"
-        "playeur playeur"
-        `}
-        >
-        <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
-          {isMinimal ? <BarNavMin  /> : <BarNav  />}
-        </Box>
-        <SearchProvider>
-          <Box gridArea={"header"} zIndex={"200"}>
-            <Header />
-          </Box>
-          <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
-            <Routes>
-      
-              <Route path='/' element={<PageHome />} />
+      <SearchProvider>
+        <PartitionProvider>
+          <Grid
+          bg={"#000000"}
+          minH="100vh"
+          templateRows={`${HEADER_HEIGHT} 1fr ${PLAYER_HEIGHT}`}
+          templateColumns={`${navResponsive} 1fr`}
+          templateAreas={`
+            "nav header"
+            "nav main"
+            "playeur playeur"
+            `}
+            >
+            <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
+              {isMinimal ? <BarNavMin  /> : <BarNav  />}
+            </Box>
+              <Box gridArea={"header"} zIndex={"200"}>
+                <Header />
+              </Box>
+              <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
+                <Routes>
+          
+                  <Route path='/' element={<PageHome />} />
 
-              <Route path='/search/' element={<PageSearchPartitions />} />
-    
-              <Route path='/instruments/user' element={<PageUserInstruments />} />
+                  <Route path='/search/' element={<PageSearchPartitions />} />
+        
+                  <Route path='/instruments/user' element={<PageUserInstruments />} />
 
-              <Route path='/instruments/all' element={<AllInstruments />} />
-    
-              <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
-    
-              <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
-    
-              <Route path='/favoris' element={<Favoris />} />
+                  <Route path='/instruments/all' element={<AllInstruments />} />
+        
+                  <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
+        
+                  <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+        
+                  <Route path='/favoris' element={<Favoris />} />
 
-              <Route path='/favoris/scorbraries' element={<Scorbraries />} />
-    
-              <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
+                  <Route path='/favoris/scorbraries' element={<Scorbraries />} />
+        
+                  <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
 
-              <Route path='/favoris/history' element={<History />} />
-      
-            </Routes>
-          </Box>
-        </SearchProvider>
-        <Box gridArea={"playeur"} zIndex={"9999"}
-        position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
-          <Playeur />
-        </Box>
-      </Grid>
+                  <Route path='/favoris/history' element={<History />} />
+          
+                </Routes>
+              </Box>
+            <Box gridArea={"playeur"} zIndex={"9999"}
+            position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
+              <Playeur />
+            </Box>
+          </Grid>
+        </PartitionProvider>
+      </SearchProvider>
     )
   } else if (loading) {
     return (

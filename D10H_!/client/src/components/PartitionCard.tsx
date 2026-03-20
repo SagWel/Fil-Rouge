@@ -13,7 +13,7 @@ function difficultyLvl(difficulty: number): React.JSX.Element[] {
 }
 
 // 
-function IconCard (instrumentKey: string): React.JSX.Element | null {
+export function IconCard (instrumentKey: string): React.JSX.Element | null {
 
     switch (instrumentKey) {
         case 'guitare': return <GuitarIcon />
@@ -35,7 +35,6 @@ export interface IPartitionCardProps { partition: IPartitions, currentInstrument
 
 // Card for each scores in search result
 const PartitionCard: React.FC<IPartitionCardProps> = ({partition, currentInstrument}) => {
-         
     return (
     <Flex as={"a"} href={`/partitions/${currentInstrument}/${partition.id}`} direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
     backgroundColor={"transparent"} minH={"192px"}>
@@ -49,6 +48,9 @@ const PartitionCard: React.FC<IPartitionCardProps> = ({partition, currentInstrum
             zIndex={"100"} maxHeight={"4.125rem"} maxWidth={"4.125Rem"}>
                 {IconCard(partition.instruments.currentInstrument.name)}
             </Flex>
+            {partition.instruments.currentInstrument.role && (
+                <Text pos={"absolute"} bottom={"-1.25rem"} right={0} color={"#c5c5c5"} fontSize={"14px"}>({partition.instruments.currentInstrument.role})</Text>
+            )}
         </Box>
         <Box id="cardInfos">
             <Box color={"#FDFCFE"}>

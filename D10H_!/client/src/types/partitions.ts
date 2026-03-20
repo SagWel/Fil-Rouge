@@ -1,19 +1,57 @@
-import { type IInstrument } from "./instrument"
+import { type IInstrument, type IOtherInstrument } from "./instrument"
 import type { IUsers } from "./user"
 
-export type TieStatus = "start" | "end" | "null"
-export type Durations = "w" | "h" | "q" | "8" | "16" | "32"
+
+type Durations = "w" | "h" | "q" | "8" | "16" | "32"
+
+export interface ITie {
+    status: "start" | "end",
+    direction?: "up" | "down" | "auto"
+}
+
+export interface ISlide {
+    type: "slide-up" | "slide-down",
+    statut: "start" | "end"
+}   
+
+export interface ITab {
+    str: number,
+    fret: number,
+    tie?: ITie
+    fingering?: {
+        number: "1" /*index */ | "2" /*majeur */ | "3" /*annulaire */ | "4" /*oricualire */ | "T" /*pouce*/,
+        position: "left" | "right" | "above" | "below"
+    }
+}
+
+export interface IGraceNote {
+    keys: string[],
+    duration: "8" | "16",
+    tab?: ITab[],
+    beam?: "start" | "continue" | "end",
+    keyTies?: (ITie[] | null)[],
+    keySlides?: (ISlide | null)[],
+    slash: boolean
+}
 
 export interface INoteData {
     id?: string,
     keys: string[],
+    tab?: ITab[],
+    stroke?: "down" | "up" | "arpeggio_down" | "arpeggio_up" | "rasquedo"
     duration: Durations,
+    graceNotes?: IGraceNote[],
     dots?: number,
     bpm?: number,
     isRest?: boolean,
     accidental?: string,
-    beam?: "start" | "continue" | "end" | "none",
-    ties?: TieStatus[],
+    articulation?: {
+        type: "staccato" | "accent" | "tenuto" | "marcato" | "fermata",
+        position: "above" | "below"
+    },
+    beam?: "start" | "continue" | "end",
+    keyTies?: (ITie[] | null)[],
+    keySlides?: (ISlide | null)[],
     tuplet?: {
         type: "start" | "mid" | "end",
         num?: number,
@@ -81,7 +119,8 @@ export interface IPartitions {
     difficulty: number,
     instruments: {
         currentInstrument : IInstrument,
-        othersInstruments : IInstrument[] }
+        othersInstruments : IOtherInstrument[]
+    },
     bpm: number,
     time_signature: string,
     clef: string,
@@ -89,6 +128,8 @@ export interface IPartitions {
     measures: IMeasure[],
     song: ISong,
     partition_preview: string,
+    popularity: number,
+    created_at: Date
 }
 
 export interface IScorbrarie {

@@ -1,15 +1,28 @@
-import { Flex, Button, Box } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Flex, Button } from "@chakra-ui/react";
 
 // SVGs import from a unique file
 import { 
-    TunnerIcon, CountdownIcon, MetronomeIcon, TempoIcon, LearningModeIcon,LooperIcon,SoloIcon,MuteIcon, AnnotationsIcon, ImpressionIcon, ChordsIcon,
-    PianoIcon, ChantIcon, DrumsIcon, BasseIcon, GuitarIcon
+    TunnerIcon, 
+    CountdownIcon, 
+    MetronomeIcon, 
+    TempoIcon, 
+    LearningModeIcon,
+    LooperIcon,
+    SoloIcon,
+    MuteIcon, 
+    AnnotationsIcon, 
+    ImpressionIcon, 
+    ChordsIcon
 } from "./svg";
+import { usePartition } from "../hooks/usePartition";
+import OtherInstrumentCard from "./OtherInstrumentCard";
+import type { IOtherInstrument } from "../types/instrument";
 
 export interface IToolsProps {}
 
 const Tools: React.FC<IToolsProps> = () => {
+    const { partition } = usePartition()
+
     return (
         <Flex id="RightBarContainer"
         direction={"column"} justifyContent={"start"} alignItems={"center"}
@@ -23,7 +36,7 @@ const Tools: React.FC<IToolsProps> = () => {
             backgroundColor={"#141216"}
             borderTopRadius={"0.5rem"}
             borderBottomColor={"#3a393d"} borderBottomStyle={"solid"} borderBottomWidth={"0.0625rem"}>
-                <Button type="button" id="tunnerBtn"
+                <Button type="button" id="tunnerBtn" title="tunner"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -33,7 +46,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <TunnerIcon size="24px"/>
                 </Button>
-                <Button type="button" id="countdownBtn"
+                <Button type="button" id="countdownBtn" title="countdown"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -43,7 +56,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <CountdownIcon size="24px"/>
                 </Button>
-                <Button type="button" id="metronomeBtn"
+                <Button type="button" id="metronomeBtn" title="metronom"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -53,7 +66,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <MetronomeIcon size="24px"/>
                 </Button>
-                <Button type="button" id="tempoBtn"
+                <Button type="button" id="tempoBtn" title="tempo management"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -63,7 +76,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <TempoIcon size="24px"/>
                 </Button>
-                <Button type="button" id="learningModeBtn"
+                <Button type="button" id="learningModeBtn" title="learning mode"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -73,7 +86,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <LearningModeIcon size="24px"/>
                 </Button>
-                <Button type="button" id="looperBtn"
+                <Button type="button" id="looperBtn" title="looper"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -83,7 +96,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <LooperIcon size="24px"/>
                 </Button>
-                <Button type="button" id="soloBtn"
+                <Button type="button" id="soloBtn" title="mode solo"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -93,7 +106,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <SoloIcon size="24px"/>
                 </Button>
-                <Button type="button" id="muteBtn"
+                <Button type="button" id="muteBtn" title="mute"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -103,7 +116,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <MuteIcon size="24px"/>
                 </Button>
-                <Button type="button" id="annotationsBtn"
+                <Button type="button" id="annotationsBtn" title="annotations"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -113,7 +126,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <AnnotationsIcon size="24px"/>
                 </Button>
-                <Button type="button" id="impressionBtn"
+                <Button type="button" id="impressionBtn" title="print"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -123,7 +136,7 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}>
                     <ImpressionIcon size="24px"/>
                 </Button>
-                <Button type="button" id="chordsBtn"
+                <Button type="button" id="chordsBtn" title="chords book"
                 backgroundColor={"transparent"}
                 padding={"0"}
                 borderRadius={"full"}
@@ -146,7 +159,7 @@ const Tools: React.FC<IToolsProps> = () => {
                     display: "none"
                 }
             }}>
-                <Box as={Link} to={""}
+                {/* <Box as={Link} to={""}
                 height={"fit-content"} width={"fit-content"}
                 borderRadius={"full"} padding={"0.185rem"}
                 _hover={{
@@ -190,7 +203,11 @@ const Tools: React.FC<IToolsProps> = () => {
                             }}
                 >
                     <GuitarIcon size="32px" viewBox={"-5 -15 90 90"}/>
-                </Box>
+                </Box> */}
+
+                {partition?.instruments.othersInstruments.map((oi: IOtherInstrument) => (
+                    <OtherInstrumentCard instrument={oi} />
+                ))}
             </Flex>
         </Flex>
     )

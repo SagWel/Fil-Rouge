@@ -1,7 +1,7 @@
 {
     "partitions": [
         {
-            "id": 116348264,
+            "id": 1,
             "title": "Michelle",
             "artist": {
                 "id": 1,
@@ -228,7 +228,14 @@
                             "keys": ["g/4"],
                             "duration": "8",
                             "beam": "end",
-                            "ties" : ["start"],
+                            "keyTies" : [
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ],
                             "lyrics": "chelle."
                         }
                     ]
@@ -239,7 +246,14 @@
                         {
                             "keys": ["g/4"],
                             "duration": "w",
-                            "ties": ["end"],
+                            "keyTies": [
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ],
                             "lyrics":"_"
                         }
                     ]
@@ -548,7 +562,18 @@
                             "keys":["b/4"],
                             "duration": "8",
                             "beam": "end",
-                            "ties":["start", "start"],
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "up"
+                                    },
+                                    {
+                                        "status":"start",
+                                        "direction":"up"
+                                    }
+                                ]
+                            ],
                             "lyrics":"way,"
                         }
                     ]
@@ -559,21 +584,46 @@
                         {
                             "keys": ["b/4"],
                             "duration": "8",
-                            "ties": ["end"],
+                            "keyTies": [
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "up"
+                                    }
+                                ]
+                            ],
                             "lyrics": "_"
                         },
                         {
                             "keys": ["a/4"],
                             "duration": "q",
                             "dots":1,
-                            "ties": ["start"],
+                            "keyTies": [
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ],
                             "lyrics": "_"
                         },
                         {
                             "keys": ["a/4"],
                             "duration":"8",
                             "beam":"start",
-                            "ties":["end","end"],
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "up"
+                                    },
+                                    {
+                                        "status":"end",
+                                        "direction":"down"
+                                    }
+                                ]
+                            ],
                             "lyrics": "_"
                         },
                         {
@@ -966,7 +1016,14 @@
                             "keys":["b/4"],
                             "duration": "8",
                             "beam": "end",
-                            "ties":["start"],
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "up"
+                                    }
+                                ]
+                            ],
                             "lyrics":"to"
                         }
                     ]
@@ -977,20 +1034,41 @@
                         {
                             "keys": ["b/4"],
                             "duration": "8",
-                            "ties": ["end"],
+                            "keyTies": [
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "up"
+                                    }
+                                ]
+                            ],
                             "lyrics": "me."
                         },
                         {
                             "keys": ["a/4"],
                             "duration": "q",
                             "dots":1,
-                            "ties":["start"],
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ],
                             "lyrics": "_"
                         },
                         {
                             "keys": ["b/4"],
                             "duration": "q",
-                            "ties": ["end"]
+                            "keyTies": [
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ]
                         },
                         {
                             "keys": ["b/4"],
@@ -1101,7 +1179,18 @@
                             "keys": ["f/5"],
                             "duration":"q",
                             "dots":1,
-                            "ties":["start","start"],
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "up"
+                                    },
+                                    {
+                                        "status": "start",
+                                        "direction":"up"
+                                    }
+                                ]
+                            ],
                             "lyrics":"you."
                         }
                     ]
@@ -1112,7 +1201,14 @@
                         {
                             "keys":["f/5"],
                             "duration":"w",
-                            "ties":["end"]
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "up"
+                                    }
+                                ]
+                            ]
                         }
                     ]
                 },
@@ -1122,7 +1218,14 @@
                         {
                             "keys":["f/5"],
                             "duration":"w",
-                            "ties":["end"]
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "up"
+                                    }
+                                ]
+                            ]
                         }
                     ]
                 },
@@ -1235,7 +1338,14 @@
                             "keys":["g/5"],
                             "duration":"q",
                             "dots":1,
-                            "ties":["start"],
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "up"
+                                    }
+                                ]
+                            ],
                             "lyrics":"want"
                         },
                         {
@@ -1248,7 +1358,14 @@
                             "keys":["g/5"],
                             "duration":"16",
                             "beam":"end",
-                            "ties":["end"]
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "up"
+                                    }
+                                ]
+                            ]
                         },
                         {
                             "keys":["f/5"],
@@ -1348,19 +1465,45 @@
                             "keys":["b/4"],
                             "duration":"8",
                             "beam":"start",
+                            "keyTies": [
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ],
                             "lyrics":"how."
                         },
                         {
                             "keys":["a/4"],
                             "duration":"8",
                             "beam":"end",
-                            "ties":["start"],
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ],
                             "lyrics":"_"
                         },
                         {
                             "keys":["a/4"],
                             "duration":"h",
-                            "ties":["end"]
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "down"
+                                    },
+                                    {
+                                        "status": "end",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ]
                         },
                         {
                             "keys":["b/4"],
@@ -1633,7 +1776,14 @@
                             "keys":["a/4"],
                             "duration":"8",
                             "beam":"end",
-                            "ties":["start"],
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "start",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ],
                             "lyrics":"words."
                         }
                     ]
@@ -1644,7 +1794,14 @@
                         {
                             "keys":["a/4"],
                             "duration":"q",
-                            "ties":["end"],
+                            "keyTies":[
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ],
                             "lyrics":"_"
                         },
                         {
@@ -1825,6 +1982,603 @@
             "audioPreview": "https://cdnt-preview.dzcdn.net/api/1/1/8/2/a/0/82aed4ff815e92629fbd193688e8de2b.mp3?hdnea=exp=1766499911~acl=/api/1/1/8/2/a/0/82aed4ff815e92629fbd193688e8de2b.mp3*~data=user_id=0,application_id=42~hmac=13cbcab1d1f0d0318a15f8ea197715bb03df69e0774a7c45969a2db8092eb6dd",
             "partitionPreview": "/img/Partition.jpeg",
             "duration": 161
+        },
+        {
+            "id": 2,
+            "name": "Michelle-Beatles-Guitare-Rythmic",
+            "difficulty": 4,
+            "instruments" : {
+                "currentInstrument" : {
+                    "id": 1,
+                    "name": "guitare",
+                    "role": "Rythmic",
+                    "imgSrc": "uploads/instruments/Guitare.png",
+                    "linkToSearch": "/partitions/guitare"
+                },
+                "othersInstruments": [
+                    {
+                        "id": 1,
+                        "name": "guitare",
+                        "role": "solo",
+                        "imgSrc": "uploads/instruments/Guitare.png",
+                        "linkToSearch": "/partitions/guitare"
+                    },
+                    {
+                        "id": 2,
+                        "name": "chant",
+                        "imgSrc": "uploads/instruments/Chant.png",
+                        "linkToSearch": "/partitions/chant"
+                    },
+                    {
+                        "id": 3,
+                        "name": "basse",
+                        "imgSrc": "uploads/instruments/Basse.png",
+                        "linkToSearch": "/partitions/basse"
+                    },
+                    {
+                        "id": 2,
+                        "name": "chant",
+                        "role": "choirs",
+                        "imgSrc": "uploads/instruments/Chant.png",
+                        "linkToSearch": "/partitions/chant"
+                    },
+                    {
+                        "id": 5,
+                        "name": "batterie",
+                        "imgSrc": "uploads/instruments/Batterie.png",
+                        "linkToSearch": "/partitions/batterie"
+                    }
+                ]
+            },
+            "bpm": 108,
+            "time_signature": "4/4",
+            "clef": "treble",
+            "clef_signature": "Eb",
+            "measures": [
+                {
+                    "id": 1,
+                    "notes":[
+                        {
+                            "keys": ["c/5"],
+                            "tab": [
+                                {
+                                    "str": 3,
+                                    "fret": 5,
+                                    "fingering": {
+                                        "number": "3",
+                                        "position": "left"
+                                    }
+                                }
+                            ],
+                            "stroke": "down",
+                            "duration": "q",
+                            "graceNotes": [
+                                {
+                                    "keys": ["b/4"],
+                                    "duration": "8",
+                                    "tab": [
+                                        {
+                                            "str": 3,
+                                            "fret": 3,
+                                            "fingering": {
+                                                "number": "1",
+                                                "position":"left"
+                                            }
+                                        }
+                                    ],
+                                    "keyTies": [
+                                        [
+                                            {
+                                                "status": "start",
+                                                "direction": "down"
+                                            }
+                                        ]
+                                    ],
+                                    "slash": true
+                                }
+                            ],
+                            "keyTies": [
+                                [
+                                    {
+                                        "status": "end",
+                                        "direction": "down"
+                                    }
+                                ]
+                            ]
+                        },
+                        {
+                            "keys": ["e/5", "g/5"],
+                            "tab": [
+                                {
+                                    "str": 2,
+                                    "fret": 4,
+                                    "fingering": {
+                                        "number": "2",
+                                        "position":"left"
+                                    }
+                                },
+                                {
+                                    "str": 1,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position": "left"
+                                    }
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration": "q"
+                        },
+                        {
+                            "keys": ["b/4"],
+                            "tab": [
+                                {
+                                    "str": 3,
+                                    "fret": 4,
+                                    "fingering": {
+                                        "number": "2",
+                                        "position": "left"
+                                    }
+                                }
+                            ],
+                            "stroke": "down",
+                            "duration":"q",
+                            "accidental": "n"
+                        },
+                        {
+                            "keys": ["e/5", "g/5"],
+                            "tab": [
+                                {
+                                    "str": 2,
+                                    "fret": 4,
+                                    "fingering": {
+                                        "number": "2",
+                                        "position": "left"
+                                    }
+                                },
+                                {
+                                    "str": 1,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position":"left"
+                                    }
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration": "8"
+                        },
+                        {
+                            "keys": ["b/4"],
+                            "duration": "8",
+                            "isRest": true
+                        }
+                    ],
+                    "shortText": "Capo V"
+                },
+                {
+                    "id": 2,
+                    "notes":[
+                        {
+                            "keys": ["bb/4"],
+                            "tab": [
+                                {
+                                    "str": 3,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position": "above"
+                                    }
+                                }
+                            ],
+                            "duration": "q",
+                            "accidental": "b"
+                        },
+                        {
+                            "keys": ["e/5", "g/5"],
+                            "tab": [
+                                {
+                                    "str": 2,
+                                    "fret": 4,
+                                    "fingering": {
+                                        "number": "2",
+                                        "position":"left"
+                                    }
+                                },
+                                {
+                                    "str": 1,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position":"left"
+                                    }
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration": "q"
+                        },
+                        {
+                            "keys": ["a/4"],
+                            "tab": [
+                                {
+                                    "str": 3,
+                                    "fret": 2,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position":"left"
+                                    }
+                                }
+                            ],
+                            "stroke": "down",
+                            "duration": "q",
+                            "accidental": "n"
+                        },
+                        {
+                          "keys": ["e/5", "g/5"],
+                           "tab": [
+                                {
+                                    "str": 2,
+                                    "fret": 4,
+                                    "fingering": {
+                                        "number": "2",
+                                        "position": "left"
+                                    }
+                                },
+                                {
+                                    "str": 1,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position":"left"
+                                    }
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration": "8"
+                        },
+                        {
+                            "keys": ["b/4"],
+                            "duration": "8",
+                            "isRest": true
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "notes":[
+                        {
+                            "keys":["ab/4"],
+                            "tab":[
+                                {
+                                    "str": 3,
+                                    "fret": 1,
+                                    "fingering": {
+                                        "number":"1",
+                                        "position":"above"
+                                    }
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration": "q",
+                            "accidental":"b"
+                        },
+                        {
+                            "keys": ["c/5", "g/5"],
+                            "tab":[
+                                {
+                                    "str": 2,
+                                    "fret": 1,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position":"left"
+                                    }
+                                },
+                                {
+                                    "str": 1,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "3",
+                                        "position":"left"
+                                    }
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration":"q"
+                        },
+                        {
+                            "keys": ["c/5", "f/5"],
+                            "tab": [
+                                {
+                                    "str":2,
+                                    "fret":1,
+                                    "fingering": {
+                                        "number":"1",
+                                        "position":"left"
+                                    }
+                                },
+                                {
+                                    "str":1,
+                                    "fret":1,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position": "left"
+                                    }
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration":"q"
+                        },
+                        {
+                            "keys":["a/4", "e/5"],
+                            "tab": [
+                                {
+                                    "str": 3,
+                                    "fret": 1,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position": "left"
+                                    }
+                                },
+                                {
+                                    "str": 2,
+                                    "fret": 4,
+                                    "fingering": {
+                                        "number": "4",
+                                        "position": "left"
+                                    }
+                                }
+                            ],
+                            "stroke": "down",
+                            "duration": "8"
+                        },
+                        {
+                            "keys": ["b/4"],
+                            "duration": "8",
+                            "isRest": true
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "notes": [
+                        {
+                            "keys": ["g/4", "d/5", "g/5"],
+                            "tab": [
+                                {
+                                    "str": 3,
+                                    "fret": 0
+                                },
+                                {
+                                    "str": 2,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position":"left"
+                                    }
+                                },
+                                {
+                                    "str": 1,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "1",
+                                        "position": "left"
+                                    }
+                                }
+                            ],
+                            "stroke": "down",
+                            "duration":"q",
+                            "graceNotes": [
+                                {
+                                    "keys": ["c/5", "f/5"],
+                                    "duration": "8",
+                                    "tab": [
+                                        {
+                                            "str": 2,
+                                            "fret": 1,
+                                            "fingering": {
+                                                "number": "1",
+                                                "position":"left"
+                                            }
+                                        },
+                                        {
+                                            "str": 1,
+                                            "fret": 1,
+                                            "fingering": {
+                                                "number": "1",
+                                                "position":"left"
+                                            }
+                                        }
+                                    ],
+                                    "keyTies": [
+                                    [
+                                        {
+                                            "status": "start",
+                                            "direction": "down"
+                                        },
+                                        {
+                                            "status": "start",
+                                            "direction": "up"
+                                        }
+                                    ]
+                                ],
+                                    "keySlides": [
+                                        {
+                                            "type": "slide-up",
+                                            "statut": "start"
+                                        },
+                                        {
+                                            "type": "slide-up",
+                                            "statut": "start"
+                                        }
+                                    ],
+                                    "slash": true
+                                }
+                            ],
+                            "keyTies": [
+                                [
+                                    null,
+                                    {
+                                        "status":"end",
+                                        "direction": "down"
+                                    },
+                                    {
+                                        "status": "end",
+                                        "direction": "up"
+                                    }
+                                ]
+                            ],
+                            "slide": {
+                                "type":"slide-down",
+                                "statut": "end"
+                            }
+                        },
+                        {
+                           "keys": ["d/5", "g/5"],
+                           "tab": [
+                                {
+                                    "str": 2,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "3",
+                                        "position":"left"
+                                    }
+                                },
+                                {
+                                    "str": 1,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "3",
+                                        "position": "left"
+                                    }
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration": "q"
+                        },
+                        {
+                          "keys": ["g/4"],
+                          "tab": [
+                                {
+                                    "str": 3,
+                                    "fret": 0
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration":"8",
+                            "beam": "start"
+                        },
+                        {
+                            "keys": ["d/5", "g/5"],
+                           "tab": [
+                                {
+                                    "str": 2,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "3",
+                                        "position":"left"
+                                    }
+                                },
+                                {
+                                    "str": 1,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "3",
+                                        "position": "left"
+                                    }
+                                }
+                            ],
+                            "stroke":"up",
+                            "duration": "8",
+                            "beam": "continue"
+                        },
+                        {
+                            "keys": ["g/4"],
+                            "tab": [
+                                {
+                                    "str": 3,
+                                    "fret": 0
+                                }
+                            ],
+                            "stroke":"down",
+                            "duration":"8",
+                            "beam": "end"
+                        },
+                        {
+                            "keys": ["b/4"],
+                            "duration": "8",
+                            "isRest": true
+                        }
+                    ]
+                },
+                {
+                    "id": 5,
+                    "notes": [
+                        {
+                            "keys": ["c/3"],
+                            "tab": [
+                                {
+                                    "str": 5,
+                                    "fret": 3,
+                                    "fingering": {
+                                        "number": "3",
+                                        "position":"left"
+                                    }
+                                }
+                            ],
+                            "stroke": "down",
+                            "duration": "q"
+                        }
+                    ]
+                }
+            ],
+            "song": {
+                "id": 1,
+                "title": "Michelle",
+                "deezer_link": "https://www.deezer.com/track/116348264",
+                "audio_preview": "https://cdnt-preview.dzcdn.net/api/1/1/8/2/a/0/82aed4ff815e92629fbd193688e8de2b.mp3?hdnea=exp=1773750270~acl=/api/1/1/8/2/a/0/82aed4ff815e92629fbd193688e8de2b.mp3*~data=user_id=0,application_id=42~hmac=d913a5425e10a4f1d8d3af5d4158326ec900535eb2d15d7e0d8f3e328ef6e6d5",
+                "duration": 161,
+                "artist": {
+                    "id": 1,
+                    "name": "The Beatles",
+                    "deezer_link": "https://www.deezer.com/artist/1",
+                    "picture": "https://api.deezer.com/artist/1/image",
+                    "picture_small": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/56x56-000000-80-0-0.jpg",
+                    "picture_medium": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/250x250-000000-80-0-0.jpg",
+                    "picture_big": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/500x500-000000-80-0-0.jpg",
+                    "picture_xl": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/1000x1000-000000-80-0-0.jpg"
+                },
+                "album": {
+                    "id": 12047936,
+                    "title": "Rubber Soul",
+                    "deezer_link": "https://www.deezer.com/fr/album/12047936",
+                    "cover": "https://api.deezer.com/album/12047936/image",
+                    "cover_small": "https://cdn-images.dzcdn.net/images/cover/da80520440d5d29876b9df3e375793b5/56x56-000000-80-0-0.jpg",
+                    "cover_medium": "https://cdn-images.dzcdn.net/images/cover/da80520440d5d29876b9df3e375793b5/250x250-000000-80-0-0.jpg",
+                    "cover_big": "https://cdn-images.dzcdn.net/images/cover/da80520440d5d29876b9df3e375793b5/500x500-000000-80-0-0.jpg",
+                    "cover_xl": "https://cdn-images.dzcdn.net/images/cover/da80520440d5d29876b9df3e375793b5/1000x1000-000000-80-0-0.jpg",
+                    "artist": {
+                        "id": 1,
+                        "name": "The Beatles",
+                        "deezer_link": "https://www.deezer.com/artist/1",
+                        "picture": "https://api.deezer.com/artist/1/image",
+                        "picture_small": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/56x56-000000-80-0-0.jpg",
+                        "picture_medium": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/250x250-000000-80-0-0.jpg",
+                        "picture_big": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/500x500-000000-80-0-0.jpg",
+                        "picture_xl": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/1000x1000-000000-80-0-0.jpg"
+                    }
+                },
+                "genre": {
+                    "id": 132,
+                    "name": "Pop",
+                    "picture": "https://api.deezer.com/genre/132/image",
+                    "picture_small": "https://cdn-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/56x56-000000-80-0-0.jpg",
+                    "picture_medium": "https://cdn-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/250x250-000000-80-0-0.jpg",
+                    "picture_big": "https://cdn-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/500x500-000000-80-0-0.jpg",
+                    "picture_xl": "https://cdn-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/1000x1000-000000-80-0-0.jpg"
+                }
+            },
+            "partition_preview": "uploads/previews/partition_2.png",
+            "popularity": null
         }
     ]
 }

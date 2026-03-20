@@ -8,7 +8,14 @@ $instrument = $_GET['id'];
 
 if ($instrumentId) {
     $rows = getPartitonsByInstrument($pdo, $instrumentId);
-    $partitions = mapperPartition($rows, $instrument);
+
+    $partitions = [];
+
+    foreach ($rows as $row) {
+        $rowsOtherInstruments = getOtherInstrumentPartitionId($pdo, $row['song_id'], $row['id']);
+
+        $partitions[] = mapperPartition($row, $rowsOtherInstruments, $instrument);
+    }
 
     echo json_encode($partitions);
 } else {

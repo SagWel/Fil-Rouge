@@ -117,7 +117,9 @@ const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listeObject, listeStrin
                                     </Flex>
                                 </Flex>
                             </MenuItem>
-                            {listeObject.map((i) => (
+                            {listeObject.map((i) => {
+                                const Icon = i.icon;
+                                return (
                                 <MenuItem key={i.id}
                                 bg={"transparent"} color={"#fdfcfe"}
                                 onClick={() => setItemObject(i)}
@@ -130,11 +132,12 @@ const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listeObject, listeStrin
                                     <Flex align={"center"} justify={"space-between"} w={"full"}>
                                         <Flex align={"center"} justify={"space-between"} w={"full"}>
                                             <Text>{i.label}</Text>
-                                            {<i.icon pt={"5px"} />}
+                                            {<Icon pt={"5px"} />}
                                         </Flex>
                                     </Flex>
                                 </MenuItem>
-                            ))}
+                                )
+                            })}
                             </>
                         )}
                     </MenuList>

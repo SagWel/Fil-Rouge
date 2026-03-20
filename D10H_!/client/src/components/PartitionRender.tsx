@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
-import React, { useRef, useEffect, useState } from "react";
-import { type INoteData, type IPartitions } from "../types/partitions";
+import React, { useRef, useEffect } from "react";
+import { type INoteData } from "../types/partitions";
 import { Renderer, 
         Stave, 
         StaveNote, 
@@ -12,8 +12,11 @@ import { Renderer,
         StaveTie, 
         SVGContext,
         Tickable,
-        Tuplet
+        Tuplet,
+        TabStave
     } from 'vexflow'
+import { useParams } from "react-router-dom";
+import { usePartition } from "../hooks/usePartition";
 
 import '../style.css'
 
@@ -34,9 +37,13 @@ export interface INoteSynchro {
     y: number
 }
 
-export interface IPartitionRenderProps {onPlay: boolean, data: IPartitions | undefined}
+export interface IPartitionRenderProps {onPlay: boolean}
 
-const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => {
+const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
+
+    const {partition} = usePartition() 
+
+    const { instrumentName } = useParams()
 
     // Refs
     const svgPartitionRef = useRef<HTMLDivElement | null>(null)
@@ -55,8 +62,6 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
 
     const containerRef = useRef<HTMLDivElement | null>(null)
     const lastScrolledYRef = useRef<number>(-1)
-
-    const [containerHeight, setContainerHeight] = useState<number>(800)
 
     const hideScrollbarStyle = {
         '&::WebkitScrollbar': {
@@ -186,7 +191,6 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
                     tuplets.forEach(t => t.setContext(context).draw())
                 }
             })
-            console.log(measures);
             
             staveRef.current = measures[0].stave
         }
@@ -229,66 +233,92 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
 
     useEffect(() => {
 
-        if (!data) return
+        if (!partition) return
 
-        if (!svgPartitionRef.current || !svgCursorRef.current|| !containerRef) return console.error('Erreur lors du chargement de la partition ...');
+        let hasTab = false;
+        switch (instrumentName?.toLowerCase()) {
+            case 'guitare' : 
+                hasTab = true
+                break
+            case 'basse' : 
+                hasTab = true
+                break
+            case 'ukulele' : 
+                hasTab = true
+                break
+            default : 
+                break
+        }
 
+        if (!svgPartitionRef.current || !svgCursorRef.current|| !containerRef.current) return console.error('Erreur lors du chargement de la partition ...');
         if (svgPartitionRef.current) svgPartitionRef.current.innerHTML = "";
         
-        const containerWidth: number = containerRef.current?.offsetWidth ?? 800;
-        
+        /*dimmensions */
+        const lineSpacing: number = 160
+        const multiTrackSpacing: number = 100
+        const totalLineHeight = hasTab ? lineSpacing + 80 : lineSpacing
+        const containerWidth: number = containerRef.current.offsetWidth ?? 800;        
         const measurePerLine: number = 4;
-        const totalLines: number = Math.ceil(data.measures.length / measurePerLine);
+        const totalLines: number = Math.ceil(partition.measures.length / measurePerLine);
         const firstMeasureExtraWidth = 80
-        const dynamicHeight: number = totalLines * 160 + 50;
-
-        const rendererPartition = new Renderer(svgPartitionRef.current, Renderer.Backends.SVG);
-        rendererPartition.resize(Math.round(containerWidth), Math.round(dynamicHeight));
-
-        const contextPartition = (rendererPartition.getContext() as SVGContext);
-        contextPartitionRef.current = contextPartition;
-
+        const dynamicHeight: number = totalLines * totalLineHeight + 50;
         const availableWidth: number = containerWidth - 40 - firstMeasureExtraWidth;
         const fixedMeasureWidth: number = availableWidth / measurePerLine;
 
-        let currentX = 20;
-        let currentY = 0;
+        /*render */
+        const rendererPartition = new Renderer(svgPartitionRef.current, Renderer.Backends.SVG);
+        rendererPartition.resize(Math.round(containerWidth), Math.round(dynamicHeight));
 
+        /*context */
+        const contextPartition = (rendererPartition.getContext() as SVGContext);
+        contextPartitionRef.current = contextPartition;
+
+        /*positions */
+        let currentX = 20;
+        let currentY = 0;    
         
+        /* Ties management variable */
         const tieGroups = {
             first: [] as StaveNote[],
             second: [] as StaveNote[]
         }
 
-        const measuresToRender: IMeasureObject[] = [];   
+        /*Final render Measures variable */
+        const measuresToRender: IMeasureObject[] = [];
         
-        console.log(data);
-        
-
-        data.measures.forEach((measure, index) => {
-
-            const { allNotes: measureNotes, beams: measureBeams, ties: measureTies, tuplets: measureTuplets } = mapToVexFlow(measure.notes, data.clef, tieGroups)
+        /*measures construction */
+        partition.measures.forEach((measure, index) => {
+            const { allNotes: measureNotes, beams: measureBeams, ties: measureTies, tuplets: measureTuplets } = mapToVexFlow(measure.notes, partition.clef, tieGroups)
 
             if (index > 0 && index % measurePerLine === 0) {
                 currentX = 20;
                 currentY += 160;
             }
-
+        
             const stave: Stave = new Stave(currentX, currentY, fixedMeasureWidth)
 
             if (index % measurePerLine === 0) {
-                stave.addClef(data.clef)
-                stave.addTimeSignature(data.time_signature)
-                if (data.clef_signature) stave.addKeySignature(data.clef_signature)
+                stave.addClef(partition.clef)
+                stave.addTimeSignature(partition.time_signature)
+                if (partition.clef_signature) stave.addKeySignature(partition.clef_signature)
                 stave.setWidth(stave.getBoundingBox().getW() + 50)
                 currentX += 50
             } else {
                 stave.setNoteStartX(stave.getX() + 10);
             }
 
+            if (hasTab) {
+                const tabStave: TabStave = new TabStave(currentX, currentY + multiTrackSpacing, fixedMeasureWidth) 
+
+                if (index % measurePerLine === 0) {
+                    tabStave.addClef("tab")
+                    tabStave.setWidth(stave.getWidth())
+                }
+                tabStave.setContext(contextPartition).draw()
+            }
 
             try {
-                const [numBeats, beatValue] = data.time_signature.split('/').map(Number);
+                const [numBeats, beatValue] = partition.time_signature.split('/').map(Number);
                 const voice = new Voice({ numBeats:numBeats, beatValue:beatValue });
 
                 voice.addTickables(measureNotes);          
@@ -299,7 +329,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
                 
                 measuresToRender.push({ stave, voice, beams: measureBeams, ties: measureTies, tuplets : measureTuplets });
             } catch (error) {
-                console.error(`%c 🚨 ERREUR VEXFLOW - Mesure n°${index + 1} `, 'background: #222; color: #ff0000; font-size: 14px; font-weight: bold;');
+                console.error(`Erreur mesure n°${index + 1} `, 'background: #222; color: #ff0000; font-size: 14px; font-weight: bold;');
                 console.warn("Détails de l'erreur :", error);
                 console.log("Contenu JSON de cette mesure :", measure);
                 
@@ -308,11 +338,11 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
             }
             currentX += fixedMeasureWidth;
         })
-        console.log(measuresToRender);
-        
 
         measuresToRenderRef.current = measuresToRender;
-        renderAllMeasures(contextPartition, measuresToRender);
+
+        /*measures display */
+        renderAllMeasures(contextPartition, measuresToRender)
 
         // data synchro generation
         const notesMap = new Map();
@@ -327,7 +357,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
 
             tickables.forEach((tickable: Tickable) => {
                 const note = tickable as StaveNote
-                const durationMs: number = (note.getTicks().value() / 4096) * (60000 / data.bpm)               
+                const durationMs: number = (note.getTicks().value() / 4096) * (60000 / partition.bpm)               
                 
                 const x: number = note.getAbsoluteX()
                 const id: string | undefined = note.getAttribute('id') ?? `note_${mIndex}_${Math.round(runningTimeMs)}`.replaceAll(/[^a-zA-Z0-9]/g, "_")
@@ -357,7 +387,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
                 })
             }
         })
-       
+        
         dataArrayRef.current = synchronizationData
 
         // Cursor
@@ -368,8 +398,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
 
         const contextCursor = rendererCursor.getContext() as SVGContext;
         contextCursorRef.current = contextCursor;
-
-    },[data])
+    },[partition])
 
     useEffect(() => {
         if (onPlay) {
@@ -428,7 +457,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay, data }) => 
         }
     },[onPlay])
 
-    if (!data) {
+    if (!partition) {
         return <Box textAlign={"center"}><Text color={"black"}>Chargement de la partition ...</Text></Box>
     }
     return (

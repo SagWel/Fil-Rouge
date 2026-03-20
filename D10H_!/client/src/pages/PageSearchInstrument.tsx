@@ -1,4 +1,4 @@
-import { Box, Heading, Flex, Input, Grid, Text, FormLabel, Select, chakra, Menu, MenuButton, Button, Portal, MenuList, MenuItem, filter } from "@chakra-ui/react";
+import { Box, Heading, Flex, Grid, Text, FormLabel, Menu, MenuButton, Button, Portal, MenuList, MenuItem } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -82,11 +82,38 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
         return filterArtist && filterMorceau && filterGender && filterDifficulty
     })
 
+    const sortedPartitions = [...filteredPartitions].sort((a, b) => {
+        switch (selectedFilter?.id) {
+            case 'A-Z_asc' : 
+                return a.song.title.localeCompare(b.song.title)
+            case 'A-Z_desc' : 
+                return b.song.title.localeCompare(a.song.title)
+            case 'artists_asc' : 
+                return a.song.artist.name.localeCompare(b.song.artist.name)
+            case 'artist_desc' : 
+                return b.song.artist.name.localeCompare(a.song.artist.name)
+            case 'difficultes_asc' : 
+                return a.difficulty - b.difficulty
+            case 'difficultes_desc' : 
+                return b.difficulty - a.difficulty
+            case 'recents_asc' : 
+                return new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+            case 'recents_desc' :
+                return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+            case 'popular_asc' : 
+                return a.popularity - b.popularity
+            case 'popular_desc' :
+                return b.popularity - a.popularity
+        }
+    })
+
     useEffect(() => {
         if (instrumentName) {
             const urlFetch = import.meta.env.VITE_URL_FETCH_ALLPARTITIONS_INSTRUMENT
             
             fetchPartitions(`${urlFetch}${instrumentName}`)
+            console.log(sortedPartitions);
+            
         } else {
             console.error('Instrument manquant ...')
         }
@@ -193,7 +220,7 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
             </Box>
 
             {/*Search results*/}
-            {filteredPartitions.length === 0 ? 
+            {sortedPartitions.length === 0 ? 
             <Box textAlign={"center"}><Text color={"white"}>Aucune partition trouvée pour {instrumentName}</Text></Box>
             :
             <Grid id="resultZone" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
@@ -202,7 +229,7 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
             marginTop={"2rem"} marginBottom={"5rem"}>
                 
                 {/*Creats a card for each scores in search result*/}
-                {filteredPartitions.map((partition: IPartitions) => (
+                {sortedPartitions.map((partition: IPartitions) => (
                     <PartitionCard key={partition.id} partition={partition} currentInstrument={instrumentName as string}/>
                 ))}
 
