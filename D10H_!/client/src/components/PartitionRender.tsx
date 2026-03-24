@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import React, { useRef, useEffect } from "react";
-import { type INoteData } from "../types/partitions";
+import { useParams } from "react-router-dom";
 import { Renderer, 
         Stave, 
         StaveNote, 
@@ -14,8 +14,12 @@ import { Renderer,
         Tickable,
         Tuplet,
         TabStave
-    } from 'vexflow'
-import { useParams } from "react-router-dom";
+} from 'vexflow'
+
+/* Import type */
+import { type INoteData } from "../types/partitions";
+
+/* Import hook */
 import { usePartition } from "../hooks/usePartition";
 
 import '../style.css'
@@ -39,30 +43,37 @@ export interface INoteSynchro {
 
 export interface IPartitionRenderProps {onPlay: boolean}
 
-const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
+const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
 
+    /* Import partition data from context by hook */
     const {partition} = usePartition() 
 
     const { instrumentName } = useParams()
 
     // Refs
+        /* Partittion Ref */
     const svgPartitionRef = useRef<HTMLDivElement | null>(null)
     const contextPartitionRef = useRef<SVGContext | null>(null)
 
+        /* Cursor Ref */
     const svgCursorRef = useRef<HTMLDivElement | null>(null)
     const contextCursorRef = useRef<SVGContext | null>(null)
 
+    /* VexFlow Ref */
     const measuresToRenderRef = useRef<any[]>([])
     const lastNoteIdRef = useRef<HTMLElement | null>(null)
     const notesMapRef = useRef<Map<string, StaveNote>>(new Map());
     const staveRef = useRef<Stave | null>(null)
     const dataArrayRef = useRef<INoteSynchro[]>([])
 
+    /* Time Ref */
     const currentTimeRef = useRef<number>(0)
 
+    /* Boxs Ref */
     const containerRef = useRef<HTMLDivElement | null>(null)
     const lastScrolledYRef = useRef<number>(-1)
 
+    /* Style */
     const hideScrollbarStyle = {
         '&::WebkitScrollbar': {
         display: 'none',
@@ -91,7 +102,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
         });
     };
 
-    //
+    // Return Measures data for drawing
     const mapToVexFlow = (notes: INoteData[], clef: string, tieGroup: any) => {
         const beams: Beam[] = []
         let currentBeamGroup: StaveNote[] = []
@@ -179,7 +190,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
         return { allNotes, beams, ties, tuplets }
     }
 
-    //
+    // Draw Measures
     const renderAllMeasures = (context: SVGContext , measures: IMeasureObject[]) => {
             measures.forEach(({ stave, voice, beams, ties, tuplets}) => {
                 stave.setContext(context).draw()
@@ -195,6 +206,7 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
             staveRef.current = measures[0].stave
         }
 
+    // Draw cursor
     const drawCursor = (context: SVGContext, stave: Stave, svg: HTMLElement) => {
         context.beginPath()
         context.setLineWidth(5)
@@ -203,11 +215,13 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
         context.lineTo(0, stave.getHeight())
         context.stroke()
 
+        /* cursor */
         const cursor = svg.lastElementChild as HTMLElement
 
         if (cursor) cursor.id = "music-cursor"
     }
 
+    /* Cursor move management */
     const moveCursor = (cursor: HTMLElement, positionX: number, positionY: number) => {
         cursor.style.transform = `translate(${positionX}px, ${positionY}px)`
     }
@@ -469,4 +483,4 @@ const PartitionRender2: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
         )
 }
 
-export default PartitionRender2
+export default PartitionRender

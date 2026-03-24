@@ -5,10 +5,11 @@ require_once '../models/userModel.php';
 $email = $_GET['email'];
 
 $user = getUserByEmail($pdo, $email);
-$profiUser = getUserProfil($pdo, $user['id']);
 
 if ($user) {
-    http_response_code(200);
+    $profiUser = getUserProfil($pdo, $user['id']);
+
+    http_response_code(409);
     echo json_encode([
         "message" => "utilisateur déjà existant",
         "isFounded" => true,

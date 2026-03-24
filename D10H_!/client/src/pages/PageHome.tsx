@@ -19,27 +19,43 @@ import { Box,
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+/* Import SVG */
+import { AddCircleIcon, DisableIcon } from "../components/Svg";
+
+/* Import conponents */
 import Carousel from "../components/PartitionCarousel"
-import { type IPartitions } from "../types/partitions";
-import PartitionCard from "../components/PartitionCard";
+import PartitionCard, {difficultyLvl} from "../components/PartitionCard";
+
+/* Import hook */
 import { useAuth } from "../hooks/useAuth";
-import { AddCircleIcon, DifficultyIcon, DisableIcon } from "../components/svg";
+
+/* Import type */
+import { type IPartitions } from "../types/partitions";
 import type { IInstrument, IInstrumentLvl } from "../types/instrument";
 
 export interface IPageAcceuilProps {}
 
 const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
+
+    /* Varibles to stock Partitions for carousel */
     const [popularPartitions, setPopularPartitions] = useState<IPartitions[] | []>([])
     const [newsPartitions, setNewsPartitions] = useState<IPartitions[] | []>([])
     const [suggestionsPartitions, setSuggestionsPartitions] = useState<IPartitions[] | []>([])
     const [historyPartitions, setHistoryPartitions] = useState<IPartitions[] | []>([])
+
+    /* Varibles to edit user profil */
     const [userInstruments, setUserInstruments] = useState<IInstrumentLvl[] | []>([])
     const [instruments, setInstruments] = useState<IInstrument[] | []>([])
-    const [displayDiv, setDisplayDiv] = useState<"block" | "none">("none")
     const [currentInstrument, setCurrentInstrument] = useState<IInstrument | undefined>(undefined)
     const [currentLvl, setCurrentLvl] = useState<1 | 2 | 3| 4 | 5 | undefined>(undefined)
+
+    /* Varable to display modal in Modal */
+    const [displayDiv, setDisplayDiv] = useState<"block" | "none">("none")
     
+    /* Variables from context by hook */
     const { isFirstLogin, user, setIsFirstLogin } = useAuth()
+
+    /* Naviagation */
     const navigate = useNavigate()
 
     const host = import.meta.env.VITE_HOST
@@ -80,12 +96,22 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         }
     }
 
-    const handleOnClickOpenAddInstrument = (e) => {
+    /* Display modal */
+    const handleOnClickOpenAddInstrument = (e: Event) => {
         e.preventDefault()
         setDisplayDiv("block")
     }
 
-    const handleOnClickAddInstrument = (e) => {
+    /* hiding modal */
+    const handleOnClickCloseAddInstrument = (e: Event) => {
+        e.preventDefault()
+        setCurrentInstrument(undefined)
+        setCurrentLvl(1)
+        setDisplayDiv("none")
+    }
+
+    /* Add instrument in list */
+    const handleOnClickAddInstrument = (e: Event) => {
         e.preventDefault()
         if (currentInstrument && currentLvl) {
             const currentUserInstrument: IInstrumentLvl = {
@@ -100,18 +126,13 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         }
     }
 
-    const handleOnClickCloseAddInstrument = (e) => {
-        e.preventDefault()
-        setCurrentInstrument(undefined)
-        setCurrentLvl(1)
-        setDisplayDiv("none")
-    }
-
+    /* Delete instrument in list */
     const deleteInstrument = (id: number) => {
         setUserInstruments(prevItems => prevItems.filter((_, i) => i !== id))
     }
 
-    const handleSubmitUserInstruments = async (e) => {
+    /* Send to backend User's instruments */
+    const handleSubmitUserInstruments = async (e: Event) => {
         e.preventDefault()
         const urlFetchCreatUserInstruments = import.meta.env.VITE_URL_FETCH_CREATUSERINSTRUMENTS
         try {
@@ -138,13 +159,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         }
     }
 
-    const difficultyLvl = (difficulty: number): React.JSX.Element[] => {
-      const arrayDiff = Array.from({length:difficulty})
-    
-      return arrayDiff.map((_, index: number) => (
-      <DifficultyIcon key={index}/>))
-    }
-
+    /* close Modam */
     const { onClose} = useDisclosure()
 
     useEffect(() => {
@@ -154,7 +169,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
 
         fetchPartitions(urlFetchPopular, setPopularPartitions)
         fetchPartitions(urlFetchNews, setNewsPartitions)
-        fetchPartitions(urlFetchSuggestions, setSuggestionsPartitions)
+        fetchPartitions(`${urlFetchSuggestions}${user?.id}`, setSuggestionsPartitions)
         fetchInstruments()
     },[])
 
@@ -174,7 +189,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
             )}/>
 
             <Carousel id="news-carousel"
-            data={newsPartitions} title="nouveautés"
+            data={newsPartitions} title="Nouveautés"
             renderItem={(item:IPartitions) => (
                 <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
             )}/>

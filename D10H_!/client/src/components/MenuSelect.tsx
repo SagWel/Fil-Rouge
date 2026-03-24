@@ -1,22 +1,26 @@
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Portal, Text, Button, FormLabel } from "@chakra-ui/react"
-import type { SvgProps } from "./svg"
+
+/* Import SVG */
+import type { SvgProps } from "./Svg"
 
 export interface Item {
     id: string,
     label: string,
     icon: React.FC<SvgProps>
 }
+
 export interface IMenuSelectProps {
     label: string,
-    listeObject?: Item[],
-    listeString?: string[],
+    listObject?: Item[],
+    listString?: string[],
     itemObject?: Item | null,
     itemString?: string
     setItemObject?: React.Dispatch<React.SetStateAction<null | Item>>,
     setItemString?: React.Dispatch<React.SetStateAction<string>>
 }
 
-const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listeObject, listeString, itemObject, itemString, setItemObject, setItemString }) => {
+/* Menu to simulate Select balise */
+const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listObject, listString, itemObject, itemString, setItemObject, setItemString }) => {
     return (
         <Flex gridColumn={"span 1"} direction={"column"} background={"#9A36F3"} borderRadius={"0.5rem"}>
             <FormLabel htmlFor={label} 
@@ -44,12 +48,12 @@ const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listeObject, listeStrin
                     zIndex: "1",
                     borderColor: "#4e4c51",
                 }}>
-                    { (listeString) ? (
+                    { (listString) ? (
                         <Flex align={"center"} justify={"center"} w={"full"}>
                             <Text>{itemString}</Text>
                         </Flex>
 
-                    ) : (listeObject && itemObject) ? (
+                    ) : (listObject && itemObject) ? (
                         <Flex align={"center"} justify={"space-between"} w={"full"}>
                             <Text>{itemObject.label}</Text>
                             {<itemObject.icon pt={"5px"} />}
@@ -65,7 +69,7 @@ const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listeObject, listeStrin
                     bg={"#3e3d3f"} 
                     border={0} p={0}
                     overflowY={"auto"}>
-                        {(setItemString && listeString) ? (
+                        {(setItemString && listString) ? (
                             <>
                             <MenuItem
                             bg={"transparent"} color={"#fdfcfe"}
@@ -82,7 +86,7 @@ const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listeObject, listeStrin
                                     </Flex>
                                 </Flex>
                             </MenuItem>
-                            {listeString.map((i, index) => (
+                            {listString.map((i, index) => (
                                 <MenuItem key={index}
                                 bg={"transparent"} color={"#fdfcfe"}
                                 onClick={() => setItemString(i)}
@@ -100,7 +104,7 @@ const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listeObject, listeStrin
                                 </MenuItem>
                             ))}
                             </>
-                        ) : ( (listeObject && setItemObject) &&
+                        ) : ( (listObject && setItemObject) &&
                             <>
                             <MenuItem
                             bg={"transparent"} color={"#fdfcfe"}
@@ -117,7 +121,7 @@ const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listeObject, listeStrin
                                     </Flex>
                                 </Flex>
                             </MenuItem>
-                            {listeObject.map((i) => {
+                            {listObject.map((i) => {
                                 const Icon = i.icon;
                                 return (
                                 <MenuItem key={i.id}

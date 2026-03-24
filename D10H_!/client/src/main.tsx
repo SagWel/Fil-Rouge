@@ -13,8 +13,10 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(
+    /* User data distribution */
     <AuthProvider>
         <BrowserRouter>
+            {/* Dark theme distribution */}
             <ChakraProvider theme={theme}> 
                 <ColorModeScript initialColorMode={theme.config.initialColorMode} />
                 <App />

@@ -1,9 +1,14 @@
 import { type ReactNode, useState, useRef, useEffect } from "react";
 import {Box, Button, Flex, Heading, IconButton, Link, List, Text} from "@chakra-ui/react"
-import { LeftCarouselIcon, RightCarouselIcon } from "./svg"
+
+/* Import SVG */
+import { LeftCarouselIcon, RightCarouselIcon } from "./Svg"
+
+/* Import type */
 import { type IScorbrarie } from "../types/partitions";
+
 export interface IOtherCarouselProps {
-    data: IScorbrarie,
+    data: IScorbrarie[],
     renderItem(e: any): ReactNode,
     id: string,
     title: string
@@ -11,12 +16,16 @@ export interface IOtherCarouselProps {
 }
 
 const OtherCarousel: React.FC<IOtherCarouselProps> = ({ data, renderItem, id, title, href}) => {
+    
+    /* States for carousels moves*/
     const [translate, setTranslate] = useState<number>(0)
     const [maxScroll, setMaxScroll] = useState<number>(0)
 
+    /* Ref */
     const carouselContainerRef = useRef<HTMLDivElement>(null)
     const listRef = useRef<HTMLUListElement>(null)
 
+    /* Carousel side scrolling */
     const scroll = (direction: "left" | "right") => {        
         const currentContainerWidth = carouselContainerRef.current?.clientWidth || 0;        
         const currentScrollWidth = listRef.current?.scrollWidth || 0;        
@@ -180,3 +189,5 @@ const OtherCarousel: React.FC<IOtherCarouselProps> = ({ data, renderItem, id, ti
         </Box>
     )
 }
+
+export default OtherCarousel

@@ -2,25 +2,34 @@ import { Box, Heading, Flex, Grid, Text, FormLabel, Menu, MenuButton, Button, Po
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import PartitionCard from '../components/PartitionCard';
 import { type IPartitions } from "../types/partitions";
-import { DownChevronIcon, UpChevronIcon, DifficultyIcon } from "../components/svg";
+
+/* Import SVG */
+import { DownChevronIcon, UpChevronIcon } from "../components/Svg";
+
+/* Imports components */
+import PartitionCard, { difficultyLvl } from '../components/PartitionCard';
 import type { Item } from "../components/MenuSelect";
 import MenuSelect from "../components/MenuSelect";
 
 export interface ISearchPartitionsInstrumentProps {}
 
 const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
+
+    /* retrieve instrument name from the URL */
     const { instrumentName } = useParams();
 
+    /* State to stock partitions */
     const [partitions, setPartitions] = useState<IPartitions[] | []>([])
 
+    /* States for filters */
     const [artist, setArtist] = useState<string>('')
     const [morceau, setMorceau] = useState<string>('')
     const [genre, setGenre] = useState<string>('')
     const [difficulty, setDifficulty] = useState<number>(0)
-    const [selectedFilter, setSelectedFilter] = useState<Item | null>(null)
+    const [selectedSort, setSelectedSort] = useState<Item | null>(null)
 
+    /* function to retrive partittions on database */
     const fetchPartitions = async (URL: string) => {
         const host = import.meta.env.VITE_HOST
         const port = import.meta.env.VITE_SERVER_PORT
@@ -37,13 +46,7 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
         }
     }
 
-    const difficultyLvl = (difficulty: number, size?: string) => {
-      const arrayDiff = Array.from({length:difficulty})
-    
-      return arrayDiff.map((_, index: number) => (
-      <DifficultyIcon key={index} size={size}/>))
-    }
-
+    /* variables to store the various data from the partitions for the options of the different select  */
     const allartists: string[] = []
     const allMorceaux: string[] = []
     const allGenders: string[] = []
@@ -56,11 +59,14 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
         allDifficultes.push(p.difficulty)
     });
 
+    /* sorted data from the partitions alphabetically */
     const artists = [...new Set(allartists)].sort()
     const morceaux = [...new Set(allMorceaux)].sort()
     const genders = [...new Set(allGenders)].sort()
     const difficultes = [...new Set(allDifficultes)].sort()
-    const filters: Item[] = [
+
+    /*sorting methodes */
+    const sorting: Item[] = [
         {id: "A-Z_asc", label: "alphabétique", icon: UpChevronIcon},
         {id: "difficultes_asc", label: "difficultées", icon: UpChevronIcon},
         {id: "artists_asc", label: "artistes", icon: UpChevronIcon},
@@ -73,6 +79,7 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
         {id: "popular_desc", label: "populaires", icon: DownChevronIcon}
     ]
 
+    /* filtered partitions with user selections */
     const filteredPartitions = partitions.filter((p: IPartitions) => {
         const filterArtist = artist === '' || p.song.artist.name === artist
         const filterMorceau = morceau === '' || p.song.title === morceau
@@ -82,8 +89,9 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
         return filterArtist && filterMorceau && filterGender && filterDifficulty
     })
 
+    /* sorted partitions with user sort choice */
     const sortedPartitions = [...filteredPartitions].sort((a, b) => {
-        switch (selectedFilter?.id) {
+        switch (selectedSort?.id) {
             case 'A-Z_asc' : 
                 return a.song.title.localeCompare(b.song.title)
             case 'A-Z_desc' : 
@@ -112,7 +120,6 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
             const urlFetch = import.meta.env.VITE_URL_FETCH_ALLPARTITIONS_INSTRUMENT
             
             fetchPartitions(`${urlFetch}${instrumentName}`)
-            console.log(sortedPartitions);
             
         } else {
             console.error('Instrument manquant ...')
@@ -213,7 +220,7 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
                     
                     <Box gridColumn={"span 1"}></Box>
                     
-                    <MenuSelect itemObject={selectedFilter} setItemObject={setSelectedFilter} listeObject={filters} label="Trier" />
+                    <MenuSelect itemObject={selectedSort} setItemObject={setSelectedSort} listeObject={sorting} label="Trier" />
                     
                     <Box gridColumn={"span 1"}></Box>
                 </Grid>

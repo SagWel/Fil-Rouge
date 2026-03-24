@@ -13,14 +13,22 @@ import {
     AnnotationsIcon, 
     ImpressionIcon, 
     ChordsIcon
-} from "./svg";
+} from "./Svg";
+
+/* Import hook */
 import { usePartition } from "../hooks/usePartition";
+
+/* Import conponent */
 import OtherInstrumentCard from "./OtherInstrumentCard";
+
+/* Import type */
 import type { IOtherInstrument } from "../types/instrument";
 
 export interface IToolsProps {}
 
 const Tools: React.FC<IToolsProps> = () => {
+
+    /* Partition data from context by hook */
     const { partition } = usePartition()
 
     return (

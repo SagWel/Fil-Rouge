@@ -1,17 +1,23 @@
 import { Box, Grid, List, chakra, ListItem } from "@chakra-ui/react"
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { type IInstrument } from "../types/instrument";
 
 import InstrumentCard from '../components/InstrumentCard'
-import { type IInstrument } from "../types/instrument";
-import { useEffect, useState } from "react";
+
+/* Import hooks */
 import { useAuth } from "../hooks/useAuth";
 
 export interface IUserInstrumentsProps {}
 
 
 const UserInstruments: React.FC<IUserInstrumentsProps> = () => {
+
+    /* take user from context by hook */
     const {user} = useAuth()
 
+    /* state for user profil instruments */
     const [userInstruments, setUserInstruments] =useState<IInstrument[] | []>([])
 
     const host = import.meta.env.VITE_HOST
@@ -19,6 +25,7 @@ const UserInstruments: React.FC<IUserInstrumentsProps> = () => {
     
     const fetchUserInstruments = async () => {
         const urlFetchUserInstruments = import.meta.env.VITE_URL_FETCH_USERINSTRUMENTS
+
         try {
             const res: Response = await fetch(`http://${host}:${port}${urlFetchUserInstruments}${user?.id}`, {credentials: 'include'})
 
@@ -61,7 +68,10 @@ const UserInstruments: React.FC<IUserInstrumentsProps> = () => {
                                     <Box as={Link} to={"/instruments/all"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
                                     display={"block"}
                                     fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
-                                    lineHeight={"24px"} textDecoration={"none"}>
+                                    lineHeight={"24px"} textDecoration={"none"}
+                                    _hover={{
+                                        borderColor: "#a19fa4"
+                                    }}>
                                         Tous les instruments
                                     </Box>
                                 </ListItem>
@@ -73,16 +83,19 @@ const UserInstruments: React.FC<IUserInstrumentsProps> = () => {
             <Grid
             marginTop={"3rem"} paddingBottom={"3rem"}
             justifyItems={"center"}
+
+            /* Responsive logic */
             templateColumns={{
                 base: "1fr",
                 md: "repeat(2, 1fr)",
                 lg: "repeat(3, 1fr)"
-            }} columnGap={"3rem"} rowGap={"6rem"}
+            }} 
+            columnGap={"3rem"} rowGap={"6rem"}
             px={"12"}>
-                {userInstruments.map((instrument) => {
-                        
-                    return <InstrumentCard key={instrument.id} instrument={instrument} />
-                })}
+                {userInstruments.map((instrument) => (    
+                    /* Creating a card for each of the user's instruments */                
+                    <InstrumentCard key={instrument.id} instrument={instrument} />
+                ))}
             </Grid>
         </Box>
     )

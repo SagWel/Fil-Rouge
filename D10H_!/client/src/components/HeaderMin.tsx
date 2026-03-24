@@ -1,5 +1,7 @@
 import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, IconButton, Text } from "@chakra-ui/react";
-import { SearchIcon, DisableIcon, NotifIcon } from "./svg";
+
+/* Import SVG */
+import { SearchIcon, DisableIcon, NotifIcon } from "./Svg";
 
 function HeaderMin() {
     return(

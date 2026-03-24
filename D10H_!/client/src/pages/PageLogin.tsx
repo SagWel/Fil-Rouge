@@ -1,19 +1,29 @@
 import { Box, Flex, Link, chakra, Stack, FormControl, FormLabel, Input, Heading, Text, InputGroup, InputRightElement, Button, FormHelperText, Wrap } from "@chakra-ui/react"
-import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon } from "../components/svg"
 import '../style.css'
 import { useState } from "react"
 import { useNavigate, type NavigateFunction } from "react-router-dom"
+
+/* import hook */
 import { useAuth } from "../hooks/useAuth"
+
+/* import SVG */
+import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon } from "../components/Svg"
 
 export interface IPageLoginProps {}
 
 const PageLogin: React.FC<IPageLoginProps> = () => {
+
+    /* varibale for navigation by react-router-dom */
     const navigate: NavigateFunction = useNavigate()
+
+    /* user et login management from context by hook */
     const { setUser, setIsAuthenticated, setIsFirstLogin } = useAuth()
 
+    /* States to stock inputs content */
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
+    /* function to submit login information */
     const onSubmit = async () => {
         const host: string = import.meta.env.VITE_HOST
         const port: string = import.meta.env.VITE_SERVER_PORT

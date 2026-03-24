@@ -1,7 +1,10 @@
 import {Box, Flex, Heading, IconButton, List, Text} from "@chakra-ui/react"
-
-import { LeftCarouselIcon, RightCarouselIcon } from "./svg"
 import { useState, useRef, useEffect, type ReactNode } from "react"
+
+/* Import SVG */
+import { LeftCarouselIcon, RightCarouselIcon } from "./Svg"
+
+/* IMport type */
 import type { IPartitions } from "../types/partitions"
 
 export interface IPartitionCarouselProps {
@@ -12,12 +15,16 @@ export interface IPartitionCarouselProps {
 }
 
 const PartitionCarousel: React.FC<IPartitionCarouselProps> = ({ data, renderItem, id, title }) => {
+
+    /* States for carousels moves*/
     const [translate, setTranslate] = useState<number>(0)
     const [maxScroll, setMaxScroll] = useState<number>(0)
 
+    /* Ref */
     const carouselContainerRef = useRef<HTMLDivElement>(null)
     const listRef = useRef<HTMLUListElement>(null)
 
+    /* Carousel side scrolling */
     const scroll = (direction: "left" | "right") => {        
         const currentContainerWidth = carouselContainerRef.current?.clientWidth || 0;        
         const currentScrollWidth = listRef.current?.scrollWidth || 0;        

@@ -8,7 +8,7 @@ import Rock from '../img/Rock.png'
 import Var from '../img/var.png'
 
 // SVGs import from a unique file
-import { LogoMinIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon } from "./svg";
+import { LogoMinIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon } from "./Svg";
 
 export interface IBarNavMinProps {}
 

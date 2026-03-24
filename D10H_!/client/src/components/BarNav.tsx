@@ -10,13 +10,14 @@ import Rock from '../img/Rock.png'
 import Var from '../img/var.png'
 
 // SVGs import from a unique file
-import { LogoIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon, CollabIcon } from "./svg";
+import { LogoIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon, CollabIcon } from "./Svg";
 
 
 export interface IBarNavProps {}
 
 const BarNav: React.FC<IBarNavProps> = () => {
 
+    /* Modal management */
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (

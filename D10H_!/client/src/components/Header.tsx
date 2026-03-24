@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 // SVGs import from a unique file
-import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon, RightCarouselIcon } from "./svg";
+import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon, RightCarouselIcon } from "./Svg";
 
 // Context
 import { useSearch } from '../context/SearchContext'
@@ -48,25 +48,30 @@ const Header: React.FC<IHeaderProps> = () => {
         }
     }
 
-    /*Variables*/
+    /* Navigation */
     const navigate = useNavigate()
     
-    type TimerId = ReturnType<typeof setTimeout>
+    type TimerId = ReturnType<typeof setTimeout>    
     
-    
+    /* States for searchbar */
     const [query, setQuery] = useState<string>('')    
     const [isFocused, setIsFocused] = useState<boolean>(false)
     const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
     const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
+
+    /* States for Avatar button */
     const [user, setUser] = useState< IUsers | null>(null)
     const [isDisplayed, setIsDisplayed] = useState<boolean>(false)
     
     const timerRef = useRef<TimerId | undefined> (undefined)
     
+    /* Variables for search history */
     const [history, _, addToHistory] = useSearchHistory()
 
+    /* User data from context by hook */
     const { user: userToken, logout } = useAuth()
 
+    /* Creat user data about user for the buger menue system he need */
     const userInfos = async () => {
         const host = import.meta.env.VITE_HOST
         const port = import.meta.env.VITE_SERVER_PORT
@@ -143,9 +148,9 @@ const Header: React.FC<IHeaderProps> = () => {
                 setInfoNavigation(true)
             }
         
-        if (ref.current != undefined) {
-            clearTimeout(ref.current)
-            ref.current = undefined
+        if (timerRef.current != undefined) {
+            clearTimeout(timerRef.current)
+            timerRef.current = undefined
         }
 
         setIsFocused(false)
@@ -162,6 +167,7 @@ const Header: React.FC<IHeaderProps> = () => {
         setInfoNavigation(true)
     }
 
+    /* display burger menu */
     const display = () => {
         if (isDisplayed) return "block"
         return "none"

@@ -1,4 +1,6 @@
 import { useContext } from "react";
+
+/* Import context */
 import { PartitionContext } from "../context/PartitionContext";
 
 export const usePartition = () => {

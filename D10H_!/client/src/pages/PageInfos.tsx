@@ -1,6 +1,6 @@
 import { Box, Link, Flex, Heading, Text, chakra } from '@chakra-ui/react'
 import '../style.css'
-import { LogoTempo } from '../components/svg'
+import { LogoTempo } from '../components/Svg'
 
 export interface IPageInfosProps {}
 

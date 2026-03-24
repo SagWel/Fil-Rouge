@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 export interface IPageListeInstrumentsProps {}
 
 const PageListeInstruments: React.FC<IPageListeInstrumentsProps> = () => {
-    const [allInstuments, setAllInstruments] = useState<IInstrument [] | []>([])
+
+    /* State to stock instruments */
+    const [allInstuments, setAllInstuments] = useState<IInstrument [] | []>([])
 
     const host = import.meta.env.VITE_HOST
     const port = import.meta.env.VITE_SERVER_PORT
@@ -25,7 +27,7 @@ const PageListeInstruments: React.FC<IPageListeInstrumentsProps> = () => {
 
             const data = await res.json()
             if (data) {                
-                setAllInstruments(data)             
+                setAllInstuments(data)             
             }
         } catch (error) {
             console.error('Imposible de récuperer les Instruments dans la base de donnée : ', error)

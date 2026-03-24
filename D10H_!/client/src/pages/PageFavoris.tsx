@@ -7,7 +7,7 @@ import { type IPartitions } from "../types/partitions";
 import PartitionCard from "../components/PartitionCard";
 
 // SVGs import from a unique file
-import { ShuffleIcon } from "../components/svg";
+import { ShuffleIcon } from "../components/Svg";
 
 export interface IPageFavorisProps {}
 

@@ -3,7 +3,9 @@
 require_once '../models/partitionsModel.php';
 require_once '../utils/mapperPartitions.php';
 
-$rows = getSuggestionsPartitions($pdo);
+$userId = $_GET['id'];
+
+$rows = getSuggestionsPartitions($pdo, $userId);
 
 $partitions = [];
 

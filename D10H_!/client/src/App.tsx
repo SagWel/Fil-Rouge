@@ -1,9 +1,10 @@
 import { Grid, Box} from '@chakra-ui/react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState } from 'react';
+
+/* Contexts imports */
 import SearchProvider from './context/SearchContext.tsx'
 import { PartitionProvider } from './context/PartitionContext.tsx';
-import { useAuth } from './hooks/useAuth.tsx';
 
 // Pages imports
 import PageHome from './pages/PageHome.tsx';
@@ -32,6 +33,7 @@ import PlayeurMin from './components/PlayeurMin.tsx';
 
 // Hooks imports
 import useWindowWidth from './hooks/useWindowWidth.tsx'
+import { useAuth } from './hooks/useAuth.tsx';
 
 function App() {
 
@@ -44,6 +46,7 @@ function App() {
   const HEADER_MIN_HEIGHT = "40px";
   const TOOLS_WIDTH = "50px"
   
+  /* music play status management */
   const [onPlay, setOnPlay] = useState<boolean>(false)
   
   // Variables for Scores page identification
@@ -65,21 +68,23 @@ function App() {
     }
   }
 
-  const {isAuthenticated, user, loading} = useAuth()
-
-  console.log(isAuthenticated);
-  
+  /* authtification management from context by hook */
+  const {isAuthenticated, user, loading} = useAuth()  
 
   // Scores page template
   if (onPageMorceau && isAuthenticated) {
     return (
+      /* Search system distribution */
     <SearchProvider>
+      {/* partition data distribution */}
       <PartitionProvider>
         <Grid
         bg={"#000000"}
         minH="100vh"
         templateRows={`${HEADER_MIN_HEIGHT} 1fr ${PLAYEUR_MIN_HEIGHT}`}
         templateColumns={`${NAV_MIN_WIDTH} 1fr ${TOOLS_WIDTH}`}
+
+        /* layout of display areas */
         templateAreas={`
           "nav header tools"
           "nav main tools"
@@ -95,24 +100,26 @@ function App() {
               <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
                 <Routes>
           
+                    {/* Route for home page */}
                     <Route path='/' element={<PageHome />} />
 
+                    {/* Route to display search results */}
                     <Route path='/search' element={<PageSearchPartitions />} />
-          
-                    <Route path='/instruments/user' element={<PageUserInstruments />} />
 
+                    {/* Routes to display instruments */}
+                    <Route path='/instruments/user' element={<PageUserInstruments />} />
                     <Route path='/instruments/all' element={<AllInstruments />} />
-          
+                    
+                    {/* Route to display partitions based on the selected instrument */}
                     <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
-          
+
+                    {/* Route to display selected partition */}
                     <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
           
+                    {/* Routes to display favorites */}
                     <Route path='/favoris' element={<Favoris />} />
-
-                    <Route path='/favoris/scorbraries' element={<Scorbraries />} />
-          
+                    <Route path='/favoris/scorbraries' element={<Scorbraries />} />          
                     <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
-
                     <Route path='/favoris/history' element={<History />} />
         
                 </Routes>
@@ -130,13 +137,17 @@ function App() {
 
   )} else if (isAuthenticated) {
 
-    // Others pages template
+    /* Access to pages after logging in */
     return (
+      /* Search system distribution */
       <SearchProvider>
+        {/* partition data distribution */}
         <PartitionProvider>
           <Grid
           bg={"#000000"}
           minH="100vh"
+
+          /* layout of display areas */
           templateRows={`${HEADER_HEIGHT} 1fr ${PLAYER_HEIGHT}`}
           templateColumns={`${navResponsive} 1fr`}
           templateAreas={`
@@ -146,6 +157,7 @@ function App() {
             `}
             >
             <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
+              {/* Responsive display */}
               {isMinimal ? <BarNavMin  /> : <BarNav  />}
             </Box>
               <Box gridArea={"header"} zIndex={"200"}>
@@ -154,24 +166,26 @@ function App() {
               <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
                 <Routes>
           
+                  {/* Route for home page */}
                   <Route path='/' element={<PageHome />} />
 
+                  {/* Route to display search results */}
                   <Route path='/search/' element={<PageSearchPartitions />} />
         
+                  {/* Routes to display instruments */}
                   <Route path='/instruments/user' element={<PageUserInstruments />} />
-
                   <Route path='/instruments/all' element={<AllInstruments />} />
         
+                  {/* Route to display partitions based on the selected instrument */}
                   <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
         
+                  {/* Route to display selected partition */}
                   <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
         
+                  {/* Routes to display favorites */}
                   <Route path='/favoris' element={<Favoris />} />
-
-                  <Route path='/favoris/scorbraries' element={<Scorbraries />} />
-        
+                  <Route path='/favoris/scorbraries' element={<Scorbraries />} />        
                   <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
-
                   <Route path='/favoris/history' element={<History />} />
           
                 </Routes>
@@ -190,15 +204,21 @@ function App() {
       </Box>
     )
   } else if (!user || !isAuthenticated) {
+    /* pages for not logged in users */
     return (
       <Box bg={"#000000"} width={"100%"}>
         <Routes>
+
+          {/* Route to informations about site */}
           <Route path='/' element={<PageInfos />} />
 
+          {/* Route to login */}
           <Route path='/login' element={<PageLogin />} />
 
+          {/* Route to resetpassword system */}
           <Route path='/resetpassword' element={<PageResetPassword />} />
 
+          {/* Route to registering page */}
           <Route path='/signup/' element={<PageSignup />}/>
         </Routes>
       </Box>

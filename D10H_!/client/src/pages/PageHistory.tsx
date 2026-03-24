@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import type { IPartitions } from "../types/partitions";
 
 // SVGs import from a unique file
-import { ShuffleIcon } from "../components/svg";
+import { ShuffleIcon } from "../components/Svg";
 
 // Card for each scores in the database
 import PartitionCard from '../components/PartitionCard'

@@ -1,7 +1,10 @@
 import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
-import PartitionRender from "../components/PartitionRender";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+
+import PartitionRender from "../components/PartitionRender";
+
+/* Import Hook */
 import { usePartition } from "../hooks/usePartition";
 
 import Fond from '../img/FondPart.jpg'
@@ -10,6 +13,7 @@ export interface IPageMorceauProps {onPlay: boolean}
 
 const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
 
+    /* Partition from context by hook */
     const { partition, setPartition} = usePartition()
 
     const { morceauId } = useParams()

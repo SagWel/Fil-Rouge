@@ -49,7 +49,7 @@ if ($ressource && file_exists($controlerFile)) {
             require_once '../middlewares/CheckLogin.php';
             break;
         case 'foundbyemail':
-            require_once '../middlewares/Checkemail.php';
+            require_once '../middlewares/CheckEmail.php';
             break;
         case 'creatuser':
             require_once '../middlewares/CheckCreatUser.php';

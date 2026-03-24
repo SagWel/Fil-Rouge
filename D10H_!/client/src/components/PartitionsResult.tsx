@@ -1,7 +1,9 @@
 import { Grid } from "@chakra-ui/react";
 
-
+/* Import component */
 import PartitionCard from './PartitionCard';
+
+/* Import type */
 import { type IPartitions } from "../types/partitions";
 
 export interface IPartitionsResult {}
@@ -61,7 +63,7 @@ const PartitionsResult: React.FC<IPartitionsResult> = () => {
             
             {/*Creats a card for each scores in search result*/}
             {mockPartitons.map((partition) => (
-                <PartitionCard key={partition.id} partition={partition} />
+                <PartitionCard key={partition.id} partition={partition} currentInstrument={partition.instruments.currentInstrument.name}/>
             ))}
 
         </Grid>

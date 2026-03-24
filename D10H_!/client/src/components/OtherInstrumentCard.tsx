@@ -1,11 +1,16 @@
 import { Box, Link } from "@chakra-ui/react"
+
+/* Import component */
 import { IconCard } from "./PartitionCard"
+
+/* Import type */
 import type { IOtherInstrument } from "../types/instrument"
 
 export interface IOtherInstrumentCardProps {
     instrument : IOtherInstrument
 }
 
+/* Card for each instrument in partition data for Tools */
 const OtherInstrumentCard: React.FC<IOtherInstrumentCardProps> = ({ instrument }) => {
     
     return (

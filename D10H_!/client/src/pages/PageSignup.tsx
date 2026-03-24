@@ -1,20 +1,50 @@
-import { Stack, chakra, Box, Flex, Link, Heading, FormControl, Button, FormLabel, Input, Text, Wrap, Image, FormErrorMessage, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Select } from "@chakra-ui/react"
-import { LogoTempo, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon } from "../components/svg"
-import '../style.css'
+import { 
+    Stack, 
+    chakra, 
+    Box, 
+    Flex, 
+    Link, 
+    Heading, 
+    FormControl, 
+    Button, 
+    FormLabel, 
+    Input, 
+    Text, 
+    Wrap, 
+    Image, 
+    FormErrorMessage,
+    NumberInput, 
+    NumberInputField, 
+    NumberInputStepper, 
+    NumberIncrementStepper, 
+    NumberDecrementStepper, 
+    Select } from "@chakra-ui/react"
 import { useState } from "react"
 import { useSearchParams, useNavigate, type NavigateFunction } from "react-router-dom"
+
+/* Import SVG */
+import { LogoTempo, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon } from "../components/Svg"
+
+import '../style.css'
+
+/* Import hooks */
 import { useAuth } from "../hooks/useAuth"
 
 
 export interface IPageSignupProps {}
 
 const PageSignup: React.FC<IPageSignupProps> = () => {
+
+    /* variable for navigation */
     const navigate: NavigateFunction = useNavigate()
     
-    const [isError, setIsError] = useState<boolean>(false)
     const [searchParams, setSearchParams] = useSearchParams()
+
+    const [isError, setIsError] = useState<boolean>(false)
+
     const currentStep = parseInt(searchParams.get("step") || "0")
 
+    /* States for inputs */
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [username, setUsername] = useState<string>('')
@@ -27,42 +57,61 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
     const urlFetchFindByEmail = import.meta.env.VITE_URL_FETCH_FINDBYEMAIL
     const urlFetchCreatUser = import.meta.env.VITE_URL_FETCH_CREATUSER
 
+    /* Authentication variables for after signup */
     const { setUser, setIsAuthenticated, setIsFirstLogin } = useAuth()
-        
+    
+    /* function to proceed to the next step */
     const handleOnClickNext = () => {
+        setIsError(false)
+        setMessage('')
         const nextStep: number = currentStep + 1
         setSearchParams({step: nextStep.toString()})
     }
 
+    /* function to proceed to the previous step */
     const handleOnClickPrev = () => {
+        setIsError(false)
+        setMessage('')
         const prevStep: number = currentStep - 1
         setSearchParams({step: prevStep.toString()})
     }
 
+    /* function to verify if email is already in database */
     const handleOnClickEmail = async () => {
+        setIsError(false)
+        setMessage('')
+
         try {
             const res: Response = await fetch(`http://${host}:${port}${urlFetchFindByEmail}${email}`, {credentials: 'include'})
-            if (!res.ok) {
-                throw new Error(`Erreur HTTP: ${res.status}`)
-            }
 
             const data = await res.json()
-            const isFounded: boolean = data.isFounded
-            setMessage(`${data.message}`)
-            setIsError(isFounded)
-            return isFounded
+
+            if (!res.ok) {
+                setIsError(data.isFounded)
+                setMessage(`${data.message}`)
+            }
+
+            if (data.isFounded === false) {
+                setIsError(data.isFounded)
+                setMessage(`${data.mesage}`)
+                handleOnClickNext()
+
+            }
         } catch (error) {
             console.error(error);
             setMessage("Erreur lors du test de l'email")
-            return true
+            setIsError(true)
         }
     }
 
+    /* function to creat user in database et login him */
     const handleOnClickCreatUser = async () => {
         try {
             const res: Response = await fetch(`http://${host}:${port}${urlFetchCreatUser}${email}`, {
                 method : 'POST',
                 headers : {'Content-Type': 'application/json'},
+
+                /* creating data tu upload on database */
                 body: JSON.stringify({
                     email: email,
                     password: password,
@@ -138,6 +187,8 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                 p={"1rem"}
                 width={"100%"}
                 bg={"#000000"}>
+
+                    {/* First step of registering process */}
                     {currentStep === 0 && (
                     <Stack alignItems={"center"} gap={"0.5rem"}
                     marginInline={"auto"}
@@ -180,6 +231,12 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         appearance={"none"}
                                         _placeholder={{color: "#5D6E73"}}
                                         onChange={(e) => setEmail(e.target.value)}
+                                        onBlur={(e) => {
+                                            if (e.target.value === '') {
+                                                setIsError(true)
+                                                setMessage('Le champ de doit pas être vide')
+                                            }
+                                        }}
                                         _active={{
                                             borderColor: "#ad47ff"
                                         }}
@@ -201,15 +258,14 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         color={"#E53E3E"}>
                                             <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                             mr={"0.5rem"} color="#E53E3E" display={"block"}/>
-                                            {message ? message : "Le champ ne doit pas être vide."}
+                                            {message}
                                         </FormErrorMessage>)}
                                     </FormControl>
                                     <Button type="submit" 
                                     onClick={(e) => {
                                         e.preventDefault()
-                                        if (handleOnClickEmail){
-                                        handleOnClickNext()}}}
-                                        onBlur={handleOnClickEmail}
+                                        handleOnClickEmail()
+                                    }}
                                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
                                     whiteSpace={"nowrap"} verticalAlign={"middle"}
                                     pos={"relative"}
@@ -375,6 +431,8 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                         </Stack>
                     </Stack>
                     )}
+
+                    {/* Second step of registering process */}
                     {currentStep === 1 && (
                         <Stack alignItems={"center"} gap={"0.5rem"}
                         marginInline={"auto"}
@@ -428,6 +486,12 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                             appearance={"none"}
                                             onChange={(e) => setPassword(e.target.value)}
+                                            onBlur={(e) => {
+                                                if (e.target.value === '') {
+                                                    setIsError(true)
+                                                    setMessage('Le champ de doit pas être vide')
+                                                }
+                                            }}
                                             _placeholder={{color: "#5D6E73"}}
                                             _active={{
                                                 borderColor: "#ad47ff"
@@ -447,7 +511,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             color={"#E53E3E"}>
                                                 <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                                 mr={"0.5rem"} color="#E53E3E" display={"block"}/>
-                                                Le champ ne doit pas être vide.
+                                                {message}
                                             </FormErrorMessage>)}
                                         </FormControl>
                                         <Button type="submit" onClick={(e) => {
@@ -620,6 +684,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                             </Stack>
                         </Stack>
                     )}
+                    {/* Last step of registering process */}
                     {currentStep === 2 && (
                         <Stack alignItems={"center"} gap={"0.5rem"}
                         marginInline={"auto"}

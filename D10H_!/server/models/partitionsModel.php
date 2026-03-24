@@ -121,7 +121,7 @@ function getPopularPartitions($pdo)
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getSuggestionsPartitions($pdo)
+function getSuggestionsPartitions($pdo, $userId)
 {
     $sql = $pdo->prepare(
         'SELECT
@@ -144,12 +144,19 @@ function getSuggestionsPartitions($pdo)
         LEFT JOIN partition_instruments pi ON p.id = pi.partition_id
         LEFT JOIN instruments i ON pi.instrument_id = i.id
         LEFT JOIN partition_views pv ON p.id = pv.partition_id
+        WHERE p.id IN (
+            SELECT pi2.partition_id
+            FROM partition_instruments pi2
+            JOIN user_instruments ui ON pi2.instrument_id = ui.instrument_id
+            WHERE ui.user_id = ?
+              AND pi2.is_current = 1
+        )
         GROUP BY p.id
         ORDER BY RAND()
         LIMIT 12;'
     );
 
-    $sql->execute();
+    $sql->execute([$userId]);
 
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
