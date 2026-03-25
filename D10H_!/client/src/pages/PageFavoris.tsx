@@ -1,10 +1,10 @@
 import { Box, Flex, Heading, Button, List, ListItem, chakra } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import Carousel from "../components/PartitionCarousel"
-import { type IPartitions } from "../types/partitions";
-import PartitionCard from "../components/PartitionCard";
+import Carousel from "../components/ScoreCarousel"
+import { type IScore } from "../types/Score";
+import ScoreCard from "../components/ScoreCard";
 
 // SVGs import from a unique file
 import { ShuffleIcon } from "../components/Svg";
@@ -12,7 +12,7 @@ import { ShuffleIcon } from "../components/Svg";
 export interface IPageFavorisProps {}
 
 const PageFavoris: React.FC<IPageFavorisProps> = () => {
-    const [historyPartitions, setHistoryPartitions] = useState<IPartitions[] | []>([])
+    const [historyScores, setHistoryScores] = useState<IScore[] | []>([])
 
     return (        
         <Box id="main"
@@ -62,7 +62,7 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                                     </chakra.span>
                                     <Box fontFamily={"Inter,Arial,sans-serif"}>
                                         <Flex alignItems={"center"} justifyContent={"center"}>
-                                            <Link to={"/partitions/:instrumentId/:morceauId"}>Une de Mes Partition Aléatoire</Link>
+                                            <Link to={"/scores/:instrumentId/:morceauId"}>Une de Mes Partition Aléatoire</Link>
                                         </Flex>
                                     </Box>
                                 </Button>
@@ -117,9 +117,9 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                     <Box>
 
                         <Carousel id="recents-carousel" 
-                        data={historyPartitions} title="Partitions joués récement"
-                        renderItem={(item:IPartitions) => (
-                            <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
+                        data={historyScores} title="Partitions joués récement"
+                        renderItem={(item:IScore) => (
+                            <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
                         )} />
                         
                         <chakra.section display={"block"}>

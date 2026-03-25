@@ -1,9 +1,9 @@
 import { createContext, useCallback, useMemo, useState, type ReactNode } from "react"
-import type { IPartitions } from "../types/partitions"
+import type { IScore } from "../types/Score"
 
-interface PartitionContextType {
-    partition: IPartitions | undefined
-    setPartition: (p: IPartitions | undefined) => void
+interface ScoreContextType {
+    score: IScore | undefined
+    setScore: (p: IScore | undefined) => void
 
     playback: {
         pctBpm: number,
@@ -36,14 +36,14 @@ interface PartitionContextType {
     
 }
 
-const PartitionContext: React.Context<PartitionContextType | undefined> = createContext<PartitionContextType | undefined>(undefined)
+const ScoreContext: React.Context<ScoreContextType | undefined> = createContext<ScoreContextType | undefined>(undefined)
 
-interface PartitionProviderProps {
+interface ScoreProviderProps {
     children: ReactNode
 }
 
-const PartitionProvider = ({ children } : PartitionProviderProps) => {
-    const [partition, setPartition] = useState<IPartitions | undefined>(undefined)
+const ScoreProvider = ({ children } : ScoreProviderProps) => {
+    const [score, setScore] = useState<IScore | undefined>(undefined)
     
     /* playback */
     const [pctBpm, setPctBpm] = useState<number>(100)
@@ -85,8 +85,8 @@ const PartitionProvider = ({ children } : PartitionProviderProps) => {
     },[])
 
     const contextValue = useMemo(() => ({
-        partition,
-        setPartition,
+        score,
+        setScore,
         playback: {
             pctBpm,
             isMetronomeActive,
@@ -105,16 +105,16 @@ const PartitionProvider = ({ children } : PartitionProviderProps) => {
         activeModal,
         setActiveModal
     }),[
-        partition, pctBpm, isMetronomeActive, isCountdownActive, loopRegion, 
+        score, pctBpm, isMetronomeActive, isCountdownActive, loopRegion, 
         learningConfig, mutedTracks, isSoloMode, annotations, activeModal, 
         setPlayback, toggleMute
     ])
 
     return (
-        <PartitionContext.Provider value={contextValue}>
+        <ScoreContext.Provider value={contextValue}>
             {children}
-        </PartitionContext.Provider>
+        </ScoreContext.Provider>
     )
 }
 
-export {PartitionContext, PartitionProvider}
+export {ScoreContext, ScoreProvider}

@@ -16,7 +16,7 @@ import {
 } from "./Svg";
 
 /* Import hook */
-import { usePartition } from "../hooks/usePartition";
+import { useScore } from "../hooks/useScore";
 
 /* Import conponent */
 import OtherInstrumentCard from "./OtherInstrumentCard";
@@ -28,8 +28,8 @@ export interface IToolsProps {}
 
 const Tools: React.FC<IToolsProps> = () => {
 
-    /* Partition data from context by hook */
-    const { partition } = usePartition()
+    /* Score data from context by hook */
+    const { score } = useScore()
 
     return (
         <Flex id="RightBarContainer"
@@ -213,7 +213,7 @@ const Tools: React.FC<IToolsProps> = () => {
                     <GuitarIcon size="32px" viewBox={"-5 -15 90 90"}/>
                 </Box> */}
 
-                {partition?.instruments.othersInstruments.map((oi: IOtherInstrument) => (
+                {score?.instruments.othersInstruments.map((oi: IOtherInstrument) => (
                     <OtherInstrumentCard instrument={oi} />
                 ))}
             </Flex>

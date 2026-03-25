@@ -1,15 +1,15 @@
 import { Grid } from "@chakra-ui/react";
 
 /* Import component */
-import PartitionCard from './PartitionCard';
+import ScoreCard from './ScoreCard';
 
 /* Import type */
-import { type IPartitions } from "../types/partitions";
+import { type IScore } from "../types/Score";
 
-export interface IPartitionsResult {}
+export interface IScoresResult {}
 
 /*Mock database*/
-const mockPartitons: IPartitions[] = [
+const mockPartitons: IScore[] = [
     {
         title : "Zombie",
         artist : "The Cranberries",
@@ -54,7 +54,7 @@ const mockPartitons: IPartitions[] = [
     }
 ]
 
-const PartitionsResult: React.FC<IPartitionsResult> = () => {
+const ScoresResult: React.FC<IScoresResult> = () => {
     return(
         <Grid id="resultZone" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
         gap={"7"} justifyItems={"center"} p={"4"}
@@ -62,12 +62,12 @@ const PartitionsResult: React.FC<IPartitionsResult> = () => {
         marginTop={"2rem"} marginBottom={"5rem"}>
             
             {/*Creats a card for each scores in search result*/}
-            {mockPartitons.map((partition) => (
-                <PartitionCard key={partition.id} partition={partition} currentInstrument={partition.instruments.currentInstrument.name}/>
+            {mockPartitons.map((score) => (
+                <ScoreCard key={score.id} score={score} currentInstrument={score.instruments.currentInstrument.name}/>
             ))}
 
         </Grid>
     )
 }
 
-export default PartitionsResult
+export default ScoresResult

@@ -1,6 +1,6 @@
 <?php
 
-function mapperPartition(array $row, $rowsOtherInstruments, ?string $searchedInstrument = null)
+function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrument = null)
 {
     $instrumentsNames = explode(',', $row['all_instruments_names']);
     $instrumentsIds = explode(',', $row['all_instruments_ids']);
@@ -16,7 +16,7 @@ function mapperPartition(array $row, $rowsOtherInstruments, ?string $searchedIns
                 "id" => (int)$instrumentsIds[$index],
                 "name" => $instrumentName,
                 "imgSrc" => $instrumentsImgs[$index],
-                "linkToSearch" => "/partitions/" . strtolower($instrumentName)
+                "linkToSearch" => "/scores/" . strtolower($instrumentName)
             ];
         } else {
             $instrumentData = [
@@ -24,7 +24,7 @@ function mapperPartition(array $row, $rowsOtherInstruments, ?string $searchedIns
                 "name" => $instrumentName,
                 "role" => $instrumentsRoles[$index],
                 "imgSrc" => $instrumentsImgs[$index],
-                "linkToSearch" => "/partitions/" . strtolower($instrumentName)
+                "linkToSearch" => "/scores/" . strtolower($instrumentName)
             ];
         }
 
@@ -45,7 +45,7 @@ function mapperPartition(array $row, $rowsOtherInstruments, ?string $searchedIns
                 "imgSrc" => $otherInstrumentRow['instrument_img'],
                 "linkToSearch" => $otherInstrumentRow['instrument_link']
             ],
-            "partitionId" => (int)$otherInstrumentRow['partitionId']
+            "scorenId" => (int)$otherInstrumentRow['scorenId']
         ];
     }
 
@@ -86,14 +86,14 @@ function mapperPartition(array $row, $rowsOtherInstruments, ?string $searchedIns
         "duration" => (int)($row['duration'] ?? 0),
         "artist" => $artist,
         "album" => $album,
-        "genre" => [
-            "id" => (int)($row['genre_id'] ?? 0),
-            "name" => $row['genre_name'] ?? "",
+        "gender" => [
+            "id" => (int)($row['gender_id'] ?? 0),
+            "name" => $row['gender_name'] ?? "",
             "picture" => ""
         ]
     ];
 
-    return $partition = [
+    return $score = [
         "id" => (int)$row['id'],
         "difficulty" => (int)$row['difficulty'],
         "instruments" => [
@@ -106,7 +106,7 @@ function mapperPartition(array $row, $rowsOtherInstruments, ?string $searchedIns
         "clef" => $row['clef'] ?? "G",
         "clef_signature" => $row['clef_signature'] ?? null,
         "measures" => json_decode($row['measures']),
-        "partition_preview" => $row['partition_preview'],
+        "score_preview" => $row['score_preview'],
         "popularity" => $row['popularity_count'],
         "created_at" => $row['created_at']
     ];

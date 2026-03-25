@@ -5,16 +5,16 @@ import { useState, useRef, useEffect, type ReactNode } from "react"
 import { LeftCarouselIcon, RightCarouselIcon } from "./Svg"
 
 /* IMport type */
-import type { IPartitions } from "../types/partitions"
+import type { IScore } from "../types/Score"
 
-export interface IPartitionCarouselProps {
-    data: IPartitions[],
-    renderItem(e: IPartitions): ReactNode,
+export interface IScoreCarouselProps {
+    data: IScore[],
+    renderItem(e: IScore): ReactNode,
     id: string,
     title: string
 }
 
-const PartitionCarousel: React.FC<IPartitionCarouselProps> = ({ data, renderItem, id, title }) => {
+const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, renderItem, id, title }) => {
 
     /* States for carousels moves*/
     const [translate, setTranslate] = useState<number>(0)
@@ -172,4 +172,4 @@ const PartitionCarousel: React.FC<IPartitionCarouselProps> = ({ data, renderItem
     )
 }
 
-export default PartitionCarousel
+export default ScoreCarousel

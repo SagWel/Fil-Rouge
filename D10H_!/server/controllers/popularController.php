@@ -1,16 +1,16 @@
 <?php
 
-require_once '../models/partitionsModel.php';
-require_once '../utils/mapperPartitions.php';
+require_once '../models/scoresModel.php';
+require_once '../utils/mapperScores.php';
 
-$rows = getPopularPartitions($pdo);
+$rows = getPopularScores($pdo);
 
-$partitions = [];
+$scores = [];
 
 foreach ($rows as $row) {
-    $rowsOtherInstruments = getOtherInstrumentPartitionId($pdo, $row['song_id'], $row['id']);
+    $rowsOtherInstruments = getOtherInstrumentScoreId($pdo, $row['song_id'], $row['id']);
 
-    $partitions[] = mapperPartition($row, $rowsOtherInstruments);
+    $scores[] = mapperScore($row, $rowsOtherInstruments);
 }
 
-echo json_encode($partitions);
+echo json_encode($scores);

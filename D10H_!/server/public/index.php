@@ -39,10 +39,10 @@ if ($ressource && file_exists($controlerFile)) {
     }
 
     switch ($ressource) {
-        case 'partition':
+        case 'score':
             require_once '../middlewares/CheckNumericId.php';
             break;
-        case 'partitionsInstrument':
+        case 'scoresInstrument':
             require_once '../middlewares/CheckInstrument.php';
             break;
         case 'auth':

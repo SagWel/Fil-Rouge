@@ -81,7 +81,7 @@ const Header: React.FC<IHeaderProps> = () => {
             const res: Response = await fetch(`http://${host}:${port}${urlFetchUserInfos}${userToken?.email}`, {credentials: 'include'})
 
             if (!res.ok) {
-                throw new Error(`Erreur HTTP: ${res.status}`);                
+                throw new Error(`Erreur HTTP: ${res.status}`);
             }
 
             const data = await res.json()

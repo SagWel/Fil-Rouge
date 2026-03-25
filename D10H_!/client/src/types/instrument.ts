@@ -4,13 +4,13 @@ export interface IInstrument {
     id: number,
     name: InstrumentType,
     role?: string
-    imgSrc: string,
-    linkToSearch: string,
+    img_src: string,
+    link_to_search: string,
 }
 
 export interface IOtherInstrument {
     instrument : IInstrument,
-    partitionId: number
+    score_id: number
 }
 
 export interface IInstrumentLvl {

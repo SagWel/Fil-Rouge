@@ -56,7 +56,7 @@ const PageScorbaries: React.FC<IPageScorbrariesProps> = () => {
                                     </chakra.span>
                                     <Box fontFamily={"Inter,Arial,sans-serif"}>
                                         <Flex alignItems={"center"} justifyContent={"center"}>
-                                            <Link to={"/partitions/:instrumentId/:morceauId"}>Une de Mes Partition Aléatoire</Link>
+                                            <Link to={"/scores/:instrumentId/:morceauId"}>Une de Mes Partition Aléatoire</Link>
                                         </Flex>
                                     </Box>
                                 </Button>

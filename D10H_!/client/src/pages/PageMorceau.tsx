@@ -2,19 +2,21 @@ import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import PartitionRender from "../components/PartitionRender";
+/* Import component */
+import ScoreRender from "../components/ScoreRender";
 
 /* Import Hook */
-import { usePartition } from "../hooks/usePartition";
+import { useScore } from "../hooks/useScore";
 
+/* Import background */
 import Fond from '../img/FondPart.jpg'
 
 export interface IPageMorceauProps {onPlay: boolean}
 
 const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
 
-    /* Partition from context by hook */
-    const { partition, setPartition} = usePartition()
+    /* Score from context by hook */
+    const { score, setScore} = useScore()
 
     const { morceauId } = useParams()
 
@@ -22,7 +24,7 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
     const port = import.meta.env.VITE_SERVER_PORT
     const BASE_URL = `http://${host}:${port}/D10h_server/public/`
 
-    const fetchPartition = async (URL: string) => {
+    const fetchScore = async (URL: string) => {
 
         try {
             const res = await fetch(`http://${host}:${port}${URL}`, {credentials: 'include'})
@@ -32,7 +34,7 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
             }
 
             const data = await res.json()
-            setPartition(data)
+            setScore(data)
         } catch (error) {
             console.error('Impossible de récupérer les donnée de la partition:', error);
         }
@@ -40,8 +42,8 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
 
     useEffect(() => {
             if (morceauId) {
-                const urlFetch = import.meta.env.VITE_URL_FETCH_PARTITION
-                fetchPartition(`${urlFetch}${morceauId}`)
+                const urlFetch = import.meta.env.VITE_URL_FETCH_SCORE
+                fetchScore(`${urlFetch}${morceauId}`)
             } else {
                 console.error('ID manquant ...')
             }
@@ -51,19 +53,19 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
        <Flex direction={"column"} overflowY={"auto"} justifyContent={"start"} width={"100%"} height={"100%"} background={"transparent"}>
             <Box width={"100%"} textAlign={"center"} position={"relative"}>
                 <Flex direction={"column"} justifyContent={"center"} alignItems={"center"} color={"#c0c0c0"}>
-                    <Heading fontWeight={"700"}>{(partition) ? partition.song.title : "Pas de Titre à afficher"}</Heading>
-                    <Text as={"span"} fontWeight={"400"}>{(partition) ? partition.song.artist.name : "Pas d'Artiste à afficher"}</Text>
+                    <Heading fontWeight={"700"}>{(score) ? score.song.title : "Pas de Titre à afficher"}</Heading>
+                    <Text as={"span"} fontWeight={"400"}>{(score) ? score.song.artist.name : "Pas d'Artiste à afficher"}</Text>
                 </Flex>
-                {partition?.instruments.currentInstrument.role && 
-                <Text pos={"absolute"} top={"35%"} right={"6rem"} color={"#c0c0c0"} fontSize={"20px"}>{partition?.instruments.currentInstrument.role}</Text>
+                {score?.instruments.currentInstrument.role && 
+                <Text pos={"absolute"} top={"35%"} right={"6rem"} color={"#c0c0c0"} fontSize={"20px"}>{score?.instruments.currentInstrument.role}</Text>
                 }
-                <Image position={"absolute"} borderRadius={"full"} src={`${BASE_URL}${partition?.instruments.currentInstrument.imgSrc}`} alt="..." h={"4rem"} w={"4rem"} right={"0.625rem"} top={"7px"}/>
+                <Image position={"absolute"} borderRadius={"full"} src={`${BASE_URL}${score?.instruments.currentInstrument.imgSrc}`} alt="..." h={"4rem"} w={"4rem"} right={"0.625rem"} top={"7px"}/>
             </Box>
             <Box backgroundImage={Fond} backgroundRepeat={"no-repeat"} backgroundPosition={"center"} backgroundSize={"cover"}
             height={"100%"} width={"97%"}
             marginY={"10px"} marginInlineStart={"20px"}
             overflowY={"auto"}>
-                <PartitionRender onPlay={onPlay}/>
+                <ScoreRender onPlay={onPlay}/>
             </Box>
         </Flex>
     );

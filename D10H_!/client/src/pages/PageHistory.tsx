@@ -1,17 +1,17 @@
 import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import type { IPartitions } from "../types/partitions";
+import type { IScore } from "../types/Score";
 
 // SVGs import from a unique file
 import { ShuffleIcon } from "../components/Svg";
 
 // Card for each scores in the database
-import PartitionCard from '../components/PartitionCard'
+import ScoreCard from '../components/ScoreCard'
 
 export interface IPageHistoryProps {}
 
 const PageHistory: React.FC<IPageHistoryProps> = () => {
-    const mockPartitons: IPartitions[] = [
+    const mockPartitons: IScore[] = [
   {
     "id": 1,
     "title": "Michelle",
@@ -60,7 +60,7 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
     "duration": 162,
     "deezer_link": "https://www.deezer.com/track/123",
     "audio_preview": "https://preview.dz.com/123.mp3",
-    "partition_preview": "https://img.com/michelle-preview.png",
+    "score_preview": "https://img.com/michelle-preview.png",
     "measures": [
       {
         "id": 1,
@@ -109,7 +109,7 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
     "duration": 147,
     "deezer_link": "https://www.deezer.com/track/456",
     "audio_preview": "https://preview.dz.com/456.mp3",
-    "partition_preview": "https://img.com/flyme-preview.png",
+    "score_preview": "https://img.com/flyme-preview.png",
     "measures": [
       {
         "id": 1,
@@ -169,7 +169,7 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
                                     </chakra.span>
                                     <Box fontFamily={"Inter,Arial,sans-serif"}>
                                         <Flex alignItems={"center"} justifyContent={"center"}>
-                                            <Link to={"/partitions/:instrumentId/:morceauId"}>Une de Mes Partition Aléatoire</Link>
+                                            <Link to={"/scores/:instrumentId/:morceauId"}>Une de Mes Partition Aléatoire</Link>
                                         </Flex>
                                     </Box>
                                 </Button>
@@ -235,8 +235,8 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
                             overflow={"visible"}
                             marginTop={"2rem"} marginBottom={"5rem"}>
 
-                                {mockPartitons.map((partition: IPartitions) => (
-                                    <PartitionCard key={partition.id} partition={partition} currentInstrument={partition.instruments.currentInstrument.name} />
+                                {mockPartitons.map((score: IScore) => (
+                                    <ScoreCard key={score.id} score={score} currentInstrument={score.instruments.currentInstrument.name} />
                                 ))}
 
                             </Grid>

@@ -4,13 +4,13 @@ import { useState } from 'react';
 
 /* Contexts imports */
 import SearchProvider from './context/SearchContext.tsx'
-import { PartitionProvider } from './context/PartitionContext.tsx';
+import { ScoreProvider } from './context/ScoreContext.tsx';
 
 // Pages imports
 import PageHome from './pages/PageHome.tsx';
-import PageSearchPartitions from './pages/PageSearch.tsx'
+import PageSearchScores from './pages/PageSearch.tsx'
 import AllInstruments from './pages/PageAllInstruments.tsx';
-import PageSearchPartitionsInstrument from './pages/PageSearchInstrument.tsx'
+import PageSearchScoresInstrument from './pages/PageSearchInstrument.tsx'
 import Morceau from './pages/PageMorceau.tsx';
 import Favoris from './pages/PageFavoris.tsx';
 import History from './pages/PageHistory.tsx';
@@ -52,7 +52,7 @@ function App() {
   // Variables for Scores page identification
   const location = useLocation()
   const pathSegment = location.pathname.split('/').filter(segment => segment.length > 0);
-  const onPageMorceau = (pathSegment[0] === "partitions" && pathSegment.length === 3)
+  const onPageMorceau = (pathSegment[0] === "scores" && pathSegment.length === 3)
   
   //Viariables for responsive
   const width = useWindowWidth()
@@ -76,8 +76,8 @@ function App() {
     return (
       /* Search system distribution */
     <SearchProvider>
-      {/* partition data distribution */}
-      <PartitionProvider>
+      {/* score data distribution */}
+      <ScoreProvider>
         <Grid
         bg={"#000000"}
         minH="100vh"
@@ -104,17 +104,17 @@ function App() {
                     <Route path='/' element={<PageHome />} />
 
                     {/* Route to display search results */}
-                    <Route path='/search' element={<PageSearchPartitions />} />
+                    <Route path='/search' element={<PageSearchScores />} />
 
                     {/* Routes to display instruments */}
                     <Route path='/instruments/user' element={<PageUserInstruments />} />
                     <Route path='/instruments/all' element={<AllInstruments />} />
                     
-                    {/* Route to display partitions based on the selected instrument */}
-                    <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
+                    {/* Route to display scores based on the selected instrument */}
+                    <Route path='/scores/:instrumentName' element={<PageSearchScoresInstrument />} />
 
-                    {/* Route to display selected partition */}
-                    <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+                    {/* Route to display selected score */}
+                    <Route path='/scores/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
           
                     {/* Routes to display favorites */}
                     <Route path='/favoris' element={<Favoris />} />
@@ -132,7 +132,7 @@ function App() {
               <PlayeurMin onClick={handleOnPlay}/>
             </Box>
         </Grid>
-      </PartitionProvider>
+      </ScoreProvider>
     </SearchProvider>
 
   )} else if (isAuthenticated) {
@@ -141,8 +141,8 @@ function App() {
     return (
       /* Search system distribution */
       <SearchProvider>
-        {/* partition data distribution */}
-        <PartitionProvider>
+        {/* score data distribution */}
+        <ScoreProvider>
           <Grid
           bg={"#000000"}
           minH="100vh"
@@ -170,17 +170,17 @@ function App() {
                   <Route path='/' element={<PageHome />} />
 
                   {/* Route to display search results */}
-                  <Route path='/search/' element={<PageSearchPartitions />} />
+                  <Route path='/search/' element={<PageSearchScores />} />
         
                   {/* Routes to display instruments */}
                   <Route path='/instruments/user' element={<PageUserInstruments />} />
                   <Route path='/instruments/all' element={<AllInstruments />} />
         
-                  {/* Route to display partitions based on the selected instrument */}
-                  <Route path='/partitions/:instrumentName' element={<PageSearchPartitionsInstrument />} />
+                  {/* Route to display scores based on the selected instrument */}
+                  <Route path='/scores/:instrumentName' element={<PageSearchScoresInstrument />} />
         
-                  {/* Route to display selected partition */}
-                  <Route path='/partitions/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+                  {/* Route to display selected score */}
+                  <Route path='/scores/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
         
                   {/* Routes to display favorites */}
                   <Route path='/favoris' element={<Favoris />} />
@@ -195,7 +195,7 @@ function App() {
               <Playeur />
             </Box>
           </Grid>
-        </PartitionProvider>
+        </ScoreProvider>
       </SearchProvider>
     )
   } else if (loading) {

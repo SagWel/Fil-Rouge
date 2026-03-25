@@ -1,21 +1,21 @@
 <?php
 
-require_once '../models/partitionsModel.php';
-require_once '../utils/mapperPartitions.php';
+require_once '../models/scoresModel.php';
+require_once '../utils/mapperScores.php';
 
 $id = $_GET['id'] ?? null;
 
 if ($id && ctype_digit($id)) {
     $id = (int)$id;
-    $row = getPartitionById($pdo, $id);
+    $row = getScoreById($pdo, $id);
 
     if ($row) {
-        $rowsOtherInstruments = getOtherInstrumentPartitionId($pdo, $row['song_id'], $id);
+        $rowsOtherInstruments = getOtherInstrumentScoreId($pdo, $row['song_id'], $id);
 
-        $partition = mapperPartition($row, $rowsOtherInstruments);
+        $score = mapperScore($row, $rowsOtherInstruments);
 
         header('Content-Type: application/json');
-        echo json_encode($partition);
+        echo json_encode($score);
     } else {
         http_response_code(404);
         echo json_encode(['erreur' => 'Partition introuvable']);

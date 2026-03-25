@@ -1,5 +1,5 @@
 {
-    "partitions": [
+    "scores": [
         {
             "id": 1,
             "title": "Michelle",
@@ -34,7 +34,7 @@
                 }
             },
             "difficulty": 3,
-            "genre": "Baroque Pop",
+            "gender": "Baroque Pop",
             "instruments": {
                 "currentInstrument": {
                     "id": "chant",
@@ -46,31 +46,31 @@
                         "id": "guitareRythm",
                         "name": "guitare",
                         "imgSrc": "/img/Guitare.png",
-                        "linkToPartition": "/partitions/guitare/116348264"
+                        "linkToScore": "/scores/guitare/116348264"
                     },
                     {
                         "id": "guitarSolo",
                         "name": "guitare",
                         "imgSrc":"/img/Guitare.png",
-                        "linkToPartition": "/partitions/guitare/116348264_2"
+                        "linkToScore": "/scores/guitare/116348264_2"
                     },
                     {
                         "id": "basse",
                         "name": "basse",
                         "imgSrc": "/img/Basse.png",
-                        "linkToPartition": "/partitions/basse/116348264"
+                        "linkToScore": "/scores/basse/116348264"
                     },
                     {
                         "id": "batterie",
                         "name": "batterie",
                         "imgSrc":"/img/Batterie.png",
-                        "linkToPartition": "/partitions/batterie/116348264"
+                        "linkToScore": "/scores/batterie/116348264"
                     },
                     {
                         "id": "choeurs",
                         "name": "chant",
                         "imgSrc": "/img/Chant.png",
-                        "linkToPartition": "/partitions/chant/116348264_2"
+                        "linkToScore": "/scores/chant/116348264_2"
                     }
                 ]
             },
@@ -1980,7 +1980,7 @@
             ],
             "deezer_link": "https://www.deezer.com/track/116348264",
             "audioPreview": "https://cdnt-preview.dzcdn.net/api/1/1/8/2/a/0/82aed4ff815e92629fbd193688e8de2b.mp3?hdnea=exp=1766499911~acl=/api/1/1/8/2/a/0/82aed4ff815e92629fbd193688e8de2b.mp3*~data=user_id=0,application_id=42~hmac=13cbcab1d1f0d0318a15f8ea197715bb03df69e0774a7c45969a2db8092eb6dd",
-            "partitionPreview": "/img/Partition.jpeg",
+            "scorePreview": "/img/score.jpeg",
             "duration": 161
         },
         {
@@ -1993,7 +1993,7 @@
                     "name": "guitare",
                     "role": "Rythmic",
                     "imgSrc": "uploads/instruments/Guitare.png",
-                    "linkToSearch": "/partitions/guitare"
+                    "linkToSearch": "/scores/guitare"
                 },
                 "othersInstruments": [
                     {
@@ -2001,32 +2001,32 @@
                         "name": "guitare",
                         "role": "solo",
                         "imgSrc": "uploads/instruments/Guitare.png",
-                        "linkToSearch": "/partitions/guitare"
+                        "linkToSearch": "/scores/guitare"
                     },
                     {
                         "id": 2,
                         "name": "chant",
                         "imgSrc": "uploads/instruments/Chant.png",
-                        "linkToSearch": "/partitions/chant"
+                        "linkToSearch": "/scores/chant"
                     },
                     {
                         "id": 3,
                         "name": "basse",
                         "imgSrc": "uploads/instruments/Basse.png",
-                        "linkToSearch": "/partitions/basse"
+                        "linkToSearch": "/scores/basse"
                     },
                     {
                         "id": 2,
                         "name": "chant",
                         "role": "choirs",
                         "imgSrc": "uploads/instruments/Chant.png",
-                        "linkToSearch": "/partitions/chant"
+                        "linkToSearch": "/scores/chant"
                     },
                     {
                         "id": 5,
                         "name": "batterie",
                         "imgSrc": "uploads/instruments/Batterie.png",
-                        "linkToSearch": "/partitions/batterie"
+                        "linkToSearch": "/scores/batterie"
                     }
                 ]
             },
@@ -2567,7 +2567,7 @@
                         "picture_xl": "https://cdn-images.dzcdn.net/images/artist/fe9eb4463ea87452e84ed97e0c86b878/1000x1000-000000-80-0-0.jpg"
                     }
                 },
-                "genre": {
+                "gender": {
                     "id": 132,
                     "name": "Pop",
                     "picture": "https://api.deezer.com/genre/132/image",
@@ -2577,7 +2577,7 @@
                     "picture_xl": "https://cdn-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/1000x1000-000000-80-0-0.jpg"
                 }
             },
-            "partition_preview": "uploads/previews/partition_2.png",
+            "score_preview": "uploads/previews/score_2.png",
             "popularity": null
         }
     ]

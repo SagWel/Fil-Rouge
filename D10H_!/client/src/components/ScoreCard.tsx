@@ -1,7 +1,7 @@
 import { Box, Heading, Text, Image, Flex} from "@chakra-ui/react";
 
 /* IMport type */
-import { type IPartitions } from "../types/partitions";
+import { type IScore } from "../types/Score";
 
 // SVGs import from a unique file
 import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "./Svg";
@@ -14,7 +14,7 @@ export const difficultyLvl = (difficulty: number, size?: string) => {
       <DifficultyIcon key={index} size={size}/>))
     }
 
-// Icon management about partition's instrument
+// Icon management about score's instrument
 export function IconCard (instrumentKey: string): React.JSX.Element | null {
 
     switch (instrumentKey) {
@@ -33,41 +33,41 @@ export function IconCard (instrumentKey: string): React.JSX.Element | null {
     const port = import.meta.env.VITE_SERVER_PORT
     const BASE_URL = `http://${host}:${port}/D10h_server/public/`
 
-export interface IPartitionCardProps { partition: IPartitions, currentInstrument: string }
+export interface IScoreCardProps { score: IScore, currentInstrument: string }
 
 // Card for each scores display
-const PartitionCard: React.FC<IPartitionCardProps> = ({partition, currentInstrument}) => {
+const ScoreCard: React.FC<IScoreCardProps> = ({score, currentInstrument}) => {
     return (
-    <Flex as={"a"} href={`/partitions/${currentInstrument}/${partition.id}`} direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
+    <Flex as={"a"} href={`/scores/${currentInstrument}/${score.id}`} direction={"column"} justifyContent={"center"} alignItems={"center"} gap={"2"}
     backgroundColor={"transparent"} minH={"192px"}>
         <Box id="cardTop" position={"relative"}
         borderRadius={"0.125rem"} maxW={"12rem"} overflow={"visible"}
         _hover={{
             filter: "brightness(120%)"
         }}>
-            <Image src={`${BASE_URL}${partition.partition_preview}`} id="preview" maxW={"12rem"} minH={"13rem"}></Image>
+            <Image src={`${BASE_URL}${score.score_preview}`} id="preview" maxW={"12rem"} minH={"13rem"}></Image>
             <Flex position={"absolute"} bottom={"-0.5rem"} right={"-33px"} boxSize={"4.125rem"} 
             zIndex={"100"} maxHeight={"4.125rem"} maxWidth={"4.125Rem"}>
-                {IconCard(partition.instruments.currentInstrument.name)}
+                {IconCard(score.instruments.currentInstrument.name)}
             </Flex>
-            {partition.instruments.currentInstrument.role && (
-                <Text pos={"absolute"} bottom={"-1.25rem"} right={0} color={"#c5c5c5"} fontSize={"14px"}>({partition.instruments.currentInstrument.role})</Text>
+            {score.instruments.currentInstrument.role && (
+                <Text pos={"absolute"} bottom={"-1.25rem"} right={0} color={"#c5c5c5"} fontSize={"14px"}>({score.instruments.currentInstrument.role})</Text>
             )}
         </Box>
         <Box id="cardInfos">
             <Box color={"#FDFCFE"}>
-            <Heading as={"h3"} fontSize={"1.5rem"}>{partition.song.title}</Heading>
-            <Text>{partition.song.artist.name}</Text>
+            <Heading as={"h3"} fontSize={"1.5rem"}>{score.song.title}</Heading>
+            <Text>{score.song.artist.name}</Text>
             </Box>
             <Flex id="difficultyLvl" 
             direction={"row"} justifyContent={"center"} alignItems={"center"} 
             width={"100%"}
             marginTop={"0.5rem"}>
-                {difficultyLvl(partition.difficulty)}
+                {difficultyLvl(score.difficulty)}
             </Flex>
         </Box>
     </Flex>
     )
 }
 
-export default PartitionCard;
+export default ScoreCard;

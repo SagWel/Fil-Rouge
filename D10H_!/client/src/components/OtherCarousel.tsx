@@ -5,7 +5,7 @@ import {Box, Button, Flex, Heading, IconButton, Link, List, Text} from "@chakra-
 import { LeftCarouselIcon, RightCarouselIcon } from "./Svg"
 
 /* Import type */
-import { type IScorbrarie } from "../types/partitions";
+import { type IScorbrarie } from "../types/Score";
 
 export interface IOtherCarouselProps {
     data: IScorbrarie[],

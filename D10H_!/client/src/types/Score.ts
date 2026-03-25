@@ -67,7 +67,7 @@ export interface IMeasure {
     bpm?: number
 }
 
-export interface IGenre {
+export interface IGender {
     id: number,
     name: string,
     picture: string,
@@ -98,7 +98,7 @@ export interface IAlbum {
     cover_medium?: string,
     cover_big?: string,
     cover_xl?: string,
-    partitions?: IPartitions[]
+    scores?: IScore[]
     artist: IArtist,
     songs: ISong[]
 }
@@ -111,10 +111,10 @@ export interface ISong {
     duration: number,
     artist: IArtist,
     album: IAlbum,
-    genre: IGenre,
+    gender: IGender,
 }
 
-export interface IPartitions {
+export interface IScore {
     id: number,
     difficulty: number,
     instruments: {
@@ -127,7 +127,7 @@ export interface IPartitions {
     clef_signature?: string,
     measures: IMeasure[],
     song: ISong,
-    partition_preview: string,
+    score_preview: string,
     popularity: number,
     created_at: Date
 }
@@ -137,5 +137,5 @@ export interface IScorbrarie {
     name: string,
     description?: string,
     user: IUsers,
-    partitions?: IPartitions[]
+    scores?: IScore[]
 }

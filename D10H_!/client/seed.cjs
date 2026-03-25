@@ -11,14 +11,11 @@ async function uploadMeasures() {
     });
 
     // 1. On lit le fichier
-    const fileContent = fs.readFileSync(
-      "./public/data/partitions.json",
-      "utf8",
-    );
+    const fileContent = fs.readFileSync("./public/data/scores.json", "utf8");
     const jsonData = JSON.parse(fileContent);
 
     // 2. On accède à LA première partition du tableau (Michelle)
-    const michelle = jsonData.partitions[0];
+    const michelle = jsonData.scores[0];
 
     if (!michelle || !michelle.measures) {
       throw new Error("Impossible de trouver les mesures dans le JSON.");
@@ -29,7 +26,7 @@ async function uploadMeasures() {
 
     // 4. On met à jour la ligne "Michelle" déjà créée dans phpMyAdmin
     const [result] = await db.execute(
-      "UPDATE partitions SET measures = ? WHERE title = ?",
+      "UPDATE scores SET measures = ? WHERE title = ?",
       [measuresString, "Michelle"],
     );
 

@@ -17,10 +17,10 @@ import { Renderer,
 } from 'vexflow'
 
 /* Import type */
-import { type INoteData } from "../types/partitions";
+import { type INoteData } from "../types/Score";
 
 /* Import hook */
-import { usePartition } from "../hooks/usePartition";
+import { useScore } from "../hooks/useScore";
 
 import '../style.css'
 
@@ -41,19 +41,19 @@ export interface INoteSynchro {
     y: number
 }
 
-export interface IPartitionRenderProps {onPlay: boolean}
+export interface IScoreRenderProps {onPlay: boolean}
 
-const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
+const ScoreRender: React.FC<IScoreRenderProps> = ({ onPlay }) => {
 
-    /* Import partition data from context by hook */
-    const {partition} = usePartition() 
+    /* Import score data from context by hook */
+    const {score} = useScore() 
 
     const { instrumentName } = useParams()
 
     // Refs
         /* Partittion Ref */
-    const svgPartitionRef = useRef<HTMLDivElement | null>(null)
-    const contextPartitionRef = useRef<SVGContext | null>(null)
+    const svgScoreRef = useRef<HTMLDivElement | null>(null)
+    const contextScoreRef = useRef<SVGContext | null>(null)
 
         /* Cursor Ref */
     const svgCursorRef = useRef<HTMLDivElement | null>(null)
@@ -247,7 +247,7 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
 
     useEffect(() => {
 
-        if (!partition) return
+        if (!score) return
 
         let hasTab = false;
         switch (instrumentName?.toLowerCase()) {
@@ -264,8 +264,8 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
                 break
         }
 
-        if (!svgPartitionRef.current || !svgCursorRef.current|| !containerRef.current) return console.error('Erreur lors du chargement de la partition ...');
-        if (svgPartitionRef.current) svgPartitionRef.current.innerHTML = "";
+        if (!svgScoreRef.current || !svgCursorRef.current|| !containerRef.current) return console.error('Erreur lors du chargement de la partition ...');
+        if (svgScoreRef.current) svgScoreRef.current.innerHTML = "";
         
         /*dimmensions */
         const lineSpacing: number = 160
@@ -273,19 +273,19 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
         const totalLineHeight = hasTab ? lineSpacing + 80 : lineSpacing
         const containerWidth: number = containerRef.current.offsetWidth ?? 800;        
         const measurePerLine: number = 4;
-        const totalLines: number = Math.ceil(partition.measures.length / measurePerLine);
+        const totalLines: number = Math.ceil(score.measures.length / measurePerLine);
         const firstMeasureExtraWidth = 80
         const dynamicHeight: number = totalLines * totalLineHeight + 50;
         const availableWidth: number = containerWidth - 40 - firstMeasureExtraWidth;
         const fixedMeasureWidth: number = availableWidth / measurePerLine;
 
         /*render */
-        const rendererPartition = new Renderer(svgPartitionRef.current, Renderer.Backends.SVG);
-        rendererPartition.resize(Math.round(containerWidth), Math.round(dynamicHeight));
+        const rendererScore = new Renderer(svgScoreRef.current, Renderer.Backends.SVG);
+        rendererScore.resize(Math.round(containerWidth), Math.round(dynamicHeight));
 
         /*context */
-        const contextPartition = (rendererPartition.getContext() as SVGContext);
-        contextPartitionRef.current = contextPartition;
+        const contextScore = (rendererScore.getContext() as SVGContext);
+        contextScoreRef.current = contextScore;
 
         /*positions */
         let currentX = 20;
@@ -301,8 +301,8 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
         const measuresToRender: IMeasureObject[] = [];
         
         /*measures construction */
-        partition.measures.forEach((measure, index) => {
-            const { allNotes: measureNotes, beams: measureBeams, ties: measureTies, tuplets: measureTuplets } = mapToVexFlow(measure.notes, partition.clef, tieGroups)
+        score.measures.forEach((measure, index) => {
+            const { allNotes: measureNotes, beams: measureBeams, ties: measureTies, tuplets: measureTuplets } = mapToVexFlow(measure.notes, score.clef, tieGroups)
 
             if (index > 0 && index % measurePerLine === 0) {
                 currentX = 20;
@@ -312,9 +312,9 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
             const stave: Stave = new Stave(currentX, currentY, fixedMeasureWidth)
 
             if (index % measurePerLine === 0) {
-                stave.addClef(partition.clef)
-                stave.addTimeSignature(partition.time_signature)
-                if (partition.clef_signature) stave.addKeySignature(partition.clef_signature)
+                stave.addClef(score.clef)
+                stave.addTimeSignature(score.time_signature)
+                if (score.clef_signature) stave.addKeySignature(score.clef_signature)
                 stave.setWidth(stave.getBoundingBox().getW() + 50)
                 currentX += 50
             } else {
@@ -328,11 +328,11 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
                     tabStave.addClef("tab")
                     tabStave.setWidth(stave.getWidth())
                 }
-                tabStave.setContext(contextPartition).draw()
+                tabStave.setContext(contextScore).draw()
             }
 
             try {
-                const [numBeats, beatValue] = partition.time_signature.split('/').map(Number);
+                const [numBeats, beatValue] = score.time_signature.split('/').map(Number);
                 const voice = new Voice({ numBeats:numBeats, beatValue:beatValue });
 
                 voice.addTickables(measureNotes);          
@@ -356,7 +356,7 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
         measuresToRenderRef.current = measuresToRender;
 
         /*measures display */
-        renderAllMeasures(contextPartition, measuresToRender)
+        renderAllMeasures(contextScore, measuresToRender)
 
         // data synchro generation
         const notesMap = new Map();
@@ -371,7 +371,7 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
 
             tickables.forEach((tickable: Tickable) => {
                 const note = tickable as StaveNote
-                const durationMs: number = (note.getTicks().value() / 4096) * (60000 / partition.bpm)               
+                const durationMs: number = (note.getTicks().value() / 4096) * (60000 / score.bpm)               
                 
                 const x: number = note.getAbsoluteX()
                 const id: string | undefined = note.getAttribute('id') ?? `note_${mIndex}_${Math.round(runningTimeMs)}`.replaceAll(/[^a-zA-Z0-9]/g, "_")
@@ -412,7 +412,7 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
 
         const contextCursor = rendererCursor.getContext() as SVGContext;
         contextCursorRef.current = contextCursor;
-    },[partition])
+    },[score])
 
     useEffect(() => {
         if (onPlay) {
@@ -471,16 +471,16 @@ const PartitionRender: React.FC<IPartitionRenderProps> = ({ onPlay }) => {
         }
     },[onPlay])
 
-    if (!partition) {
+    if (!score) {
         return <Box textAlign={"center"}><Text color={"black"}>Chargement de la partition ...</Text></Box>
     }
     return (
             <Box position={"relative"} w={"100%"} ref={containerRef} overflowY={"auto"} maxH={"800px"}
             sx={hideScrollbarStyle}>
-                <Box id="partition-container" ref={svgPartitionRef} sx={{ display: "block", height: "auto"}}/>
+                <Box id="score-container" ref={svgScoreRef} sx={{ display: "block", height: "auto"}}/>
                 <Box id="cursor-container" ref={svgCursorRef} sx={{ position: "absolute", top: "0", left: "0", pointerEvents: "none", width:"100%", background: "transparent"}}/>
             </Box>
         )
 }
 
-export default PartitionRender
+export default ScoreRender

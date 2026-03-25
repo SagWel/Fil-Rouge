@@ -23,25 +23,25 @@ import { useNavigate } from "react-router-dom";
 import { AddCircleIcon, DisableIcon } from "../components/Svg";
 
 /* Import conponents */
-import Carousel from "../components/PartitionCarousel"
-import PartitionCard, {difficultyLvl} from "../components/PartitionCard";
+import Carousel from "../components/ScoreCarousel"
+import ScoreCard, {difficultyLvl} from "../components/ScoreCard";
 
 /* Import hook */
 import { useAuth } from "../hooks/useAuth";
 
 /* Import type */
-import { type IPartitions } from "../types/partitions";
+import { type IScore } from "../types/score";
 import type { IInstrument, IInstrumentLvl } from "../types/instrument";
 
 export interface IPageAcceuilProps {}
 
 const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
 
-    /* Varibles to stock Partitions for carousel */
-    const [popularPartitions, setPopularPartitions] = useState<IPartitions[] | []>([])
-    const [newsPartitions, setNewsPartitions] = useState<IPartitions[] | []>([])
-    const [suggestionsPartitions, setSuggestionsPartitions] = useState<IPartitions[] | []>([])
-    const [historyPartitions, setHistoryPartitions] = useState<IPartitions[] | []>([])
+    /* Varibles to stock Scores for carousel */
+    const [popularScores, setPopularScores] = useState<IScore[] | []>([])
+    const [newsScores, setNewsScores] = useState<IScore[] | []>([])
+    const [suggestionsScores, setSuggestionsScores] = useState<IScore[] | []>([])
+    const [historyScores, setHistoryScores] = useState<IScore[] | []>([])
 
     /* Varibles to edit user profil */
     const [userInstruments, setUserInstruments] = useState<IInstrumentLvl[] | []>([])
@@ -61,7 +61,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
     const host = import.meta.env.VITE_HOST
     const port = import.meta.env.VITE_SERVER_PORT
     
-    const fetchPartitions = async (URL: string, set: React.Dispatch<React.SetStateAction<IPartitions[] | []>>) => {
+    const fetchScores = async (URL: string, set: React.Dispatch<React.SetStateAction<IScore[] | []>>) => {
         try {
             const res = await fetch(`http://${host}:${port}${URL}`, {credentials: 'include'})
 
@@ -167,9 +167,9 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         const urlFetchNews = import.meta.env.VITE_URL_FETCH_NEWS
         const urlFetchSuggestions = import.meta.env.VITE_URL_FETCH_SUGGESTIONS
 
-        fetchPartitions(urlFetchPopular, setPopularPartitions)
-        fetchPartitions(urlFetchNews, setNewsPartitions)
-        fetchPartitions(`${urlFetchSuggestions}${user?.id}`, setSuggestionsPartitions)
+        fetchScores(urlFetchPopular, setPopularScores)
+        fetchScores(urlFetchNews, setNewsScores)
+        fetchScores(`${urlFetchSuggestions}${user?.id}`, setSuggestionsScores)
         fetchInstruments()
     },[])
 
@@ -177,27 +177,27 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         <Box id="homeUser"
         overflowY={"auto"} height={"100%"} mb={"70px"} position={"relative"}>
             <Carousel id="recents-carousel" 
-            data={historyPartitions} title="Partitions joués récement"
-            renderItem={(item:IPartitions) => (
-                <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
+            data={historyScores} title="Partitions joués récement"
+            renderItem={(item:IScore) => (
+                <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
             )} />
 
             <Carousel id="suggestions-carousel"
-            data={suggestionsPartitions} title="Suggestions"
-            renderItem={(item:IPartitions) => (
-                <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
+            data={suggestionsScores} title="Suggestions"
+            renderItem={(item:IScore) => (
+                <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
             )}/>
 
             <Carousel id="news-carousel"
-            data={newsPartitions} title="Nouveautés"
-            renderItem={(item:IPartitions) => (
-                <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
+            data={newsScores} title="Nouveautés"
+            renderItem={(item:IScore) => (
+                <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
             )}/>
 
             <Carousel id="popular-carousel"
-            data={popularPartitions} title="Partitions populaires"
-            renderItem={(item:IPartitions) => (
-                <PartitionCard key={item.id} partition={item} currentInstrument={item.instruments.currentInstrument.name} />
+            data={popularScores} title="Partitions populaires"
+            renderItem={(item:IScore) => (
+                <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
             )}/>
             <Modal isOpen={isFirstLogin} onClose={onClose}>
                 <ModalOverlay background={"rgba(0, 0, 0, 0.48)"}

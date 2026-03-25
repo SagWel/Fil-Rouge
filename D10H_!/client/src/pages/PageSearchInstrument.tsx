@@ -2,35 +2,35 @@ import { Box, Heading, Flex, Grid, Text, FormLabel, Menu, MenuButton, Button, Po
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { type IPartitions } from "../types/partitions";
+import { type IScore } from "../types/Score";
 
 /* Import SVG */
 import { DownChevronIcon, UpChevronIcon } from "../components/Svg";
 
 /* Imports components */
-import PartitionCard, { difficultyLvl } from '../components/PartitionCard';
+import ScoreCard, { difficultyLvl } from '../components/ScoreCard';
 import type { Item } from "../components/MenuSelect";
 import MenuSelect from "../components/MenuSelect";
 
-export interface ISearchPartitionsInstrumentProps {}
+export interface ISearchScoresInstrumentProps {}
 
-const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
+const Search: React.FC<ISearchScoresInstrumentProps> = () => {
 
     /* retrieve instrument name from the URL */
     const { instrumentName } = useParams();
 
-    /* State to stock partitions */
-    const [partitions, setPartitions] = useState<IPartitions[] | []>([])
+    /* State to stock scores */
+    const [scores, setScores] = useState<IScore[] | []>([])
 
     /* States for filters */
     const [artist, setArtist] = useState<string>('')
     const [morceau, setMorceau] = useState<string>('')
-    const [genre, setGenre] = useState<string>('')
+    const [gender, setGender] = useState<string>('')
     const [difficulty, setDifficulty] = useState<number>(0)
     const [selectedSort, setSelectedSort] = useState<Item | null>(null)
 
-    /* function to retrive partittions on database */
-    const fetchPartitions = async (URL: string) => {
+    /* function to retrive scores on database */
+    const fetchScores = async (URL: string) => {
         const host = import.meta.env.VITE_HOST
         const port = import.meta.env.VITE_SERVER_PORT
         try {            
@@ -40,26 +40,26 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
             }
 
             const data = await res.json()
-            setPartitions(data)
+            setScores(data)
         } catch (error) {
             console.error('Impossible de récupérer les données des partitions:', error);
         }
     }
 
-    /* variables to store the various data from the partitions for the options of the different select  */
+    /* variables to store the various data from the scores for the options of the different select  */
     const allartists: string[] = []
     const allMorceaux: string[] = []
     const allGenders: string[] = []
     const allDifficultes: number[] = []
 
-    partitions.forEach(p => {
+    scores.forEach(p => {
         allartists.push(p.song.artist.name)
         allMorceaux.push(p.song.title)
-        allGenders.push(p.song.genre.name)
+        allGenders.push(p.song.gender.name)
         allDifficultes.push(p.difficulty)
     });
 
-    /* sorted data from the partitions alphabetically */
+    /* sorted data from the scores alphabetically */
     const artists = [...new Set(allartists)].sort()
     const morceaux = [...new Set(allMorceaux)].sort()
     const genders = [...new Set(allGenders)].sort()
@@ -79,18 +79,18 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
         {id: "popular_desc", label: "populaires", icon: DownChevronIcon}
     ]
 
-    /* filtered partitions with user selections */
-    const filteredPartitions = partitions.filter((p: IPartitions) => {
+    /* filtered scores with user selections */
+    const filteredScores = scores.filter((p: IScore) => {
         const filterArtist = artist === '' || p.song.artist.name === artist
         const filterMorceau = morceau === '' || p.song.title === morceau
-        const filterGender = genre === '' || p.song.genre.name === genre
+        const filterGender = gender === '' || p.song.gender.name === gender
         const filterDifficulty = difficulty === 0 || p.difficulty === difficulty
 
         return filterArtist && filterMorceau && filterGender && filterDifficulty
     })
 
-    /* sorted partitions with user sort choice */
-    const sortedPartitions = [...filteredPartitions].sort((a, b) => {
+    /* sorted scores with user sort choice */
+    const sortedScores = [...filteredScores].sort((a, b) => {
         switch (selectedSort?.id) {
             case 'A-Z_asc' : 
                 return a.song.title.localeCompare(b.song.title)
@@ -117,9 +117,9 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
 
     useEffect(() => {
         if (instrumentName) {
-            const urlFetch = import.meta.env.VITE_URL_FETCH_ALLPARTITIONS_INSTRUMENT
+            const urlFetch = import.meta.env.VITE_URL_FETCH_ALLSCORES_INSTRUMENT
             
-            fetchPartitions(`${urlFetch}${instrumentName}`)
+            fetchScores(`${urlFetch}${instrumentName}`)
             
         } else {
             console.error('Instrument manquant ...')
@@ -143,7 +143,7 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
                     
                     <Box gridColumn={"span 1"}></Box>
                     
-                    <MenuSelect listeString={genders} label="Genre" itemString={genre} setItemString={setGenre}/>
+                    <MenuSelect listeString={genders} label="Genre" itemString={gender} setItemString={setGender}/>
                     
                     <Box gridColumn={"span 1"}></Box>
                    
@@ -227,7 +227,7 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
             </Box>
 
             {/*Search results*/}
-            {sortedPartitions.length === 0 ? 
+            {sortedScores.length === 0 ? 
             <Box textAlign={"center"}><Text color={"white"}>Aucune partition trouvée pour {instrumentName}</Text></Box>
             :
             <Grid id="resultZone" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
@@ -236,8 +236,8 @@ const Search: React.FC<ISearchPartitionsInstrumentProps> = () => {
             marginTop={"2rem"} marginBottom={"5rem"}>
                 
                 {/*Creats a card for each scores in search result*/}
-                {sortedPartitions.map((partition: IPartitions) => (
-                    <PartitionCard key={partition.id} partition={partition} currentInstrument={instrumentName as string}/>
+                {sortedScores.map((score: IScore) => (
+                    <ScoreCard key={score.id} score={score} currentInstrument={instrumentName as string}/>
                 ))}
 
             </Grid>}
