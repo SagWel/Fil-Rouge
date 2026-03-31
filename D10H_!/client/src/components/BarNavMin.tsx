@@ -1,4 +1,3 @@
-import "react";
 import { Link } from "react-router-dom";
 import { Flex, Box, IconButton, Image } from "@chakra-ui/react";
 
@@ -58,7 +57,7 @@ const BarNavMin: React.FC<IBarNavMinProps> = () => {
                             }}>
                             <HomeIcon />
                         </Flex>
-                        <Flex as={Link} to={"/Instruments/user"}id="Instuments"
+                        <Flex as={Link} to={"/instruments/user"} id="Instuments"
                         alignItems={"center"} gap={"0.5rem"} justifyContent={"center"}
                         padding={"0.5rem"}
                         borderRadius={"0.5rem"}

@@ -1,6 +1,5 @@
 import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { type JwtPayload } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 
 interface DecodedUser extends JwtPayload {
     id: number,

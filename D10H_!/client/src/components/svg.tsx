@@ -1219,3 +1219,25 @@ export const CameraIcon: React.FC<SvgProps> = ( {size, color, ...rest} ) => (
         4.686H5.783a25.346 25.346 0 0 1-.452-4.977c.017-1.639.194-3.102.435-4.363h12.48Z" ></path>
     </Icon>
 )
+
+export const CheckIcon: React.FC<SvgProps> = ( {size, ...rest} ) => (
+    <Icon viewBox="0 0 24 24"
+    w={size || "24px"} h={size || "24px"}
+    fill={"currentColor"} {...rest}>
+        <path d="m11.109 12.996 2.905-4.303 1.104.746-3.732 5.53-3.248-2.723.856-1.023 2.115 1.773Z">
+        </path>
+        <path d="M4 12c0-5.138 2.862-8 8-8 5.137 0 8 2.862 8 8 0 5.137-2.863 8-8 8-5.138 0-8-2.863-8-8Zm1.333 0c0 4.424 2.243 6.667 6.667 6.667 4.424 0 6.667-2.243 6.667-6.667 
+        0-4.424-2.243-6.667-6.667-6.667-4.424 0-6.667 2.243-6.667 6.667Z">            
+        </path>
+    </Icon>
+)
+
+export const ValidateIcon: React.FC<SvgProps> = ( {size, color, ...rest} ) => (
+    <Icon viewBox="0 0 24 24"
+    w={size || "24px"} h={size || "24px"}
+    color={color || "#00b23d"} fill={"currentColor"} {...rest}>
+        <path fillRule="evenodd" d="M4 12c0-5.138 2.862-8 8-8 5.137 0 8 2.862 8 8 0 5.137-2.863 8-8 8-5.138 0-8-2.863-8-8Zm7.109.996 2.905-4.303 1.104.746-3.732 5.53-3.248-2.723.856-1.023 
+        2.115 1.773Z" clipRule={"evenodd"}>
+        </path>
+    </Icon>
+)

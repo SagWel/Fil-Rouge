@@ -64,7 +64,7 @@ const BarNav: React.FC<IBarNavProps> = () => {
                                 <Heading fontSize={"1.125rem"} fontWeight={"700"}>Acceuil</Heading>
                             </Flex>
                         </Link>
-                        <Link to={"/Instruments/user"}>
+                        <Link to={"/instruments/user"}>
                             <Flex 
                             gap={"0.5rem"} p={"0.5rem"}
                             direction={"row"}

@@ -18,7 +18,7 @@ static $reservedNames = ['admin', 'root', 'support', 'help', 'api', 'moderator']
 static $genders = ['M', 'F', 'NB', 'Private'];
 
 if ($email && $password) {
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($password) > 7) {
+    if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($password) >= 8 && preg_match('/\d/', $password) === 1 && preg_match('/[a-z]/i', $password) === 1) {
         $_GET['email'] = filter_var($email, FILTER_SANITIZE_EMAIL);
         $_GET['password'] = $password;
         if ($username && 3 < strlen($username) && strlen($username)  <= 20) {

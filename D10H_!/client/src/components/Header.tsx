@@ -110,7 +110,7 @@ const Header: React.FC<IHeaderProps> = () => {
         userInfos()       
     },[userToken])
 
-    /*search choice management*/
+    /* search choice management */
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key == 'Enter') {
             event.preventDefault()

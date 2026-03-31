@@ -23,13 +23,12 @@ import { useState } from "react"
 import { useSearchParams, useNavigate, type NavigateFunction } from "react-router-dom"
 
 /* Import SVG */
-import { LogoTempo, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon } from "../components/Svg"
+import { LogoTempo, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon, ValidateIcon, CheckIcon } from "../components/Svg"
 
 import '../style.css'
 
 /* Import hooks */
 import { useAuth } from "../hooks/useAuth"
-
 
 export interface IPageSignupProps {}
 
@@ -51,6 +50,12 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
     const [age, setAge] = useState<number>(0)
     const [identity, setidentity] = useState<string>('')
     const [message, setMessage] = useState<string | null>(null)
+
+    const passwordLenght: boolean = password.length >= 8
+    const passwordLetter: boolean = /[a-zA-Z]/.test(password)
+    const passwordNumber: boolean = /\d/.test(password)
+
+    const emailFormat: boolean = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
 
     const host: string = import.meta.env.VITE_HOST
     const port: string = import.meta.env.VITE_SERVER_PORT
@@ -102,6 +107,50 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
             setMessage("Erreur lors du test de l'email")
             setIsError(true)
         }
+    }
+
+    const testPasswordSecuityLvl = () => {
+        if (passwordLenght && passwordLetter&& passwordNumber && /[A-Z]/.test(password) && /[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            return(
+                <Text 
+                flex={"1 1 0%"}
+                fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                lineHeight={"24px"} textDecor={"none"} textAlign={"end"} color={"#00b23d"}>
+                    Fort
+                </Text>
+            )
+        }
+            
+        if (passwordLenght && passwordLetter&& passwordNumber && (/[A-Z]/.test(password) || /[!@#$%^&*(),.?":{}|<>]/.test(password))) {
+            return (
+                <Text 
+                flex={"1 1 0%"}
+                fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                lineHeight={"24px"} textDecor={"none"} textAlign={"end"} color={"#fe9935"}>
+                    Moyen
+                </Text>
+            )
+        }
+            
+        if (passwordLenght && passwordLetter&& /\d/.test(password)) {
+            return (
+                <Text 
+                flex={"1 1 0%"}
+                fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                lineHeight={"24px"} textDecor={"none"} textAlign={"end"} color={"#f44336"}>
+                    Faible
+                </Text>
+            )
+        }
+
+        return (
+            <Text 
+            flex={"1 1 0%"}
+            fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+            lineHeight={"24px"} textDecor={"none"} textAlign={"end"} color={"#f44336"}>
+                Trop faible
+            </Text>
+        )
     }
 
     /* function to creat user in database et login him */
@@ -230,7 +279,13 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                         appearance={"none"}
                                         _placeholder={{color: "#5D6E73"}}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={(e) => {
+                                            if (isError) {
+                                                setIsError(false)
+                                                setMessage('')
+                                            }
+                                            setEmail(e.target.value)
+                                        }}
                                         onBlur={(e) => {
                                             if (e.target.value === '') {
                                                 setIsError(true)
@@ -261,7 +316,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             {message}
                                         </FormErrorMessage>)}
                                     </FormControl>
-                                    <Button type="submit" 
+                                    <Button type="submit" isDisabled={!emailFormat}
                                     onClick={(e) => {
                                         e.preventDefault()
                                         handleOnClickEmail()
@@ -290,6 +345,10 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                     _hover={{
                                         color: "#f5f2f8",
                                         bg: "#bb73ff"
+                                    }}
+                                    _disabled={{
+                                        color: "#706e73",
+                                        bg: "#2e2c30"
                                     }}>
                                         <span>Continuer</span>
                                     </Button>
@@ -437,7 +496,11 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                         <Stack alignItems={"center"} gap={"0.5rem"}
                         marginInline={"auto"}
                         maxW={"512px"} w={"100%"}>
-                            <Stack onClick={handleOnClickPrev}
+                            <Stack onClick={() => {
+                                setIsError(false)
+                                setMessage('')
+                                handleOnClickPrev()
+                            }}
                             alignItems={"center"} justifyContent={"flex-start"} gap={"0.125rem"} flexDir={"row"}
                             maxW={"512px"} w={"100%"}
                             textAlign={"start"}
@@ -485,11 +548,26 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             outline={"transparent solid 2px"} outlineOffset={"2px"}
                                             transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                             appearance={"none"}
-                                            onChange={(e) => setPassword(e.target.value)}
+                                            onChange={(e) => {
+                                                setPassword(e.target.value)
+                                                if (isError && password && !passwordLenght) {
+                                                    setMessage('Ton mot de passe doit comporter au moins 8 caractères.')
+                                                }
+                                                if (isError && passwordLenght && (!passwordLetter || !passwordNumber)) {
+                                                    setMessage('Trop faible')
+                                                } else {
+                                                    setIsError(false)
+                                                    setMessage('')
+                                                }
+                                            }}
                                             onBlur={(e) => {
                                                 if (e.target.value === '') {
                                                     setIsError(true)
                                                     setMessage('Le champ de doit pas être vide')
+                                                }
+                                                if (password && !passwordLenght) {
+                                                    setIsError(true)
+                                                    setMessage('Ton mot de passe doit comporter au moins 8 caractères.')
                                                 }
                                             }}
                                             _placeholder={{color: "#5D6E73"}}
@@ -503,6 +581,43 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                                 bg: "#2e2c30",
                                                 color : "#f5f2f8"
                                             }}/>
+                                            {password !== "" && (
+                                                <Flex justify={"between"}
+                                                py={"0.75rem"} mt={'0.5rem'} px={"1rem"}
+                                                bg={"#141216"}
+                                                borderRadius={"0.5rem"}>
+                                                    <Stack align={"flex-start"} gap={'0.5rem'}
+                                                    marginInlineEnd={'1rem'}>
+                                                        <Text 
+                                                        fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                                        lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}>
+                                                            Ton mot de passe doit inclure
+                                                        </Text>
+                                                        <Stack align={"center"} flexDir={"row"} gap={'0.25rem'}
+                                                        color={passwordLenght ? "#00b23d" : "#ffffff"}>
+                                                            {passwordLenght ? <ValidateIcon lineHeight={"24px"} flexShrink={0} verticalAlign={"middle"} animation={"300ms ease 0s 1 normal none running"} /> : <CheckIcon /> }
+                                                            <chakra.span>
+                                                                Au moins 8 caractères
+                                                            </chakra.span>
+                                                        </Stack>
+                                                        <Stack align={"center"} flexDir={"row"} gap={'0.25rem'}
+                                                        color={passwordLetter ? "#00b23d" : "#ffffff"}>
+                                                            {passwordLetter ? <ValidateIcon lineHeight={"24px"} flexShrink={0} verticalAlign={"middle"} animation={"300ms ease 0s 1 normal none running"} /> : <CheckIcon /> }
+                                                            <chakra.span>
+                                                            Au moins une lettre
+                                                            </chakra.span>
+                                                        </Stack>
+                                                        <Stack align={"center"} flexDir={"row"} gap={'0.25rem'}
+                                                        color={passwordNumber ? "#00b23d" : "#ffffff"}>
+                                                            {passwordNumber ? <ValidateIcon lineHeight={"24px"} flexShrink={0} verticalAlign={"middle"} animation={"300ms ease 0s 1 normal none running"} /> : <CheckIcon /> }
+                                                            <chakra.span>
+                                                            Au moins un nombre
+                                                            </chakra.span>
+                                                        </Stack>
+                                                    </Stack>
+                                                    {testPasswordSecuityLvl()}
+                                                </Flex>
+                                            )}
                                             {isError && (
                                             <FormErrorMessage display={"flex"} alignItems={"center"}
                                             mt={"0.5rem"}
@@ -514,11 +629,15 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                                 {message}
                                             </FormErrorMessage>)}
                                         </FormControl>
-                                        <Button type="submit" onClick={(e) => {
+                                        <Button type="submit" isDisabled={!passwordLenght || !passwordLetter || !passwordNumber}
+                                        onClick={(e) => {
                                             e.preventDefault()
-                                            const usernameSuggestion: string = email.split('@')[0].split(/[.\-_]/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
-                                            setUsername(usernameSuggestion)
-                                            handleOnClickNext()}}
+                                            if (passwordLenght && passwordLetter && passwordNumber) {
+                                                const usernameSuggestion: string = email.split('@')[0].split(/[.\-_]/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
+                                                setUsername(usernameSuggestion)
+                                                handleOnClickNext()
+                                            }
+                                        }}
                                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
                                         whiteSpace={"nowrap"} verticalAlign={"middle"}
                                         pos={"relative"}
@@ -543,6 +662,10 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         _hover={{
                                             color: "#f5f2f8",
                                             bg: "#bb73ff"
+                                        }}
+                                        _disabled={{
+                                            color: "#706e73",
+                                            bg: "#2e2c30"
                                         }}>
                                             <span>Continuer</span>
                                         </Button>
