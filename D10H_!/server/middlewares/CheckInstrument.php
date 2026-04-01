@@ -9,6 +9,9 @@ if ($instrument) {
     $_GET['instrument_id'] = $instrument['id'];
 } else {
     http_response_code(400);
-    echo json_encode(["erreur" => "Cet instrument n'est pas disponible"]);
+    echo json_encode([
+        "erreur" => "Cet instrument n'est pas disponible",
+        'instrument' => $instrument
+    ]);
     exit();
 }

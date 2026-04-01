@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { type IInstrument } from "../types/instrument";
 
-import InstrumentCard from '../components/InstrumentCard'
+import InstrumentCard from '../components/cards/InstrumentCard'
 
 /* Import hooks */
 import { useAuth } from "../hooks/useAuth";

@@ -9,7 +9,7 @@ $user = getUserByEmail($pdo, $email);
 if ($user) {
     $profiUser = getUserProfil($pdo, $user['id']);
 
-    http_response_code(409);
+    http_response_code(200);
     echo json_encode([
         "message" => "utilisateur déjà existant",
         "isFounded" => true,
@@ -27,5 +27,5 @@ if ($user) {
     exit;
 }
 
-http_response_code(200);
+http_response_code(204);
 echo json_encode(["message" => "utilisateur non trouvé. Création autorisée", "isFounded" => false]);

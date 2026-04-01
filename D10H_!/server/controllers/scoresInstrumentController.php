@@ -20,5 +20,9 @@ if ($instrumentId) {
     echo json_encode($scores);
 } else {
     http_response_code(400);
-    echo json_encode(['erreur' => 'Instrument non repertorié']);
+    echo json_encode([
+        'erreur' => 'Instrument non repertorié',
+        'instrumentId' => $instrumentId,
+        'instrument' => $instrument
+    ]);
 }

@@ -9,7 +9,7 @@ import ScoreRender from "../components/ScoreRender";
 import { useScore } from "../hooks/useScore";
 
 /* Import background */
-import Fond from '../img/FondPart.jpg'
+import Fond from '../../public/imgs/FondPart.jpg'
 
 export interface IPageMorceauProps {onPlay: boolean}
 

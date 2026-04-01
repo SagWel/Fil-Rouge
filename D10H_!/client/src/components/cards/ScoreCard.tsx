@@ -1,10 +1,10 @@
 import { Box, Heading, Text, Image, Flex} from "@chakra-ui/react";
 
 /* IMport type */
-import { type IScore } from "../types/Score";
+import { type IScore } from "../../types/Score";
 
 // SVGs import from a unique file
-import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "./Svg";
+import { GuitarIcon, DrumsIcon, PianoIcon, BasseIcon, ChantIcon, UkuleleIcon, SaxoIcon, DifficultyIcon } from "../Svg";
 
 // Displays icons according to the difficulty value
 export const difficultyLvl = (difficulty: number, size?: string) => {

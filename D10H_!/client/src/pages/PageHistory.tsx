@@ -6,7 +6,7 @@ import type { IScore } from "../types/Score";
 import { ShuffleIcon } from "../components/Svg";
 
 // Card for each scores in the database
-import ScoreCard from '../components/ScoreCard'
+import ScoreCard from '../components/cards/ScoreCard'
 
 export interface IPageHistoryProps {}
 

@@ -42,7 +42,7 @@ if ($ressource && file_exists($controlerFile)) {
         case 'score':
             require_once '../middlewares/CheckNumericId.php';
             break;
-        case 'scoresInstrument':
+        case 'scoresinstrument':
             require_once '../middlewares/CheckInstrument.php';
             break;
         case 'auth':

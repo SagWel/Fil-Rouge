@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 /* Import SVG */
-import { SearchIcon, DisableIcon, NotifIcon, RightCarouselIcon } from "./Svg";
+import { SearchIcon, DisableIcon, NotifIcon, RightCarouselIcon } from "../Svg";
 
 // Hooks
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 // Types
-import { type IUsers } from "../types/user";
+import { type IUsers } from "../../types/user";
 
 function HeaderMin() {
 

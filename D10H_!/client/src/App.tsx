@@ -21,15 +21,22 @@ import PageLogin from './pages/PageLogin.tsx';
 import PageSignup from './pages/PageSignup.tsx';
 import PageResetPassword from './pages/PageResetPassword.tsx'
 import PageUserInstruments from './pages/PageUserInstruments.tsx'
+import PageAccount from './pages/PageAccount.tsx'
+import PageAccountNotifications from './pages/PageAccountNotifications.tsx';
+import PageAccountDevices from './pages/PageAccountDevices.tsx';
+import PageApps from './pages/PageApps.tsx';
+import PageAccountDisplay from './pages/PageAccountDisplay.tsx';
+import PageAccountShare from './pages/PageAccountShare.tsx';
+import PageAccountCountry from './pages/PageAccountCountry.tsx';
 
 // Components imports
-import Tools from './components/Tools.tsx';
-import BarNav from './components/BarNav.tsx';
-import Header from './components/Header.tsx';
-import Playeur from './components/Playeur.tsx';
-import BarNavMin from './components/BarNavMin.tsx';
-import HeaderMin from './components/HeaderMin.tsx';
-import PlayeurMin from './components/PlayeurMin.tsx';
+import Tools from './components/layout/Tools.tsx';
+import BarNav from './components/layout/BarNav.tsx';
+import Header from './components/layout/Header.tsx';
+import Playeur from './components/layout/Playeur.tsx';
+import BarNavMin from './components/layout/BarNavMin.tsx';
+import HeaderMin from './components/layout/HeaderMin.tsx';
+import PlayeurMin from './components/layout/PlayeurMin.tsx';
 
 // Hooks imports
 import useWindowWidth from './hooks/useWindowWidth.tsx'
@@ -103,6 +110,16 @@ function App() {
                     {/* Route for home page */}
                     <Route path='/' element={<PageHome />} />
 
+                    {/* Route for profil editing */}
+                    <Route path='/account' element={<PageAccount />} />
+                    <Route path='/account/notifications' element={<PageAccountNotifications />} />
+                    <Route path='/account/devices' element={<PageAccountDevices />} />
+                    <Route path='/account/display' element={<PageAccountDisplay />} />
+                    <Route path='/account/share' element={<PageAccountShare />} />
+                    <Route path='/account/country_selector' element={<PageAccountCountry />} />
+
+                    <Route path='/apps' element={<PageApps />} />
+
                     {/* Route to display search results */}
                     <Route path='/search' element={<PageSearchScores />} />
 
@@ -168,6 +185,16 @@ function App() {
           
                   {/* Route for home page */}
                   <Route path='/' element={<PageHome />} />
+
+                  {/* Route for profil editing */}
+                  <Route path='/account' element={<PageAccount />} />
+                  <Route path='/account/notifications' element={<PageAccountNotifications />} />
+                  <Route path='/account/devices' element={<PageAccountDevices />} />
+                  <Route path='/account/display' element={<PageAccountDisplay />} />
+                  <Route path='/account/share' element={<PageAccountShare />} />
+                  <Route path='/account/country_selector' element={<PageAccountCountry />} />
+
+                  <Route path='/apps' element={<PageApps />} />
 
                   {/* Route to display search results */}
                   <Route path='/search/' element={<PageSearchScores />} />

@@ -5,12 +5,12 @@ import {
  } from "@chakra-ui/react";
 
 // Pictures import as modules
-import Fire from '../img/au-coin-du-feu.png'
-import Rock from '../img/Rock.png'
-import Var from '../img/var.png'
+import Fire from '../../img/au-coin-du-feu.png'
+import Rock from '../../img/Rock.png'
+import Var from '../../img/var.png'
 
 // SVGs import from a unique file
-import { LogoIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon, CollabIcon } from "./Svg";
+import { LogoIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon, CollabIcon } from "../Svg";
 
 
 export interface IBarNavProps {}

@@ -496,11 +496,31 @@ export const UpChevronIcon: React.FC<SvgProps> = ({ w, h, color, ... rest}) => (
     </Icon>
 )
 
+export const UpChevronSoftIcon: React.FC<SvgProps> = ({ w, h, color, ... rest}) => (
+    <Icon viewBox="0 0 24 24"
+    w={w || "24px"} h={h || "24px"}
+    fill={color || "#fdfcfe"} color={color || "transparent"} {...rest}>
+        <path d="M20 15.345c-.823-.906-.909-1.048-1.742-1.917-2.116-2.206-3.431-3.463-5.755-5.581a.748.748 0 0 0-1.006 0c-2.32 2.114-3.635 3.37-5.755 5.58-.834.87-.918 
+        1.012-1.742 1.918l1.102 1.002c.815-.895.89-1.029 1.715-1.889A98.474 98.474 0 0 1 12 9.405a98.13 98.13 0 0 1 5.183 5.053c.824.86.9.994 1.715 1.89L20 15.345Z">
+        </path>
+    </Icon>
+)
+
 export const DownChevronIcon: React.FC<SvgProps> = ({ w, h, color, ... rest}) => (
     <Icon viewBox="0 0 24 24"
     w={w || "24px"} h={h || "16px"}
     fill={"currentColor"} color={color || "#fdfcfe"} {...rest}>
         <path d="M25.3334 1.33344L13.3334 17.3334L1.33337 1.33344">
+        </path>
+    </Icon>
+)
+
+export const DownChevronSoftIcon: React.FC<SvgProps> = ({ w, h, color, ... rest}) => (
+    <Icon viewBox="0 0 24 24"
+    w={w || "24px"} h={h || "24px"}
+    fill={color || "#fdfcfe"} color={color || "#fdfcfe"} {...rest}>
+        <path d="M4 8.655c.824.906.909 1.048 1.742 1.917 2.116 2.206 3.431 3.463 5.755 5.581a.748.748 0 0 0 1.006 0c2.32-2.114 3.635-3.37 5.755-5.58.834-.87.919-1.012 
+        1.742-1.918l-1.102-1.002c-.815.895-.89 1.029-1.715 1.889A98.474 98.474 0 0 1 12 14.595a98.13 98.13 0 0 1-5.183-5.053c-.824-.86-.9-.994-1.715-1.89L4 8.655Z">
         </path>
     </Icon>
 )

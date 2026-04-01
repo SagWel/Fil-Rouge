@@ -18,12 +18,14 @@ import {
     NumberInputStepper, 
     NumberIncrementStepper, 
     NumberDecrementStepper, 
-    Select } from "@chakra-ui/react"
+    Select,
+    InputGroup,
+    InputRightElement } from "@chakra-ui/react"
 import { useState } from "react"
 import { useSearchParams, useNavigate, type NavigateFunction } from "react-router-dom"
 
 /* Import SVG */
-import { LogoTempo, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon, ValidateIcon, CheckIcon } from "../components/Svg"
+import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon, ValidateIcon, CheckIcon } from "../components/Svg"
 
 import '../style.css'
 
@@ -40,16 +42,17 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const [isError, setIsError] = useState<boolean>(false)
+    const [message, setMessage] = useState<string>('')
 
     const currentStep = parseInt(searchParams.get("step") || "0")
 
     /* States for inputs */
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [inputType, setInputType] = useState<'password' | 'text'>('password')
     const [username, setUsername] = useState<string>('')
     const [age, setAge] = useState<number>(0)
     const [identity, setidentity] = useState<string>('')
-    const [message, setMessage] = useState<string | null>(null)
 
     const passwordLenght: boolean = password.length >= 8
     const passwordLetter: boolean = /[a-zA-Z]/.test(password)
@@ -151,6 +154,11 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                 Trop faible
             </Text>
         )
+    }
+
+    const displayPassword = () => {
+        if (inputType === 'password') setInputType('text')
+        if (inputType === 'text') setInputType('password')
     }
 
     /* function to creat user in database et login him */
@@ -289,7 +297,11 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         onBlur={(e) => {
                                             if (e.target.value === '') {
                                                 setIsError(true)
-                                                setMessage('Le champ de doit pas être vide')
+                                                setMessage('Le champ ne doit pas être vide')
+                                            }
+                                            if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(e.target.value) ) {
+                                                setIsError(true)
+                                                setMessage("Le format de ton adresse email n'est pas valide.")
                                             }
                                         }}
                                         _active={{
@@ -537,7 +549,11 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}>
                                                 Mot de passe
                                             </FormLabel>
-                                            <Input name="password" type="password" id="password" autoComplete="password" placeholder="Mot de passe" required value={password}
+                                            <InputGroup display={"flex"}
+                                            pos={"relative"}
+                                            w={"100%"}
+                                            isolation={"isolate"}>
+                                            <Input name="password" type={inputType} id="password" autoComplete="password" placeholder="Mot de passe" required value={password}
                                             position={"relative"}
                                             paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
                                             w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
@@ -581,6 +597,33 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                                 bg: "#2e2c30",
                                                 color : "#f5f2f8"
                                             }}/>
+                                            <InputRightElement display={"flex"} alignItems={"center"} justifyContent={"center"}
+                                            position={"absolute"} right={0} top={0}
+                                            marginInlineStart={"1rem"} marginInlineEnd={"0.75rem"}
+                                            w={"1.5rem"} h={"3rem"}
+                                            fontSize={"16px"}
+                                            zIndex={"2"}>
+                                                <Button display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                                whiteSpace={"nowrap"}
+                                                pos={"relative"}
+                                                paddingInline={0} py={0} p={0}
+                                                minH={"3rem"} minW={"3rem"} h={"auto"}
+                                                fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} 
+                                                verticalAlign={"middle"} lineHeight={"24px"} textDecor={"none"}
+                                                bg={"transparent"}
+                                                borderRadius={"0.75rem"}
+                                                outline={"transparent solid 2px"} outlineOffset={0}
+                                                transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                userSelect={"none"}
+                                                onClick={displayPassword}
+                                                _focusVisible={{ boxShadow: "none"}}
+                                                _hover={{bg: "transparent"}}>
+                                                    <DisplayIcon display={"block"} size="20px"
+                                                    lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"}
+                                                    mb={"1px"}/>
+                                                </Button>
+                                            </InputRightElement>
+                                            </InputGroup>
                                             {password !== "" && (
                                                 <Flex justify={"between"}
                                                 py={"0.75rem"} mt={'0.5rem'} px={"1rem"}

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Box, Flex, Button, Text, Image } from "@chakra-ui/react";
 
 /* Import image for background */
-import Cover from '../img/dont-stop-the-party.png';
+import Cover from '../../img/dont-stop-the-party.png';
 
 /* Import SVG */
 import { HeartLoveOnIcon,
@@ -16,7 +16,7 @@ import { HeartLoveOnIcon,
     QueueListIcon, 
     ChromcastIcon, 
     VolumeIcon, 
-    AudioIcon } from "./Svg";
+    AudioIcon } from "../Svg";
 
 export interface IPlayeurMinProps {onClick: () => void}
 

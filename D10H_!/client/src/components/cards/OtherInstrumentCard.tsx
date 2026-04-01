@@ -4,7 +4,7 @@ import { Box, Link } from "@chakra-ui/react"
 import { IconCard } from "./ScoreCard"
 
 /* Import type */
-import type { IOtherInstrument } from "../types/instrument"
+import type { IOtherInstrument } from "../../types/instrument"
 
 export interface IOtherInstrumentCardProps {
     instrument : IOtherInstrument

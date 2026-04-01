@@ -1,4 +1,4 @@
-import { Box, Flex, Link, chakra, Stack, FormControl, FormLabel, Input, Heading, Text, InputGroup, InputRightElement, Button, FormHelperText, Wrap } from "@chakra-ui/react"
+import { Box, Flex, Link, chakra, Stack, FormControl, FormErrorMessage, FormLabel, Input, Heading, Text, InputGroup, InputRightElement, Button, FormHelperText, Wrap } from "@chakra-ui/react"
 import '../style.css'
 import { useState } from "react"
 import { useNavigate, type NavigateFunction } from "react-router-dom"
@@ -7,7 +7,7 @@ import { useNavigate, type NavigateFunction } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
 
 /* import SVG */
-import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon } from "../components/Svg"
+import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, ErrorIcon } from "../components/Svg"
 
 export interface IPageLoginProps {}
 
@@ -19,9 +19,20 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
     /* user et login management from context by hook */
     const { setUser, setIsAuthenticated, setIsFirstLogin } = useAuth()
 
+    const [isErrorEmail, setIsErrorEmail] = useState<boolean>(false)
+    const [messageErrorEmail, setMessageErrorEmail] = useState<string>('')
+    const [isErrorPassword, setIsErrorPassword] = useState<boolean>(false)
+    const [messageErrorPassword, setMessageErrorPassword] = useState<string>('')
+
     /* States to stock inputs content */
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [inputType, setInputType] = useState<'password' | 'text'>('password')
+
+    const displayPassword = () => {
+        if (inputType === 'password') setInputType('text')
+        if (inputType === 'text') setInputType('password')
+    }
 
     /* function to submit login information */
     const onSubmit = async () => {
@@ -47,7 +58,15 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
             setUser(data.user)
             setIsAuthenticated(data.isAuthenticated)
             setIsFirstLogin(data.isFirstLogin)
-            navigate('/')
+
+            if (data.user && data.isAuthenticated) {
+                navigate('/')
+            } else {
+                setIsErrorEmail(true)
+                setMessageErrorEmail('Identifiant inconnu')
+                setIsErrorPassword(true)
+                setMessageErrorPassword('Identifiant incorrect')
+            }
         } catch (error) {
             console.error("Impossible de trouver l'utilisateur: ", error);
         }
@@ -126,7 +145,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                 <Stack alignItems={"center"} gap={"1rem"}
                                 marginInline={"auto"}
                                 w={"100%"} maxW={"512px"}>
-                                    <FormControl w={"100%"} pos={"relative"}>
+                                    <FormControl w={"100%"} pos={"relative"} isInvalid={isErrorEmail}>
                                         <FormLabel display={"block"}
                                         marginInlineEnd={"0.75rem"}
                                         mb={"0.5rem"}
@@ -148,7 +167,9 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                         outline={"transparent solid 2px"} outlineOffset={"2px"}
                                         transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                         appearance={"none"}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={(e) => {
+                                            setEmail(e.target.value)
+                                        }}
                                         _active={{
                                             borderColor: "#ad47ff"
                                         }}
@@ -159,8 +180,18 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                             bg: "#2e2c30",
                                             color: "#f5f2f8"
                                         }}/>
+                                        {isErrorEmail && (
+                                        <FormErrorMessage display={"flex"} alignItems={"center"}
+                                        mt={"0.5rem"}
+                                        fontSize={"0.875rem"}
+                                        lineHeight={"normal"} textAlign={"start"}
+                                        color={"#E53E3E"}>
+                                            <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                            mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                            {messageErrorEmail}
+                                        </FormErrorMessage>)}
                                     </FormControl>
-                                    <FormControl w={"100%"} pos={"relative"}>
+                                    <FormControl w={"100%"} pos={"relative"} isInvalid={isErrorPassword}>
                                         <FormLabel display={"block"}
                                         marginInlineEnd={"0.75rem"}
                                         mb={"0.5rem"}
@@ -175,7 +206,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                         pos={"relative"}
                                         w={"100%"}
                                         isolation={"isolate"}>
-                                            <Input type="password" autoComplete="current-password" name="password" id="password" value={password} required
+                                            <Input type={inputType} autoComplete="current-password" name="password" id="password" value={password} required
                                             position={"relative"}
                                             paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
                                             w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
@@ -186,7 +217,9 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                             outline={"transparent solid 2px"} outlineOffset={"2px"}
                                             transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                             appearance={"none"}
-                                            onChange={(e) => setPassword(e.target.value)}
+                                            onChange={(e) => {
+                                                setPassword(e.target.value)
+                                            }}
                                             _active={{
                                                 borderColor: "#ad47ff"
                                             }}
@@ -215,9 +248,10 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                                 outline={"transparent solid 2px"} outlineOffset={0}
                                                 transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                                 userSelect={"none"}
+                                                onClick={displayPassword}
                                                 _focusVisible={{ boxShadow: "none"}}
                                                 _hover={{bg: "transparent"}}>
-                                                    <DisplayIcon display={"block"}  
+                                                    <DisplayIcon display={"block"} size="20px"
                                                     lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"}
                                                     mb={"1px"}/>
                                                 </Button>
@@ -236,6 +270,16 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                         _hover={{textDecor: "none"}}>
                                             Mot de passe oublié?
                                         </FormHelperText>
+                                        {isErrorPassword && (
+                                            <FormErrorMessage display={"flex"} alignItems={"center"}
+                                            mt={"0.5rem"}
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"normal"} textAlign={"start"}
+                                            color={"#E53E3E"}>
+                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                {messageErrorPassword}
+                                            </FormErrorMessage>)}
                                     </FormControl>
                                     <Button type="submit"
                                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
@@ -253,7 +297,33 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                     userSelect={"none"}
                                     onClick={(e) => {
                                         e.preventDefault()
-                                        onSubmit()
+
+                                        if (isErrorPassword) {
+                                            setIsErrorPassword(false)
+                                            setMessageErrorPassword('')
+                                        }
+                                        
+                                        if (isErrorEmail) {
+                                            setIsErrorEmail(false)
+                                            setMessageErrorEmail('')
+                                        }
+
+                                        const emailEmpty = email.trim() === ''
+                                        const passwordEmpty = password.trim() === ''
+                                        
+                                        if (emailEmpty ) {
+                                            setIsErrorEmail(true)
+                                            setMessageErrorEmail('Le champ ne doit pas être vide')
+                                        }
+
+                                        if (passwordEmpty) {
+                                            setIsErrorPassword(true)
+                                            setMessageErrorPassword('Le champ ne doit pas être vide')
+                                        }
+
+                                        if (!emailEmpty && !passwordEmpty) {
+                                            onSubmit()
+                                        }
                                     }}
                                     _active={{
                                         color: "#e2dfe6",

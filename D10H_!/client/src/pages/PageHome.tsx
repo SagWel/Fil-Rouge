@@ -24,7 +24,7 @@ import { AddCircleIcon, DisableIcon } from "../components/Svg";
 
 /* Import conponents */
 import Carousel from "../components/ScoreCarousel"
-import ScoreCard, {difficultyLvl} from "../components/ScoreCard";
+import ScoreCard, {difficultyLvl} from "../components/cards/ScoreCard";
 
 /* Import hook */
 import { useAuth } from "../hooks/useAuth";

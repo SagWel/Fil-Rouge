@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import Carousel from "../components/ScoreCarousel"
 import { type IScore } from "../types/Score";
-import ScoreCard from "../components/ScoreCard";
+import ScoreCard from "../components/cards/ScoreCard";
 
 // SVGs import from a unique file
 import { ShuffleIcon } from "../components/Svg";

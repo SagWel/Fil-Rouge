@@ -1,3 +1,7 @@
+a {
+    -webkit-user-drag: none;
+}
+
 .note-active g {
     fill: #7328b5 !important;
     stroke: #7328b5 !important;
@@ -44,13 +48,13 @@
         --subtitle-fontsize: 35px !important;
     }
     
-    .css-rpfvsj, .css-hptv2g {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
         width: 716px;
     }
 }
 
 @media screen and (min-width: 940px) {
-    .css-rpfvsj, .css-hptv2g {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
         width: 826px;
     }
 }
@@ -116,26 +120,26 @@
         padding-inline-end: 192px !important;
     }
 
-    .css-rpfvsj, .css-hptv2g {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
         width: 902px;
     }
 }
 
 @media screen and (min-width: 1310px) {
 
-    .css-rpfvsj, .css-hptv2g {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
         width: 1304px;
     }
 }
 
 @media screen and (min-width: 1430px) {
-    .css-rpfvsj, .css-hptv2g {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
         width: 1154px;
     }
 }
 
 @media screen and (min-width: 1728px) {
-    .css-rpfvsj, .css-hptv2g {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
         width: 1425px;
     }
 }

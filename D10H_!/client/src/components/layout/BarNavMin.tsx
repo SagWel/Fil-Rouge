@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import { Flex, Box, IconButton, Image } from "@chakra-ui/react";
 
 // Pictures import as modules
-import Fire from '../img/au-coin-du-feu.png'
-import Rock from '../img/Rock.png'
-import Var from '../img/var.png'
+import Fire from '../../img/au-coin-du-feu.png'
+import Rock from '../../img/Rock.png'
+import Var from '../../img/var.png'
 
 // SVGs import from a unique file
-import { LogoMinIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon } from "./Svg";
+import { LogoMinIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon } from "../Svg";
 
 export interface IBarNavMinProps {}
 

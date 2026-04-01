@@ -13,16 +13,16 @@ import {
     AnnotationsIcon, 
     ImpressionIcon, 
     ChordsIcon
-} from "./Svg";
+} from "../Svg";
 
 /* Import hook */
-import { useScore } from "../hooks/useScore";
+import { useScore } from "../../hooks/useScore";
 
 /* Import conponent */
-import OtherInstrumentCard from "./OtherInstrumentCard";
+import OtherInstrumentCard from "../cards/OtherInstrumentCard";
 
 /* Import type */
-import type { IOtherInstrument } from "../types/instrument";
+import type { IOtherInstrument } from "../../types/instrument";
 
 export interface IToolsProps {}
 

@@ -8,7 +8,7 @@ import { type IScore } from "../types/Score";
 import { DownChevronIcon, UpChevronIcon } from "../components/Svg";
 
 /* Imports components */
-import ScoreCard, { difficultyLvl } from '../components/ScoreCard';
+import ScoreCard, { difficultyLvl } from '../components/cards/ScoreCard';
 import type { Item } from "../components/MenuSelect";
 import MenuSelect from "../components/MenuSelect";
 
@@ -33,8 +33,10 @@ const Search: React.FC<ISearchScoresInstrumentProps> = () => {
     const fetchScores = async (URL: string) => {
         const host = import.meta.env.VITE_HOST
         const port = import.meta.env.VITE_SERVER_PORT
+        
         try {            
             const res = await fetch(`http://${host}:${port}${URL}`, {credentials: 'include'})
+            
             if (!res.ok) {
                 throw new Error(`Erreur HTTP: ${res.status}`);                
             }
@@ -90,7 +92,7 @@ const Search: React.FC<ISearchScoresInstrumentProps> = () => {
     })
 
     /* sorted scores with user sort choice */
-    const sortedScores = [...filteredScores].sort((a, b) => {
+    const sortedScores = [...filteredScores].sort((a: IScore, b: IScore) => {
         switch (selectedSort?.id) {
             case 'A-Z_asc' : 
                 return a.song.title.localeCompare(b.song.title)
@@ -112,6 +114,8 @@ const Search: React.FC<ISearchScoresInstrumentProps> = () => {
                 return a.popularity - b.popularity
             case 'popular_desc' :
                 return b.popularity - a.popularity
+            default :
+                return 0
         }
     })
 
@@ -133,17 +137,17 @@ const Search: React.FC<ISearchScoresInstrumentProps> = () => {
             <Heading id="headText" color={"#FDFCFE"}> SCORBRARY {instrumentName?.toUpperCase()} </Heading>
 
             {/*Search filters*/}
-            <Box id="filtersZone" border={"0.0625rem solid #4e4c51"} mx={"1.5rem"} padding={"0.5rem"}>
+            <Box id="filtersZone" border={"0.0625rem solid #4e4c51"} mx={"1.5rem"} padding={"0.5rem"} pos={'relative'}>
                 <Grid templateColumns={"repeat(5, 1fr)"}>
-                    <MenuSelect label="Artiste" listeString={artists} itemString={artist} setItemString={setArtist} />
+                    <MenuSelect label="Artiste" listString={artists} itemString={artist} setItemString={setArtist} />
                     
                     <Box gridColumn={"span 1"}></Box>
                     
-                    <MenuSelect label="Morceau" listeString={morceaux} itemString={morceau} setItemString={setMorceau}/>
+                    <MenuSelect label="Morceau" listString={morceaux} itemString={morceau} setItemString={setMorceau}/>
                     
                     <Box gridColumn={"span 1"}></Box>
                     
-                    <MenuSelect listeString={genders} label="Genre" itemString={gender} setItemString={setGender}/>
+                    <MenuSelect listString={genders} label="Genre" itemString={gender} setItemString={setGender}/>
                     
                     <Box gridColumn={"span 1"}></Box>
                    
@@ -220,7 +224,7 @@ const Search: React.FC<ISearchScoresInstrumentProps> = () => {
                     
                     <Box gridColumn={"span 1"}></Box>
                     
-                    <MenuSelect itemObject={selectedSort} setItemObject={setSelectedSort} listeObject={sorting} label="Trier" />
+                    <MenuSelect itemObject={selectedSort} setItemObject={setSelectedSort} listObject={sorting} label="Trier" />
                     
                     <Box gridColumn={"span 1"}></Box>
                 </Grid>

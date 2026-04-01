@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 // SVGs import from a unique file
-import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon, RightCarouselIcon } from "./Svg";
+import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon, RightCarouselIcon } from "../Svg";
 
 // Context
-import { useSearch } from '../context/SearchContext'
+import { useSearch } from '../../context/SearchContext'
 
 // Hooks
-import useSearchHistory, { type IHistoryItem } from '../hooks/useSearchHistory'
-import { useAuth } from "../hooks/useAuth";
+import useSearchHistory, { type IHistoryItem } from '../../hooks/useSearchHistory'
+import { useAuth } from "../../hooks/useAuth";
 
 // Type
-import { type IDeezerSearchResponse, type IDeezerTrack } from '../types/Deezer'
-import { type IUsers } from "../types/user";
+import { type IDeezerSearchResponse, type IDeezerTrack } from '../../types/Deezer'
+import { type IUsers } from "../../types/user";
 
 export interface IHeaderProps {
 }
@@ -62,6 +62,9 @@ const Header: React.FC<IHeaderProps> = () => {
     /* States for Avatar button */
     const [user, setUser] = useState< IUsers | null>(null)
     const [isDisplayed, setIsDisplayed] = useState<boolean>(false)
+
+    console.log(user);
+    
     
     const timerRef = useRef<TimerId | undefined> (undefined)
     
@@ -210,7 +213,7 @@ const Header: React.FC<IHeaderProps> = () => {
                             background={"transparent"}
                             _active={{
                             borderColor: "#9A36F3"
-                        }}
+                            }}
                             >
                                 <SearchIcon />
                             </Button>
@@ -261,7 +264,7 @@ const Header: React.FC<IHeaderProps> = () => {
                         _active={{
                             borderColor: "#A238FF"
                         }}
-                        ></Input>
+                        />
                         <InputRightElement
                         right={"0"}
                         width={"1.5rem"} height={"3rem"}
@@ -494,7 +497,7 @@ const Header: React.FC<IHeaderProps> = () => {
                         borderRadius={"10px"}
                         boxShadow={"0 4px 20px 0 #0000003d"}
                         overflowY={"auto"}>
-                            <Flex as={Link} alignItems={"center"}
+                            <Flex as={Link} href="/favoris" alignItems={"center"}
                             p={"12px 20px"}
                             color={"#ffffff"} textDecor={"none"}
                             bg={"transparent"}

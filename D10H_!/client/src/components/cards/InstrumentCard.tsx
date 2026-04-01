@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import  { Image, Text, Flex } from "@chakra-ui/react";
 
 /* Import type */
-import type { IInstrument } from "../types/instrument";
+import type { IInstrument } from "../../types/instrument";
 
 export interface IInstrumentCardProps { instrument: IInstrument }
 

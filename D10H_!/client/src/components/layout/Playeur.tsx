@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { Box, Flex, Button, Text, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from "@chakra-ui/react";
 
 // Pictures import as modules
-import Cover from '../img/dont-stop-the-party.png';
+import Cover from '../../img/dont-stop-the-party.png';
 
 // SVGs import from a unique file
-import { HeartLoveOnIcon, AddIcon, ShuffleIcon, PreviousIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "./Svg";
+import { HeartLoveOnIcon, AddIcon, ShuffleIcon, PreviousIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "../Svg";
 
 export interface IPlayeurProps {}
 
