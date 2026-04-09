@@ -2,12 +2,12 @@ import { Box, Grid, List, chakra, ListItem } from "@chakra-ui/react"
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { type IInstrument } from "../types/instrument";
+import { type IInstrument } from "../../types/instrument";
 
-import InstrumentCard from '../components/cards/InstrumentCard'
+import InstrumentCard from '../../components/cards/InstrumentCard'
 
 /* Import hooks */
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 export interface IUserInstrumentsProps {}
 

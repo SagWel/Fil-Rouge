@@ -1261,3 +1261,13 @@ export const ValidateIcon: React.FC<SvgProps> = ( {size, color, ...rest} ) => (
         </path>
     </Icon>
 )
+
+export const PenIcon: React.FC<SvgProps> = ( {size, color, ...rest} ) => (
+    <Icon viewBox="0 0 24 24"
+    w={size || "24px"} h={size || "24px"}
+    color={color || '#ffffff'} fill={color || '#ffffff'} {...rest}>
+        <path fillRule="evenodd" d="m12.833 4 5.55 9.617c.775 1.343.6 6.383.6 6.383s-4.593-2.583-5.24-3.704l-5.55-9.617L12.833 4Zm-.49 1.83-2.321 1.34 1.246 2.159 2.32-1.34-1.245-2.16Zm-.405 4.66 2.964 5.136c.245.354 
+        1.405 1.177 2.745 2.02-.051-1.624-.211-2.99-.424-3.36L14.258 9.15l-2.32 1.34ZM6.5 19.963a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z">
+        </path>
+    </Icon>
+)

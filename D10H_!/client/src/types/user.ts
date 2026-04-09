@@ -1,3 +1,5 @@
+export type GenderType = "M" | "F" | "NB" | "Private"
+
 export interface IUsers {
     id: number,
     email: string,
@@ -5,6 +7,6 @@ export interface IUsers {
     avatarUrl: string,
     age: number,
     birthday: Date,
-    gender: string,
-    visibility: string
+    gender: GenderType,
+    visibility: "public" | "private"
 }

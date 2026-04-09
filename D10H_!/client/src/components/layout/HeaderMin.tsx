@@ -307,7 +307,7 @@ function HeaderMin() {
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     onClick={() => {
                                         logout()
-                                        navigate('/')
+                                        navigate('/login')
                                     }}
                                     _hover={{
                                         backgroundColor: "#242326",

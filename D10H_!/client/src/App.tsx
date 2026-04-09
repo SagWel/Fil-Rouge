@@ -1,33 +1,33 @@
 import { Grid, Box} from '@chakra-ui/react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 /* Contexts imports */
 import SearchProvider from './context/SearchContext.tsx'
 import { ScoreProvider } from './context/ScoreContext.tsx';
 
 // Pages imports
-import PageHome from './pages/PageHome.tsx';
-import PageSearchScores from './pages/PageSearch.tsx'
-import AllInstruments from './pages/PageAllInstruments.tsx';
-import PageSearchScoresInstrument from './pages/PageSearchInstrument.tsx'
-import Morceau from './pages/PageMorceau.tsx';
-import Favoris from './pages/PageFavoris.tsx';
-import History from './pages/PageHistory.tsx';
-import Scorbraries from './pages/PageScorbaries.tsx'
-import Scorbrary from './pages/PageScorbrary.tsx';
-import PageInfos from './pages/PageInfos.tsx';
-import PageLogin from './pages/PageLogin.tsx';
-import PageSignup from './pages/PageSignup.tsx';
-import PageResetPassword from './pages/PageResetPassword.tsx'
-import PageUserInstruments from './pages/PageUserInstruments.tsx'
-import PageAccount from './pages/PageAccount.tsx'
-import PageAccountNotifications from './pages/PageAccountNotifications.tsx';
-import PageAccountDevices from './pages/PageAccountDevices.tsx';
-import PageApps from './pages/PageApps.tsx';
-import PageAccountDisplay from './pages/PageAccountDisplay.tsx';
-import PageAccountShare from './pages/PageAccountShare.tsx';
-import PageAccountCountry from './pages/PageAccountCountry.tsx';
+import PageHome from './pages/connected/PageHome.tsx';
+import PageSearchScores from './pages/connected/PageSearch.tsx'
+import AllInstruments from './pages/connected/PageAllInstruments.tsx';
+import PageSearchScoresInstrument from './pages/connected/PageSearchInstrument.tsx'
+import Morceau from './pages/connected/PageMorceau.tsx';
+import Favoris from './pages/favoris/PageFavoris.tsx';
+import History from './pages/favoris/PageHistory.tsx';
+import Scorbraries from './pages/favoris/PageScorbaries.tsx'
+import Scorbrary from './pages/favoris/PageScorbrary.tsx';
+import PageInfos from './pages/disconnected/PageInfos.tsx';
+import PageLogin from './pages/disconnected/PageLogin.tsx';
+import PageSignup from './pages/disconnected/PageSignup.tsx';
+import PageResetPassword from './pages/disconnected/PageResetPassword.tsx'
+import PageUserInstruments from './pages/connected/PageUserInstruments.tsx'
+import PageAccount from './pages/account/PageAccount.tsx'
+import PageAccountNotifications from './pages/account/PageAccountNotifications.tsx';
+import PageAccountDevices from './pages/account/PageAccountDevices.tsx';
+import PageApps from './pages/account/PageApps.tsx';
+import PageAccountDisplay from './pages/account/PageAccountDisplay.tsx';
+import PageAccountShare from './pages/account/PageAccountShare.tsx';
+import PageAccountCountry from './pages/account/PageAccountCountry.tsx';
 
 // Components imports
 import Tools from './components/layout/Tools.tsx';
@@ -60,6 +60,9 @@ function App() {
   const location = useLocation()
   const pathSegment = location.pathname.split('/').filter(segment => segment.length > 0);
   const onPageMorceau = (pathSegment[0] === "scores" && pathSegment.length === 3)
+
+  // Variable for navigation
+  const navigate = useNavigate()
   
   //Viariables for responsive
   const width = useWindowWidth()
@@ -77,6 +80,15 @@ function App() {
 
   /* authtification management from context by hook */
   const {isAuthenticated, user, loading} = useAuth()  
+
+  useEffect(() => {
+    const publicRoutes = ['/login', '/signup', '/', '/resetpassword']
+    
+    if (!loading && !isAuthenticated && !publicRoutes.includes(location.pathname)) {
+      navigate('/login')
+    }
+
+  }, [isAuthenticated, loading, navigate, location.pathname])
 
   // Scores page template
   if (onPageMorceau && isAuthenticated) {
@@ -246,7 +258,7 @@ function App() {
           <Route path='/resetpassword' element={<PageResetPassword />} />
 
           {/* Route to registering page */}
-          <Route path='/signup/' element={<PageSignup />}/>
+          <Route path='/signup' element={<PageSignup />}/>
         </Routes>
       </Box>
     )

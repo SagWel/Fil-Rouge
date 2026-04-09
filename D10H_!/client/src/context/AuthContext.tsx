@@ -3,16 +3,15 @@ import { type JwtPayload } from "jwt-decode";
 
 interface DecodedUser extends JwtPayload {
     id: number,
-    username: string;
+    username: string,
     email: string
 }
 
-
 interface AuthContextType {
     isAuthenticated: boolean,
-    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>,
     user: DecodedUser | null,
-    isFirstLogin: boolean
+    isFirstLogin: boolean,
     setUser: React.Dispatch<React.SetStateAction<DecodedUser | null>>,
     setIsFirstLogin: React.Dispatch<React.SetStateAction<boolean>>,
     logout: () => void,
@@ -40,8 +39,15 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
 
 
     const fetchAuthcontext = async () => {
+        setLoading(true)
         try {
             const res = await fetch(`http://${host}:${port}${urlFecthAuthContext}`, {credentials: 'include'})
+
+            if (res.status === 401) {
+                logout()
+                return
+            }
+
             if (!res.ok) {
                 throw new Error(`Erreur HTTP: ${res.status}`)
             }
@@ -58,8 +64,10 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
         }
 
     const fetchLogout = async () => {
+        setLoading(true)
         try {
             const res = await fetch(`http://${host}:${port}${urlFetchLogout}`, {credentials: 'include'})
+
             if (!res.ok) {
                 throw new Error(`Erreur HTTP: ${res.status}`)
             }
@@ -75,6 +83,7 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
         setIsAuthenticated(false)
         console.error(error)
         }
+        setLoading(false)
     }
 
     useEffect(() => {       

@@ -20,18 +20,18 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /* Import SVG */
-import { AddCircleIcon, DisableIcon } from "../components/Svg";
+import { AddCircleIcon, DisableIcon } from "../../components/Svg";
 
 /* Import conponents */
-import Carousel from "../components/ScoreCarousel"
-import ScoreCard, {difficultyLvl} from "../components/cards/ScoreCard";
+import Carousel from "../../components/ScoreCarousel"
+import ScoreCard, {difficultyLvl} from "../../components/cards/ScoreCard";
 
 /* Import hook */
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 /* Import type */
-import { type IScore } from "../types/score";
-import type { IInstrument, IInstrumentLvl } from "../types/instrument";
+import { type IScore } from "../../types/Score";
+import type { IInstrument, IInstrumentLvl } from "../../types/instrument";
 
 export interface IPageAcceuilProps {}
 

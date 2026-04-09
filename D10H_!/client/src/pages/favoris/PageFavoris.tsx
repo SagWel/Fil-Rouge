@@ -2,12 +2,12 @@ import { Box, Flex, Heading, Button, List, ListItem, chakra } from "@chakra-ui/r
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-import Carousel from "../components/ScoreCarousel"
-import { type IScore } from "../types/Score";
-import ScoreCard from "../components/cards/ScoreCard";
+import Carousel from "../../components/ScoreCarousel"
+import { type IScore } from "../../types/Score";
+import ScoreCard from "../../components/cards/ScoreCard";
 
 // SVGs import from a unique file
-import { ShuffleIcon } from "../components/Svg";
+import { ShuffleIcon } from "../../components/Svg";
 
 export interface IPageFavorisProps {}
 

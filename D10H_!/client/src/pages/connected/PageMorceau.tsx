@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 /* Import component */
-import ScoreRender from "../components/ScoreRender";
+import ScoreRender from "../../components/ScoreRender";
 
 /* Import Hook */
-import { useScore } from "../hooks/useScore";
+import { useScore } from "../../hooks/useScore";
 
 /* Import background */
-import Fond from '../../public/imgs/FondPart.jpg'
+import Fond from '../../../public/imgs/FondPart.jpg'
 
 export interface IPageMorceauProps {onPlay: boolean}
 

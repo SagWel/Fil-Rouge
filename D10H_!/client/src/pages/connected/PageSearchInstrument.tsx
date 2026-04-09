@@ -2,15 +2,15 @@ import { Box, Heading, Flex, Grid, Text, FormLabel, Menu, MenuButton, Button, Po
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { type IScore } from "../types/Score";
+import { type IScore } from "../../types/Score";
 
 /* Import SVG */
-import { DownChevronIcon, UpChevronIcon } from "../components/Svg";
+import { DownChevronIcon, UpChevronIcon } from "../../components/Svg";
 
 /* Imports components */
-import ScoreCard, { difficultyLvl } from '../components/cards/ScoreCard';
-import type { Item } from "../components/MenuSelect";
-import MenuSelect from "../components/MenuSelect";
+import ScoreCard, { difficultyLvl } from '../../components/cards/ScoreCard';
+import type { Item } from "../../components/MenuSelect";
+import MenuSelect from "../../components/MenuSelect";
 
 export interface ISearchScoresInstrumentProps {}
 

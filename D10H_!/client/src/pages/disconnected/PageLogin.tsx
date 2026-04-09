@@ -1,13 +1,13 @@
 import { Box, Flex, Link, chakra, Stack, FormControl, FormErrorMessage, FormLabel, Input, Heading, Text, InputGroup, InputRightElement, Button, FormHelperText, Wrap } from "@chakra-ui/react"
-import '../style.css'
+import '../../style.css'
 import { useState } from "react"
 import { useNavigate, type NavigateFunction } from "react-router-dom"
 
 /* import hook */
-import { useAuth } from "../hooks/useAuth"
+import { useAuth } from "../../hooks/useAuth"
 
 /* import SVG */
-import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, ErrorIcon } from "../components/Svg"
+import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, ErrorIcon } from "../../components/Svg"
 
 export interface IPageLoginProps {}
 

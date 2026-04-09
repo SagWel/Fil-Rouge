@@ -25,12 +25,12 @@ import { useState } from "react"
 import { useSearchParams, useNavigate, type NavigateFunction } from "react-router-dom"
 
 /* Import SVG */
-import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon, ValidateIcon, CheckIcon } from "../components/Svg"
+import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon, ValidateIcon, CheckIcon } from "../../components/Svg"
 
-import '../style.css'
+import '../../style.css'
 
 /* Import hooks */
-import { useAuth } from "../hooks/useAuth"
+import { useAuth } from "../../hooks/useAuth"
 
 export interface IPageSignupProps {}
 

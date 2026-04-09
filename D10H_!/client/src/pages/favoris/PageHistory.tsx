@@ -1,12 +1,12 @@
 import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import type { IScore } from "../types/Score";
+import type { IScore } from "../../types/Score";
 
 // SVGs import from a unique file
-import { ShuffleIcon } from "../components/Svg";
+import { ShuffleIcon } from "../../components/Svg";
 
 // Card for each scores in the database
-import ScoreCard from '../components/cards/ScoreCard'
+import ScoreCard from '../../components/cards/ScoreCard'
 
 export interface IPageHistoryProps {}
 

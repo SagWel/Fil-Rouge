@@ -2,17 +2,17 @@ import { Box, Heading, Flex, Grid, Text, Checkbox, FormLabel, Menu, MenuButton, 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import type { Item } from "../components/MenuSelect";
-import { type IScore } from "../types/Score";
+import type { Item } from "../../components/MenuSelect";
+import { type IScore } from "../../types/Score";
 
-import MenuSelect from "../components/MenuSelect";
-import ScoreCard, { difficultyLvl } from '../components/cards/ScoreCard';
+import MenuSelect from "../../components/MenuSelect";
+import ScoreCard, { difficultyLvl } from '../../components/cards/ScoreCard';
 
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 /* Import SVG */
-import { DownChevronIcon, UpChevronIcon } from "../components/Svg";
-import type { IInstrument } from "../types/instrument";
+import { DownChevronIcon, UpChevronIcon } from "../../components/Svg";
+import type { IInstrument } from "../../types/instrument";
 
 export interface ISearchProps {}
 

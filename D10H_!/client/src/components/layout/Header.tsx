@@ -61,10 +61,7 @@ const Header: React.FC<IHeaderProps> = () => {
 
     /* States for Avatar button */
     const [user, setUser] = useState< IUsers | null>(null)
-    const [isDisplayed, setIsDisplayed] = useState<boolean>(false)
-
-    console.log(user);
-    
+    const [isDisplayed, setIsDisplayed] = useState<boolean>(false)    
     
     const timerRef = useRef<TimerId | undefined> (undefined)
     
@@ -536,7 +533,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"0 none"}
-                                    transition={"015s"} transitionProperty={"background-color, color"}
+                                    transition={".15s"} transitionProperty={"background-color, color"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     _hover={{
                                         backgroundColor: "#242326",
@@ -556,7 +553,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     _hover={{
                                         backgroundColor: "#242326",
@@ -576,7 +573,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     _hover={{
                                         backgroundColor: "#242326",
@@ -595,7 +592,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     _hover={{
                                         backgroundColor: "#242326",
@@ -614,11 +611,11 @@ const Header: React.FC<IHeaderProps> = () => {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     onClick={() => {
                                         logout()
-                                        navigate('/')
+                                        navigate('/login')
                                     }}
                                     _hover={{
                                         backgroundColor: "#242326",
