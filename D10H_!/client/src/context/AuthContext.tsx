@@ -1,18 +1,13 @@
 import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import { type JwtPayload } from "jwt-decode";
 
-interface DecodedUser extends JwtPayload {
-    id: number,
-    username: string,
-    email: string
-}
+import type { IUsers } from "../types/user";
 
 interface AuthContextType {
     isAuthenticated: boolean,
     setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>,
-    user: DecodedUser | null,
+    user: IUsers | null,
     isFirstLogin: boolean,
-    setUser: React.Dispatch<React.SetStateAction<DecodedUser | null>>,
+    setUser: React.Dispatch<React.SetStateAction<IUsers | null>>,
     setIsFirstLogin: React.Dispatch<React.SetStateAction<boolean>>,
     logout: () => void,
     loading: boolean
@@ -26,7 +21,7 @@ interface AuthProviderProps {
 
 const AuthProvider = ({ children } : AuthProviderProps) => {
 
-    const [user, setUser] = useState<DecodedUser | null>(null);
+    const [user, setUser] = useState<IUsers | null>(null);
     const [isFirstLogin, setIsFirstLogin] = useState<boolean>(true)
     const [loading, setLoading] = useState<boolean>(true)
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
@@ -53,6 +48,7 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
             }
             
             const data = await res.json()
+            
             setUser(data.user)
             setIsFirstLogin(data.isFirstLogin)
             setIsAuthenticated(data.isAuthenticated)
@@ -115,4 +111,4 @@ const AuthProvider = ({ children } : AuthProviderProps) => {
     )
 }
 
-export {AuthContext, AuthProvider, type DecodedUser}
+export {AuthContext, AuthProvider}

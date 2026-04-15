@@ -1,8 +1,5 @@
 import { Box, Grid, List, chakra, ListItem } from "@chakra-ui/react"
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-
-import { type IInstrument } from "../../types/instrument";
 
 import InstrumentCard from '../../components/cards/InstrumentCard'
 
@@ -16,33 +13,6 @@ const UserInstruments: React.FC<IUserInstrumentsProps> = () => {
 
     /* take user from context by hook */
     const {user} = useAuth()
-
-    /* state for user profil instruments */
-    const [userInstruments, setUserInstruments] =useState<IInstrument[] | []>([])
-
-    const host = import.meta.env.VITE_HOST
-    const port = import.meta.env.VITE_SERVER_PORT
-    
-    const fetchUserInstruments = async () => {
-        const urlFetchUserInstruments = import.meta.env.VITE_URL_FETCH_USERINSTRUMENTS
-
-        try {
-            const res: Response = await fetch(`http://${host}:${port}${urlFetchUserInstruments}${user?.id}`, {credentials: 'include'})
-
-            if (!res.ok) {
-                throw new Error(`Erreur HTTP: ${res.status}`);                
-            }
-
-            const data = await res.json()
-            setUserInstruments(data)
-        } catch (error) {
-            console.error("Impossible de récupèrer les instruments de l'utilisateur", error)
-        }
-    }
-
-    useEffect(() => {
-        fetchUserInstruments()
-    },[])
 
     return (
         <Box id="main" overflowY={"auto"} height={"100%"}>
@@ -92,9 +62,9 @@ const UserInstruments: React.FC<IUserInstrumentsProps> = () => {
             }} 
             columnGap={"3rem"} rowGap={"6rem"}
             px={"12"}>
-                {userInstruments.map((instrument) => (    
+                {user?.userInstruments.map((userInstrument) => (    
                     /* Creating a card for each of the user's instruments */                
-                    <InstrumentCard key={instrument.id} instrument={instrument} />
+                    <InstrumentCard key={userInstrument.instrument.id} instrument={userInstrument.instrument} />
                 ))}
             </Grid>
         </Box>

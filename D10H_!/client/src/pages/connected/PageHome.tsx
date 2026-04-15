@@ -176,11 +176,12 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
     return(
         <Box id="homeUser"
         overflowY={"auto"} height={"100%"} mb={"70px"} position={"relative"}>
+            {(historyScores.length > 0) && 
             <Carousel id="recents-carousel" 
             data={historyScores} title="Partitions joués récement"
             renderItem={(item:IScore) => (
                 <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
-            )} />
+            )} />}
 
             <Carousel id="suggestions-carousel"
             data={suggestionsScores} title="Suggestions"
@@ -345,7 +346,10 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
                                                         w={"140%"} h={"fit-content"}
                                                         p={".75rem"}
                                                         pos={"absolute"} top={"50%"} left={"50%"} transform={"translate(-50%, -50%)"}
-                                                        bg={"#242326"} zIndex={"200"}>
+                                                        bg={"#242326"}
+                                                        borderRadius={"0.5rem"}
+                                                        boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,rgba(0, 0, 0, 0.2) 0px 5px 10px,rgba(0, 0, 0, 0.4) 0px 15px 40px"}
+                                                        zIndex={"200"}>
                                                             <Stack pos={"relative"} w={"100%"} h={"100%"} textAlign={'center'} gap={5}>
                                                                 <Heading paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"} padding={"1.5rem"}
                                                                 fontWeight={"700"} lineHeight={"24px"} fontFamily={"Inter,Arial,sans-serif"}
@@ -375,7 +379,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
                                                                         <DisableIcon/>
                                                                     </Button>
                                                                 </Flex>
-                                                                <Stack flexDir={"row"}>
+                                                                <Flex>
                                                                     <Select name="instrument" id="identity" value={currentInstrument?.id ?? ""} placeholder="Selectionner un instrument" required
                                                                     pos={"relative"} textTransform={"capitalize"}
                                                                     pb={"1px"}
@@ -404,7 +408,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
                                                                         bg: "#5e5d5f",
                                                                         color : "#f5f2f8"
                                                                     }}>
-                                                                        { Array.isArray(instruments) &&
+                                                                        {Array.isArray(instruments) &&
                                                                         instruments.filter(i => !userInstruments.some(ui => ui.instrument.id === i.id)).map((i, index) => (
                                                                                 <chakra.option textTransform={"capitalize"} value={i.id} key={index}>{i.name}</chakra.option>
                                                                             )
@@ -444,7 +448,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
                                                                         <option value={4}>Niveau 4</option>
                                                                         <option value={5}>Niveau 5 (Expert)</option>
                                                                     </Select>
-                                                                </Stack>
+                                                                </Flex>
                                                                 <Flex justifyContent={"center"} alignItems={"center"}>
                                                                     <Button px={"4rem"} bg={"#4d4c50"} color={"#ffffff"}
                                                                     onClick={handleOnClickAddInstrument}

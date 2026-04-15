@@ -1,4 +1,4 @@
-import {Box, Flex, Heading, IconButton, List, Text} from "@chakra-ui/react"
+import {Box, Flex, Heading, IconButton, List} from "@chakra-ui/react"
 import { useState, useRef, useEffect, type ReactNode } from "react"
 
 /* Import SVG */
@@ -149,13 +149,6 @@ const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, renderItem, id, ti
                         style={{
                             transform: `translateX(${translate}px)`
                         }}>
-                            {data.length === 0 ? 
-                            <Text display={"flex"} justifyContent={"center"} alignItems={"center"}
-                            minH={"332px"}
-                            fontSize={"18px"} fontWeight={"500"}
-                            color={"#c9c9c9"}>
-                                Aucune partition à afficher ...
-                            </Text> : 
                             <List as={Flex} ref={listRef} 
                             flexWrap={"nowrap"} gap={"5rem"}
                             mt={"-24px"} m={0} p={0}
@@ -163,7 +156,7 @@ const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, renderItem, id, ti
                             overflow={"visible"}
                             listStyleType={"none"}>
                                 {data.map(e => renderItem(e))}
-                            </List>}
+                            </List>
                         </Box>
                     </Box>
                 </Box>

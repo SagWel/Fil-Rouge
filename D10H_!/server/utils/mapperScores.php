@@ -66,13 +66,13 @@ function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrum
 
     $artist = [
         "id" => (int)$row['artist_id'],
-        "name" => $row['artist_name'],
+        "name" => ucwords($row['artist_name']),
         "picture" => $row['artist_picture'] ?? "",
     ];
 
     $album = [
         "id" => (int)$row['album_id'],
-        "title" => $row['album_title'],
+        "title" => ucwords($row['album_title']),
         "cover" => $row['album_cover'] ?? "",
         "artist" => $artist,
         "deezer_link" => $row['album_deezer_link'] ?? "",
@@ -80,7 +80,7 @@ function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrum
 
     $song = [
         "id" => (int)($row['song_id'] ?? 0),
-        "title" => $row['title'],
+        "title" => ucwords($row['title']),
         "deezer_link" => $row['deezer_link'] ?? "",
         "audio_preview" => $row['audio_preview'] ?? "",
         "duration" => (int)($row['duration'] ?? 0),
@@ -88,7 +88,7 @@ function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrum
         "album" => $album,
         "gender" => [
             "id" => (int)($row['gender_id'] ?? 0),
-            "name" => $row['gender_name'] ?? "",
+            "name" => ucwords($row['gender_name']) ?? "",
             "picture" => ""
         ]
     ];

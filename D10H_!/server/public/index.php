@@ -54,6 +54,9 @@ if ($ressource && file_exists($controlerFile)) {
         case 'creatuser':
             require_once '../middlewares/CheckCreatUser.php';
             break;
+        case 'searchscore':
+            require_once '../middlewares/CheckQuery.php';
+            break;
     }
     require_once $controlerFile;
 } else {

@@ -1,4 +1,4 @@
-import { Box, Heading, Flex, Grid, Text, Checkbox, FormLabel, Menu, MenuButton, Button, Portal, MenuList, MenuItem } from "@chakra-ui/react";
+import { Box, Heading, Flex, Grid, Text, Checkbox, FormLabel, Menu, MenuButton, Button, Portal, MenuList, MenuItem, Stack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -12,7 +12,6 @@ import { useAuth } from "../../hooks/useAuth";
 
 /* Import SVG */
 import { DownChevronIcon, UpChevronIcon } from "../../components/Svg";
-import type { IInstrument } from "../../types/instrument";
 
 export interface ISearchProps {}
 
@@ -20,12 +19,10 @@ const Search: React.FC<ISearchProps> = () => {
     
     const { user } = useAuth()
 
-    /* retrieve search from the URL */
+    /* retrieve query from the URL and from backend */
     const [searchParams] = useSearchParams()
     const query = searchParams.get('q')
-
-    const host = import.meta.env.VITE_HOST
-    const port = import.meta.env.VITE_SERVER_PORT
+    const [safeQuery, setSafeQuery] = useState<string>('')
 
     /* State to stock scores */
     const [scores, setScores] = useState<IScore[]>([])
@@ -37,25 +34,7 @@ const Search: React.FC<ISearchProps> = () => {
     const [difficulty, setDifficulty] = useState<number>(0)
     const [selectedSort, setSelectedSort] = useState<Item | null>(null)
     const [filteredUserInstruments, setFilteredUserInstruments] = useState<boolean>(true)
-
-    const [userInstruments, setUserInstruments] =useState<IInstrument []>([])
-
-    const fetchUserInstruments = async () => {
-        const urlFetchUserInstruments = import.meta.env.VITE_URL_FETCH_USERINSTRUMENTS
-
-        try {
-            const res: Response = await fetch(`http://${host}:${port}${urlFetchUserInstruments}${user?.id}`, {credentials: 'include'})
-
-            if (!res.ok) {
-                throw new Error(`Erreur HTTP: ${res.status}`);                
-            }
-
-            const data = await res.json()
-            setUserInstruments(data)
-        } catch (error) {
-            console.error("Impossible de récupèrer les instruments de l'utilisateur", error)
-        }
-    }
+    const [filteredUserLvl, setFilteredUserLvl] = useState<boolean>(true)
 
     /* function to retrive scores on database */
     const fetchScores = async (URL: string) => {
@@ -68,7 +47,9 @@ const Search: React.FC<ISearchProps> = () => {
             }
 
             const data = await res.json()
-            setScores(data)
+            console.log(data);
+            setScores(data.scores)
+            setSafeQuery(data.query)
         } catch (error) {
             console.error('Impossible de récupérer les données des partitions:', error);
         }
@@ -113,9 +94,10 @@ const Search: React.FC<ISearchProps> = () => {
     const filterMorceau = morceau === '' || p.song.title === morceau
     const filterGender = gender === '' || p.song.gender.name === gender
     const filterDifficulty = difficulty === 0 || p.difficulty === difficulty
-    const filterUserInstruments = !filteredUserInstruments || userInstruments.includes(p.instruments.currentInstrument)
+    const filterUserInstruments = !filteredUserInstruments || user?.userInstruments.find(ui => ui.instrument.name === p.instruments.currentInstrument.name)
+    const filterUserLvl = !filteredUserLvl || user?.userInstruments.find(ui => ui.lvl === p.difficulty)
 
-        return filterArtist && filterMorceau && filterGender && filterDifficulty && filterUserInstruments
+        return filterArtist && filterMorceau && filterGender && filterDifficulty && filterUserInstruments && filterUserLvl
     })
 
     /* sorted scores with user sort choice */
@@ -154,12 +136,10 @@ const Search: React.FC<ISearchProps> = () => {
         } else {
             console.log('Pas de recherche demandé')
         }
-
-        fetchUserInstruments()
     },[query])
 
     return(
-        <Flex direction={"column"} textAlign={"center"} gap={"2rem"} pt={"2rem"}>
+        <Stack textAlign={"center"} gap={"2rem"} pt={"2rem"}>
 
             {/*Title containing the query*/}
             <Heading id="headText" color={"#FDFCFE"}> SCORBRARY "{query}" </Heading>
@@ -256,17 +236,45 @@ const Search: React.FC<ISearchProps> = () => {
                     
                     <Box gridColumn={"span 1"}></Box>
                 </Grid>
+                <Stack 
+                pos={'absolute'} right={0} bottom={0}
+                mx={"0.75rem"} mb={".5rem"}>
                 <Checkbox isChecked={filteredUserInstruments} 
-                colorScheme="gray" flexDir={'row-reverse'} size={"sm"} minW={"10rem"} mx={"0.75rem"} mb={".5rem"} gap={2}
-                pos={'absolute'} right={0} bottom={0} color={"white"} 
+                colorScheme="gray" flexDir={'row-reverse'} size={"sm"} minW={"10rem"}  gap={2}
+                color={"white"} 
                 onChange={(e) => setFilteredUserInstruments(e.target.checked)} >
-                    Vos instruments
+                    Mes instruments
                 </Checkbox>
+                <Checkbox isChecked={filteredUserLvl && filteredUserInstruments} 
+                colorScheme="gray" flexDir={'row-reverse'} size={"sm"} minW={"10rem"} gap={2}
+                color={"white"} 
+                onChange={(e) => setFilteredUserLvl(e.target.checked)} >
+                    Mon niveau
+                </Checkbox>
+                </Stack>
             </Box>
 
             {/*Search results*/}
             {sortedScores.length === 0 ? 
-            <Box textAlign={"center"}><Text color={"white"}>Aucune partition trouvée pour la rechercher "{query}"</Text></Box>
+            <Box textAlign={"center"}>
+                <Text color={"white"}>
+                    Aucune partition trouvée pour la rechercher "{safeQuery}"
+                </Text>
+                <Button
+                display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
+                pos={'relative'} verticalAlign={'middle'}
+                paddingInline={'1.5rem'} py={'0.75rem'} mt={'3rem'}
+                minH={'3rem'} minW={'3rem'} h={'auto'}
+                fontSize={'16px'} fontWeight={'700'}
+                whiteSpace={'nowrap'} lineHeight={'24px'} fontFamily={'Inter,Arial,sans-serif'} textDecor={'none'} color={'#ffffff'}
+                bg={'#ad47ff'}
+                borderRadius={'0.75rem'}
+                outline={'transparent solid 2px'} outlineOffset={'0px'}
+                transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
+                appearance={'none'} userSelect={'none'} cursor={'pointer'}>
+                    Demander une partition
+                </Button>
+            </Box>
             :
             <Grid id="resultZone" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
             gap={"7"} justifyItems={"center"} p={"4"}
@@ -279,7 +287,7 @@ const Search: React.FC<ISearchProps> = () => {
                 ))}
 
             </Grid>}
-        </Flex>
+        </Stack>
     )
 }
 

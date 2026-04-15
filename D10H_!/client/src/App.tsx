@@ -79,7 +79,7 @@ function App() {
   }
 
   /* authtification management from context by hook */
-  const {isAuthenticated, user, loading} = useAuth()  
+  const {isAuthenticated, user, loading} = useAuth() 
 
   useEffect(() => {
     const publicRoutes = ['/login', '/signup', '/', '/resetpassword']

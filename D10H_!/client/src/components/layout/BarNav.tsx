@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import { 
     Flex, Box, Heading, IconButton, Image, Modal, ModalBody, ModalHeader, ModalCloseButton, ModalContent, 
-    ModalOverlay, useDisclosure, Text, Input, FormControl, FormLabel, Switch
+    ModalOverlay, useDisclosure, Text, Input, FormControl, FormLabel, Switch, Link
  } from "@chakra-ui/react";
 
 // Pictures import as modules
@@ -39,7 +38,13 @@ const BarNav: React.FC<IBarNavProps> = () => {
                     <Box id="D10H_!" 
                     paddingLeft={"105px"}
                     fontSize={"1,125rem"} fontWeight={"600"}>
-                        <Link to={"/"}>D10H !</Link>
+                        <Link href={"/"}
+                        _hover={{
+                            color: '#bb73ff',
+                            textDecor: 'none'
+                        }}>
+                            D10H !
+                        </Link>
                     </Box>
                     <a id="Deezer_Link" href="https://www.deezer.com/">
                         <Box>
@@ -51,7 +56,10 @@ const BarNav: React.FC<IBarNavProps> = () => {
                     paddingLeft={"0.5rem"} paddingRight={"0.5rem"} gap={"0.25rem"}
                     direction={"column"} justifyContent={"space-around"} 
                     height={"8rem"}>
-                        <Link to={"/"}>
+                        <Link href={"/"}
+                        _hover={{
+                            textDecor: 'none'
+                        }}>
                             <Flex id="Acceuil" 
                             gap={"0.5rem"} p={"0.5rem"} 
                             direction={"row"}
@@ -64,7 +72,10 @@ const BarNav: React.FC<IBarNavProps> = () => {
                                 <Heading fontSize={"1.125rem"} fontWeight={"700"}>Acceuil</Heading>
                             </Flex>
                         </Link>
-                        <Link to={"/instruments/user"}>
+                        <Link href={"/instruments/user"}
+                        _hover={{
+                            textDecor: 'none'
+                        }}>
                             <Flex 
                             gap={"0.5rem"} p={"0.5rem"}
                             direction={"row"}
@@ -77,7 +88,10 @@ const BarNav: React.FC<IBarNavProps> = () => {
                                 <Heading fontSize={"1.125rem"} fontWeight={"700"}>Instruments</Heading>
                             </Flex>
                         </Link>
-                        <Link to={"/Favoris"}>
+                        <Link href={"/Favoris"}
+                        _hover={{
+                            textDecor: 'none'
+                        }}>
                             <Flex 
                             gap={"0.5rem"} p={"0.5rem"} 
                             direction={"row"}
@@ -100,7 +114,7 @@ const BarNav: React.FC<IBarNavProps> = () => {
                     padding={"0px 1rem 0px 16px"}
                     direction={"row"} justifyContent={"space-between"} alignItems={"center"} 
                     height={"40px"}>
-                            <Link to={"/favoris/scorbraries"}>
+                            <Link href={"/favoris/scorbraries"} _hover={{textDecor:'none'}}>
                                 <Heading fontSize={"1.125rem"} fontWeight={"700"} color={"#fdfcfeff"}>Scorbraries</Heading>
                             </Link>
                             <IconButton id="boutoun-new-scorbrary" aria-label="Ajouter un Scorbrary"
@@ -128,9 +142,11 @@ const BarNav: React.FC<IBarNavProps> = () => {
                     direction={"column"} padding={"0 1rem"}
                     fontFamily={"Inter, Arial, sans-serif"} fontSize={"16px"} fontWeight={"400"}
                     color={"#fdfcfeff"}>
-                            <Flex as={Link} to={"favoris/scorbraries/concert-30-09"} id="concert-30/09" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
+                            <Flex as={Link} href={"favoris/scorbraries/concert-30-09"} id="concert-30/09" 
+                            alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
                             _hover={{
                                 bg: "#29282D",
+                                textDecor: 'none'
                             }}
                             >
                                 <Flex alignItems={"center"} justifyContent={"center"}
@@ -144,9 +160,10 @@ const BarNav: React.FC<IBarNavProps> = () => {
                                     Concert 30/09
                                 </Box>
                             </Flex>
-                            <Flex as={Link} to={"favoris/scorbraries/rock"} id="rock" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
+                            <Flex as={Link} href={"favoris/scorbraries/rock"} id="rock" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
                             _hover={{
                                 bg: "#29282D",
+                                textDecor: 'none'
                             }}
                             >
                                 <Flex alignItems={"center"} justifyContent={"center"}
@@ -160,9 +177,10 @@ const BarNav: React.FC<IBarNavProps> = () => {
                                     Rock
                                 </Box>
                             </Flex>
-                            <Flex as={Link} to={"favoris/scorbraries/au-coin-du-feu"} id="au-coin-du-feu" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
+                            <Flex as={Link} href={"favoris/scorbraries/au-coin-du-feu"} id="au-coin-du-feu" alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
                             _hover={{
                                 bg: "#29282D",
+                                textDecor: 'none'
                             }}
                             >
                                 <Flex alignItems={"center"} justifyContent={"center"}
@@ -194,7 +212,7 @@ const BarNav: React.FC<IBarNavProps> = () => {
                 style={{
                     opacity: 1,
                     transform: "none"
-                }} >
+                }}>
                     <ModalHeader display={"flex"}
                     justifyContent={"space-between"}
                     paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"} padding={"1.5rem"}
@@ -207,10 +225,10 @@ const BarNav: React.FC<IBarNavProps> = () => {
                         </Heading>
                         <ModalCloseButton color={"#ffffff"} flexShrink={0}
                         position={"static"} 
-                        bg={""} w={"auto"} h={"auto"}
-                        onClick={onClose}></ModalCloseButton>
+                        w={"auto"} h={"auto"}
+                        onClick={onClose}/>
                     </ModalHeader>
-                    <ModalBody 
+                    <ModalBody
                     width={"100%"}
                     paddingInline={"1.5rem"}
                     fontSize={"14px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"} lineHeight={"20px"} textDecoration={"none"} textAlign={"left"}>

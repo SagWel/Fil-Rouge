@@ -14,12 +14,14 @@ function getUserByEmail($pdo, $email)
 function getUserProfil($pdo, $userId)
 {
     $sql = $pdo->prepare(
-        'SELECT * FROM user_profiles WHERE user_id = ?'
+        'SELECT avatar_url, bio, age, birthday, gender, language, visibility FROM user_profiles WHERE user_id = ?'
     );
 
     $sql->execute([$userId]);
 
-    return $sql->fetch(PDO::FETCH_ASSOC);
+    $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+    return $result[0];
 }
 
 function creatUser($pdo, $email, $passwordHash, $username = null, $age = null, $identity = 'Private')

@@ -1,6 +1,7 @@
 <?php
 
 require_once '../models/userModel.php';
+require_once '../models/instrumentsModel.php';
 
 $email = $_GET['email'];
 $password = $_GET['password'];
@@ -54,13 +55,37 @@ setcookie(
 );
 
 $firstLogin = isFirstLogin($pdo, $email);
+$profiUser = getUserProfil($pdo, $user['id']);
+$userInstruments = getUserInstruments($pdo, $user['id']);
+$userInstrumentLvl = [];
+
+foreach ($userInstruments as $userInstrument) {
+
+    $userInstrumentLvl[] = [
+        "instrument" => [
+            "id" => $userInstrument['id'],
+            "name" => $userInstrument['name'],
+            'img_src' => $userInstrument['img_src'],
+            'lint_to_search' => $userInstrument['link_to_search']
+        ],
+        "lvl" => $userInstrument['lvl']
+    ];
+}
+
 http_response_code(200);
 echo json_encode([
     "isAuthenticated" => true,
     "user" => [
-        "id" => $user['id'],
+        "id" => (int)$user['id'],
+        "email" => $user['email'],
         "username" => $user['username'],
-        "email" => $user['email']
+        "avatarUrl" => $profiUser['avatar_url'],
+        "age" => (int)$profiUser['age'],
+        "birthday" => $profiUser['birthday'],
+        "gender" => $profiUser['gender'],
+        "language" => $profiUser['language'],
+        "visibility" => $profiUser['visibility'],
+        "userInstruments" => $userInstrumentLvl
     ],
     "isFirstLogin" => $firstLogin
 ]);

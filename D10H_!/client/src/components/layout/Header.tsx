@@ -60,7 +60,7 @@ const Header: React.FC<IHeaderProps> = () => {
     const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
 
     /* States for Avatar button */
-    const [user, setUser] = useState< IUsers | null>(null)
+    const { user } = useAuth()
     const [isDisplayed, setIsDisplayed] = useState<boolean>(false)    
     
     const timerRef = useRef<TimerId | undefined> (undefined)
@@ -70,26 +70,6 @@ const Header: React.FC<IHeaderProps> = () => {
 
     /* User data from context by hook */
     const { user: userToken, logout } = useAuth()
-
-    /* Creat user data about user for the buger menue system he need */
-    const userInfos = async () => {
-        const host = import.meta.env.VITE_HOST
-        const port = import.meta.env.VITE_SERVER_PORT
-        const urlFetchUserInfos = import.meta.env.VITE_URL_FETCH_FINDBYEMAIL
-
-        try {
-            const res: Response = await fetch(`http://${host}:${port}${urlFetchUserInfos}${userToken?.email}`, {credentials: 'include'})
-
-            if (!res.ok) {
-                throw new Error(`Erreur HTTP: ${res.status}`);
-            }
-
-            const data = await res.json()
-            setUser(data.user)
-        } catch (err) {
-            console.error("Impossible de récuperer les informations de l'utilisateur connecté : ", err)
-        }
-    } 
 
     useEffect(() => {
         if (isInternalUpdate) {
@@ -105,10 +85,6 @@ const Header: React.FC<IHeaderProps> = () => {
             clearTimeout(timerRef.current)
         }
     }, [query, isInternalUpdate])
-
-    useEffect(() => {
-        userInfos()       
-    },[userToken])
 
     /* search choice management */
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
