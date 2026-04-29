@@ -20,6 +20,7 @@ import {
     NumberDecrementStepper, 
     Select,
     InputGroup,
+    FormHelperText,
     InputRightElement } from "@chakra-ui/react"
 import { useState } from "react"
 import { useSearchParams, useNavigate, type NavigateFunction } from "react-router-dom"
@@ -77,6 +78,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
     const [username, setUsername] = useState<string>('')
     const [age, setAge] = useState<number>(0)
     const [identity, setidentity] = useState<string>('')
+    const [isLogin, setIsLogin] = useState<boolean>(false)
 
     const passwordLenght: boolean = password.length >= 8
     const passwordLetter: boolean = /[a-zA-Z]/.test(password)
@@ -126,12 +128,9 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
 
             const data = await res.json()
 
-            if (data.isFounded === false) {
-                setIsError(data.isFounded)
-                setMessage(`${data.mesage}`)
-                handleOnClickNext()
-
-            }
+            setIsLogin(data.isFounded)
+            handleOnClickNext()
+            
         } catch (error) {
             console.error(error);
             setMessage("Erreur lors du test de l'email")
@@ -218,6 +217,44 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
         } catch (error) {
             console.error("Impossible de créer l'utilisateur: ", error)
             setIsError(true)
+        }
+    }
+
+    /* function to submit login information if email is already on db*/
+    const onSubmit = async () => {
+        const host: string = import.meta.env.VITE_HOST
+        const port: string = import.meta.env.VITE_SERVER_PORT
+        const urlFetchLogin: string = import.meta.env.VITE_URL_FETCH_LOGIN
+        
+        try {
+            const res: Response = await fetch(`http://${host}:${port}${urlFetchLogin}`, {
+                method: 'POST',
+                headers : {'Content-Type': 'application/json'},
+                body: JSON.stringify ({
+                    email: email,
+                    password: password
+                }),
+                credentials: 'include'})
+
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`);
+            }
+
+            const data = await res.json()
+            setUser(data.user)
+            setIsAuthenticated(data.isAuthenticated)
+            setIsFirstLogin(data.isFirstLogin)
+
+            if (data.user && data.isAuthenticated) {
+                navigate('/')
+            } else {
+                setIsError(true)
+                setMessage('Identifiant incorrect')
+            }
+        } catch (error) {
+            console.error("Impossible de trouver l'utilisateur: ", error);
+            setIsError(true)
+            setMessage('Identifiant incorrect')
         }
     }
 
@@ -541,6 +578,174 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
 
                     {/* Second step of registering process */}
                     {currentStep === 1 && (
+                        isLogin ? 
+                        <Stack alignItems={"center"} gap={"0.5rem"}
+                        marginInline={"auto"}
+                        maxW={"512px"} w={"100%"}>
+                            <Stack onClick={() => {
+                                setIsError(false)
+                                setMessage('')
+                                handleOnClickPrev()
+                            }}
+                            alignItems={"center"} justifyContent={"flex-start"} gap={"0.125rem"} flexDir={"row"}
+                            maxW={"512px"} w={"100%"}
+                            textAlign={"start"}
+                            cursor={"pointer"}>
+                                <LeftCarouselIcon lineHeight={"1rem"} flexShrink={0} color="#a19fa4" verticalAlign={"middle"} display={"block"}/>
+                                <Text
+                                fontSize={"14px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                lineHeight={"20px"} textDecor={"none"} color={"#a19fa4"}>
+                                    Étape 2 sur 2
+                                </Text>
+                            </Stack>
+                            <Stack alignItems={"center"} gap={"1.5rem"} w={"100%"}>
+                                <Stack gap={"1.5rem"}
+                                paddingInline={"0"}
+                                w={"100%"} maxW={"512px"}
+                                color={"#ffffff"}>
+                                        <Heading as={"h2"}
+                                    fontWeight={"700"} fontSize={"46px"} lineHeight={"48px"} maxW={"100ch"}>
+                                        Renseigne ton mot de passe
+                                    </Heading>
+                                </Stack>
+                                <chakra.form style={{width: "100%"}}>
+                                    <Stack alignItems={"center"} gap={"1rem"}
+                                    marginInline={"auto"}
+                                    maxW={"512px"} w={"100%"}>
+                                        <FormControl w={"100%"} pos={"relative"} isInvalid={isError}>
+                                            <FormLabel display={"block"}
+                                            marginInlineEnd={"0.75rem"}
+                                            mb={"0.5rem"}
+                                            fontWeight={"500"} fontSize={"0.875rem"}
+                                            color={"#a19fa4"}
+                                            textAlign={"start"}
+                                            opacity={1}
+                                            transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}>
+                                                Mot de passe
+                                            </FormLabel>
+                                            <InputGroup display={"flex"}
+                                            pos={"relative"}
+                                            w={"100%"}
+                                            isolation={"isolate"}>
+                                                <Input type={inputType} autoComplete="current-password" name="password" id="password" value={password} required
+                                                position={"relative"}
+                                                paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
+                                                w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
+                                                fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                                color={"#ffffff"} lineHeight={"24px"} textDecor={"none"}
+                                                bg={"#242326"}
+                                                borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
+                                                outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                                transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                appearance={"none"}
+                                                onChange={(e) => {
+                                                    setPassword(e.target.value)
+                                                }}
+                                                _active={{
+                                                    borderColor: "#ad47ff"
+                                                }}
+                                                _focus={{
+                                                    borderColor: "#ad47ff"
+                                                }}
+                                                _hover={{
+                                                    bg: "#2e2c30",
+                                                    color: "#f5f2f8"
+                                                }}/>
+                                                <InputRightElement display={"flex"} alignItems={"center"} justifyContent={"center"}
+                                                position={"absolute"} right={0} top={0}
+                                                marginInlineStart={"1rem"} marginInlineEnd={"0.75rem"}
+                                                w={"1.5rem"} h={"3rem"}
+                                                fontSize={"16px"}
+                                                zIndex={"2"}>
+                                                    <Button display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                                    whiteSpace={"nowrap"}
+                                                    pos={"relative"}
+                                                    paddingInline={0} py={0} p={0}
+                                                    minH={"3rem"} minW={"3rem"} h={"auto"}
+                                                    fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} 
+                                                    verticalAlign={"middle"} lineHeight={"24px"} textDecor={"none"}
+                                                    bg={"transparent"}
+                                                    borderRadius={"0.75rem"}
+                                                    outline={"transparent solid 2px"} outlineOffset={0}
+                                                    transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                    userSelect={"none"}
+                                                    onClick={displayPassword}
+                                                    _focusVisible={{ boxShadow: "none"}}
+                                                    _hover={{bg: "transparent"}}>
+                                                        <DisplayIcon display={"block"} size="20px"
+                                                        lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"}
+                                                        mb={"1px"}/>
+                                                    </Button>
+                                                </InputRightElement>
+                                            </InputGroup>
+                                            <FormHelperText as={Link} href="/resetpassword" target="_blank"
+                                            mt={"0.5rem"}
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"normal"} color={"#a19fa4"} textDecor={"inherit"}
+                                            bg={"transparent"}
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-end"
+                                            }}
+                                            _focusVisible={{ outlineColor: "#ad47ff"}}
+                                            _hover={{textDecor: "none"}}>
+                                                Mot de passe oublié?
+                                            </FormHelperText>
+                                            {isError && (
+                                                <FormErrorMessage display={"flex"} alignItems={"center"}
+                                                mt={"0.5rem"}
+                                                fontSize={"0.875rem"}
+                                                lineHeight={"normal"} textAlign={"start"}
+                                                color={"#E53E3E"}>
+                                                    <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                    mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                    {message}
+                                                </FormErrorMessage>)}
+                                        </FormControl>
+                                        <Button type="submit"
+                                        display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                        pos={"relative"}
+                                        paddingInline={"1.5rem"}
+                                        py={"0.75rem"}
+                                        minH={"3rem"} minW={"3rem"} h={"auto"} w={"100%"}
+                                        whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                        fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"}
+                                        lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}
+                                        bg={"#ad47ff"}
+                                        borderRadius={"0.75rem"}
+                                        outline={"transparent solid 2px"} outlineOffset={0}
+                                        transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                        userSelect={"none"}
+                                        onClick={(e) => {
+                                            e.preventDefault()
+    
+                                            const passwordEmpty = password.trim() === ''
+                                            if (passwordEmpty) {
+                                                setIsError(true)
+                                                setMessage('Le champ ne doit pas être vide')
+                                            }
+                                            
+                                            onSubmit()
+                                        }}
+                                        _active={{
+                                            color: "#e2dfe6",
+                                            bg: "#ca97ff"
+                                        }}
+                                        _focusVisible={{
+                                            boxShadow: "none",
+                                            outlineColor: "#f5f2f8"
+                                        }}
+                                        _hover={{
+                                            color: "#f5f2f8",
+                                            bg: "#bb73ff"
+                                        }}>
+                                            <span>Se connecter</span>
+                                        </Button>
+                                    </Stack>
+                                </chakra.form>
+                            </Stack>
+                        </Stack>
+                        :
                         <Stack alignItems={"center"} gap={"0.5rem"}
                         marginInline={"auto"}
                         maxW={"512px"} w={"100%"}>

@@ -12,16 +12,7 @@ if ($user) {
     http_response_code(200);
     echo json_encode([
         "message" => "utilisateur déjà existant",
-        "isFounded" => true,
-        "user" => [
-            "id" => $user['id'],
-            "email" => $user['email'],
-            "username" => $user['username'],
-            "avatarUrl" => $profiUser['avatar_url'],
-            "age" => $profiUser['age'],
-            "birthday" => $profiUser['birthday'],
-            "gender" => $profiUser['gender'],
-        ]
+        "isFounded" => true
     ]);
     exit;
 }
