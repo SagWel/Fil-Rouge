@@ -83,7 +83,6 @@ function App() {
 
   useEffect(() => {
     const publicRoutes = ['/login', '/signup/', '/', '/resetpassword']
-    console.log(location.pathname)
     
     if (!loading && !isAuthenticated && !publicRoutes.includes(location.pathname)) {
       navigate('/login')

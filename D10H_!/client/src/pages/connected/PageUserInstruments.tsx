@@ -62,10 +62,14 @@ const UserInstruments: React.FC<IUserInstrumentsProps> = () => {
             }} 
             columnGap={"3rem"} rowGap={"6rem"}
             px={"12"}>
-                {user?.userInstruments.map((userInstrument) => (    
+                {user?.userInstruments.map((userInstrumentsLvl) => {
+                    console.log(userInstrumentsLvl);
+                    console.log(userInstrumentsLvl.instrument);
+                    
                     /* Creating a card for each of the user's instruments */                
-                    <InstrumentCard key={userInstrument.instrument.id} instrument={userInstrument.instrument} />
-                ))}
+                    return <InstrumentCard key={userInstrumentsLvl.instrument.id} instrument={userInstrumentsLvl.instrument} />
+                }
+                )}
             </Grid>
         </Box>
     )

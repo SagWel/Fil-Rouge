@@ -24,7 +24,7 @@ foreach ($userInstruments as $userInstrument) {
             "id" => $userInstrument['id'],
             "name" => $userInstrument['name'],
             'img_src' => $userInstrument['img_src'],
-            'lint_to_search' => $userInstrument['link_to_search']
+            'link_to_search' => $userInstrument['link_to_search']
         ],
         "lvl" => $userInstrument['lvl']
     ];

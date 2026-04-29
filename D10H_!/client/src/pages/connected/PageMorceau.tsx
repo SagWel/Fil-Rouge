@@ -62,9 +62,6 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
                     if (!res.ok) {
                         throw new Error(`Erreur HTTP: ${res.status}`);                
                     }
-    
-                    const data = await res.json()
-                    console.log(data);
                     
                 } catch (error) {
                     console.error("Impossible d'ajouter le morceau à l'historique de l'utilisateur", error)

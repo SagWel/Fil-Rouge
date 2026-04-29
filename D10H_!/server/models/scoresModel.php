@@ -280,11 +280,30 @@ function getSearchScores($pdo, $searchTerm)
 
 function addToUserHistory($pdo, $userId, $scoreId)
 {
-    $sql = $pdo->prepare(
-        'INSERT INTO user_history (user_id, score_id, played_at) 
-        VALUES (?, ?, NOW())
-        ON DUPLICATE KEY UPDATE played_at = NOW()'
-    );
+    try {
+        $sql = $pdo->prepare(
+            'INSERT INTO user_history (user_id, score_id, played_at)
+            VALUES (?, ?, NOW())
+            ON DUPLICATE KEY UPDATE played_at = NOW()'
+        );
+        $sql->execute([$userId, $scoreId]);
 
-    $sql->execute([$userId, $scoreId]);
+        $rowCount = $sql->rowCount();
+
+        return [
+            'success' => true,
+            'codeHttp' => 200,
+            'userId' => $userId,
+            'scoreId' => $scoreId,
+            'message' => "Ajout à l'historique de l'utilisateur bien réalisé sur la colonne " . $rowCount
+        ];
+    } catch (PDOException $e) {
+        return [
+            'success' => false,
+            'codeHttp' => 500,
+            'userId' => $userId,
+            'scoreId' => $scoreId,
+            'message' => "Erreur SQL : " . $e->getMessage()
+        ];
+    }
 }
