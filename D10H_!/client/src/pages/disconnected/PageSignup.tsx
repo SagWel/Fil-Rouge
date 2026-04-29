@@ -46,9 +46,33 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
 
     const currentStep = parseInt(searchParams.get("step") || "0")
 
+    const sessionInformations = sessionStorage.getItem('smartJourneyState')
+
+    type InformationsType = {
+        appName: string,
+        steps: string[],
+        userData: {}
+    }    
+
+    let informationsData: InformationsType = {
+        appName: "D10H_!",
+        steps: ["email_or_phone", "create_password", "user_profile"],
+        userData: {}
+    }
+
+    let sessionEmail: string = ''
+    let sessionPassword: string = ''
+
+    if (sessionInformations) {
+        sessionEmail = JSON.parse(sessionInformations).userData.email || ''
+        sessionPassword = JSON.parse(sessionInformations).userData.password || ''
+    } else {
+        sessionStorage.setItem('smartJourneyState', JSON.stringify(informationsData))
+    }
+
     /* States for inputs */
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
+    const [email, setEmail] = useState<string>(sessionEmail)
+    const [password, setPassword] = useState<string>(sessionPassword)
     const [inputType, setInputType] = useState<'password' | 'text'>('password')
     const [username, setUsername] = useState<string>('')
     const [age, setAge] = useState<number>(0)
@@ -348,6 +372,14 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                     userSelect={"none"}
                                     onClick={(e) => {
                                         e.preventDefault()
+                                        informationsData = {
+                                            appName: "D10H_!",
+                                            steps: ["email_or_phone", "create_password", "user_profile"],
+                                            userData: {
+                                                email : email
+                                            }
+                                        }
+                                        sessionStorage.setItem('smartJourneyState', JSON.stringify(informationsData))
                                         handleOnClickEmail()
                                     }}
                                     _active={{
@@ -680,6 +712,15 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         onClick={(e) => {
                                             e.preventDefault()
                                             if (passwordLenght && passwordLetter && passwordNumber) {
+                                                informationsData = {
+                                                    appName: "D10H_!",
+                                                    steps: ["email_or_phone", "create_password", "user_profile"],
+                                                    userData: {
+                                                        email : email,
+                                                        password : password
+                                                    }
+                                                }
+                                                sessionStorage.setItem('smartJourneyState', JSON.stringify(informationsData))
                                                 const usernameSuggestion: string = email.split('@')[0].split(/[.\-_]/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
                                                 setUsername(usernameSuggestion)
                                                 handleOnClickNext()
@@ -1065,6 +1106,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         </Text>
                                         <Button type="submit" onClick={(e) => {
                                             e.preventDefault()
+                                            sessionStorage.removeItem('smartJourneyState')
                                             handleOnClickCreatUser()
                                         }}
                                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
