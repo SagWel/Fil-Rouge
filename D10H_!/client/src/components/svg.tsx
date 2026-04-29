@@ -124,7 +124,7 @@ export const AppleIcon: React.FC<SvgProps> = ({ size, ...rest }) => (
     </Icon>  
 )
 
-export const ErrorIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
+export const WarningIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
     <Icon viewBox="0 0 24 24"
     w={size || "24px"} h={size || "24px"}
     fill={color || "#ffffff"} color={"#ffffff"} {...rest}>
@@ -1267,6 +1267,26 @@ export const ValidateIcon: React.FC<SvgProps> = ( {size, color, ...rest} ) => (
     color={color || "#00b23d"} fill={"currentColor"} {...rest}>
         <path fillRule="evenodd" d="M4 12c0-5.138 2.862-8 8-8 5.137 0 8 2.862 8 8 0 5.137-2.863 8-8 8-5.138 0-8-2.863-8-8Zm7.109.996 2.905-4.303 1.104.746-3.732 5.53-3.248-2.723.856-1.023 
         2.115 1.773Z" clipRule={"evenodd"}>
+        </path>
+    </Icon>
+)
+
+export const SuccesIcon: React.FC<SvgProps> = ( {size, color, ...rest} ) => (
+    <Icon viewBox="0 0 24 24"
+    w={size || "24px"} h={size || "24px"}
+    color={color || "#00b23d"} fill={color || "#00b23d"} {...rest}>
+        <path d="M11.456 13.45 15.813 7l1.658 1.12-5.599 8.288L7 12.326l1.284-1.533 3.172 2.658Z">
+        </path>
+        <path fillRule="evenodd" d="M1 12C1 4.936 4.936 1 12 1s11 3.936 11 11-3.936 11-11 11S1 19.064 1 12Zm2 0c0 5.972 3.028 9 9 9 5.972 0 9-3.028 9-9 0-5.972-3.028-9-9-9-5.972 0-9 3.028-9 9Z" clipRule="evenodd">
+        </path>
+    </Icon>
+)
+
+export const ErrorIcon: React.FC<SvgProps> = ( {size, color, ...rest}) => (
+    <Icon viewBox="0 0 24 24"
+    w={size || "24px"} h={size || "24px"}
+    color={color || "#f44336"} fill={color || "#f44336"} {...rest}>
+        <path fillRule="evenodd" d="M1 12C1 4.936 4.936 1 12 1s11 3.936 11 11-3.936 11-11 11S1 19.064 1 12Zm2 0c0 5.972 3.028 9 9 9 5.972 0 9-3.028 9-9 0-5.972-3.028-9-9-9-5.972 0-9 3.028-9 9Zm9-1.414 3.293-3.293 1.414 1.414L13.414 12l3.293 3.293-1.414 1.414L12 13.414l-3.293 3.293-1.414-1.414L10.586 12 7.293 8.707l1.414-1.414L12 10.586Z" clipRule="evenodd">
         </path>
     </Icon>
 )

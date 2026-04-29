@@ -14,6 +14,19 @@ $username = trim($data['username']);
 $age = $data['age'];
 $gender = $data['identity'];
 
+if ($email === null | $password === null |  $username === null | $age == null | $gender === null) {
+    http_response_code(400);
+    echo json_encode([
+        'message' => 'Erreur : Une donnée est null',
+        'email' => $email,
+        'password' => $password,
+        'username' => $username,
+        'age' => $age,
+        'gender' => $gender
+    ]);
+    exit;
+}
+
 static $reservedNames = ['admin', 'root', 'support', 'help', 'api', 'moderator'];
 static $genders = ['M', 'F', 'NB', 'Private'];
 

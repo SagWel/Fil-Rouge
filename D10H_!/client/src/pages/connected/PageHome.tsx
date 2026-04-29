@@ -166,10 +166,12 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         const urlFetchPopular = import.meta.env.VITE_URL_FETCH_POPULAR
         const urlFetchNews = import.meta.env.VITE_URL_FETCH_NEWS
         const urlFetchSuggestions = import.meta.env.VITE_URL_FETCH_SUGGESTIONS
+        const urlfetchHistory = import.meta.env.VITE_URL_FETCH_HISTORY
 
         fetchScores(urlFetchPopular, setPopularScores)
         fetchScores(urlFetchNews, setNewsScores)
         fetchScores(`${urlFetchSuggestions}${user?.id}`, setSuggestionsScores)
+        fetchScores(`${urlfetchHistory}${user?.id}`,setHistoryScores)
         fetchInstruments()
     },[])
 
@@ -177,8 +179,8 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         <Box id="homeUser"
         overflowY={"auto"} height={"100%"} mb={"70px"} position={"relative"}>
             {(historyScores.length > 0) && 
-            <Carousel id="recents-carousel" 
-            data={historyScores} title="Partitions joués récement"
+            <Carousel id="recents-carousel"
+            data={historyScores.slice(0, 12)} title="Partitions joués récement"
             renderItem={(item:IScore) => (
                 <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
             )} />}

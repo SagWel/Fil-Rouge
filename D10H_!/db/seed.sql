@@ -72,6 +72,6 @@ INSERT INTO `user_instruments` (`user_id`, `instrument_id`, `level`) VALUES
 -- Déchargement des données de la table `user_profiles`
 --
 
-INSERT INTO `user_profiles` (`user_id`, `avatar_url`, `bio`, `age`, `birthday`, `gender`, `visibility`) VALUES
+INSERT INTO `user_profiles` (`user_id`, `avatar_url`, `age`, `birthday`, `gender`) VALUES
 (3, NULL, NULL, 33, NULL, 'M', 'private'),
 (9, NULL, NULL, NULL, NULL, 'Private', 'public');

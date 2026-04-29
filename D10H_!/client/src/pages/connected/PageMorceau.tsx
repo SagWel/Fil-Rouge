@@ -10,6 +10,7 @@ import { useScore } from "../../hooks/useScore";
 
 /* Import background */
 import Fond from '../../../public/imgs/FondPart.jpg'
+import { useAuth } from "../../hooks/useAuth";
 
 export interface IPageMorceauProps {onPlay: boolean}
 
@@ -19,6 +20,7 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
     const { score, setScore} = useScore()
 
     const { morceauId } = useParams()
+    const { user } = useAuth()
 
     const host = import.meta.env.VITE_HOST
     const port = import.meta.env.VITE_SERVER_PORT
@@ -48,6 +50,29 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
                 console.error('ID manquant ...')
             }
     },[morceauId])    
+
+    useEffect(() => {         
+        const urlAddUserHistory = import.meta.env.VITE_URL_FETCH_ADDUSERHISTORY
+        
+        const fetchAddUserHistory = async () => {
+            if (onPlay) {
+                try {
+                    const res: Response = await fetch(`http://${host}:${port}${urlAddUserHistory}${user?.id}/${morceauId}`, {credentials: 'include'})
+    
+                    if (!res.ok) {
+                        throw new Error(`Erreur HTTP: ${res.status}`);                
+                    }
+    
+                    const data = await res.json()
+                    console.log(data);
+                    
+                } catch (error) {
+                    console.error("Impossible d'ajouter le morceau à l'historique de l'utilisateur", error)
+                }
+            }
+        }
+        fetchAddUserHistory()
+    },[onPlay, user, morceauId])
 
     return (
        <Flex direction={"column"} overflowY={"auto"} justifyContent={"start"} width={"100%"} height={"100%"} background={"transparent"}>

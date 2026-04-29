@@ -14,7 +14,7 @@ function getUserByEmail($pdo, $email)
 function getUserProfil($pdo, $userId)
 {
     $sql = $pdo->prepare(
-        'SELECT avatar_url, bio, age, birthday, gender, language, visibility FROM user_profiles WHERE user_id = ?'
+        'SELECT avatar_url, age, birthday, gender, language FROM user_profiles WHERE user_id = ?'
     );
 
     $sql->execute([$userId]);
@@ -70,46 +70,57 @@ function isFirstLogin($pdo, $email)
     return $result['total'] == 0;
 }
 
-function editProfil($pdo, $userId, $username = null, $gender = null, $avatar = null, $bio = null, $birthday = null, $visibility = null)
+function updateProfil($pdo, $userId, $username = null, $gender = null, $avatar = null, $birthday = null, ?array $userInstruments = null)
 {
-
     try {
         $pdo->beginTransaction();
 
-        $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
+        $stmt = $pdo->prepare('SELECT u.*, up.* FROM users u JOIN user_profiles up ON u.id = up.user_id WHERE u.id = ?');
         $stmt->execute([$userId]);
-
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        if (!$user) {
+            throw new Exception("Utilisateur introuvable.");
+        }
+
         $sql1 = $pdo->prepare('UPDATE users SET username = ? WHERE id = ?');
-        $sql1->execute([$username ?? $user['username'], $user['id']]);
+        $sql1->execute([$username ?? $user['username'], $userId]);
+
+        $birthdayObj = $birthday ? new DateTime($birthday) : new DateTime($user['birthday']);
+        $age = $birthdayObj->diff(new DateTime())->y;
 
         $sql2 = $pdo->prepare(
             'UPDATE user_profiles
-            SET avatar_url = ?,
-                bio = ?,
-                birthday = ?,
-                age = ?,
-                gender = ?,
-                visibility = ?
+            SET avatar_url = ?, birthday = ?, age = ?, gender = ?
             WHERE user_id = ?'
         );
-
-        $age = $birthday->dif(new DateTime())->y;
-
         $sql2->execute([
             $avatar ?? $user['avatar_url'],
-            $bio ?? $user['bio'],
             $birthday ?? $user['birthday'],
             $age,
-            $gender ?? $user['$gender'],
-            $visibility ?? $user['visibility'],
-            $user['id']
+            $gender ?? $user['gender'],
+            $userId
         ]);
 
+        if ($userInstruments !== null) {
+            $deleteInstruments = $pdo->prepare('DELETE FROM user_instruments WHERE user_id = ?');
+            $deleteInstruments->execute([$userId]);
+
+            $insertInstrument = $pdo->prepare('INSERT INTO user_instruments (user_id, instrument_id, lvl) VALUES (?, ?, ?)');
+            foreach ($userInstruments as $inst) {
+                $insertInstrument->execute([
+                    $userId,
+                    $inst['id'],
+                    $inst['lvl']
+                ]);
+            }
+        }
+
         $pdo->commit();
-    } catch (PDOException $e) {
+        return true;
+    } catch (Exception $e) {
         $pdo->rollBack();
-        print "Error!: " . $e->getMessage() . "</br>";
+        error_log("Erreur updateProfil: " . $e->getMessage());
+        return false;
     }
 }

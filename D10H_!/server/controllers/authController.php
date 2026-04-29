@@ -84,7 +84,6 @@ echo json_encode([
         "birthday" => $profiUser['birthday'],
         "gender" => $profiUser['gender'],
         "language" => $profiUser['language'],
-        "visibility" => $profiUser['visibility'],
         "userInstruments" => $userInstrumentLvl
     ],
     "isFirstLogin" => $firstLogin

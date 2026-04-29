@@ -21,11 +21,13 @@ if ($user) {
             "age" => $profiUser['age'],
             "birthday" => $profiUser['birthday'],
             "gender" => $profiUser['gender'],
-            "visibility" => $profiUser['visibility']
         ]
     ]);
     exit;
 }
 
-http_response_code(204);
-echo json_encode(["message" => "utilisateur non trouvé. Création autorisée", "isFounded" => false]);
+http_response_code(200);
+echo json_encode([
+    "message" => 'utilisateur non trouvé. Création autorisée',
+    "isFounded" => false
+]);

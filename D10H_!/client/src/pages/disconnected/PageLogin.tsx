@@ -7,7 +7,7 @@ import { useNavigate, type NavigateFunction } from "react-router-dom"
 import { useAuth } from "../../hooks/useAuth"
 
 /* import SVG */
-import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, ErrorIcon } from "../../components/Svg"
+import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, WarningIcon } from "../../components/Svg"
 
 export interface IPageLoginProps {}
 
@@ -69,6 +69,10 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
             }
         } catch (error) {
             console.error("Impossible de trouver l'utilisateur: ", error);
+            setIsErrorEmail(true)
+            setMessageErrorEmail('Identifiant inconnu')
+            setIsErrorPassword(true)
+            setMessageErrorPassword('Identifiant incorrect')
         }
     }
 
@@ -186,7 +190,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                         fontSize={"0.875rem"}
                                         lineHeight={"normal"} textAlign={"start"}
                                         color={"#E53E3E"}>
-                                            <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                            <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                             mr={"0.5rem"} color="#E53E3E" display={"block"}/>
                                             {messageErrorEmail}
                                         </FormErrorMessage>)}
@@ -276,7 +280,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                             fontSize={"0.875rem"}
                                             lineHeight={"normal"} textAlign={"start"}
                                             color={"#E53E3E"}>
-                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                                 mr={"0.5rem"} color="#E53E3E" display={"block"}/>
                                                 {messageErrorPassword}
                                             </FormErrorMessage>)}

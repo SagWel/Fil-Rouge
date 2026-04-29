@@ -1,34 +1,66 @@
-import { Box, Flex, Heading, Button, List, ListItem, chakra } from "@chakra-ui/react";
+import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-
-import Carousel from "../../components/ScoreCarousel"
-import { type IScore } from "../../types/Score";
-import ScoreCard from "../../components/cards/ScoreCard";
+import type { IScore } from "../../../types/Score";
+import { useAuth } from "../../../hooks/useAuth";
+import { useState, useEffect } from "react";
 
 // SVGs import from a unique file
-import { ShuffleIcon } from "../../components/Svg";
+import { ShuffleIcon } from "../../../components/Svg";
 
-export interface IPageFavorisProps {}
+// Card for each scores in the database
+import ScoreCard from '../../../components/cards/ScoreCard'
 
-const PageFavoris: React.FC<IPageFavorisProps> = () => {
-    const [historyScores, setHistoryScores] = useState<IScore[] | []>([])
+import '../../../style.css'
+
+export interface IPageHistoryProps {}
+
+const PageHistory: React.FC<IPageHistoryProps> = () => {
+
+    const { user } = useAuth()
+    
+        const [historyScores, setHistoryScores] = useState<IScore[] | []>([])
+    
+        const host = import.meta.env.VITE_HOST
+        const port = import.meta.env.VITE_SERVER_PORT
+    
+        const fetchScores = async (URL: string, set: React.Dispatch<React.SetStateAction<IScore[] | []>>) => {
+            try {
+                const res = await fetch(`http://${host}:${port}${URL}`, {credentials: 'include'})
+    
+                if (!res.ok) {
+                    throw new Error(`Erreur HTTP: ${res.status}`);                
+                }
+    
+                const data = await res.json()
+                set(data)
+            } catch (error) {
+                console.error('Impossible de récupérer les données des partitions:', error);
+            }
+        }
+    
+        useEffect(() => {
+            const urlfetchHistory = import.meta.env.VITE_URL_FETCH_HISTORY
+    
+            fetchScores(`${urlfetchHistory}${user?.id}`,setHistoryScores)
+        },[])
 
     return (        
         <Box id="main"
         overflowY={"auto"} height={"100%"}>
 
             {/*Favoris page content header*/}
-            <Box id="header-container" marginBottom={"12px"} boxShadow={"0 2px 2px"}>
-                <Box id="container" padding={"24px 24px 0"} marginX={"49px"}>
-                    <Flex gap={"2rem"}>
+            <Box id="header-container" marginBottom={"12px"} boxShadow={"0 2px 2px #2d2d3214"}>
+                <Box id="container" 
+                mx={'auto'} p={'24px 24px 0'} pos={'relative'}
+                boxSizing="border-box">
+                    <Box display={"flex"} gap={"2rem"}>
                         <Box alignSelf={"center"}>
                             <Heading as={"h2"} fontSize={"64px"} fontFamily={"Tahoma,Arial,sans-serif"} fontWeight={"700"}
                             marginBottom={"1.5rem"} color={"#ffffff"}>
                                 Favoris
                             </Heading>
                         </Box>
-                    </Flex>
+                    </Box>
                     <Box marginTop={"1.5rem"} marginBottom={"2rem"}>
                         <List display={"inline-flex"} gap={"0.25rem"} listStyleType={"none"} margin={0} padding={0}>
                             <ListItem listStyleType={"none"} margin={0} padding={0}>
@@ -58,7 +90,7 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                                     background: "#bb73ff"
                                 }}> 
                                     <chakra.span display={"inline-flex"} alignSelf={"center"} flexShrink={0} marginInlineEnd={0}>
-                                        <ShuffleIcon />
+                                        <ShuffleIcon/>
                                     </chakra.span>
                                     <Box fontFamily={"Inter,Arial,sans-serif"}>
                                         <Flex alignItems={"center"} justifyContent={"center"}>
@@ -69,16 +101,26 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                             </ListItem>
                         </List>
                     </Box>
-                    <chakra.nav boxShadow={"none"} marginBottom={"0"} width={"100%"}>
-                        <Box padding={0} width={"100%"}>
+                    <chakra.nav 
+                    display={'block'}
+                    pos={'relative'}
+                    marginBottom={"0"} 
+                    width={"100%"}
+                    borderBottom={'1px solid #141216'}
+                    boxShadow={"none"} boxSizing="border-box">
+                        <Box 
+                        pos={'relative'}
+                        padding={0} mx={'auto'}
+                        width={"100%"}
+                        whiteSpace={'nowrap'}
+                        boxSizing="border-box">
                             <List listStyleType={"none"} margin={0} padding={0}>
                                 <ListItem 
                                 listStyleType={"none"} margin={0} padding={0}
                                 color={"#a19fa4"} display={"inline-block"} position={"relative"} >
-                                    <Box as={Link} to={"/favoris"} borderBottom={"#ad47ff solid 2px"} color={"#ffffff"}
-                                    paddingBottom={"16px"}
+                                    <Box as={Link} to={"/favoris"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
                                     display={"block"}
-                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"600"}
+                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
                                     lineHeight={"24px"} textDecoration={"none"}>
                                         Vue d'ensemble
                                     </Box>
@@ -96,9 +138,10 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                                 <ListItem 
                                 listStyleType={"none"} margin={0} padding={0}
                                 color={"#a19fa4"} display={"inline-block"} position={"relative"} paddingLeft={"44px"}>
-                                    <Box as={Link} to={"/favoris/history"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
+                                    <Box as={Link} to={"/favoris/history"} borderBottom={"#ad47ff solid 2px"} color={"#ffffff"}
+                                    paddingBottom={"16px"}
                                     display={"block"}
-                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
+                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"600"}
                                     lineHeight={"24px"} textDecoration={"none"}>
                                         Historique de partitions
                                     </Box>
@@ -108,41 +151,40 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                     </chakra.nav>
                 </Box>
             </Box>
-            
-            {/*Favoris page content*/}
+
+            {/*History page content*/}
             <Box position={"relative"}>
-
-                {/*Carousels container*/}
                 <Box id="catalog-content">
-                    <Box>
+                    <Box role="tebpanel">
+                        <Box 
+                        position={"relative"}
+                        padding={"24px"} mx={"auto"} 
+                        boxSizing="border-box">
+                            <Box>
+                                <Heading as={"h2"}
+                                fontFamily={"Inter,Arial,sans-serif"} fontWeight={"700"} fontSize={"20px"} 
+                                lineHeight={"24px"} textDecoration={"none"} color={"#ffffff"}>
+                                    Historique des partitions
+                                </Heading>
+                            </Box>
+                        </Box>
+                        <Box marginTop={"-24px"} padding={"24px"} marginX={"auto"} position={"relative"}>
+                            <Grid id="historyGrid" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
+                            gap={"7"} justifyItems={"center"} p={"4"}
+                            overflow={"visible"}
+                            marginTop={"2rem"} marginBottom={"5rem"}>
 
-                        <Carousel id="recents-carousel" 
-                        data={historyScores} title="Partitions joués récement"
-                        renderItem={(item:IScore) => (
-                            <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
-                        )} />
-                        
-                        <chakra.section display={"block"}>
+                                {historyScores.map((score: IScore) => (
+                                    <ScoreCard key={score.id} score={score} currentInstrument={score.instruments.currentInstrument.name} />
+                                ))}
 
-                            {/* future CAROUSEL */}
-
-                        </chakra.section>
-                        <chakra.section display={"block"}>
-
-                            {/* future CAROUSEL */}
-
-                        </chakra.section>
-                        <chakra.section display={"block"}>
-
-                            {/* future CAROUSEL */}
-
-                        </chakra.section>
+                            </Grid>
+                        </Box>
                     </Box>
                 </Box>
             </Box>
         </Box>
     )
-    
 }
 
-export default PageFavoris
+export default PageHistory

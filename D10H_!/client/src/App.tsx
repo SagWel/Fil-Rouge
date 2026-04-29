@@ -12,22 +12,22 @@ import PageSearchScores from './pages/connected/PageSearch.tsx'
 import AllInstruments from './pages/connected/PageAllInstruments.tsx';
 import PageSearchScoresInstrument from './pages/connected/PageSearchInstrument.tsx'
 import Morceau from './pages/connected/PageMorceau.tsx';
-import Favoris from './pages/favoris/PageFavoris.tsx';
-import History from './pages/favoris/PageHistory.tsx';
-import Scorbraries from './pages/favoris/PageScorbaries.tsx'
-import Scorbrary from './pages/favoris/PageScorbrary.tsx';
+import Favoris from './pages/connected/favoris/PageFavoris.tsx';
+import History from './pages/connected/favoris/PageHistory.tsx';
+import Scorbraries from './pages/connected/favoris/PageScorbaries.tsx'
+import Scorbrary from './pages/connected/favoris/PageScorbrary.tsx';
 import PageInfos from './pages/disconnected/PageInfos.tsx';
 import PageLogin from './pages/disconnected/PageLogin.tsx';
 import PageSignup from './pages/disconnected/PageSignup.tsx';
 import PageResetPassword from './pages/disconnected/PageResetPassword.tsx'
 import PageUserInstruments from './pages/connected/PageUserInstruments.tsx'
-import PageAccount from './pages/account/PageAccount.tsx'
-import PageAccountNotifications from './pages/account/PageAccountNotifications.tsx';
-import PageAccountDevices from './pages/account/PageAccountDevices.tsx';
-import PageApps from './pages/account/PageApps.tsx';
-import PageAccountDisplay from './pages/account/PageAccountDisplay.tsx';
-import PageAccountShare from './pages/account/PageAccountShare.tsx';
-import PageAccountCountry from './pages/account/PageAccountCountry.tsx';
+import PageAccount from './pages/connected/account/PageAccount.tsx'
+import PageAccountNotifications from './pages/connected/account/PageAccountNotifications.tsx';
+import PageAccountDevices from './pages/connected/account/PageAccountDevices.tsx';
+import PageApps from './pages/connected/account/PageApps.tsx';
+import PageAccountDisplay from './pages/connected/account/PageAccountDisplay.tsx';
+import PageAccountShare from './pages/connected/account/PageAccountShare.tsx';
+import PageAccountCountry from './pages/connected/account/PageAccountCountry.tsx';
 
 // Components imports
 import Tools from './components/layout/Tools.tsx';
@@ -82,7 +82,8 @@ function App() {
   const {isAuthenticated, user, loading} = useAuth() 
 
   useEffect(() => {
-    const publicRoutes = ['/login', '/signup', '/', '/resetpassword']
+    const publicRoutes = ['/login', '/signup/', '/', '/resetpassword']
+    console.log(location.pathname)
     
     if (!loading && !isAuthenticated && !publicRoutes.includes(location.pathname)) {
       navigate('/login')

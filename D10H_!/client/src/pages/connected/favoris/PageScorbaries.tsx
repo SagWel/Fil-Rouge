@@ -1,128 +1,15 @@
 import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import type { IScore } from "../../types/Score";
 
 // SVGs import from a unique file
-import { ShuffleIcon } from "../../components/Svg";
+import { ShuffleIcon } from "../../../components/Svg";
 
-// Card for each scores in the database
-import ScoreCard from '../../components/cards/ScoreCard'
 
-export interface IPageHistoryProps {}
+export interface IPageScorbrariesProps {}
 
-const PageHistory: React.FC<IPageHistoryProps> = () => {
-    const mockPartitons: IScore[] = [
-  {
-    "id": 1,
-    "title": "Michelle",
-    "artist": {
-      "id": 101,
-      "name": "The Beatles",
-      "picture": "https://e-cdns-images.dzcdn.net/images/artist/072461/500x500.jpg",
-      "deezer_link": "https://www.deezer.com/artist/1"
-    },
-    "album": {
-      "id": 201,
-      "title": "Rubber Soul",
-      "deezer_link": "https://www.deezer.com/album/201",
-      "cover": "https://e-cdns-images.dzcdn.net/images/cover/123/500x500.jpg",
-      "artist": { "id": 101, "name": "The Beatles", "picture": "..." }
-    },
-    "genre": {
-      "id": 1,
-      "name": "Pop/Rock",
-      "picture": "https://img.com/rock.jpg"
-    },
-    "difficulty": 3,
-    "instruments": {
-      "currentInstrument": {
-        "id": "1",
-        "name": "guitare",
-        "imgSrc": "assets/instruments/guitar-icon.png"
-      },
-      "othersInstruments": [
-        {
-          "id": "2",
-          "name": "basse",
-          "imgSrc": "assets/instruments/bass-icon.png"
-        },
-        {
-          "id": "3",
-          "name": "chant",
-          "imgSrc": "assets/instruments/vocals-icon.png"
-        }
-      ]
-    },
-    "bpm": 117,
-    "time_signature": "4/4",
-    "clef": "treble",
-    "clef_signature": "Ab",
-    "duration": 162,
-    "deezer_link": "https://www.deezer.com/track/123",
-    "audio_preview": "https://preview.dz.com/123.mp3",
-    "score_preview": "https://img.com/michelle-preview.png",
-    "measures": [
-      {
-        "id": 1,
-        "notes": [
-          { "keys": ["f/4"], "duration": "q" },
-          { "keys": ["e/4"], "duration": "q", "accidental": "b" },
-          { "keys": ["db/4"], "duration": "q" },
-          { "keys": ["c/4"], "duration": "q" }
-        ],
-        "shortText": "Intro"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "title": "Fly Me To The Moon",
-    "artist": {
-      "id": 102,
-      "name": "Frank Sinatra",
-      "picture": "https://img.com/sinatra.jpg"
-    },
-    "genre": {
-      "id": 2,
-      "name": "Jazz",
-      "picture": "https://img.com/jazz.jpg"
-    },
-    "difficulty": 4,
-    "instruments": {
-      "currentInstrument": {
-        "id": "4",
-        "name": "piano",
-        "imgSrc": "assets/instruments/piano-icon.png"
-      },
-      "othersInstruments": [
-        {
-          "id": "5",
-          "name": "saxo",
-          "imgSrc": "assets/instruments/sax-icon.png"
-        }
-      ]
-    },
-    "bpm": 120,
-    "time_signature": "4/4",
-    "clef": "treble",
-    "clef_signature": "C",
-    "duration": 147,
-    "deezer_link": "https://www.deezer.com/track/456",
-    "audio_preview": "https://preview.dz.com/456.mp3",
-    "score_preview": "https://img.com/flyme-preview.png",
-    "measures": [
-      {
-        "id": 1,
-        "notes": [
-          { "keys": ["c/4"], "duration": "w", "lyrics": "Fly" }
-        ]
-      }
-    ]
-  }
-]
-
-    return (        
-        <Box id="main"
+const PageScorbaries: React.FC<IPageScorbrariesProps> = () => {
+    return (
+<Box id="main"
         overflowY={"auto"} height={"100%"}>
 
             {/*Favoris page content header*/}
@@ -165,7 +52,7 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
                                     background: "#bb73ff"
                                 }}> 
                                     <chakra.span display={"inline-flex"} alignSelf={"center"} flexShrink={0} marginInlineEnd={0}>
-                                        <ShuffleIcon/>
+                                        <ShuffleIcon />
                                     </chakra.span>
                                     <Box fontFamily={"Inter,Arial,sans-serif"}>
                                         <Flex alignItems={"center"} justifyContent={"center"}>
@@ -192,9 +79,10 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
                                 <ListItem 
                                 listStyleType={"none"} margin={0} padding={0}
                                 color={"#a19fa4"} display={"inline-block"} position={"relative"} paddingLeft={"44px"}>
-                                    <Box as={Link} to={"/favoris/scorbraries"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
+                                    <Box as={Link} to={"/favoris/scorbraries"} borderBottom={"#ad47ff solid 2px"} color={"#ffffff"}
+                                    paddingBottom={"16px"}
                                     display={"block"}
-                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
+                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"600"}
                                     lineHeight={"24px"} textDecoration={"none"}>
                                         Scorbraries
                                     </Box>
@@ -202,10 +90,9 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
                                 <ListItem 
                                 listStyleType={"none"} margin={0} padding={0}
                                 color={"#a19fa4"} display={"inline-block"} position={"relative"} paddingLeft={"44px"}>
-                                    <Box as={Link} to={"/favoris/history"} borderBottom={"#ad47ff solid 2px"} color={"#ffffff"}
-                                    paddingBottom={"16px"}
+                                    <Box as={Link} to={"/favoris/history"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
                                     display={"block"}
-                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"600"}
+                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
                                     lineHeight={"24px"} textDecoration={"none"}>
                                         Historique de partitions
                                     </Box>
@@ -216,31 +103,22 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
                 </Box>
             </Box>
 
-            {/*History page content*/}
+            {/*Scorbraries page content*/}
             <Box position={"relative"}>
                 <Box id="catalog-content">
-                    <Box role="tebpanel">
-                        <Box padding={"24px"} marginX={"auto"} position={"relative"}>
-                            <Box>
-                                <Heading as={"h2"}
-                                fontFamily={"Inter,Arial,sans-serif"} fontWeight={"700"} fontSize={"20px"} 
-                                lineHeight={"24px"} textDecoration={"none"} color={"#ffffff"}>
-                                    Historique des partitions
-                                </Heading>
+                    <Box>
+                        <chakra.section display={"block"}>
+                            <Box id="search-container" 
+                            padding={"24px"} marginX={"auto"} position={"relative"}>
+                                <Box>
+                                    
+                                </Box>
                             </Box>
-                        </Box>
-                        <Box marginTop={"-24px"} padding={"24px"} marginX={"auto"} position={"relative"}>
-                            <Grid id="historyGrid" templateColumns={"repeat(auto-fit, minmax(20rem, 1fr))"}
-                            gap={"7"} justifyItems={"center"} p={"4"}
-                            overflow={"visible"}
-                            marginTop={"2rem"} marginBottom={"5rem"}>
+                            <Box id="result-container" 
+                            padding={"24px"} marginX={"auto"} position={"relative"}>
 
-                                {mockPartitons.map((score: IScore) => (
-                                    <ScoreCard key={score.id} score={score} currentInstrument={score.instruments.currentInstrument.name} />
-                                ))}
-
-                            </Grid>
-                        </Box>
+                            </Box>
+                        </chakra.section>
                     </Box>
                 </Box>
             </Box>
@@ -248,4 +126,4 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
     )
 }
 
-export default PageHistory
+export default PageScorbaries

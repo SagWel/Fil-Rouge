@@ -9,7 +9,7 @@ function getScoreById($pdo, $id)
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
             al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
             g.id AS gender_id, g.name AS gender_name,
-            COUNT(DISTINCT pv.id) AS popularity_count,
+            COUNT(DISTINCT sv.id) AS popularity_count,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
             GROUP_CONCAT(i.img_src) AS all_instruments_images,
@@ -161,6 +161,39 @@ function getSuggestionsScores($pdo, $userId)
     return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getUserHistoryScores($pdo, $userId)
+{
+    $sql = $pdo->prepare(
+        'SELECT
+            h.played_at,
+            s.*,
+            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration,
+            a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
+            al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
+            g.id AS gender_id, g.name AS gender_name,
+            COUNT(DISTINCT sv.id) AS popularity_count,
+            GROUP_CONCAT(i.name) AS all_instruments_names,
+            GROUP_CONCAT(i.id) AS all_instruments_ids,
+            GROUP_CONCAT(i.img_src) AS all_instruments_images,
+            GROUP_CONCAT(si.track_name) As all_instruments_roles,
+            GROUP_CONCAT(si.is_current) AS all_is_current
+        FROM user_history h
+        INNER JOIN scores s ON h.score_id = s.id
+        INNER JOIN songs so ON s.song_id = so.id
+        LEFT JOIN artists a ON so.artist_id = a.id
+        LEFT JOIN albums al ON so.album_id = al.id
+        LEFT JOIN genders g ON so.gender_id = g.id
+        LEFT JOIN score_instruments si ON s.id = si.score_id
+        LEFT JOIN instruments i ON si.instrument_id = i.id
+        LEFT JOIN score_views sv ON s.id = sv.score_id
+        WHERE h.user_id = ?
+        ORDER BY h.played_at DESC'
+    );
+
+    $sql->execute([$userId]);
+
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
 function getScoresByInstrument($pdo, $instrumentId)
 {
@@ -243,4 +276,15 @@ function getSearchScores($pdo, $searchTerm)
     ]);
 
     return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function addToUserHistory($pdo, $userId, $scoreId)
+{
+    $sql = $pdo->prepare(
+        'INSERT INTO user_history (user_id, score_id, played_at) 
+        VALUES (?, ?, NOW())
+        ON DUPLICATE KEY UPDATE played_at = NOW()'
+    );
+
+    $sql->execute([$userId, $scoreId]);
 }

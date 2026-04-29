@@ -24,6 +24,7 @@ $publicIndex = array_search('public', $parts);
 if ($publicIndex !== false) {
     $ressource = $parts[$publicIndex + 1] ?? '';
     $id = $parts[$publicIndex + 2] ?? null;
+    $id2 = $parts[$publicIndex + 3] ?? null;
 } else {
     $ressource = $parts[0] ?? '';
     $id = $parts[1] ?? null;
@@ -37,10 +38,15 @@ if ($ressource && file_exists($controlerFile)) {
     if ($id) {
         $_GET['id'] = $id;
     }
+    if ($id2) {
+        $_GET['id2'] = $id2;
+    }
+
+    $middlewareID = '../middlewares/CheckNumericId.php';
 
     switch ($ressource) {
         case 'score':
-            require_once '../middlewares/CheckNumericId.php';
+            require_once $middlewareID;
             break;
         case 'scoresinstrument':
             require_once '../middlewares/CheckInstrument.php';
@@ -54,8 +60,29 @@ if ($ressource && file_exists($controlerFile)) {
         case 'creatuser':
             require_once '../middlewares/CheckCreatUser.php';
             break;
+        case 'creatuserinstruments':
+            require_once $middlewareID;
+            break;
+        case 'profil':
+            require_once $middlewareID;
+            break;
+        case 'updateprofil':
+            require_once '../middlewares/CheckProfilInputs.php';
+            $_POST['userId'] = $id;
+            break;
         case 'searchscore':
             require_once '../middlewares/CheckQuery.php';
+            break;
+        case 'adduserhistory':
+            require_once $middlewareID;
+            $_POST['userId'] = $id;
+            $_POST['scoreId'] = $id2;
+            break;
+        case 'suggestions':
+            require_once $middlewareID;
+            break;
+        case 'history':
+            require_once $middlewareID;
             break;
     }
     require_once $controlerFile;

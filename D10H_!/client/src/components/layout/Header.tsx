@@ -11,10 +11,10 @@ import { useSearch } from '../../context/SearchContext'
 // Hooks
 import useSearchHistory, { type IHistoryItem } from '../../hooks/useSearchHistory'
 import { useAuth } from "../../hooks/useAuth";
+import useWindowWidth from '../..//hooks/useWindowWidth.tsx'
 
 // Type
 import { type IDeezerSearchResponse, type IDeezerTrack } from '../../types/Deezer'
-import { type IUsers } from "../../types/user";
 
 export interface IHeaderProps {
 }
@@ -27,6 +27,12 @@ const Header: React.FC<IHeaderProps> = () => {
         setSearchResults,
         setIsLoading,
     } = useSearch()
+
+    //Viariables for responsive
+        const width = useWindowWidth()
+        const Breakpoint = 1160
+        const isMinimal = width <= Breakpoint
+        const headerResponsiveWidth = isMinimal ? '80px' : '272px'
 
     /*Calling the Deezer API for search suggestions*/
     async function fetchDeezerSuggestions(query: string) {
@@ -160,7 +166,7 @@ const Header: React.FC<IHeaderProps> = () => {
         height={"80px"} minWidth={"770px"}
         padding={"1rem"}
         background={"#000000"}
-        position={"fixed"} left={"272px"} right={"0"} top={"0"}
+        position={"fixed"} left={headerResponsiveWidth} right={"0"} top={"0"}
         borderBottom={"1px solid #4e4c51"}>
             <Flex id="header"
             direction={"row"} align={"center"}

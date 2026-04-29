@@ -5,15 +5,15 @@ require_once '../models/instrumentsModel.php';
 
 $email = $_GET['email'];
 $password = $_GET['password'];
-$username = $_GET['username'];
-$age = $_GET['age'];
-$gender = $_GET['gender'];
+$username = $_GET['username'] ?? null;
+$age = $_GET['age'] ?? null;
+$gender = $_GET['gender'] ?? null;
 
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-creatUser($pdo, $email, $passwordHash);
+creatUser($pdo, $email, $passwordHash, $username, $age, $gender);
 $user = getUserByEmail($pdo, $email);
-$profiUser = getUserProfil($pdo, $user['id']);
+$profilUser = getUserProfil($pdo, $user['id']);
 $userInstruments = getUserInstruments($pdo, $user['id']);
 $userInstrumentLvl = [];
 
@@ -67,11 +67,10 @@ echo json_encode([
         "id" => (int)$user['id'],
         "email" => $user['email'],
         "username" => $user['username'],
-        "avatarUrl" => $profiUser['avatar_url'],
-        "age" => (int)$profiUser['age'],
-        "birthday" => $profiUser['birthday'],
-        "gender" => $profiUser['gender'],
-        "visibility" => $profiUser['visibility'],
+        "avatarUrl" => $profilUser['avatar_url'],
+        "age" => (int)$profilUser['age'],
+        "birthday" => $profilUser['birthday'],
+        "gender" => $profilUser['gender'],
         "userInstruments" => $userInstrumentLvl
     ],
     "isFirstLogin" => $firstLogin

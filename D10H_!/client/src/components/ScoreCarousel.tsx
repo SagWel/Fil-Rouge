@@ -42,7 +42,7 @@ const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, renderItem, id, ti
     }
 
     const cursor = (direction: "left" | "right") => {
-        if(direction === "left" && translate === 0 || direction === "right" && translate === maxScroll || direction === "right" && data.length === 0) {
+        if(direction === "left" && translate === 0 || direction === "right" && translate === maxScroll) {
             return "not-allowed"
         } else return "pointer"
     }
@@ -71,6 +71,7 @@ const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, renderItem, id, ti
                                 {title}
                             </Heading>
                         </Box>
+                        {data.length > 4 &&
                         <Box position={"absolute"} right={0} top={"50%"} transform={"translateY(-50%)"}>
                             <Flex display={"inline-flex"}
                             ps={"8px"}>
@@ -137,6 +138,7 @@ const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, renderItem, id, ti
                                 </IconButton>
                             </Flex>
                         </Box>
+                        }
                     </Flex>
                 </Box>
                 <Box 

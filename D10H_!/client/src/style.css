@@ -16,7 +16,7 @@ a {
 }
 
 @media screen and (min-width: 724px) {
-    .css-merrtw {
+    .css-merrtw, .css-1p4s6so {
         display: inherit !important;
         padding-inline-start: 80px !important;
         padding-inline-end: 80px !important;
@@ -48,24 +48,19 @@ a {
         --subtitle-fontsize: 35px !important;
     }
     
-    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s, .css-13pjprk, .css-qdkt6m, .css-1drfrs9 {
         width: 716px;
     }
 }
 
 @media screen and (min-width: 940px) {
-    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s, .css-13pjprk, .css-qdkt6m, .css-1drfrs9 {
         width: 826px;
     }
 }
 
 @media screen and (min-width: 1024px) {
-    .css-merrtw {
-        padding-inline-start: 112px !important;
-        padding-inline-end: 112px !important;
-    }
-
-    .css-es59od {
+    .css-merrtw, .css-es59od {
         padding-inline-start: 112px !important;
         padding-inline-end: 112px !important;
     }
@@ -86,6 +81,10 @@ a {
         font-weight: 700 !important;
         line-height: 46px !important;
         text-decoration: none;
+    }
+
+    .css-ie55x3 {
+        gap: 2rem !important
     }
 }
 
@@ -110,36 +109,31 @@ a {
 }
 
 @media screen and (min-width: 1200px) {
-    .css-merrtw {
+    .css-merrtw, .css-es59od {
         padding-inline-start: 192px !important;
         padding-inline-end: 192px !important;
     }
 
-    .css-es59od {
-        padding-inline-start: 192px !important;
-        padding-inline-end: 192px !important;
-    }
-
-    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s, .css-13pjprk, .css-qdkt6m, .css-1drfrs9 {
         width: 902px;
     }
 }
 
 @media screen and (min-width: 1310px) {
 
-    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s, .css-13pjprk, .css-qdkt6m, .css-1drfrs9 {
         width: 1304px;
     }
 }
 
 @media screen and (min-width: 1430px) {
-    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s, .css-13pjprk, .css-qdkt6m, .css-1drfrs9 {
         width: 1154px;
     }
 }
 
 @media screen and (min-width: 1728px) {
-    .css-rpfvsj, .css-hptv2g, .css-1yidl7s {
+    .css-rpfvsj, .css-hptv2g, .css-1yidl7s, .css-13pjprk, .css-qdkt6m, .css-1drfrs9 {
         width: 1425px;
     }
 }

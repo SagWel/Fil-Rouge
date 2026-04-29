@@ -210,11 +210,9 @@ CREATE TABLE IF NOT EXISTS `user_instruments` (
 CREATE TABLE IF NOT EXISTS `user_profiles` (
   `user_id` int(11) NOT NULL,
   `avatar_url` varchar(500) DEFAULT NULL,
-  `bio` text DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
   `gender` enum('M','F','NB','Private') DEFAULT 'Private',
-  `visibility` enum('public','private') NOT NULL DEFAULT 'public',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

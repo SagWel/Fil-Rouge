@@ -25,7 +25,7 @@ import { useState } from "react"
 import { useSearchParams, useNavigate, type NavigateFunction } from "react-router-dom"
 
 /* Import SVG */
-import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, ErrorIcon, IncrementIcon, DecrementIcon, ValidateIcon, CheckIcon } from "../../components/Svg"
+import { LogoTempo, DisplayIcon, FacebookIcon, GoogleIcon, AppleIcon, RightCarouselIcon, LeftCarouselIcon, WarningIcon, IncrementIcon, DecrementIcon, ValidateIcon, CheckIcon } from "../../components/Svg"
 
 import '../../style.css'
 
@@ -91,13 +91,16 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
 
         try {
             const res: Response = await fetch(`http://${host}:${port}${urlFetchFindByEmail}${email}`, {credentials: 'include'})
-
-            const data = await res.json()
-
+            
+            
             if (!res.ok) {
+                const data = await res.json()
+
                 setIsError(data.isFounded)
                 setMessage(`${data.message}`)
             }
+
+            const data = await res.json()
 
             if (data.isFounded === false) {
                 setIsError(data.isFounded)
@@ -163,6 +166,12 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
 
     /* function to creat user in database et login him */
     const handleOnClickCreatUser = async () => {
+        console.log(age);
+        console.log(email);
+        console.log(password);
+        console.log(username);
+        console.log(identity);
+        
         try {
             const res: Response = await fetch(`http://${host}:${port}${urlFetchCreatUser}${email}`, {
                 method : 'POST',
@@ -323,16 +332,12 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         fontSize={"0.875rem"}
                                         lineHeight={"normal"} textAlign={"start"}
                                         color={"#E53E3E"}>
-                                            <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                            <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                             mr={"0.5rem"} color="#E53E3E" display={"block"}/>
                                             {message}
                                         </FormErrorMessage>)}
                                     </FormControl>
                                     <Button type="submit" isDisabled={!emailFormat}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        handleOnClickEmail()
-                                    }}
                                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
                                     whiteSpace={"nowrap"} verticalAlign={"middle"}
                                     pos={"relative"}
@@ -346,6 +351,10 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                     outline={"transparent solid 2px"} outlineOffset={0}
                                     transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                     userSelect={"none"}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        handleOnClickEmail()
+                                    }}
                                     _active={{
                                         color: "#e2dfe6",
                                         bg : "#ca97ff"
@@ -667,7 +676,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             fontSize={"0.875rem"}
                                             lineHeight={"normal"} textAlign={"start"}
                                             color={"#E53E3E"}>
-                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                                 mr={"0.5rem"} color="#E53E3E" display={"block"}/>
                                                 {message}
                                             </FormErrorMessage>)}
@@ -921,7 +930,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             fontSize={"0.875rem"}
                                             lineHeight={"normal"} textAlign={"start"}
                                             color={"#E53E3E"}>
-                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                                 mr={"0.5rem"} color="#E53E3E" display={"block"}/>
                                                 Le champ ne doit pas être vide.
                                             </FormErrorMessage>)}
@@ -937,8 +946,9 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}>
                                                 Âge
                                             </FormLabel>
-                                            <NumberInput name="age" id="age" value={age > 0 ? age : ''}
-                                            step={1} min={0} max={9007199254740991} zIndex={0}>
+                                            <NumberInput name="age" id="age" value={age > 0 ? age : undefined}
+                                            step={1} min={0} max={9007199254740991} zIndex={0}
+                                            onChange={(e) => setAge(Number(e))}>
                                                 <NumberInputField 
                                                 paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
                                                 w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
@@ -949,7 +959,6 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                                 outline={"transparent solid 2px"} outlineOffset={"2px"}
                                                 transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                                 appearance={"none"}
-                                                onChange={(e) => setAge(parseInt(e.target.value))}
                                                 _placeholder={{color: "#5D6E73"}}
                                                 _active={{
                                                     borderColor: "#ad47ff"
@@ -987,7 +996,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             fontSize={"0.875rem"}
                                             lineHeight={"normal"} textAlign={"start"}
                                             color={"#E53E3E"}>
-                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                                 mr={"0.5rem"} color="#E53E3E" display={"block"}/>
                                                 Le champ ne doit pas être vide.
                                             </FormErrorMessage>)}
@@ -1042,7 +1051,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                             fontSize={"0.875rem"}
                                             lineHeight={"normal"} textAlign={"start"}
                                             color={"#E53E3E"}>
-                                                <ErrorIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                                 mr={"0.5rem"} color="#E53E3E" display={"block"}/>
                                                 Le champ ne doit pas être vide.
                                             </FormErrorMessage>)}

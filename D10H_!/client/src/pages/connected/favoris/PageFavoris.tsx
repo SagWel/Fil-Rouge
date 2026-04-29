@@ -1,28 +1,66 @@
-import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
+import { Box, Flex, Heading, Button, List, ListItem, chakra } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import Carousel from "../../../components/ScoreCarousel"
+import { type IScore } from "../../../types/Score";
+import ScoreCard from "../../../components/cards/ScoreCard";
 
 // SVGs import from a unique file
-import { ShuffleIcon } from "../../components/Svg";
+import { ShuffleIcon } from "../../../components/Svg";
+import { useAuth } from "../../../hooks/useAuth";
 
+import '../../../style.css'
 
-export interface IPageScorbrariesProps {}
+export interface IPageFavorisProps {}
 
-const PageScorbaries: React.FC<IPageScorbrariesProps> = () => {
-    return (
-<Box id="main"
+const PageFavoris: React.FC<IPageFavorisProps> = () => {
+
+    const { user } = useAuth()
+
+    const [historyScores, setHistoryScores] = useState<IScore[] | []>([])
+
+    const host = import.meta.env.VITE_HOST
+    const port = import.meta.env.VITE_SERVER_PORT
+
+    const fetchScores = async (URL: string, set: React.Dispatch<React.SetStateAction<IScore[] | []>>) => {
+        try {
+            const res = await fetch(`http://${host}:${port}${URL}`, {credentials: 'include'})
+
+            if (!res.ok) {
+                throw new Error(`Erreur HTTP: ${res.status}`);                
+            }
+
+            const data = await res.json()
+            set(data)
+        } catch (error) {
+            console.error('Impossible de récupérer les données des partitions:', error);
+        }
+    }
+
+    useEffect(() => {
+        const urlfetchHistory = import.meta.env.VITE_URL_FETCH_HISTORY
+
+        fetchScores(`${urlfetchHistory}${user?.id}`,setHistoryScores)
+    },[])
+
+    return (        
+        <Box id="main"
         overflowY={"auto"} height={"100%"}>
 
             {/*Favoris page content header*/}
-            <Box id="header-container" marginBottom={"12px"} boxShadow={"0 2px 2px"}>
-                <Box id="container" padding={"24px 24px 0"} marginX={"49px"}>
-                    <Box display={"flex"} gap={"2rem"}>
+            <Box id="header-container" marginBottom={"12px"} boxShadow={"0 2px 2px #2d2d3214"}>
+                <Box id="container" 
+                mx={'auto'} p={'24px 24px 0'} pos={'relative'}
+                boxSizing="border-box">
+                    <Flex gap={"2rem"}>
                         <Box alignSelf={"center"}>
                             <Heading as={"h2"} fontSize={"64px"} fontFamily={"Tahoma,Arial,sans-serif"} fontWeight={"700"}
                             marginBottom={"1.5rem"} color={"#ffffff"}>
                                 Favoris
                             </Heading>
                         </Box>
-                    </Box>
+                    </Flex>
                     <Box marginTop={"1.5rem"} marginBottom={"2rem"}>
                         <List display={"inline-flex"} gap={"0.25rem"} listStyleType={"none"} margin={0} padding={0}>
                             <ListItem listStyleType={"none"} margin={0} padding={0}>
@@ -63,15 +101,27 @@ const PageScorbaries: React.FC<IPageScorbrariesProps> = () => {
                             </ListItem>
                         </List>
                     </Box>
-                    <chakra.nav boxShadow={"none"} marginBottom={"0"} width={"100%"}>
-                        <Box padding={0} width={"100%"}>
+                    <chakra.nav 
+                    display={'block'}
+                    pos={'relative'}
+                    marginBottom={"0"} 
+                    width={"100%"}
+                    borderBottom={'1px solid #141216'}
+                    boxShadow={"none"} boxSizing="border-box">
+                        <Box 
+                        pos={'relative'}
+                        padding={0} mx={'auto'}
+                        width={"100%"}
+                        whiteSpace={'nowrap'}
+                        boxSizing="border-box">
                             <List listStyleType={"none"} margin={0} padding={0}>
                                 <ListItem 
                                 listStyleType={"none"} margin={0} padding={0}
                                 color={"#a19fa4"} display={"inline-block"} position={"relative"} >
-                                    <Box as={Link} to={"/favoris"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
+                                    <Box as={Link} to={"/favoris"} borderBottom={"#ad47ff solid 2px"} color={"#ffffff"}
+                                    paddingBottom={"16px"}
                                     display={"block"}
-                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
+                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"600"}
                                     lineHeight={"24px"} textDecoration={"none"}>
                                         Vue d'ensemble
                                     </Box>
@@ -79,10 +129,9 @@ const PageScorbaries: React.FC<IPageScorbrariesProps> = () => {
                                 <ListItem 
                                 listStyleType={"none"} margin={0} padding={0}
                                 color={"#a19fa4"} display={"inline-block"} position={"relative"} paddingLeft={"44px"}>
-                                    <Box as={Link} to={"/favoris/scorbraries"} borderBottom={"#ad47ff solid 2px"} color={"#ffffff"}
-                                    paddingBottom={"16px"}
+                                    <Box as={Link} to={"/favoris/scorbraries"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
                                     display={"block"}
-                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"600"}
+                                    fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
                                     lineHeight={"24px"} textDecoration={"none"}>
                                         Scorbraries
                                     </Box>
@@ -102,28 +151,31 @@ const PageScorbaries: React.FC<IPageScorbrariesProps> = () => {
                     </chakra.nav>
                 </Box>
             </Box>
-
-            {/*Scorbraries page content*/}
+            
+            {/*Favoris page content*/}
             <Box position={"relative"}>
+
+                {/*Carousels container*/}
                 <Box id="catalog-content">
                     <Box>
-                        <chakra.section display={"block"}>
-                            <Box id="search-container" 
-                            padding={"24px"} marginX={"auto"} position={"relative"}>
-                                <Box>
-                                    
-                                </Box>
-                            </Box>
-                            <Box id="result-container" 
-                            padding={"24px"} marginX={"auto"} position={"relative"}>
 
-                            </Box>
+                        <Carousel id="recents-carousel" 
+                        data={historyScores} title="Partitions joués récement"
+                        renderItem={(item:IScore) => (
+                            <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
+                        )} />
+                        
+                        <chakra.section display={"block"}>
+
+                            {/* future CAROUSEL */}
+
                         </chakra.section>
                     </Box>
                 </Box>
             </Box>
         </Box>
     )
+    
 }
 
-export default PageScorbaries
+export default PageFavoris

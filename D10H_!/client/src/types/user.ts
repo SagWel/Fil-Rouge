@@ -12,7 +12,6 @@ export interface IUsers extends JwtPayload {
     birthday: Date,
     gender: GenderType,
     language: string,
-    visibility: "public" | "private"
     userInstruments: IInstrumentLvl[]
 }
 
