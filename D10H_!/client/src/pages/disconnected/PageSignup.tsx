@@ -166,11 +166,6 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
 
     /* function to creat user in database et login him */
     const handleOnClickCreatUser = async () => {
-        console.log(age);
-        console.log(email);
-        console.log(password);
-        console.log(username);
-        console.log(identity);
         
         try {
             const res: Response = await fetch(`http://${host}:${port}${urlFetchCreatUser}${email}`, {

@@ -12,10 +12,7 @@ const InstrumentCard: React.FC<IInstrumentCardProps> = ({instrument}) => {
     const host = import.meta.env.VITE_HOST
     const port = import.meta.env.VITE_SERVER_PORT
     const BASE_URL = `http://${host}:${port}/D10h_server/public/`
-
-    console.log(instrument);
     
-    console.log(instrument.link_to_search);
     return (
         
         <Flex as={Link} to={instrument.link_to_search} role="group"

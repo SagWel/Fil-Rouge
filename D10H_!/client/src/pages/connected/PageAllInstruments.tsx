@@ -82,11 +82,9 @@ const PageListeInstruments: React.FC<IPageListeInstrumentsProps> = () => {
         px={"12"}>
             
             {/*Creats a card for each instrument in database*/}
-            {allInstuments.map((instrument) => {
-                    console.log(instrument);
-                    
-                    return <InstrumentCard key={instrument.id} instrument={instrument} />
-                })}
+            {allInstuments.map((instrument) => (
+                <InstrumentCard key={instrument.id} instrument={instrument} />
+            ))}
         </Grid>
         </>  
     );

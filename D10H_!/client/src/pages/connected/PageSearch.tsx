@@ -47,7 +47,6 @@ const Search: React.FC<ISearchProps> = () => {
             }
 
             const data = await res.json()
-            console.log(data);
             setScores(data.scores)
             setSafeQuery(data.query)
         } catch (error) {
@@ -134,7 +133,7 @@ const Search: React.FC<ISearchProps> = () => {
 
             fetchScores(`${urlFetch}${query}`)
         } else {
-            console.log('Pas de recherche demandé')
+            console.error('Pas de recherche demandé')
         }
     },[query])
 
