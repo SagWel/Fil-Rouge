@@ -22,14 +22,20 @@ import {
     ModalContent, 
     ModalHeader, 
     ModalCloseButton, 
-    ModalBody
+    ModalBody,
+    InputGroup,
+    InputRightElement,
+    FormHelperText,
+    FormErrorMessage,
+    Link as ChakraLink
 } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 import { 
     AppleIcon, 
     FacebookIcon, 
     GoogleIcon, 
-    DisableIcon, 
+    DisableIcon,
+    DisplayIcon,
     AddCircleIcon, 
     CameraIcon, 
     DownChevronSoftIcon, 
@@ -38,7 +44,8 @@ import {
     AddIcon, RemoveIcon, 
     SuccesIcon, 
     ErrorIcon,
-    CloseButtonIcon
+    CloseButtonIcon,
+    WarningIcon
 } from "../../../components/Svg"
 
 import { useEffect, useRef, useState } from "react"
@@ -49,7 +56,6 @@ import { useAuth } from "../../../hooks/useAuth"
 import type { GenderType } from "../../../types/user"
 import type { IInstrumentLvl, IInstrument } from "../../../types/instrument"
 import { difficultyLvl } from "../../../components/cards/ScoreCard"
-import UserInstruments from "../PageUserInstruments"
 
 export interface IPageAccountProps { }
 
@@ -76,6 +82,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
     const [opacity, setOpacity] = useState<"0" | "1">("0")
     const [scale, setScale] = useState<"0" | "1">("0")
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null)
     const [userGender, setUserGender] = useState<GenderType | undefined>(user?.gender)
     const [userPseudo, setUserPseudo] = useState<string | undefined>(user?.username)
     const [userInstruments, setUserInstruments] = useState<IInstrumentLvl[] | undefined>(user?.userInstruments)
@@ -91,8 +98,18 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
     const [updateMessage, setUpdateMessage] = useState<string>('')
     const [updateModal, setUpdateModal] = useState<boolean>(false)
     const [updateValidating, setUpdateValidating] = useState<boolean>(true)
+    const [displayDeleteInformations, setDisplayDeleteInformations] = useState<boolean>(false)
+    const [inputType, setInputType] = useState<'password' | 'text'>('password')
+    const [password, setPassword] = useState<string>('')
+    const [isError, setIsError] = useState<boolean>(false)
+    const [message, setMessage] = useState<string>('')
 
-    const avatarPreview: string = "https://cdn-images.dzcdn.net/images/user//125x125-000000-80-0-0.jpg"
+    const avatarDefault: string = "https://cdn-images.dzcdn.net/images/user//125x125-000000-80-0-0.jpg"
+
+    const host = import.meta.env.VITE_HOST
+    const port = import.meta.env.VITE_SERVER_PORT
+
+    const BASE_URL = `http://${host}:${port}/D10h_server/public/`
 
     const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -107,6 +124,15 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
         }
     ]
 
+    const displayPassword = () => {
+        if (inputType === 'password') setInputType('text')
+        if (inputType === 'text') setInputType('password')
+    }
+
+    const handleDisplayModalResetPassword = () => {
+
+    }
+
     const handleOnClick = () => {
         if (opacity === "0" && scale === "0") {
             setOpacity('1')
@@ -117,12 +143,15 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
         }
     }
 
-    const handleFileOnChange = () => {
-        
-    }
+    const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0]
+            setSelectedFile(file)
 
-    const host = import.meta.env.VITE_HOST
-    const port = import.meta.env.VITE_SERVER_PORT
+            const localUrl = URL.createObjectURL(file)
+            setPreviewUrl(localUrl)
+        }
+    }
 
     const fetchInstruments = async () => {
         const urlFetchInstruments = import.meta.env.VITE_URL_FETCH_ALLINSTRUMENTS
@@ -223,6 +252,9 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
         if (JSON.stringify(userInstruments) !== JSON.stringify(user?.userInstruments)) {
             formData.append('userInstruments', JSON.stringify(userInstruments));
         }
+        if (selectedFile) {
+            formData.append('avatar', selectedFile)
+        }
 
         try {
             const res: Response = await fetch(`http://${host}:${port}${urlfetchUpdateProfile}${user?.id}`, {
@@ -257,6 +289,10 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
         }
     }
 
+    const handleFinalDeleting = () => {
+        
+    }
+
     useEffect(() => {
         const totalDays: number = new Date(userBirthdayYear, userBirthdayMonth, 0).getDate()
         setDaysInMonth(totalDays)
@@ -271,8 +307,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
 
     return (
         <>
-            {
-            updateModal && (
+            {updateModal && (
                 <chakra.aside 
                 pos={'fixed'} left={0} right={0}
                 marginInline={'auto'}
@@ -283,8 +318,8 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                     <Flex align={'center'} gap={'0.5rem'}
                     pos={'relative'}
                     p={'0.75rem'}
-                    color={'#ffffff'}
-                    bg={'#000000'}
+                    color={'#000000'}
+                    bg={'#ffff'}
                     borderRadius={'0.5rem'}
                     overflow={'hidden'}>
                         <chakra.span display={'inherit'}>
@@ -301,8 +336,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                         align={'center'} justifyContent={'flex-end'} gap={'0.5rem'} flexGrow={1}/>
                     </Flex>
                 </chakra.aside>
-            )
-            }
+            )}
             <chakra.nav
             display={"block"}
             pos={'relative'}
@@ -572,7 +606,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                 }
                                             }}>
                                             {/* User image or */}
-                                            <Image alt={user?.username} src={user?.avatarUrl || avatarPreview}
+                                            <Image alt={user?.username} src={previewUrl || `${BASE_URL}uploads/avatars/${user?.avatarUrl}` || avatarDefault}
                                                 display={"inline-block"}
                                                 h={'125px'} w={'125px'}
                                                 verticalAlign={'top'}
@@ -580,7 +614,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                 objectFit={'cover'} />
                                         </Box>
                                         <Input type="file" accept="image/jpeg, image/png" ref={fileInputRef}
-                                        onChange={handleFileOnChange()}
+                                        onChange={handleFileOnChange}
                                             display={'none'}
                                             m={0}
                                             lineHeight={'normal'} verticalAlign={'middle'}
@@ -1353,6 +1387,114 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                         opacity={'0.2'}
                         borderWidth={'0 0 1px'} borderColor={'inherit'} borderStyle={'solid'} />
                     <Stack alignItems={'flex-start'} gap={'1.5rem'} w={'100%'}>
+                        {displayDeleteInformations && 
+                            <Stack align={'flex-start'} gap={'1rem'} w={'100%'}>
+                                <Heading as={'h2'}
+                                fontFamily={'Inter,Arial,sans-serif'} fontWeight={'700'} fontSize={'20px'}
+                                lineHeight={"24px"} textDecor={'none'}>
+                                    Es-tu sûr·e de vouloir supprimer ton compte&nbsp;?
+                                </Heading>
+                                <Stack align={'flex-start'} gap={'0.5rem'} w={'100%'}>
+                                    <Text as={'p'} m={0}>
+                                        Pour confirmer la suppression de ton compte, merci d'entrer ton mot de passe ci-dessous. Tu vas recevoir un email de validation finale de ta demande.
+                                    </Text>
+                                    <Text as={'p'} m={0}>
+                                        Vérifie que l'adresse email de ton compte ci-dessus est valide, sinon ton compte ne pourra pas être supprimé.
+                                    </Text>
+                                    <Text as={'p'} m={0}>
+                                        La suppression de ton compte entraînera la perte définitive de toutes tes Scorbraries et artistes favoris.
+                                    </Text>
+                                </Stack>
+                                <Box w={'100%'}>
+                                    <FormControl w={'100%'} pos={'relative'}>
+                                        <FormLabel 
+                                        display={'block'}
+                                        marginInlineEnd={'0.75rem'} mb={'0.5rem'}
+                                        fontWeight={'500'} fontSize={'0.875rem'}
+                                        textAlign={'start'} color={'#a19fa4'}
+                                        transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
+                                        opacity={1} cursor={'pointer'}>
+                                            Mot de passe&nbsp;:
+                                        </FormLabel>
+                                        <InputGroup 
+                                        pos={'relative'}
+                                        display={'flex'}
+                                        w={'100%'}
+                                        isolation={'isolate'}>
+                                            <Input id="password" type={inputType} value={password}
+                                            pos={'relative'}
+                                            paddingInlineEnd={'0.75rem'} paddingInlineStart={'1rem'} m={0}
+                                            minW={0} w={'100%'} h={'3rem'} minH={'3rem'}
+                                            fontSize={'16px'} fontWeight={'400'} fontFamily={'Inter,Arial,sans-serif'}
+                                            color={'#ffffff'} lineHeight={'24px'} textDecor={'none'} verticalAlign={'middle'}
+                                            bg={'#242326'}
+                                            border={'transparent, solid 0.125rem'} borderRadius={'0.5rem'}
+                                            outline={'transparent solid 2px'} outlineOffset={'2px'}
+                                            transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
+                                            appearance={'none'} boxSizing="border-box"
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            _active={{
+                                                borderColor: '#ad47ff'
+                                            }}
+                                            _focus={{
+                                                borderColor: '#ad47ff'
+                                            }}
+                                            _hover={{
+                                                bgColor: '#2e2c30',
+                                                color: '#f5f2f8'
+                                            }} />
+                                            <InputRightElement display={"flex"} alignItems={"center"} justifyContent={"center"}
+                                            position={"absolute"} right={0} top={0}
+                                            marginInlineStart={"1rem"} marginInlineEnd={"0.75rem"}
+                                            w={"1.5rem"} h={"3rem"}
+                                            fontSize={"16px"}
+                                            zIndex={"2"}>
+                                                <Button display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                                whiteSpace={"nowrap"}
+                                                pos={"relative"}
+                                                paddingInline={0} py={0} p={0}
+                                                minH={"3rem"} minW={"3rem"} h={"auto"}
+                                                fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} 
+                                                verticalAlign={"middle"} lineHeight={"24px"} textDecor={"none"}
+                                                bg={"transparent"}
+                                                borderRadius={"0.75rem"}
+                                                outline={"transparent solid 2px"} outlineOffset={0}
+                                                transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                userSelect={"none"}
+                                                onClick={displayPassword}
+                                                _focusVisible={{ boxShadow: "none"}}
+                                                _hover={{bg: "transparent"}}>
+                                                    <DisplayIcon display={"block"} size="20px"
+                                                    lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"}
+                                                    mb={"1px"}/>
+                                                </Button>
+                                            </InputRightElement>
+                                        </InputGroup>
+                                        <FormHelperText as={ChakraLink} role="button"
+                                        display={'block'}
+                                        mt={"0.75rem"}
+                                        fontSize={"0.875rem"}
+                                        lineHeight={"normal"} color={"#a19fa4"} textDecor={"inherit"}
+                                        bg={"transparent"}
+                                        _focusVisible={{ outlineColor: "#ad47ff"}}
+                                        _hover={{textDecor: "none"}}>
+                                            Mot de passe oublié?
+                                        </FormHelperText>
+                                        {isError && (
+                                            <FormErrorMessage display={"flex"} alignItems={"center"}
+                                            mt={"0.5rem"}
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"normal"} textAlign={"start"}
+                                            color={"#E53E3E"}>
+                                                <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                {message}
+                                            </FormErrorMessage>
+                                        )}
+                                    </FormControl>
+                                </Box>
+                            </Stack>
+                        }
                         <Button
                             display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
                             pos={'relative'} verticalAlign={'middle'}
@@ -1365,6 +1507,20 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                             outline={'transparent solid 2px'} outlineOffset={'0px'}
                             transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
                             appearance={'none'} userSelect={'none'} cursor={'pointer'}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                if (displayDeleteInformations) {
+                                    if (password === '') {
+                                        setIsError(true)
+                                        setMessage('Le champ ne doit pas être vide')
+                                    }
+                                    setIsError(false)
+                                    setMessage('')
+                                    handleFinalDeleting()
+                                } else {
+                                    setDisplayDeleteInformations(true)
+                                }
+                            }}
                             _active={{
                                 borderColor: '#656367',
                                 bg: '#38373b',

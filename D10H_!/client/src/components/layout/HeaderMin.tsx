@@ -20,13 +20,16 @@ function HeaderMin() {
     const [user, setUser] = useState< IUsers | null>(null)
     const [isDisplayed, setIsDisplayed] = useState<boolean>(false)
 
+    const host = import.meta.env.VITE_HOST
+    const port = import.meta.env.VITE_SERVER_PORT
+
+    const BASE_URL = `http://${host}:${port}/D10h_server/public/`
+
     /* User data from context by hook */
     const { user: userToken, logout } = useAuth()
 
     /* Creat user data about user for the buger menue system he need */
     const userInfos = async () => {
-        const host = import.meta.env.VITE_HOST
-        const port = import.meta.env.VITE_SERVER_PORT
         const urlFetchUserInfos = import.meta.env.VITE_URL_FETCH_FINDBYEMAIL
 
         try {
@@ -160,7 +163,7 @@ function HeaderMin() {
                     </IconButton>
                 </Box>
                 <Box h={"32px"} pos={"relative"} w={"32px"} ml={"16px"}>
-                    <Avatar as={Button} id="compte" name={userToken?.username} src={user?.avatarUrl}
+                    <Avatar as={Button} id="compte" name={userToken?.username} src={`${BASE_URL}uploads/avatars/${user?.avatarUrl}`}
                     textAlign={"center"} verticalAlign={"top"}
                     padding={0}
                     w={"2rem"} h={"2rem"} minW={"2rem"}
@@ -199,7 +202,7 @@ function HeaderMin() {
                                         textDecor: "none"
                                     }}
                             >
-                                <Avatar as={"span"} name={userToken?.username} src={user?.avatarUrl}
+                                <Avatar as={"span"} name={userToken?.username} src={`${BASE_URL}uploads/avatars/${user?.avatarUrl}`}
                                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                                 pos={"relative"} verticalAlign={"top"}
                                 w={"2.5rem"} h={"2.5rem"}

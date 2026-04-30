@@ -1,6 +1,6 @@
 <?php
 
-$userId = $_POST['userId'];
+$userId = $_GET['id'];
 $username = $_POST['username'] ?? null;
 $gender = $_POST['gender'] ?? null;
 $avatar = $_FILES['avatar'] ?? null;

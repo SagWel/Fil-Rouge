@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `user_history` (
 CREATE TABLE IF NOT EXISTS `user_instruments` (
   `user_id` int(11) NOT NULL,
   `instrument_id` int(11) NOT NULL,
-  `level` int(11) DEFAULT 1,
+  `lvl` int(11) DEFAULT 1,
   PRIMARY KEY (`user_id`,`instrument_id`),
   KEY `fk_ui_inst` (`instrument_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

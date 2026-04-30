@@ -110,7 +110,7 @@ function updateProfil($pdo, $userId, $username = null, $gender = null, $avatar =
             foreach ($userInstruments as $inst) {
                 $insertInstrument->execute([
                     $userId,
-                    $inst['id'],
+                    $inst['instrument']['id'],
                     $inst['lvl']
                 ]);
             }

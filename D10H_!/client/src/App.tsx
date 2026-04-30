@@ -124,20 +124,20 @@ function App() {
 
                     {/* Route for profil editing */}
                     <Route path='/account' element={<PageAccount />} />
-                    <Route path='/account/notifications' element={<PageAccountNotifications />} />
+                    {/* <Route path='/account/notifications' element={<PageAccountNotifications />} />
                     <Route path='/account/devices' element={<PageAccountDevices />} />
                     <Route path='/account/display' element={<PageAccountDisplay />} />
                     <Route path='/account/share' element={<PageAccountShare />} />
                     <Route path='/account/country_selector' element={<PageAccountCountry />} />
 
-                    <Route path='/apps' element={<PageApps />} />
+                    <Route path='/apps' element={<PageApps />} /> */}
 
                     {/* Route to display search results */}
                     <Route path='/search' element={<PageSearchScores />} />
 
                     {/* Routes to display instruments */}
                     <Route path='/instruments/user' element={<PageUserInstruments />} />
-                    <Route path='/instruments/all' element={<AllInstruments />} />
+                    {/* <Route path='/instruments/all' element={<AllInstruments />} /> */}
                     
                     {/* Route to display scores based on the selected instrument */}
                     <Route path='/scores/:instrumentName' element={<PageSearchScoresInstrument />} />
@@ -147,9 +147,9 @@ function App() {
           
                     {/* Routes to display favorites */}
                     <Route path='/favoris' element={<Favoris />} />
-                    <Route path='/favoris/scorbraries' element={<Scorbraries />} />          
+                    {/* <Route path='/favoris/scorbraries' element={<Scorbraries />} />          
                     <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
-                    <Route path='/favoris/history' element={<History />} />
+                    <Route path='/favoris/history' element={<History />} /> */}
         
                 </Routes>
               </Box>

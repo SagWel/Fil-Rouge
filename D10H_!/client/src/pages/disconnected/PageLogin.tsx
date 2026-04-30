@@ -283,7 +283,8 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                                 <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                                 mr={"0.5rem"} color="#E53E3E" display={"block"}/>
                                                 {messageErrorPassword}
-                                            </FormErrorMessage>)}
+                                            </FormErrorMessage>
+                                        )}
                                     </FormControl>
                                     <Button type="submit"
                                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}

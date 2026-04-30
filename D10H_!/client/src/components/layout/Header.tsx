@@ -34,6 +34,11 @@ const Header: React.FC<IHeaderProps> = () => {
         const isMinimal = width <= Breakpoint
         const headerResponsiveWidth = isMinimal ? '80px' : '272px'
 
+        const host = import.meta.env.VITE_HOST
+        const port = import.meta.env.VITE_SERVER_PORT
+
+        const BASE_URL = `http://${host}:${port}/D10h_server/public/`
+
     /*Calling the Deezer API for search suggestions*/
     async function fetchDeezerSuggestions(query: string) {
         try {
@@ -450,7 +455,7 @@ const Header: React.FC<IHeaderProps> = () => {
                     </IconButton>
                 </Box>
                 <Box h={"32px"} pos={"relative"} w={"32px"} ml={"16px"}>
-                    <Avatar as={Button} id="compte" name={userToken?.username} src={user?.avatarUrl}
+                    <Avatar as={Button} id="compte" name={userToken?.username} src={`${BASE_URL}uploads/avatars/${user?.avatarUrl}`}
                     textAlign={"center"} verticalAlign={"top"}
                     padding={0}
                     w={"2rem"} h={"2rem"} minW={"2rem"}
@@ -489,7 +494,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                         textDecor: "none"
                                     }}
                             >
-                                <Avatar as={"span"} name={userToken?.username} src={user?.avatarUrl}
+                                <Avatar as={"span"} name={userToken?.username} src={`${BASE_URL}uploads/avatars/${user?.avatarUrl}`}
                                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                                 pos={"relative"} verticalAlign={"top"}
                                 w={"2.5rem"} h={"2.5rem"}
