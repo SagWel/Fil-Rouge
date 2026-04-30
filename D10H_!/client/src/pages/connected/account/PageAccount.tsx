@@ -49,6 +49,7 @@ import { useAuth } from "../../../hooks/useAuth"
 import type { GenderType } from "../../../types/user"
 import type { IInstrumentLvl, IInstrument } from "../../../types/instrument"
 import { difficultyLvl } from "../../../components/cards/ScoreCard"
+import UserInstruments from "../PageUserInstruments"
 
 export interface IPageAccountProps { }
 
@@ -120,11 +121,6 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
         
     }
 
-    /* Delete instrument in list */
-    const deleteInstrument = (id: number) => {
-        setUserInstruments(prevItems => prevItems.filter((_, i) => i !== id))
-    }
-
     const host = import.meta.env.VITE_HOST
     const port = import.meta.env.VITE_SERVER_PORT
 
@@ -148,6 +144,11 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
         }
     }
 
+    /* Delete instrument in list */
+    const deleteInstrument = (id: number) => {
+        setUserInstruments(prevItems => prevItems.filter((_, i) => i !== id))
+    }
+
     /* Add instrument in list */
     const handleOnClickAddInstrument = (e: Event) => {
         e.preventDefault()
@@ -162,6 +163,38 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
             setUserInstruments(prevInstrumentLvl => [...prevInstrumentLvl, currentUserInstrument])
             onClose()
         }
+    }
+
+    const handleReduceLvl = (ui : IInstrumentLvl) => {
+        const updateUserInstruments = userInstruments?.flatMap((userI: IInstrumentLvl) => {
+            if (userI.instrument.id === ui.instrument.id) {
+                if (userI.lvl === 1 && userInstruments.length > 1 && confirm("Vous allez supprimer l'instrument de votre liste. Est ce bien ce que vous voulez faire ?")) {
+                    return []
+                }
+
+                return [{ ...userI, lvl: userI.lvl - 1}]
+            }
+
+            return [userI]
+        })
+
+        setUserInstruments(updateUserInstruments)
+    }
+
+    const handleIncreaseLvl = (ui : IInstrumentLvl) => {
+        const updateUserInstruments = userInstruments?.flatMap((userI: IInstrumentLvl) => {
+             if (userI.instrument.id === ui.instrument.id) {
+                if (userI.lvl === 5) {
+                    return [userI]
+                }
+
+                return [{ ...userI, lvl: userI.lvl + 1}]
+             }
+
+             return [userI]
+        })
+
+        setUserInstruments(updateUserInstruments)
     }
 
     const [daysInMonth, setDaysInMonth] = useState<number>(31)
@@ -966,7 +999,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                             outline={"transparent solid 2px"} outlineOffset={"2px"}
                                             transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                             appearance={"none"}>
-                                            {userInstruments && userInstruments.map((ui: IInstrumentLvl, index) => (
+                                            {userInstruments?.map((ui: IInstrumentLvl, index) => (
                                                 <Flex key={index} w={"100%"} bg={"#4d4c50"} justifyContent={"space-between"} alignItems={"center"} ps={"1rem"} borderRadius={"0.375rem"}>
                                                     <Flex w={"100%"} alignItems={"center"} justifyContent={"space-between"} minH={'2rem'}>
                                                         <Flex w={"50%"} justifyContent={"space-between"}>
@@ -975,23 +1008,31 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                         </Flex>
                                                         <Flex flexDir={"row"} justifyContent={"center"} w={"50%"} alignItems={"center"} pos={'relative'}>
                                                             {difficultyLvl(ui.lvl)}
-                                                            {user?.userInstruments.includes(ui) &&
+                                                            {user?.userInstruments.some(userI => userI.instrument === ui.instrument) &&
                                                                 <Flex position={'absolute'} right={0} gap={1} mr={1}>
-                                                                    <Button
+                                                                    <Button isDisabled={userInstruments.length === 1 && ui.lvl === 1}
                                                                         p={0}
                                                                         h={'1.75rem'} w={'1.75rem'} minH={'1.75rem'} minW={'1.75rem'}
                                                                         bg={'transparent'}
                                                                         borderRadius={'full'}
+                                                                        onClick={(e) => {
+                                                                            e.preventDefault()
+                                                                            handleReduceLvl(ui)
+                                                                        }}
                                                                         _hover={{
                                                                             bg: '#a19fa4'
                                                                         }}>
                                                                         <RemoveIcon />
                                                                     </Button>
-                                                                    <Button
+                                                                    <Button isDisabled={ui.lvl === 5}
                                                                         p={0}
                                                                         h={'1.75rem'} w={'1.75rem'} minH={'1.75rem'} minW={'1.75rem'}
                                                                         bg={'transparent'}
                                                                         borderRadius={'full'}
+                                                                        onClick={(e) => {
+                                                                            e.preventDefault()
+                                                                            handleIncreaseLvl(ui)
+                                                                        }}
                                                                         _hover={{
                                                                             bg: '#a19fa4'
                                                                         }}>
@@ -1001,7 +1042,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                             }
                                                         </Flex>
                                                     </Flex>
-                                                    {(userInstruments.length > 1 && !user?.userInstruments.includes(ui)) &&
+                                                    {(userInstruments.length > 1 && !user?.userInstruments.some(userI => userI.instrument === ui.instrument)) &&
                                                         <Button
                                                             bg={"transparent"} p={0} pos={'absolute'} right={0} mr={3} minH={'2rem'} h={'2rem'} minW={'2rem'} w={'2rem'}
                                                             onClick={() => deleteInstrument(index)}
