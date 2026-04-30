@@ -137,7 +137,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
         const urlFetchCreatUserInstruments = import.meta.env.VITE_URL_FETCH_CREATUSERINSTRUMENTS
         try {
             if (userInstruments.length > 0) {
-                const res = await fetch(`http://${host}:${port}${urlFetchCreatUserInstruments}`, {
+                const res = await fetch(`http://${host}:${port}${urlFetchCreatUserInstruments}${user?.id}`, {
                     method : 'POST',
                     headers : {'Content-Type': 'application/json'},
                     body: JSON.stringify({
