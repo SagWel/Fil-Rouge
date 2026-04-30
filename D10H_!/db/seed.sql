@@ -65,7 +65,7 @@ INSERT INTO `users` (`id`, `external_id`, `username`, `email`, `password`, `crea
 -- Déchargement des données de la table `user_instruments`
 --
 
-INSERT INTO `user_instruments` (`user_id`, `instrument_id`, `level`) VALUES
+INSERT INTO `user_instruments` (`user_id`, `instrument_id`, `lvl`) VALUES
 (3, 1, 3);
 
 --
