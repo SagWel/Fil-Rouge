@@ -95,8 +95,9 @@ const Search: React.FC<ISearchProps> = () => {
     const filterDifficulty = difficulty === 0 || p.difficulty === difficulty
     const filterUserInstruments = !filteredUserInstruments || user?.userInstruments.find(ui => ui.instrument.name === p.instruments.currentInstrument.name)
     const filterUserLvl = !filteredUserLvl || user?.userInstruments.find(ui => ui.lvl === p.difficulty)
+    const filterbyExplicitContent = !(p.song.isExplicit && (user?.filterExplicit || user?.isChildAccount))
 
-        return filterArtist && filterMorceau && filterGender && filterDifficulty && filterUserInstruments && filterUserLvl
+        return filterArtist && filterMorceau && filterGender && filterDifficulty && filterUserInstruments && filterUserLvl && filterbyExplicitContent
     })
 
     /* sorted scores with user sort choice */

@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 /* Import component */
 import ScoreRender from "../../components/ScoreRender";
@@ -21,10 +21,16 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
 
     const { morceauId } = useParams()
     const { user } = useAuth()
+    const navigate = useNavigate()
 
     const host = import.meta.env.VITE_HOST
     const port = import.meta.env.VITE_SERVER_PORT
     const BASE_URL = `http://${host}:${port}/D10h_server/public/`
+
+    if ((user?.filterExplicit || user?.isChildAccount) && score?.song.isExplicit) {
+        alert('Ce morceau contient des propos explicites et ne peux donc pas être consulté par vous en raison de votre age ou de vos réglages')
+        navigate(-1)
+    }
 
     const fetchScore = async (URL: string) => {
 

@@ -14,7 +14,7 @@ function getUserByEmail($pdo, $email)
 function getUserProfil($pdo, $userId)
 {
     $sql = $pdo->prepare(
-        'SELECT avatar_url, age, birthday, gender, language FROM user_profiles WHERE user_id = ?'
+        'SELECT avatar_url, age, birthday, gender, filter_explicit, is_child_account, language FROM user_profiles WHERE user_id = ?'
     );
 
     $sql->execute([$userId]);
@@ -43,10 +43,12 @@ function creatUser($pdo, $email, $passwordHash, $username = null, $age = null, $
         $id = $pdo->lastInsertId();
 
         $sql2 = $pdo->prepare(
-            'INSERT INTO user_profiles (user_id, age, gender) VALUES (?, ?, ?)'
+            'INSERT INTO user_profiles (user_id, age, gender, is_child_account) VALUES (?, ?, ?, ?)'
         );
 
-        $sql2->execute([$id, $age, $identity]);
+        $isChildAccount = $age < 18;
+
+        $sql2->execute([$id, $age, $identity, $isChildAccount ? 1 : 0]);
 
         $pdo->commit();
     } catch (PDOException $e) {
@@ -88,10 +90,11 @@ function updateProfil($pdo, $userId, $username = null, $gender = null, $avatar =
 
         $birthdayObj = $birthday ? new DateTime($birthday) : new DateTime($user['birthday']);
         $age = $birthdayObj->diff(new DateTime())->y;
+        $isChildAccount = $age < 18;
 
         $sql2 = $pdo->prepare(
             'UPDATE user_profiles
-            SET avatar_url = ?, birthday = ?, age = ?, gender = ?
+            SET avatar_url = ?, birthday = ?, age = ?, gender = ?, is_child_account = ?
             WHERE user_id = ?'
         );
         $sql2->execute([
@@ -99,6 +102,7 @@ function updateProfil($pdo, $userId, $username = null, $gender = null, $avatar =
             $birthday ?? $user['birthday'],
             $age,
             $gender ?? $user['gender'],
+            $isChildAccount ? 1 : 0,
             $userId
         ]);
 

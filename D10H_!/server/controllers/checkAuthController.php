@@ -17,6 +17,8 @@ $jsonPayload = base64_decode(str_replace(['-', '_', ''], ['+', '/', '='], $parts
 
 $payload = json_decode($jsonPayload, true);
 
+$secretKey = $_ENV['MA_SUPER_CLEF_SECRETE'];
+
 $signatureTest = hash_hmac('sha256', $parts[0] . "." . $parts[1], $secretKey, true);
 $base64UrlSignatureTest = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signatureTest));
 
@@ -65,6 +67,8 @@ echo json_encode([
         "birthday" => $profiUser['birthday'],
         "gender" => $profiUser['gender'],
         "language" => $profiUser['language'],
+        "filterExplicit" => (int)$profiUser['filter_explicit'] === 1 ? true : false,
+        "isChildAccount" => (int)$profiUser['is_child_account'] === 1 ? true : false,
         "userInstruments" => $userInstrumentLvl
     ],
     "isFirstLogin" => $firstLogin

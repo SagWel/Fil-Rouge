@@ -6,15 +6,22 @@ import { LeftCarouselIcon, RightCarouselIcon } from "./Svg"
 
 /* IMport type */
 import type { IScore } from "../types/Score"
+import { useAuth } from "../hooks/useAuth"
+import ScoreCard from "./cards/ScoreCard"
 
 export interface IScoreCarouselProps {
     data: IScore[],
-    renderItem(e: IScore): ReactNode,
     id: string,
     title: string
 }
 
-const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, renderItem, id, title }) => {
+const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, id, title }) => {
+
+    const { user } = useAuth()    
+
+    const filteredForChildData = data.filter((p: IScore) => {
+        return p.song.isExplicit === false 
+    })
 
     /* States for carousels moves*/
     const [translate, setTranslate] = useState<number>(0)
@@ -157,7 +164,14 @@ const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, renderItem, id, ti
                             position={"relative"}
                             overflow={"visible"}
                             listStyleType={"none"}>
-                                {data.map(e => renderItem(e))}
+                                { (user?.isChildAccount ||  user?.filterExplicit) ? 
+                                filteredForChildData.map(e => 
+                                    <ScoreCard key={e.id} score={e} currentInstrument={e.instruments.currentInstrument.name} />
+                                ) :
+                                data.map(e => 
+                                    <ScoreCard key={e.id} score={e} currentInstrument={e.instruments.currentInstrument.name} />
+                                )
+                                }
                             </List>
                         </Box>
                     </Box>
