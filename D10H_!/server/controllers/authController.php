@@ -31,6 +31,8 @@ $payload = json_encode([
     'exp' => time() + 86400
 ]);
 
+$secretKey = $_ENV['MA_SUPER_CLEF_SECRETE'];
+
 $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
 $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
 
@@ -55,7 +57,7 @@ setcookie(
 );
 
 $firstLogin = isFirstLogin($pdo, $email);
-$profiUser = getUserProfil($pdo, $user['id']);
+$profilUser = getUserProfil($pdo, $user['id']);
 $userInstruments = getUserInstruments($pdo, $user['id']);
 $userInstrumentLvl = [];
 
@@ -79,11 +81,13 @@ echo json_encode([
         "id" => (int)$user['id'],
         "email" => $user['email'],
         "username" => $user['username'],
-        "avatarUrl" => $profiUser['avatar_url'],
-        "age" => (int)$profiUser['age'],
-        "birthday" => $profiUser['birthday'],
-        "gender" => $profiUser['gender'],
-        "language" => $profiUser['language'],
+        "avatarUrl" => $profilUser['avatar_url'],
+        "age" => (int)$profilUser['age'],
+        "birthday" => $profilUser['birthday'],
+        "gender" => $profilUser['gender'],
+        "language" => $profilUser['language'],
+        "filterExplicit" => (int)$profilUser['filter_explicit'] === 1 ? true : false,
+        "isChildAccount" => (int)$profilUser['is_child_account'] === 1 ? true : false,
         "userInstruments" => $userInstrumentLvl
     ],
     "isFirstLogin" => $firstLogin

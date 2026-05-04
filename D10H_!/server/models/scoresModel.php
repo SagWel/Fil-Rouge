@@ -5,7 +5,7 @@ function getScoreById($pdo, $id)
     $sql = $pdo->prepare(
         'SELECT
             s.*,
-            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration,
+            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
             al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
             g.id AS gender_id, g.name AS gender_name,
@@ -59,7 +59,7 @@ function getNewsScores($pdo)
     $sql = $pdo->prepare(
         'SELECT
             s.*,
-            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration,
+            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
             al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
             g.id AS gender_id, g.name AS gender_name,
@@ -92,7 +92,7 @@ function getPopularScores($pdo)
     $sql = $pdo->prepare(
         'SELECT
             s.*,
-            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration,
+            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
             al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
             g.id AS gender_id, g.name AS gender_name,
@@ -126,7 +126,7 @@ function getSuggestionsScores($pdo, $userId)
     $sql = $pdo->prepare(
         'SELECT
             s.*,
-            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration,
+            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
             al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
             g.id AS gender_id, g.name AS gender_name,
@@ -167,7 +167,7 @@ function getUserHistoryScores($pdo, $userId)
         'SELECT
             h.played_at,
             s.*,
-            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration,
+            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
             al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
             g.id AS gender_id, g.name AS gender_name,
@@ -200,7 +200,7 @@ function getScoresByInstrument($pdo, $instrumentId)
     $sql = $pdo->prepare(
         'SELECT
             s.*,
-            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration,
+            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
             al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
             g.id AS gender_id, g.name AS gender_name,
@@ -237,7 +237,7 @@ function getSearchScores($pdo, $searchTerm)
     $sql = $pdo->prepare(
         'SELECT
             s.*,
-            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration,
+            so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
             al.id AS album_id, al.title AS album_title, al.cover AS album_cover, al.deezer_link AS album_deezer_link,
             g.id AS gender_id, g.name AS gender_name,

@@ -39,6 +39,8 @@ $payload = json_encode([
     'exp' => time() + 86400
 ]);
 
+$secretKey = $_ENV['MA_SUPER_CLEF_SECRETE'];
+
 $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
 $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
 
@@ -71,6 +73,9 @@ echo json_encode([
         "age" => (int)$profilUser['age'],
         "birthday" => $profilUser['birthday'],
         "gender" => $profilUser['gender'],
+        "language" => $profilUser['language'],
+        "filterExplicit" => (int)$profilUser['filter_explicit'] === 1 ? true : false,
+        "isChildAccount" => (int)$profilUser['is_child_account'] === 1 ? true : false,
         "userInstruments" => $userInstrumentLvl
     ],
     "isFirstLogin" => $firstLogin

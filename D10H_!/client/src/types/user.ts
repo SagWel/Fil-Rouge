@@ -12,6 +12,8 @@ export interface IUsers extends JwtPayload {
     birthday: Date,
     gender: GenderType,
     language: string,
+    filterExplicit: boolean,
+    isChildAccount: boolean,
     userInstruments: IInstrumentLvl[]
 }
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
 // SVGs import from a unique file
-import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon, RightCarouselIcon } from "../Svg";
+import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon, RightCarouselIcon } from "../Svg.tsx";
 
 // Context
 import { useSearch } from '../../context/SearchContext'

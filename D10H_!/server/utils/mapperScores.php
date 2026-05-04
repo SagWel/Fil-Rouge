@@ -90,7 +90,8 @@ function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrum
             "id" => (int)($row['gender_id'] ?? 0),
             "name" => ucwords($row['gender_name']) ?? "",
             "picture" => ""
-        ]
+        ],
+        "isExplicit" => (int)$row['is_explicit'] === 1 ? true : false
     ];
 
     return $score = [

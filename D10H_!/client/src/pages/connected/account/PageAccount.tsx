@@ -81,10 +81,24 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
 
     const disabled = true
 
+    
+    const img = new window.Image()
+
+    img.onload = () => {
+        setUserImgExist(true)
+    }
+
+    img.onerror = () => {
+        setUserImgExist(false)
+    }
+
+    if (user) img.src = user.avatarUrl
+
     const [opacity, setOpacity] = useState<"0" | "1">("0")
     const [scale, setScale] = useState<"0" | "1">("0")
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+    const [userImgExist, setUserImgExist] = useState<boolean>(false)
     const [userGender, setUserGender] = useState<GenderType | undefined>(user?.gender)
     const [userPseudo, setUserPseudo] = useState<string | undefined>(user?.username)
     const [userInstruments, setUserInstruments] = useState<IInstrumentLvl[] | undefined>(user?.userInstruments)
@@ -626,7 +640,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                 }
                                             }}>
                                             {/* User image or */}
-                                            <Image alt={user?.username} src={user?.avatarUrl ? `${BASE_URL}uploads/avatars/${user?.avatarUrl}` : previewUrl || avatarDefault}
+                                            <Image alt={user?.username} src={(user?.avatarUrl && userImgExist) ? `${BASE_URL}uploads/avatars/${user?.avatarUrl}` : previewUrl || avatarDefault}
                                                 display={"inline-block"}
                                                 h={'125px'} w={'125px'}
                                                 verticalAlign={'top'}

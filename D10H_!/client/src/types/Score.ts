@@ -112,6 +112,7 @@ export interface ISong {
     artist: IArtist,
     album: IAlbum,
     gender: IGender,
+    isExplicit: boolean
 }
 
 export interface IScore {

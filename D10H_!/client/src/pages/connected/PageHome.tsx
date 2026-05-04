@@ -24,7 +24,7 @@ import { AddCircleIcon, DisableIcon } from "../../components/Svg";
 
 /* Import conponents */
 import Carousel from "../../components/ScoreCarousel"
-import ScoreCard, {difficultyLvl} from "../../components/cards/ScoreCard";
+import {difficultyLvl} from "../../components/cards/ScoreCard";
 
 /* Import hook */
 import { useAuth } from "../../hooks/useAuth";
@@ -70,6 +70,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
             }
 
             const data = await res.json()
+            
             set(data)
         } catch (error) {
             console.error('Impossible de récupérer les données des partitions:', error);
@@ -86,9 +87,7 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
             }
 
             const data = await res.json()
-            if (data) {                
-                setInstruments(data)             
-            }
+            setInstruments(data)
             
             
         } catch (error) {
@@ -178,30 +177,22 @@ const PageAcceuil: React.FC<IPageAcceuilProps> = () => {
     return(
         <Box id="homeUser"
         overflowY={"auto"} height={"100%"} mb={"70px"} position={"relative"}>
-            {(historyScores.length > 0) && 
+            {historyScores.length > 0 && 
             <Carousel id="recents-carousel"
-            data={historyScores.slice(0, 12)} title="Partitions joués récement"
-            renderItem={(item:IScore) => (
-                <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
-            )} />}
+            data={historyScores.slice(0, 12)} title="Partitions joués récement"/>}
 
+            {suggestionsScores.length > 0 && 
             <Carousel id="suggestions-carousel"
-            data={suggestionsScores} title="Suggestions"
-            renderItem={(item:IScore) => (
-                <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
-            )}/>
+            data={suggestionsScores} title="Suggestions"/>}
 
+            {newsScores.length > 0 &&
             <Carousel id="news-carousel"
-            data={newsScores} title="Nouveautés"
-            renderItem={(item:IScore) => (
-                <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
-            )}/>
+            data={newsScores} title="Nouveautés"/>}
 
+            {popularScores.length > 0 &&
             <Carousel id="popular-carousel"
-            data={popularScores} title="Partitions populaires"
-            renderItem={(item:IScore) => (
-                <ScoreCard key={item.id} score={item} currentInstrument={item.instruments.currentInstrument.name} />
-            )}/>
+            data={popularScores} title="Partitions populaires"/>}
+
             <Modal isOpen={isFirstLogin} onClose={onClose}>
                 <ModalOverlay background={"rgba(0, 0, 0, 0.48)"}
                 style={{

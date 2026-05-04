@@ -11,6 +11,7 @@ import { DownChevronIcon, UpChevronIcon } from "../../components/Svg";
 import ScoreCard, { difficultyLvl } from '../../components/cards/ScoreCard';
 import type { Item } from "../../components/MenuSelect";
 import MenuSelect from "../../components/MenuSelect";
+import { useAuth } from "../../hooks/useAuth";
 
 export interface ISearchScoresInstrumentProps {}
 
@@ -18,6 +19,8 @@ const Search: React.FC<ISearchScoresInstrumentProps> = () => {
 
     /* retrieve instrument name from the URL */
     const { instrumentName } = useParams();
+
+    const { user } = useAuth()
 
     /* State to stock scores */
     const [scores, setScores] = useState<IScore[] | []>([])
@@ -87,8 +90,9 @@ const Search: React.FC<ISearchScoresInstrumentProps> = () => {
         const filterMorceau = morceau === '' || p.song.title === morceau
         const filterGender = gender === '' || p.song.gender.name === gender
         const filterDifficulty = difficulty === 0 || p.difficulty === difficulty
+        const filterbyExplicitContent = !(p.song.isExplicit && (user?.filterExplicit || user?.isChildAccount))
 
-        return filterArtist && filterMorceau && filterGender && filterDifficulty
+        return filterArtist && filterMorceau && filterGender && filterDifficulty && filterbyExplicitContent
     })
 
     /* sorted scores with user sort choice */
