@@ -131,10 +131,6 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
         if (inputType === 'text') setInputType('password')
     }
 
-    const handleDisplayModalResetPassword = () => {
-
-    }
-
     const handleOnClick = () => {
         if (opacity === "0" && scale === "0") {
             setOpacity('1')
@@ -201,9 +197,9 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
             if (userI.instrument.id === ui.instrument.id) {
                 if (userI.lvl === 1 && userInstruments.length > 1 && confirm("Vous allez supprimer l'instrument de votre liste. Est ce bien ce que vous voulez faire ?")) {
                     return []
+                } else if (userI.lvl > 1) {
+                    return [{ ...userI, lvl: userI.lvl - 1}]
                 }
-
-                return [{ ...userI, lvl: userI.lvl - 1}]
             }
 
             return [userI]
@@ -266,7 +262,9 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
             })
 
             if (!res.ok) {
-                throw new Error(`Erreur HTTP: ${res.status}`);
+                const errorBody = await res.json()
+                
+                throw errorBody;
             }
 
             const data = await res.json()
@@ -278,9 +276,11 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                 setUpdateMessage('')
                 setUpdateValidating(true)
             }, 5000)
+            
         } catch (error) {
             console.error("Erreur lors de l'update du profil : ", error);
-            setUpdateMessage('Erreur lors de la modification de vos données')
+            
+            setUpdateMessage(`Erreur lors de la modification de vos données : ${error.message}` )
             setUpdateValidating(false)
             setUpdateModal(true)
             setTimeout(() => {
@@ -625,7 +625,6 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                     opacity: '.24'
                                                 }
                                             }}>
-                                            {/* User image or */}
                                             <Image alt={user?.username} src={user?.avatarUrl ? `${BASE_URL}uploads/avatars/${user?.avatarUrl}` : previewUrl || avatarDefault}
                                                 display={"inline-block"}
                                                 h={'125px'} w={'125px'}
@@ -669,7 +668,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                         m={0}
                                         fontFamily={'"Deezer Product",Tahoma,Arial,sans-serif'} fontWeight={'700'} fontSize={'32px'}
                                         lineHeight={'32px'} textDecor={'none'} textAlign={'center'}>
-                                        {user?.username}
+                                        {userPseudo}
                                     </Heading>
                                     {/* Partie affichage abonnement 
                                     <Text as={'p'} 
