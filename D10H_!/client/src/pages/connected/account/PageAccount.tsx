@@ -79,6 +79,8 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
     /* Modal management */
     const { isOpen, onOpen, onClose } = useDisclosure()
 
+    const disabled = true
+
     const [opacity, setOpacity] = useState<"0" | "1">("0")
     const [scale, setScale] = useState<"0" | "1">("0")
     const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -399,7 +401,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                             m={0} p={0} pl={"44px"}
                             fontSize={"16px"}
                             color={"#a19fa4"}>
-                            <Text as={Link} to={"/account/devices"}
+                            <Text as={Link} to={"/account/devices"} title="prochainement"
                                 display={"block"}
                                 pb={"16px"}
                                 color={"#a19fa4"}
@@ -410,6 +412,15 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                 lineHeight={"24px"} textDecor={'none'} cursor={'pointer'}
                                 transitionDuration={'.15s'} transitionProperty={"border-color, color"}
                                 boxSizing="border-box"
+                                onClick={(e) => disabled && e.preventDefault()}
+                                sx={disabled ? {
+                                    opacity: 0.5,
+                                    cursor: 'not-allowed',
+                                    textDecor: 'none',
+                                    _hover : {
+                                        borderColor: 'none'
+                                    }
+                                } : {}}
                                 _hover={{
                                     borderColor: '#a19fa4'
                                 }}>
@@ -422,7 +433,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                             m={0} p={0} pl={"44px"}
                             fontSize={"16px"}
                             color={"#a19fa4"}>
-                            <Text as={Link} to={"/apps"} target="_blanket"
+                            <Text as={Link} to={"/apps"} target="_blanket" title="prochainement"
                                 display={"block"}
                                 pb={"16px"}
                                 color={"#a19fa4"}
@@ -433,6 +444,15 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                 lineHeight={"24px"} textDecor={'none'} cursor={'pointer'}
                                 transitionDuration={'.15s'} transitionProperty={"border-color, color"}
                                 boxSizing="border-box"
+                                onClick={(e) => disabled && e.preventDefault()}
+                                sx={disabled ? {
+                                    opacity: 0.5,
+                                    cursor: 'not-allowed',
+                                    textDecor: 'none',
+                                    _hover : {
+                                        borderColor: 'none'
+                                    }
+                                } : {}}
                                 _hover={{
                                     borderColor: '#a19fa4'
                                 }}>
@@ -606,7 +626,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                 }
                                             }}>
                                             {/* User image or */}
-                                            <Image alt={user?.username} src={previewUrl || `${BASE_URL}uploads/avatars/${user?.avatarUrl}` || avatarDefault}
+                                            <Image alt={user?.username} src={user?.avatarUrl ? `${BASE_URL}uploads/avatars/${user?.avatarUrl}` : previewUrl || avatarDefault}
                                                 display={"inline-block"}
                                                 h={'125px'} w={'125px'}
                                                 verticalAlign={'top'}

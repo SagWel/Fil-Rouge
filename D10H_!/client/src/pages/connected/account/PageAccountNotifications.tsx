@@ -37,6 +37,8 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
         }
     }
 
+    const disabled = true
+
     return(
         <>
             <chakra.nav
@@ -101,7 +103,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                             m={0} p={0} pl={"44px"}
                             fontSize={"16px"}
                             color={"#a19fa4"}>
-                            <Text as={Link} to={"/account/devices"}
+                            <Text as={Link} to={"/account/devices"} title="prochainement"
                                 display={"block"}
                                 pb={"16px"}
                                 color={"#a19fa4"}
@@ -112,6 +114,14 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                 lineHeight={"24px"} textDecor={'none'} cursor={'pointer'}
                                 transitionDuration={'.15s'} transitionProperty={"border-color, color"}
                                 boxSizing="border-box"
+                                sx={disabled ? {
+                                    opacity: 0.5,
+                                    cursor: 'not-allowed',
+                                    textDecor: 'none',
+                                    _hover : {
+                                        borderColor: 'none'
+                                    }
+                                } : {}}
                                 _hover={{
                                     borderColor: '#a19fa4'
                                 }}>
@@ -124,7 +134,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                             m={0} p={0} pl={"44px"}
                             fontSize={"16px"}
                             color={"#a19fa4"}>
-                            <Text as={Link} to={"/apps"} target="_blanket"
+                            <Text as={Link} to={"/apps"} target="_blanket" title="prochainement"
                                 display={"block"}
                                 pb={"16px"}
                                 color={"#a19fa4"}
@@ -135,6 +145,14 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                 lineHeight={"24px"} textDecor={'none'} cursor={'pointer'}
                                 transitionDuration={'.15s'} transitionProperty={"border-color, color"}
                                 boxSizing="border-box"
+                                sx={disabled ? {
+                                    opacity: 0.5,
+                                    cursor: 'not-allowed',
+                                    textDecor: 'none',
+                                    _hover : {
+                                        borderColor: 'none'
+                                    }
+                                } : {}}
                                 _hover={{
                                     borderColor: '#a19fa4'
                                 }}>
