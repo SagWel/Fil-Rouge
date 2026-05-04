@@ -592,22 +592,22 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                     borderRadius={'0.5rem'} border={'1px solid #4e4c51'}>
                     <Box>
                         <Heading as={'h2'}
-                            m={0}
-                            fontFamily={'"Deezer Product",Tahoma,Arial,sans-serif'} fontWeight={'700'} fontSize={'32px'}
-                            lineHeight={'32px'} textDecor={'none'}>
+                        m={0}
+                        fontFamily={'"Deezer Product",Tahoma,Arial,sans-serif'} fontWeight={'700'} fontSize={'32px'}
+                        lineHeight={'32px'} textDecor={'none'}>
                             Mes informations
                         </Heading>
                         <chakra.hr aria-orientation="horizontal"
-                            mt={'0.75rem'} mb={'1rem'}
-                            w={'full'}
-                            opacity={'0.1 !important'}
-                            borderWidth={'0 0 1px'} borderColor={'inherit'} borderStyle={'solid'} />
+                        mt={'0.75rem'} mb={'1rem'}
+                        w={'full'}
+                        opacity={'0.1 !important'}
+                        borderWidth={'0 0 1px'} borderColor={'inherit'} borderStyle={'solid'} />
                         <Stack gap={'1.5rem'}
-                            marginInline={'auto'}
-                            maxW={'640px'} w={"100%"}>
+                        marginInline={'auto'}
+                        maxW={'640px'} w={"100%"}>
                             <Stack align={'center'} gap={'1.5rem'}>
                                 <Box
-                                    borderRadius={'full'} overflow={'hidden'} flex={'0 0 auto'}>
+                                borderRadius={'full'} overflow={'hidden'} flex={'0 0 auto'}>
                                     <chakra.figure role="group"
                                         display={'inline-block'}
                                         pos={'relative'}
