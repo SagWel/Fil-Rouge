@@ -23,6 +23,7 @@ const Search: React.FC<ISearchProps> = () => {
     const [searchParams] = useSearchParams()
     const query = searchParams.get('q')
     const [safeQuery, setSafeQuery] = useState<string>('')
+    console.log('Query : ', query);    
 
     /* State to stock scores */
     const [scores, setScores] = useState<IScore[]>([])
@@ -35,6 +36,7 @@ const Search: React.FC<ISearchProps> = () => {
     const [selectedSort, setSelectedSort] = useState<Item | null>(null)
     const [filteredUserInstruments, setFilteredUserInstruments] = useState<boolean>(true)
     const [filteredUserLvl, setFilteredUserLvl] = useState<boolean>(true)
+    const [lvlPreference, setLvlPreference] = useState<boolean>(filteredUserLvl)
 
     /* function to retrive scores on database */
     const fetchScores = async (URL: string) => {
@@ -54,25 +56,6 @@ const Search: React.FC<ISearchProps> = () => {
         }
     }
 
-    /* variables to store the various data from the scores for the options of the different select  */
-    const allartists: string[] = []
-    const allMorceaux: string[] = []
-    const allGenders: string[] = []
-    const allDifficultes: number[] = []
-
-    scores.forEach(p => {
-        allartists.push(p.song.artist.name)
-        allMorceaux.push(p.song.title)
-        allGenders.push(p.song.gender.name)
-        allDifficultes.push(p.difficulty)
-    });
-
-    /* sorted data from the scores alphabetically */
-    const artists = [...new Set(allartists)].sort()
-    const morceaux = [...new Set(allMorceaux)].sort()
-    const genders = [...new Set(allGenders)].sort()
-    const difficultes = [...new Set(allDifficultes)].sort()
-
     /*sorting methodes */
     const sorting: Item[] = [
         {id: "A-Z_asc", label: "alphabétique", icon: UpChevronIcon},
@@ -89,16 +72,47 @@ const Search: React.FC<ISearchProps> = () => {
 
     /* filtered scores with user selections */
     const filteredScores = scores.filter((p: IScore) => {
-    const filterArtist = artist === '' || p.song.artist.name === artist
-    const filterMorceau = morceau === '' || p.song.title === morceau
-    const filterGender = gender === '' || p.song.gender.name === gender
-    const filterDifficulty = difficulty === 0 || p.difficulty === difficulty
-    const filterUserInstruments = !filteredUserInstruments || user?.userInstruments.find(ui => ui.instrument.name === p.instruments.currentInstrument.name)
-    const filterUserLvl = !filteredUserLvl || user?.userInstruments.find(ui => ui.lvl === p.difficulty)
-    const filterbyExplicitContent = !(p.song.isExplicit && (user?.filterExplicit || user?.isChildAccount))
+    
+        const filterArtist = artist === '' || p.song.artist.name === artist;
+        const filterMorceau = morceau === '' || p.song.title === morceau;
+        const filterGender = gender === '' || p.song.gender.name === gender;
+        const filterDifficulty = difficulty === 0 || p.difficulty === difficulty;
 
-        return filterArtist && filterMorceau && filterGender && filterDifficulty && filterUserInstruments && filterUserLvl && filterbyExplicitContent
-    })
+        const userInst = user?.userInstruments?.find(ui => ui.instrument.name === p.instruments.currentInstrument.name);
+        
+        const filterUserInstruments = !filteredUserInstruments || !!userInst;
+
+        const filterUserLvl = !filteredUserLvl || (!!userInst && Number(p.difficulty) <= (Number(userInst.lvl) + 1));
+
+        const isExplicit = p.song.isExplicit === true;
+        const filterbyExplicitContent = !(isExplicit && (user?.filterExplicit === 'hidden' || user?.isChildAccount));
+
+        return filterArtist && filterMorceau && filterGender && filterDifficulty && 
+            filterUserInstruments && filterUserLvl && filterbyExplicitContent;
+    });
+
+     /* variables to store the various data from the scores for the options of the different select  */
+    const allartists: string[] = []
+    const allMorceaux: string[] = []
+    const allGenders: string[] = []
+    const allDifficultes: number[] = []
+
+    filteredScores.forEach(p => {
+        allartists.push(p.song.artist.name)
+        allMorceaux.push(p.song.title)
+        allGenders.push(p.song.gender.name)
+        allDifficultes.push(p.difficulty)
+    });
+
+    /* sorted data from the scores alphabetically */
+    const artists = [...new Set(allartists)].sort()
+    const morceaux = [...new Set(allMorceaux)].sort()
+    const genders = [...new Set(allGenders)].sort()
+    const difficultes = [...new Set(allDifficultes)].sort()
+
+    console.log('Partitions : ', scores);
+    console.log('Partitions filtré : ', filteredScores);
+    console.log("Instruments de l'utilisateur", user?.userInstruments);
 
     /* sorted scores with user sort choice */
     const sortedScores = [...filteredScores].sort((a: IScore, b: IScore) => {
@@ -242,13 +256,28 @@ const Search: React.FC<ISearchProps> = () => {
                 <Checkbox isChecked={filteredUserInstruments} 
                 colorScheme="gray" flexDir={'row-reverse'} size={"sm"} minW={"10rem"}  gap={2}
                 color={"white"} 
-                onChange={(e) => setFilteredUserInstruments(e.target.checked)} >
+                onChange={(e) => {
+                    const isChecked = e.target.checked
+                    setFilteredUserInstruments(isChecked)
+
+                    if (isChecked) {
+                        setFilteredUserLvl(lvlPreference)
+                    } else {
+                        setFilteredUserLvl(false)
+                    }
+                }}
+                >
                     Mes instruments
                 </Checkbox>
-                <Checkbox isChecked={filteredUserLvl && filteredUserInstruments} 
+                <Checkbox isChecked={filteredUserLvl} isDisabled={!filteredUserInstruments}
                 colorScheme="gray" flexDir={'row-reverse'} size={"sm"} minW={"10rem"} gap={2}
                 color={"white"} 
-                onChange={(e) => setFilteredUserLvl(e.target.checked)} >
+                onChange={(e) => {
+                    const isChecked = e.target.checked
+                    setFilteredUserLvl(isChecked)
+                    setLvlPreference(isChecked)
+                }} 
+                >
                     Mon niveau
                 </Checkbox>
                 </Stack>
@@ -257,8 +286,8 @@ const Search: React.FC<ISearchProps> = () => {
             {/*Search results*/}
             {sortedScores.length === 0 ? 
             <Box textAlign={"center"}>
-                <Text color={"white"}>
-                    Aucune partition trouvée pour la rechercher "{safeQuery}"
+                <Text color={"#a19fa4"}>
+                    Aucune partition trouvée pour la rechercher "{safeQuery.length > 0 ? safeQuery : query}"
                 </Text>
                 <Button
                 display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
@@ -271,7 +300,22 @@ const Search: React.FC<ISearchProps> = () => {
                 borderRadius={'0.75rem'}
                 outline={'transparent solid 2px'} outlineOffset={'0px'}
                 transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
-                appearance={'none'} userSelect={'none'} cursor={'pointer'}>
+                appearance={'none'} userSelect={'none'} cursor={'pointer'}
+                _active={{
+                    color : "#e2dfe6",
+                    background : "#ca97ff"
+                }}
+                _focus={{
+                    zIndex : "1"
+                }}
+                _focusVisible={{
+                    boxShadow : "none",
+                    outlineColor : "#ca97ff"
+                }}
+                _hover={{
+                    color: "#f5f2f8",
+                    background: "#bb73ff"
+                }}>
                     Demander une partition
                 </Button>
             </Box>

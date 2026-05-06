@@ -2,11 +2,11 @@
 
 function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrument = null)
 {
-    $instrumentsNames = explode(',', $row['all_instruments_names']);
-    $instrumentsIds = explode(',', $row['all_instruments_ids']);
-    $instrumentsRoles = explode(',', $row['all_instruments_roles']);
-    $instrumentsImgs = explode(',', $row['all_instruments_images']);
-    $instrumentsCurrent = explode(',', $row['all_is_current']);
+    $instrumentsNames = explode(',', $row['all_instruments_names'] ?? '');
+    $instrumentsIds = explode(',', $row['all_instruments_ids'] ?? '');
+    $instrumentsRoles = explode(',', $row['all_instruments_roles'] ?? '');
+    $instrumentsImgs = explode(',', $row['all_instruments_images'] ?? '');
+    $instrumentsCurrent = explode(',', $row['all_is_current'] ?? '');
 
     $currentInstrument = null;
 

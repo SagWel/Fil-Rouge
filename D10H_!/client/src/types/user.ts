@@ -12,7 +12,7 @@ export interface IUsers extends JwtPayload {
     birthday: Date,
     gender: GenderType,
     language: string,
-    filterExplicit: boolean,
+    filterExplicit: 'not_filtered' | 'not_suggested' | 'hidden',
     isChildAccount: boolean,
     userInstruments: IInstrumentLvl[]
 }

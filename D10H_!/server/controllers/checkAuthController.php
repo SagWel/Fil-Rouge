@@ -67,7 +67,7 @@ echo json_encode([
         "birthday" => $profiUser['birthday'],
         "gender" => $profiUser['gender'],
         "language" => $profiUser['language'],
-        "filterExplicit" => (int)$profiUser['filter_explicit'] === 1 ? true : false,
+        "filterExplicit" => $profiUser['filter_explicit'],
         "isChildAccount" => (int)$profiUser['is_child_account'] === 1 ? true : false,
         "userInstruments" => $userInstrumentLvl
     ],

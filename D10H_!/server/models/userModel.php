@@ -43,12 +43,12 @@ function creatUser($pdo, $email, $passwordHash, $username = null, $age = null, $
         $id = $pdo->lastInsertId();
 
         $sql2 = $pdo->prepare(
-            'INSERT INTO user_profiles (user_id, age, gender, is_child_account) VALUES (?, ?, ?, ?)'
+            'INSERT INTO user_profiles (user_id, age, gender, is_child_account, filter_explicit) VALUES (?, ?, ?, ?, ?)'
         );
 
         $isChildAccount = $age < 18;
 
-        $sql2->execute([$id, $age, $identity, $isChildAccount ? 1 : 0]);
+        $sql2->execute([$id, $age, $identity, $isChildAccount ? 1 : 0, $isChildAccount ? "hidden" : 'not-filtered']);
 
         $pdo->commit();
     } catch (PDOException $e) {

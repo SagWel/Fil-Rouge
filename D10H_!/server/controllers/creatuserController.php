@@ -74,7 +74,7 @@ echo json_encode([
         "birthday" => $profilUser['birthday'],
         "gender" => $profilUser['gender'],
         "language" => $profilUser['language'],
-        "filterExplicit" => (int)$profilUser['filter_explicit'] === 1 ? true : false,
+        "filterExplicit" => $profilUser['filter_explicit'],
         "isChildAccount" => (int)$profilUser['is_child_account'] === 1 ? true : false,
         "userInstruments" => $userInstrumentLvl
     ],

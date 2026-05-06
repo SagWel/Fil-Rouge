@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakra-ui/react";
+import { Box, Link as ChakraLink, Flex, Heading, Button, List, ListItem, chakra, Grid, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import type { IScore } from "../../../types/Score";
 import { useAuth } from "../../../hooks/useAuth";
@@ -174,9 +174,50 @@ const PageHistory: React.FC<IPageHistoryProps> = () => {
                             overflow={"visible"}
                             marginTop={"2rem"} marginBottom={"5rem"}>
 
-                                {historyScores.map((score: IScore) => (
-                                    <ScoreCard key={score.id} score={score} currentInstrument={score.instruments.currentInstrument.name} />
-                                ))}
+                                {
+                                    historyScores.length > 0 ? historyScores.map((score: IScore) => (
+                                        <ScoreCard key={score.id} score={score} currentInstrument={score.instruments.currentInstrument.name} />
+                                    )) :
+                                    <Box textAlign={"center"}>
+                                        <Text color={"#a19fa4"}>
+                                            C'est bien vide ici ...
+                                        </Text>
+                                        <ChakraLink href={"/instruments/user"}
+                                        display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'} flexDir={'column'}
+                                        pos={'relative'} verticalAlign={'middle'}
+                                        paddingInline={'1.5rem'} py={'0.75rem'} mt={'3rem'}
+                                        minH={'3rem'} minW={'3rem'} h={'auto'}
+                                        fontSize={'16px'} fontWeight={'700'}
+                                        whiteSpace={'nowrap'} lineHeight={'24px'} fontFamily={'Inter,Arial,sans-serif'} textDecor={'none'} color={'#ffffff'}
+                                        bg={'#ad47ff'}
+                                        borderRadius={'0.75rem'}
+                                        outline={'transparent solid 2px'} outlineOffset={'0px'}
+                                        transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
+                                        appearance={'none'} userSelect={'none'} cursor={'pointer'}
+                                        _active={{
+                                            color : "#e2dfe6",
+                                            background : "#ca97ff"
+                                        }}
+                                        _focus={{
+                                            zIndex : "1"
+                                        }}
+                                        _focusVisible={{
+                                            boxShadow : "none",
+                                            outlineColor : "#ca97ff"
+                                        }}
+                                        _hover={{
+                                            color: "#f5f2f8",
+                                            background: "#bb73ff"
+                                        }}>
+                                            <Text>
+                                                Choisit un instrument
+                                            </Text>
+                                            <Text>
+                                                et joue ton premier morceau
+                                            </Text>
+                                        </ChakraLink>
+                                    </Box>
+                                }
 
                             </Grid>
                         </Box>

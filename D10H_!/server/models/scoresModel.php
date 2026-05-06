@@ -1,9 +1,9 @@
-npm <?php
+<?php
 
-    function getScoreById($pdo, $id)
-    {
-        $sql = $pdo->prepare(
-            'SELECT
+function getScoreById($pdo, $id)
+{
+    $sql = $pdo->prepare(
+        'SELECT
             s.*,
             so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
@@ -25,17 +25,17 @@ npm <?php
         LEFT JOIN score_views sv ON s.id = sv.score_id
         WHERE s.id = ?
         GROUP BY s.id'
-        );
+    );
 
-        $sql->execute([$id]);
+    $sql->execute([$id]);
 
-        return $sql->fetch(PDO::FETCH_ASSOC);
-    }
+    return $sql->fetch(PDO::FETCH_ASSOC);
+}
 
-    function getOtherInstrumentScoreId($pdo, $songId, $scoreId)
-    {
-        $sql = $pdo->prepare(
-            'SELECT
+function getOtherInstrumentScoreId($pdo, $songId, $scoreId)
+{
+    $sql = $pdo->prepare(
+        'SELECT
             s.id AS score_id,
             i.id AS instrument_id,
             i.name AS instrument_name,
@@ -47,17 +47,17 @@ npm <?php
         WHERE s.song_id = ?
           AND s.id != ?
           AND si.is_current = 1'
-        );
+    );
 
-        $sql->execute([$songId, $scoreId]);
+    $sql->execute([$songId, $scoreId]);
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function getNewsScores($pdo)
-    {
-        $sql = $pdo->prepare(
-            'SELECT
+function getNewsScores($pdo)
+{
+    $sql = $pdo->prepare(
+        'SELECT
             s.*,
             so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
@@ -80,17 +80,17 @@ npm <?php
         GROUP BY s.id
         ORDER BY s.created_at DESC
         LIMIT 12;'
-        );
+    );
 
-        $sql->execute();
+    $sql->execute();
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function getPopularScores($pdo)
-    {
-        $sql = $pdo->prepare(
-            'SELECT
+function getPopularScores($pdo)
+{
+    $sql = $pdo->prepare(
+        'SELECT
             s.*,
             so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
@@ -114,17 +114,17 @@ npm <?php
         GROUP BY s.id
         ORDER BY popularity_count DESC
         LIMIT 12;'
-        );
+    );
 
-        $sql->execute();
+    $sql->execute();
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function getSuggestionsScores($pdo, $userId)
-    {
-        $sql = $pdo->prepare(
-            'SELECT
+function getSuggestionsScores($pdo, $userId)
+{
+    $sql = $pdo->prepare(
+        'SELECT
             s.*,
             so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
@@ -154,17 +154,17 @@ npm <?php
         GROUP BY s.id
         ORDER BY RAND()
         LIMIT 12;'
-        );
+    );
 
-        $sql->execute([$userId]);
+    $sql->execute([$userId]);
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function getUserHistoryScores($pdo, $userId)
-    {
-        $sql = $pdo->prepare(
-            'SELECT
+function getUserHistoryScores($pdo, $userId)
+{
+    $sql = $pdo->prepare(
+        'SELECT
             h.played_at,
             s.*,
             so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
@@ -188,17 +188,17 @@ npm <?php
         LEFT JOIN score_views sv ON s.id = sv.score_id
         WHERE h.user_id = ?
         ORDER BY h.played_at DESC'
-        );
+    );
 
-        $sql->execute([$userId]);
+    $sql->execute([$userId]);
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function getScoresByInstrument($pdo, $instrumentId)
-    {
-        $sql = $pdo->prepare(
-            'SELECT
+function getScoresByInstrument($pdo, $instrumentId)
+{
+    $sql = $pdo->prepare(
+        'SELECT
             s.*,
             so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
@@ -225,17 +225,17 @@ npm <?php
             AND si2.is_current = 1
         )
         GROUP BY s.id'
-        );
+    );
 
-        $sql->execute([$instrumentId]);
+    $sql->execute([$instrumentId]);
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function getSearchScores($pdo, $searchTerm)
-    {
-        $sql = $pdo->prepare(
-            'SELECT
+function getSearchScores($pdo, $searchTerm)
+{
+    $sql = $pdo->prepare(
+        'SELECT
             s.*,
             so.id AS song_id, so.title, so.deezer_link, so.audio_preview, so.duration, so.is_explicit,
             a.id AS artist_id, a.name AS artist_name, a.picture AS artist_picture,
@@ -266,44 +266,44 @@ npm <?php
                 ELSE 3
             END,
             so.title ASC'
-        );
+    );
 
-        $likeQuery = "%" . $searchTerm . "%";
+    $likeQuery = "%" . $searchTerm . "%";
 
-        $sql->execute([
-            'query' => $likeQuery,
-            'exact_query' => $searchTerm
-        ]);
+    $sql->execute([
+        'query' => $likeQuery,
+        'exact_query' => $searchTerm
+    ]);
 
-        return $sql->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function addToUserHistory($pdo, $userId, $scoreId)
-    {
-        try {
-            $sql = $pdo->prepare(
-                'INSERT INTO user_history (user_id, score_id, played_at)
+function addToUserHistory($pdo, $userId, $scoreId)
+{
+    try {
+        $sql = $pdo->prepare(
+            'INSERT INTO user_history (user_id, score_id, played_at)
             VALUES (?, ?, NOW())
             ON DUPLICATE KEY UPDATE played_at = NOW()'
-            );
-            $sql->execute([$userId, $scoreId]);
+        );
+        $sql->execute([$userId, $scoreId]);
 
-            $rowCount = $sql->rowCount();
+        $rowCount = $sql->rowCount();
 
-            return [
-                'success' => true,
-                'codeHttp' => 200,
-                'userId' => $userId,
-                'scoreId' => $scoreId,
-                'message' => "Ajout à l'historique de l'utilisateur bien réalisé sur la colonne " . $rowCount
-            ];
-        } catch (PDOException $e) {
-            return [
-                'success' => false,
-                'codeHttp' => 500,
-                'userId' => $userId,
-                'scoreId' => $scoreId,
-                'message' => "Erreur SQL : " . $e->getMessage()
-            ];
-        }
+        return [
+            'success' => true,
+            'codeHttp' => 200,
+            'userId' => $userId,
+            'scoreId' => $scoreId,
+            'message' => "Ajout à l'historique de l'utilisateur bien réalisé sur la colonne " . $rowCount
+        ];
+    } catch (PDOException $e) {
+        return [
+            'success' => false,
+            'codeHttp' => 500,
+            'userId' => $userId,
+            'scoreId' => $scoreId,
+            'message' => "Erreur SQL : " . $e->getMessage()
+        ];
     }
+}
