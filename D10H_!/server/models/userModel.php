@@ -154,3 +154,29 @@ function deleteAccount($pdo, $userId)
         ];
     }
 }
+
+function updatePassword($pdo, $userId, $newPasswordHash)
+{
+    try {
+        $sql = $pdo->prepare(
+            'UPDATE users
+            SET password = ?
+            WHERE id = ?'
+        );
+
+        $sql->execute([$newPasswordHash, $userId]);
+
+        return [
+            'validating' => true,
+            'codeHttp' => 200,
+            'message' => 'Mot de passe modifié avec succes'
+        ];
+    } catch (PDOException $e) {
+        return [
+            'validating' => false,
+            'codeHttp' => 500,
+            'userId' => $userId,
+            'message' => 'Erreur lors du changement du mot de passe : ' . $e->getMessage()
+        ];
+    }
+}

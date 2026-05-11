@@ -89,6 +89,11 @@ if ($ressource && file_exists($controlerFile)) {
             require_once '../middlewares/CheckLogin.php';
             $_POST['userId'] = $id;
             break;
+        case 'editpassword':
+            require_once $middlewareID;
+            require_once '../middlewares/CheckEditPassword.php';
+            $_POST['userId'] = $id;
+            break;
     }
     require_once $controlerFile;
 } else {

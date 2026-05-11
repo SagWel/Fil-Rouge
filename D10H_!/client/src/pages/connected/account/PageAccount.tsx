@@ -20,7 +20,8 @@ import {
     InputRightElement,
     FormHelperText,
     FormErrorMessage,
-    Link as ChakraLink
+    Link as ChakraLink,
+    ButtonGroup
 } from "@chakra-ui/react"
 import { Link, useNavigate } from "react-router-dom"
 import { 
@@ -35,7 +36,9 @@ import {
     SuccesIcon, 
     ErrorIcon,
     CloseButtonIcon,
-    WarningIcon
+    WarningIcon, 
+    ValidateIcon,
+    CheckIcon
 } from "../../../components/Svg"
 
 import { useEffect, useRef, useState } from "react"
@@ -98,18 +101,32 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
     const [userBirthdayYear, setUserBirthdayYear] = useState<number>(userProfilBirthdayYear)
     const [userLanguage, setUserLanguage] = useState<string | undefined>(user?.language)
     const [instruments, setInstruments] = useState<IInstrument[] | []>([])
-    // const [currentInstrument, setCurrentInstrument] = useState<IInstrument | undefined>(undefined)
-    // const [currentLvl, setCurrentLvl] = useState<1 | 2 | 3 | 4 | 5 | undefined>(undefined)
-    // const [displayConfidentialModal, setDisplayConfidentialModal] = useState<'flex' | 'none'>('none')
     const [displayModalMailling, setDisplayModalMailling] = useState<'block' | 'none'>('none')
     const [updateMessage, setUpdateMessage] = useState<string>('')
     const [updateModal, setUpdateModal] = useState<boolean>(false)
     const [updateValidating, setUpdateValidating] = useState<boolean>(true)
     const [displayDeleteInformations, setDisplayDeleteInformations] = useState<boolean>(false)
-    const [inputType, setInputType] = useState<'password' | 'text'>('password')
-    const [password, setPassword] = useState<string>('')
-    const [isError, setIsError] = useState<boolean>(false)
-    const [message, setMessage] = useState<string>('')
+    const [deletingInputType, setDeletingInputType] = useState<'password' | 'text'>('password')
+    const [deletingPassword, setDeletingPassword] = useState<string>('')
+    const [deletingIsError, setDeletingIsError] = useState<boolean>(false)
+    const [deletingErrorMessage, setDeletingErrorMessage] = useState<string>('')
+    const [isEditingPassword, setIsEditingPassword] = useState<boolean>(false)
+    const [currentPassword, setCurrentPassword] = useState<string>('')
+    const [editingCurrentInputType, setEditingCurrentInputType] = useState<'password' | 'text'>('password')
+    const [newPassword, setNewPassword] = useState<string>('')
+    const [editingNewInputType, setEditingNewInputType] = useState<'password' | 'text'>('password')
+    const [currentIsError, setCurrentIsError] = useState<boolean>(false)
+    const [currentErrorMessage, setCurrentErrorMessage] = useState<string>('')
+    const [newIsError, setNewIsError] = useState<boolean>(false)
+    const [newErrorMessage, setNewErrorMessage] = useState<string>('')
+    const [confirmNewPassword, setConfirmNewPassword] = useState<string>('')
+    const [editingConfirmInputType, setEditingConfirmInputType] = useState<'password' | 'text'>('password')
+    const [confirmIsError, setConfirmIsError] = useState<boolean>(false)
+    const [confirmErrorMessage, setConfirmErrorMessage] = useState<string>('')
+
+    const newPasswordLenght: boolean = newPassword.length >= 8
+    const newPasswordLetter: boolean = /[a-zA-Z]/.test(newPassword)
+    const newPasswordNumber: boolean = /\d/.test(newPassword)
 
     const avatarDefault: string = "https://cdn-images.dzcdn.net/images/user//125x125-000000-80-0-0.jpg"
 
@@ -131,9 +148,69 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
         }
     ]
 
-    const displayPassword = () => {
-        if (inputType === 'password') setInputType('text')
-        if (inputType === 'text') setInputType('password')
+    const testPasswordSecuityLvl = () => {
+        if (newPasswordLenght && newPasswordLetter&& newPasswordNumber && /[A-Z]/.test(newPassword) && /[!@#$%^&*(),.?":{}|<>]/.test(newPassword)) {
+            return(
+                <Text 
+                flex={"1 1 0%"}
+                fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                lineHeight={"24px"} textDecor={"none"} textAlign={"end"} color={"#00b23d"}>
+                    Fort
+                </Text>
+            )
+        }
+            
+        if (newPasswordLenght && newPasswordLetter&& newPasswordNumber && (/[A-Z]/.test(newPassword) || /[!@#$%^&*(),.?":{}|<>]/.test(newPassword))) {
+            return (
+                <Text 
+                flex={"1 1 0%"}
+                fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                lineHeight={"24px"} textDecor={"none"} textAlign={"end"} color={"#fe9935"}>
+                    Moyen
+                </Text>
+            )
+        }
+            
+        if (newPasswordLenght && newPasswordLetter&& /\d/.test(newPassword)) {
+            return (
+                <Text 
+                flex={"1 1 0%"}
+                fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                lineHeight={"24px"} textDecor={"none"} textAlign={"end"} color={"#f44336"}>
+                    Faible
+                </Text>
+            )
+        }
+
+        return (
+            <Text 
+            flex={"1 1 0%"}
+            fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+            lineHeight={"24px"} textDecor={"none"} textAlign={"end"} color={"#f44336"}>
+                Trop faible
+            </Text>
+        )
+    }
+
+    const displayeditingCurrentPassword = () => {
+        if (editingCurrentInputType === 'password') setEditingCurrentInputType('text')
+        if (editingCurrentInputType === 'text') setEditingCurrentInputType('password')
+    }
+
+
+    const displayeditingNewPassword = () => {
+        if (editingNewInputType === 'password') setEditingNewInputType('text')
+        if (editingNewInputType === 'text') setEditingNewInputType('password')
+    }
+    
+    const displayeditingConfirmPassword = () => {
+        if (editingConfirmInputType === 'password') setEditingConfirmInputType('text')
+        if (editingConfirmInputType === 'text') setEditingConfirmInputType('password')
+    }
+
+    const displayDeletingPassword = () => {
+        if (deletingInputType === 'password') setDeletingInputType('text')
+        if (deletingInputType === 'text') setDeletingInputType('password')
     }
 
     const handleOnClick = () => {
@@ -180,6 +257,105 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
     
     const handleOnClickOpenMaillingModal = () => {
         displayModalMailling === 'block' ? setDisplayModalMailling('none') : setDisplayModalMailling('block')
+    }
+
+    const handleOnClickEditPassword: () => void = () => {
+        if (isEditingPassword) {
+            setIsEditingPassword(false)
+            setConfirmNewPassword('')
+            setCurrentPassword('')
+            setNewPassword('')
+        } else {
+            setIsEditingPassword(true)
+        }        
+    }
+
+    const handleOnSubmitEditPassword = async () => {
+        setNewIsError(false)
+        setNewErrorMessage('')
+        setConfirmIsError(false)
+        setConfirmErrorMessage('')
+        setCurrentIsError(false)
+        setConfirmErrorMessage('')
+
+        if (currentPassword.trim() === '') {
+            setCurrentIsError(true)
+            setCurrentErrorMessage('Le champ ne doit pas être vide')
+            return
+        }
+        
+        if (newPassword.trim() === '') {
+            setNewIsError(true)
+            setNewErrorMessage('Le champ ne doit pas être vide')
+            return
+        }
+
+        if (confirmNewPassword.trim() === '') {
+            setConfirmIsError(true)
+            setConfirmErrorMessage('Le champ ne doit pas être vide')
+            return
+        }
+
+       if (newPassword !== confirmNewPassword) {
+            setNewIsError(true)
+            setNewErrorMessage('Le nouveau mot de passe et la confirmation ne correspondent pas')
+            setConfirmIsError(true)
+            setConfirmErrorMessage('Le nouveau mot de passe et la confirmation ne correspondent pas')
+            return
+       }
+
+       if (newPassword === currentPassword) {
+            setNewIsError(true)
+            setNewErrorMessage("Votre nouveau mot de passe doit être diffèrent de l'ancien")
+            return
+       }
+
+       const urlFetchEditPassword = import.meta.env.VITE_URL_FETCH_EDITPASSWORD
+
+       try {
+            const res: Response = await fetch(`http://${host}:${port}${urlFetchEditPassword}${user?.id}`, {
+                method: 'POST',
+                headers : {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    currentPassword: currentPassword,
+                    newPassword: newPassword
+                }),
+                credentials: 'include'
+            })
+
+            if (!res.ok) {
+                const errorBody = await res.json()
+                
+                throw errorBody;
+            }
+
+            const data = await res.json()
+            setUpdateMessage(data.message)
+            setUpdateValidating(data.validating)
+            setUpdateModal(true)
+            setTimeout(() => {
+                setUpdateModal(false)
+                setUpdateMessage('')
+                setUpdateValidating(true)
+            }, 5000)
+            
+       } catch (error) {
+            console.error("Erreur lors de la modification du mot de passe : ", error);
+
+                if (error instanceof Error) {
+                    setUpdateMessage(`Erreur lors de la modification de vos données : ${error.message}` )
+                    setUpdateValidating(false)
+                    setUpdateModal(true)
+                    setTimeout(() => {
+                        setUpdateModal(false)
+                        setUpdateMessage('')
+                        setUpdateValidating(true)
+                    }, 5000)
+                } else {
+                    console.error("Une erreur inconnue est survenue", error);
+                }
+        }
+
     }
 
     const handleOnCLickUpdateProfil = async () => {
@@ -256,7 +432,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                 headers : {'Content-Type': 'application/json'},
                 body: JSON.stringify ({
                     email: user?.email,
-                    password: password
+                    password: deletingPassword
                 }),
                 credentials: 'include'})
 
@@ -777,7 +953,330 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                             </Button>
                                         </Stack>
                                     </FormControl>
-                                    <FormControl role="group"
+                                    {isEditingPassword ?
+                                    <Stack gap={'0.5rem'} 
+                                    p={'0.75rem'} w={'100%'}
+                                    border={'1px solid #656367'} borderRadius={'0.75rem'}
+                                    >
+                                        <FormControl w={'100%'} isInvalid={currentIsError}>
+                                            <FormLabel
+                                            display={'block'}
+                                            marginInlineEnd={'0.75rem'} mb={'0.5rem'}
+                                            textAlign={'start'}>
+                                                Pour modifier ton mot de passe renseigne d'abord ton mot de passe actuel :
+                                            </FormLabel>
+                                            <InputGroup display={"flex"}
+                                            pos={"relative"}
+                                            w={"100%"}
+                                            isolation={"isolate"}>
+                                                <Input type={editingCurrentInputType} autoComplete="current-password" name="password" id="password" value={currentPassword}
+                                                position={"relative"}
+                                                paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
+                                                w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
+                                                fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                                color={"#ffffff"} lineHeight={"24px"} textDecor={"none"}
+                                                bg={"#242326"}
+                                                borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
+                                                outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                                transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                appearance={"none"}
+                                                onChange={(e) => {
+                                                    setCurrentPassword(e.target.value)
+                                                }}
+                                                _active={{
+                                                    borderColor: "#ad47ff"
+                                                }}
+                                                _focus={{
+                                                    borderColor: "#ad47ff"
+                                                }}
+                                                _hover={{
+                                                    bg: "#2e2c30",
+                                                    color: "#f5f2f8"
+                                                }}/>
+                                                <InputRightElement display={"flex"} alignItems={"center"} justifyContent={"center"}
+                                                position={"absolute"} right={0} top={0}
+                                                marginInlineStart={"1rem"} marginInlineEnd={"0.75rem"}
+                                                w={"1.5rem"} h={"3rem"}
+                                                fontSize={"16px"}
+                                                zIndex={"2"}>
+                                                    <Button display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                                    whiteSpace={"nowrap"}
+                                                    pos={"relative"}
+                                                    paddingInline={0} py={0} p={0}
+                                                    minH={"3rem"} minW={"3rem"} h={"auto"}
+                                                    fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} 
+                                                    verticalAlign={"middle"} lineHeight={"24px"} textDecor={"none"}
+                                                    bg={"transparent"}
+                                                    borderRadius={"0.75rem"}
+                                                    outline={"transparent solid 2px"} outlineOffset={0}
+                                                    transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                    userSelect={"none"}
+                                                    onClick={displayeditingCurrentPassword}
+                                                    _focusVisible={{ boxShadow: "none"}}
+                                                    _hover={{bg: "transparent"}}>
+                                                        <DisplayIcon display={"block"} size="20px"
+                                                        lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"}
+                                                        mb={"1px"}/>
+                                                    </Button>
+                                                </InputRightElement>
+                                            </InputGroup>
+                                            <FormHelperText as={ChakraLink} role="button" textAlign={'end'}
+                                            display={'block'}
+                                            mt={"0.75rem"}
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"normal"} color={"#a19fa4"} textDecor={"inherit"}
+                                            bg={"transparent"}
+                                            _focusVisible={{ outlineColor: "#ad47ff"}}
+                                            _hover={{textDecor: "none"}}>
+                                                Mot de passe oublié?
+                                            </FormHelperText>
+                                            {currentIsError && (
+                                                <FormErrorMessage display={"flex"} alignItems={"center"}
+                                            mt={"0.5rem"}
+                                            fontSize={"0.875rem"}
+                                            lineHeight={"normal"} textAlign={"start"}
+                                            color={"#E53E3E"}>
+                                                <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                {currentErrorMessage}
+                                            </FormErrorMessage>
+                                            )}
+                                        </FormControl>
+                                        <FormControl w={'100%'} isInvalid={newIsError}>
+                                            <FormLabel
+                                            display={'block'}
+                                            marginInlineEnd={'0.75rem'} mb={'0.5rem'}
+                                            textAlign={'start'}>
+                                                Maintenant ton nouveau mot de passe :
+                                            </FormLabel>
+                                                <InputGroup display={"flex"}
+                                                pos={"relative"}
+                                                w={"100%"}
+                                                isolation={"isolate"}>
+                                                    <Input type={editingNewInputType} value={newPassword}
+                                                    position={"relative"}
+                                                    paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
+                                                    w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
+                                                    fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                                    color={"#ffffff"} lineHeight={"24px"} textDecor={"none"}
+                                                    bg={"#242326"}
+                                                    borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
+                                                    outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                                    transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                    appearance={"none"}
+                                                    onChange={(e) => {
+                                                        setNewPassword(e.target.value)
+                                                        if (newIsError && newPassword && !newPasswordLenght) {
+                                                            setNewErrorMessage('Ton mot de passe doit comporter au moins 8 caractères.')
+                                                        }
+                                                        if (newIsError && newPasswordLenght && (!newPasswordLetter || !newPasswordNumber)) {
+                                                            setNewErrorMessage('Trop faible')
+                                                        } else {
+                                                            setNewIsError(false)
+                                                            setNewErrorMessage('')
+                                                        }
+                                                    }}
+                                                    _active={{
+                                                        borderColor: "#ad47ff"
+                                                    }}
+                                                    _focus={{
+                                                        borderColor: "#ad47ff"
+                                                    }}
+                                                    _hover={{
+                                                        bg: "#2e2c30",
+                                                        color: "#f5f2f8"
+                                                    }}/>
+                                                    <InputRightElement display={"flex"} alignItems={"center"} justifyContent={"center"}
+                                                    position={"absolute"} right={0} top={0}
+                                                    marginInlineStart={"1rem"} marginInlineEnd={"0.75rem"}
+                                                    w={"1.5rem"} h={"3rem"}
+                                                    fontSize={"16px"}
+                                                    zIndex={"2"}>
+                                                        <Button display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                                        whiteSpace={"nowrap"}
+                                                        pos={"relative"}
+                                                        paddingInline={0} py={0} p={0}
+                                                        minH={"3rem"} minW={"3rem"} h={"auto"}
+                                                        fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} 
+                                                        verticalAlign={"middle"} lineHeight={"24px"} textDecor={"none"}
+                                                        bg={"transparent"}
+                                                        borderRadius={"0.75rem"}
+                                                        outline={"transparent solid 2px"} outlineOffset={0}
+                                                        transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                        userSelect={"none"}
+                                                        onClick={displayeditingNewPassword}
+                                                        _focusVisible={{ boxShadow: "none"}}
+                                                        _hover={{bg: "transparent"}}>
+                                                            <DisplayIcon display={"block"} size="20px"
+                                                            lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"}
+                                                            mb={"1px"}/>
+                                                        </Button>
+                                                    </InputRightElement>
+                                                </InputGroup>
+                                                {newIsError && (
+                                                <FormErrorMessage display={"flex"} alignItems={"center"}
+                                                mt={"0.5rem"}
+                                                fontSize={"0.875rem"}
+                                                lineHeight={"normal"} textAlign={"start"}
+                                                color={"#E53E3E"}>
+                                                    <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                    mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                    {newErrorMessage}
+                                                </FormErrorMessage>
+                                                )}
+                                                {newPassword.trim() !== '' && (
+                                                    <Flex justify={"between"}
+                                                    py={"0.75rem"} mt={'0.5rem'} px={"1rem"}
+                                                    bg={"#141216"}
+                                                    borderRadius={"0.5rem"}>
+                                                        <Stack align={"flex-start"} gap={'0.5rem'}
+                                                        marginInlineEnd={'1rem'}>
+                                                            <Text 
+                                                            fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                                            lineHeight={"24px"} textDecor={"none"} color={"#ffffff"}>
+                                                                Ton mot de passe doit inclure
+                                                            </Text>
+                                                            <Stack align={"center"} flexDir={"row"} gap={'0.25rem'}
+                                                            color={newPasswordLenght ? "#00b23d" : "#ffffff"}>
+                                                                {newPasswordLenght ? <ValidateIcon lineHeight={"24px"} flexShrink={0} verticalAlign={"middle"} animation={"300ms ease 0s 1 normal none running"} /> : <CheckIcon /> }
+                                                                <chakra.span>
+                                                                    Au moins 8 caractères
+                                                                </chakra.span>
+                                                            </Stack>
+                                                            <Stack align={"center"} flexDir={"row"} gap={'0.25rem'}
+                                                            color={newPasswordLetter ? "#00b23d" : "#ffffff"}>
+                                                                {newPasswordLetter ? <ValidateIcon lineHeight={"24px"} flexShrink={0} verticalAlign={"middle"} animation={"300ms ease 0s 1 normal none running"} /> : <CheckIcon /> }
+                                                                <chakra.span>
+                                                                Au moins une lettre
+                                                                </chakra.span>
+                                                            </Stack>
+                                                            <Stack align={"center"} flexDir={"row"} gap={'0.25rem'}
+                                                            color={newPasswordNumber ? "#00b23d" : "#ffffff"}>
+                                                                {newPasswordNumber ? <ValidateIcon lineHeight={"24px"} flexShrink={0} verticalAlign={"middle"} animation={"300ms ease 0s 1 normal none running"} /> : <CheckIcon /> }
+                                                                <chakra.span>
+                                                                Au moins un nombre
+                                                                </chakra.span>
+                                                            </Stack>
+                                                        </Stack>
+                                                        {testPasswordSecuityLvl()}
+                                                    </Flex>
+                                                ) }
+                                        </FormControl>
+                                        <FormControl w={'100%'} isInvalid={confirmIsError}>
+                                            <FormLabel
+                                            display={'block'}
+                                            marginInlineEnd={'0.75rem'} mb={'0.5rem'}
+                                            textAlign={'start'}>
+                                                Confirme ton nouveau mot de passe :
+                                            </FormLabel>
+                                                <InputGroup display={"flex"}
+                                                pos={"relative"}
+                                                w={"100%"}
+                                                isolation={"isolate"}>
+                                                    <Input type={editingConfirmInputType} value={confirmNewPassword}
+                                                    position={"relative"}
+                                                    paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"}
+                                                    w={"100%"} h={"3rem"} minW={"0"} minH={"3rem"}
+                                                    fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                                    color={"#ffffff"} lineHeight={"24px"} textDecor={"none"}
+                                                    bg={"#242326"}
+                                                    borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
+                                                    outline={"transparent solid 2px"} outlineOffset={"2px"}
+                                                    transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                    appearance={"none"}
+                                                    onChange={(e) => {
+                                                        setConfirmNewPassword(e.target.value)
+                                                    }}
+                                                    _active={{
+                                                        borderColor: "#ad47ff"
+                                                    }}
+                                                    _focus={{
+                                                        borderColor: "#ad47ff"
+                                                    }}
+                                                    _hover={{
+                                                        bg: "#2e2c30",
+                                                        color: "#f5f2f8"
+                                                    }}/>
+                                                    <InputRightElement display={"flex"} alignItems={"center"} justifyContent={"center"}
+                                                    position={"absolute"} right={0} top={0}
+                                                    marginInlineStart={"1rem"} marginInlineEnd={"0.75rem"}
+                                                    w={"1.5rem"} h={"3rem"}
+                                                    fontSize={"16px"}
+                                                    zIndex={"2"}>
+                                                        <Button display={"inline-flex"} alignItems={"center"} justifyContent={"center"} gap={"0.25rem"}
+                                                        whiteSpace={"nowrap"}
+                                                        pos={"relative"}
+                                                        paddingInline={0} py={0} p={0}
+                                                        minH={"3rem"} minW={"3rem"} h={"auto"}
+                                                        fontWeight={"700"} fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} 
+                                                        verticalAlign={"middle"} lineHeight={"24px"} textDecor={"none"}
+                                                        bg={"transparent"}
+                                                        borderRadius={"0.75rem"}
+                                                        outline={"transparent solid 2px"} outlineOffset={0}
+                                                        transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
+                                                        userSelect={"none"}
+                                                        onClick={displayeditingConfirmPassword}
+                                                        _focusVisible={{ boxShadow: "none"}}
+                                                        _hover={{bg: "transparent"}}>
+                                                            <DisplayIcon display={"block"} size="20px"
+                                                            lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"}
+                                                            mb={"1px"}/>
+                                                        </Button>
+                                                    </InputRightElement>
+                                                </InputGroup>
+                                                {confirmIsError && (
+                                                <FormErrorMessage display={"flex"} alignItems={"center"}
+                                                mt={"0.5rem"}
+                                                fontSize={"0.875rem"}
+                                                lineHeight={"normal"} textAlign={"start"}
+                                                color={"#E53E3E"}>
+                                                    <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
+                                                    mr={"0.5rem"} color="#E53E3E" display={"block"}/>
+                                                    {confirmErrorMessage}
+                                                </FormErrorMessage>
+                                                )}
+                                        </FormControl>
+                                        <ButtonGroup 
+                                        display={'flex'} justifyContent={'center'}
+                                        p={"1.5rem"}>
+                                            <StandardButton content="Annuler"
+                                            bg={'transparent'} color={'#ffffff'}
+                                            onClick={handleOnClickEditPassword}
+                                            _active={{
+                                                color: '#e2dfe6',
+                                                bg: '#38373b'
+                                            }}
+                                            _focus={{
+                                                zIndex: 1
+                                            }}
+                                            _focusVisible={{
+                                                boxShadow: 'none',
+                                                outlineColor: '#ad47ff'
+                                            }}
+                                            _hover={{
+                                                color: '#f5f2f8',
+                                                bg: '#2e2c30'
+                                            }}/>
+
+                                            <StandardButton content="Changer mon mot de passe"
+                                            bg={'#ad47ff'} color={'#ffffff'}
+                                            onClick={handleOnSubmitEditPassword}
+                                            _active={{
+                                                color: '#e2dfe6',
+                                                bg: '#ca97ff'
+                                            }} 
+                                            _focusVisible={{
+                                                boxShadow: 'none',
+                                                outlineColor: '#f5f2f8'
+                                            }}
+                                            _hover={{
+                                                color: '#f5f2f8',
+                                                bg: '#bb73ff'
+                                            }}/>
+                                        </ButtonGroup>
+                                    </Stack>
+                                    :
+                                    <FormControl
                                         w={'100%'} pos={'relative'}>
                                         <FormLabel htmlFor="field-:rt:"
                                             display={'block'}
@@ -819,7 +1318,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                 outline={'transparent solid 1px'} outlineOffset={'0px'}
                                                 transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
                                                 appearance={'none'} userSelect={'none'} cursor={'pointer'} overflow={'visible'}
-                                                onClick={handleOnClickOpenMaillingModal}
+                                                onClick={handleOnClickEditPassword}
                                                 _active={{
                                                     borderColor: '#656367',
                                                     bg: '#38373b',
@@ -838,7 +1337,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                 <PenIcon lineHeight={'1em'} flexShrink={0} verticalAlign={'middle'} display={'block'} />
                                             </Button>
                                         </Stack>
-                                    </FormControl>
+                                    </FormControl>}
                                 </Stack>
                             </Box>
                             {/* Connexion services associés 
@@ -1397,7 +1896,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                         display={'flex'}
                                         w={'100%'}
                                         isolation={'isolate'}>
-                                            <Input id="password" type={inputType} value={password}
+                                            <Input id="password" type={deletingInputType} value={deletingPassword}
                                             pos={'relative'}
                                             paddingInlineEnd={'0.75rem'} paddingInlineStart={'1rem'} m={0}
                                             minW={0} w={'100%'} h={'3rem'} minH={'3rem'}
@@ -1408,7 +1907,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                             outline={'transparent solid 2px'} outlineOffset={'2px'}
                                             transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
                                             appearance={'none'} boxSizing="border-box"
-                                            onChange={(e) => setPassword(e.target.value)}
+                                            onChange={(e) => setDeletingPassword(e.target.value)}
                                             _active={{
                                                 borderColor: '#ad47ff'
                                             }}
@@ -1437,7 +1936,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                 outline={"transparent solid 2px"} outlineOffset={0}
                                                 transitionDuration={"200ms"} transitionProperty={"background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform"}
                                                 userSelect={"none"}
-                                                onClick={displayPassword}
+                                                onClick={displayDeletingPassword}
                                                 _focusVisible={{ boxShadow: "none"}}
                                                 _hover={{bg: "transparent"}}>
                                                     <DisplayIcon display={"block"} size="20px"
@@ -1456,7 +1955,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                         _hover={{textDecor: "none"}}>
                                             Mot de passe oublié?
                                         </FormHelperText>
-                                        {isError && (
+                                        {deletingIsError && (
                                             <FormErrorMessage display={"flex"} alignItems={"center"}
                                             mt={"0.5rem"}
                                             fontSize={"0.875rem"}
@@ -1464,7 +1963,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                             color={"#E53E3E"}>
                                                 <WarningIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"}
                                                 mr={"0.5rem"} color="#E53E3E" display={"block"}/>
-                                                {message}
+                                                {deletingErrorMessage}
                                             </FormErrorMessage>
                                         )}
                                     </FormControl>
@@ -1477,12 +1976,12 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                         onClick={(e) => {
                             e.preventDefault()
                             if (displayDeleteInformations) {
-                                if (password === '') {
-                                    setIsError(true)
-                                    setMessage('Le champ ne doit pas être vide')
+                                if (deletingPassword === '') {
+                                    setDeletingIsError(true)
+                                    setDeletingErrorMessage('Le champ ne doit pas être vide')
                                 }
-                                setIsError(false)
-                                setMessage('')
+                                setDeletingIsError(false)
+                                setDeletingErrorMessage('')
                                 handleFinalDeleting()
                             } else {
                                 setDisplayDeleteInformations(true)

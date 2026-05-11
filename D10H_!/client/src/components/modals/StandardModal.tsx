@@ -104,19 +104,16 @@ const StandardModal: React.FC<IStandardModalProps> = ({ heading, children, foote
                         bg={'#ad47ff'} color={'#ffffff'}
                         onClick={footerOnClick}
                         _active={{
-                            borderColor: '#656367',
-                            bg: '#38373b',
-                            color: '#e2dfe6'
+                            color: '#e2dfe6',
+                            bg: '#ca97ff'
                         }} 
                         _focusVisible={{
                             boxShadow: 'none',
-                            borderColor: '#ad47ff',
-                            color: '#ad47ff'
+                            outlineColor: '#f5f2f8'
                         }}
                         _hover={{
-                            borderColor: '#59575c',
-                            bg: '#2e2c30',
-                            color: '#f5f2f8'
+                            color: '#f5f2f8',
+                            bg: '#bb73ff'
                         }}/>
                     </ButtonGroup>
                 </ModalFooter>
