@@ -19,6 +19,7 @@ const MODALS: Record<string, React.ComponentType<any>> = {
     // 'CONFIDENTIAL_PARAMS': , 
     // 'PERSONAL_DATA': ,
     // 'CONFIRM_IDENTITY': ,
+    // 'FORGOTTEN_PASSWORD': ,
 }
 
 const ModalManager: React.FC<IModalManagerProps> = () => {

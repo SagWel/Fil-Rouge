@@ -14,6 +14,7 @@ export type ModalName =
     // 'CONFIDENTIAL_PARAMS' | 
     // 'PERSONAL_DATA' |
     // 'CONFIRM_IDENTITY' |
+    'FORGOTTEN_PASSWORD' |
     null
 
 interface ModalsContextType {
