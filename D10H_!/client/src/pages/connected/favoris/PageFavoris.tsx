@@ -132,7 +132,10 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                                     <Box as={Link} to={"/favoris/scorbraries"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
                                     display={"block"}
                                     fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
-                                    lineHeight={"24px"} textDecoration={"none"}>
+                                    lineHeight={"24px"} textDecoration={"none"}
+                                    _hover={{
+                                        borderBottomColor: '#a19fa4'
+                                    }}>
                                         Scorbraries
                                     </Box>
                                 </ListItem>
@@ -142,7 +145,10 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                                     <Box as={Link} to={"/favoris/history"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
                                     display={"block"}
                                     fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
-                                    lineHeight={"24px"} textDecoration={"none"}>
+                                    lineHeight={"24px"} textDecoration={"none"}
+                                    _hover={{
+                                        borderBottomColor: '#a19fa4'
+                                    }}>
                                         Historique de partitions
                                     </Box>
                                 </ListItem>
