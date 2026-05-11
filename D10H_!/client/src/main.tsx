@@ -4,6 +4,7 @@ import {BrowserRouter} from 'react-router-dom'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import { AuthProvider } from './context/AuthContext.tsx'
 import theme from './theme.ts'
+import { ModalsProvider } from './context/ModalsContext.tsx'
 
 
 const rootElement = document.getElementById('root');
@@ -19,7 +20,9 @@ createRoot(rootElement).render(
             {/* Dark theme distribution */}
             <ChakraProvider theme={theme}> 
                 <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-                <App />
+                <ModalsProvider>
+                    <App />
+                </ModalsProvider>
             </ChakraProvider>
         </BrowserRouter>
     </AuthProvider>

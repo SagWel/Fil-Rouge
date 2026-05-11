@@ -41,6 +41,7 @@ import PlayeurMin from './components/layout/PlayeurMin.tsx';
 // Hooks imports
 import useWindowWidth from './hooks/useWindowWidth.tsx'
 import { useAuth } from './hooks/useAuth.tsx';
+import ModalManager from './components/modals/ModalManager.tsx';
 
 function App() {
 
@@ -162,6 +163,7 @@ function App() {
             </Box>
         </Grid>
       </ScoreProvider>
+      <ModalManager/>
     </SearchProvider>
 
   )} else if (isAuthenticated) {
@@ -235,6 +237,7 @@ function App() {
             </Box>
           </Grid>
         </ScoreProvider>
+        <ModalManager/>
       </SearchProvider>
     )
   } else if (loading) {
@@ -260,6 +263,7 @@ function App() {
           {/* Route to registering page */}
           <Route path='/signup' element={<PageSignup />}/>
         </Routes>
+        <ModalManager/>
       </Box>
     )
   }

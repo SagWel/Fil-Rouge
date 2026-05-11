@@ -305,9 +305,6 @@ const Search: React.FC<ISearchProps> = () => {
                     color : "#e2dfe6",
                     background : "#ca97ff"
                 }}
-                _focus={{
-                    zIndex : "1"
-                }}
                 _focusVisible={{
                     boxShadow : "none",
                     outlineColor : "#ca97ff"
@@ -316,7 +313,7 @@ const Search: React.FC<ISearchProps> = () => {
                     color: "#f5f2f8",
                     background: "#bb73ff"
                 }}>
-                    Demander une partition
+                    <span>Demander une partition</span>
                 </Button>
             </Box>
             :

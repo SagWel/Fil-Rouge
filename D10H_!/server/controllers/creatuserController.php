@@ -3,11 +3,11 @@
 require_once '../models/userModel.php';
 require_once '../models/instrumentsModel.php';
 
-$email = $_GET['email'];
-$password = $_GET['password'];
-$username = $_GET['username'] ?? null;
-$age = $_GET['age'] ?? null;
-$gender = $_GET['gender'] ?? null;
+$email = $_POST['email'];
+$password = $_POST['password'];
+$username = $_POST['username'] ?? null;
+$age = $_POST['age'] ?? null;
+$gender = $_POST['gender'] ?? null;
 
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 

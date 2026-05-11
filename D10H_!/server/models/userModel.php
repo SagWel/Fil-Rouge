@@ -128,3 +128,29 @@ function updateProfil($pdo, $userId, $username = null, $gender = null, $avatar =
         return false;
     }
 }
+
+function deleteAccount($pdo, $userId)
+{
+    try {
+        $sql = $pdo->prepare(
+            'DELETE FROM users WHERE id = ?'
+        );
+
+        $sql->execute([$userId]);
+
+        return [
+            'isDeleting' => true,
+            'codeHttp' => 200,
+            'userId' => $userId,
+            'message' => 'Votre compte à bien été supprimé'
+        ];
+    } catch (PDOException $e) {
+
+        return [
+            'isDeleting' => false,
+            "codeHttp" => 500,
+            'userId' => $userId,
+            'message' => 'Erreur lors de la suppression du compte' . $e->getMessage()
+        ];
+    }
+}

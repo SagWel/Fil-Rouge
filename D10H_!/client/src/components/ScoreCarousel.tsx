@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, type ReactNode } from "react"
 /* Import SVG */
 import { LeftCarouselIcon, RightCarouselIcon } from "./Svg"
 
-/* IMport type */
+/* Import type */
 import type { IScore } from "../types/Score"
 import { useAuth } from "../hooks/useAuth"
 import ScoreCard from "./cards/ScoreCard"

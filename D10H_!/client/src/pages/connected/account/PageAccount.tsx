@@ -1,8 +1,6 @@
 import { 
-    Box, 
-    useDisclosure, 
-    Select, 
-    ModalOverlay, 
+    Box,
+    Select,
     Container, 
     Button,
     chakra, 
@@ -17,31 +15,23 @@ import {
     FormControl, 
     FormLabel, 
     Radio, 
-    RadioGroup, 
-    Modal, 
-    ModalContent, 
-    ModalHeader, 
-    ModalCloseButton, 
-    ModalBody,
+    RadioGroup,
     InputGroup,
     InputRightElement,
     FormHelperText,
     FormErrorMessage,
     Link as ChakraLink
 } from "@chakra-ui/react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { 
     AppleIcon, 
     FacebookIcon, 
-    GoogleIcon, 
-    DisableIcon,
+    GoogleIcon,
     DisplayIcon,
-    AddCircleIcon, 
     CameraIcon, 
     DownChevronSoftIcon, 
     PenIcon, 
-    UpChevronSoftIcon, 
-    AddIcon, RemoveIcon, 
+    UpChevronSoftIcon,
     SuccesIcon, 
     ErrorIcon,
     CloseButtonIcon,
@@ -55,7 +45,8 @@ import '../../../style.css'
 import { useAuth } from "../../../hooks/useAuth"
 import type { GenderType } from "../../../types/user"
 import type { IInstrumentLvl, IInstrument } from "../../../types/instrument"
-import { difficultyLvl } from "../../../components/cards/ScoreCard"
+import StandardButton from "../../../components/buttons/StandardButton"
+import UserInstrumentManagement from "../../../components/UserInstrumentManagement"
 
 export interface IPageAccountProps { }
 
@@ -65,8 +56,11 @@ export interface ILanguage {
 }
 
 const PageAccount: React.FC<IPageAccountProps> = () => {
+    const maillingImplemented: boolean = false
 
-    const { user } = useAuth()
+    const { user, logout } = useAuth()
+
+    const navigate = useNavigate()
 
     const currentYear: number = new Date().getFullYear()
 
@@ -74,13 +68,10 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
 
     const userProfilBirthdayDay: number = userProfilBirthday ? userProfilBirthday.getDate() : 1
     const userProfilBirthdayMonth: number | undefined = userProfilBirthday ? userProfilBirthday.getMonth() + 1 : 1
-    const userProfilBirthdayYear: number = userProfilBirthday ? userProfilBirthday.getFullYear() : user?.age !== 0 ? currentYear - user?.age : currentYear - 1
-
-    /* Modal management */
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const yearFromAge = (user?.age && user.age !== 0) ? currentYear - user.age : currentYear - 1;
+    const userProfilBirthdayYear: number = userProfilBirthday ? userProfilBirthday.getFullYear() : yearFromAge;
 
     const disabled = true
-
     
     const img = new window.Image()
 
@@ -107,8 +98,8 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
     const [userBirthdayYear, setUserBirthdayYear] = useState<number>(userProfilBirthdayYear)
     const [userLanguage, setUserLanguage] = useState<string | undefined>(user?.language)
     const [instruments, setInstruments] = useState<IInstrument[] | []>([])
-    const [currentInstrument, setCurrentInstrument] = useState<IInstrument | undefined>(undefined)
-    const [currentLvl, setCurrentLvl] = useState<1 | 2 | 3 | 4 | 5 | undefined>(undefined)
+    // const [currentInstrument, setCurrentInstrument] = useState<IInstrument | undefined>(undefined)
+    // const [currentLvl, setCurrentLvl] = useState<1 | 2 | 3 | 4 | 5 | undefined>(undefined)
     // const [displayConfidentialModal, setDisplayConfidentialModal] = useState<'flex' | 'none'>('none')
     const [displayModalMailling, setDisplayModalMailling] = useState<'block' | 'none'>('none')
     const [updateMessage, setUpdateMessage] = useState<string>('')
@@ -185,61 +176,8 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
         }
     }
 
-    /* Delete instrument in list */
-    const deleteInstrument = (id: number) => {
-        setUserInstruments(prevItems => prevItems.filter((_, i) => i !== id))
-    }
-
-    /* Add instrument in list */
-    const handleOnClickAddInstrument = (e: Event) => {
-        e.preventDefault()
-        if (currentInstrument && currentLvl) {
-            const currentUserInstrument: IInstrumentLvl = {
-                instrument: currentInstrument,
-                lvl: currentLvl
-            }
-            setCurrentInstrument(undefined)
-            setCurrentLvl(undefined)
-
-            setUserInstruments(prevInstrumentLvl => [...prevInstrumentLvl, currentUserInstrument])
-            onClose()
-        }
-    }
-
-    const handleReduceLvl = (ui : IInstrumentLvl) => {
-        const updateUserInstruments = userInstruments?.flatMap((userI: IInstrumentLvl) => {
-            if (userI.instrument.id === ui.instrument.id) {
-                if (userI.lvl === 1 && userInstruments.length > 1 && confirm("Vous allez supprimer l'instrument de votre liste. Est ce bien ce que vous voulez faire ?")) {
-                    return []
-                } else if (userI.lvl > 1) {
-                    return [{ ...userI, lvl: userI.lvl - 1}]
-                }
-            }
-
-            return [userI]
-        })
-
-        setUserInstruments(updateUserInstruments)
-    }
-
-    const handleIncreaseLvl = (ui : IInstrumentLvl) => {
-        const updateUserInstruments = userInstruments?.flatMap((userI: IInstrumentLvl) => {
-             if (userI.instrument.id === ui.instrument.id) {
-                if (userI.lvl === 5) {
-                    return [userI]
-                }
-
-                return [{ ...userI, lvl: userI.lvl + 1}]
-             }
-
-             return [userI]
-        })
-
-        setUserInstruments(updateUserInstruments)
-    }
-
     const [daysInMonth, setDaysInMonth] = useState<number>(31)
-
+    
     const handleOnClickOpenMaillingModal = () => {
         displayModalMailling === 'block' ? setDisplayModalMailling('none') : setDisplayModalMailling('block')
     }
@@ -293,20 +231,57 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
             
         } catch (error) {
             console.error("Erreur lors de l'update du profil : ", error);
-            
-            setUpdateMessage(`Erreur lors de la modification de vos données : ${error.message}` )
-            setUpdateValidating(false)
-            setUpdateModal(true)
-            setTimeout(() => {
-                setUpdateModal(false)
-                setUpdateMessage('')
-                setUpdateValidating(true)
-            }, 5000)
+
+            if (error instanceof Error) {
+                setUpdateMessage(`Erreur lors de la modification de vos données : ${error.message}` )
+                setUpdateValidating(false)
+                setUpdateModal(true)
+                setTimeout(() => {
+                    setUpdateModal(false)
+                    setUpdateMessage('')
+                    setUpdateValidating(true)
+                }, 5000)
+            } else {
+                console.error("Une erreur inconnue est survenue", error);
+            }
         }
     }
 
-    const handleFinalDeleting = () => {
-        
+    const handleFinalDeleting = async () => {
+        const urlDeletingAccount = import.meta.env.VITE_URL_FETCH_DELETEACCOUNT
+
+        try {
+            const res: Response = await fetch(`http://${host}:${port}${urlDeletingAccount}${user?.id}`, {
+                method: 'POST',
+                headers : {'Content-Type': 'application/json'},
+                body: JSON.stringify ({
+                    email: user?.email,
+                    password: password
+                }),
+                credentials: 'include'})
+
+            if (!res.ok) {
+                const errorBody = await res.json()
+                
+                throw errorBody;
+            }
+
+            const data = await res.json()
+            if (data.isDeleting) {
+                alert(data.message)
+                logout()
+                navigate('/')
+            }
+        } catch (error) {
+            alert('Erreur lors de la suppression de votre compte. Veuillez contacter le service client')
+            console.error("Impossible de supprimer le compte de l'utilisateur ")
+            console.error(`utilisateur ${user?.username} : `, user?.id)
+            if (error instanceof Error) {
+                console.error(error.message)
+            } else {
+                console.error("Une erreur inconnue est survenue", error);
+            }
+        }
     }
 
     useEffect(() => {
@@ -639,7 +614,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                     opacity: '.24'
                                                 }
                                             }}>
-                                            <Image alt={user?.username} src={user?.avatarUrl ? `${BASE_URL}uploads/avatars/${user?.avatarUrl}` : previewUrl || avatarDefault}
+                                            <Image alt={user?.username} src={(user?.avatarUrl && userImgExist) ? `${BASE_URL}uploads/avatars/${user?.avatarUrl}` : previewUrl || avatarDefault}
                                                 display={"inline-block"}
                                                 h={'125px'} w={'125px'}
                                                 verticalAlign={'top'}
@@ -770,7 +745,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                     borderColor: 'transparent',
                                                     color: '#706e73'
                                                 }} />
-                                            <Button aria-label="Modifier" title="Modifier"
+                                            <Button aria-label="Modifier" title="Modifier (en cours d'implementation)" isDisabled={!maillingImplemented}
                                                 display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
                                                 pos={'relative'}
                                                 p={0} m={0}
@@ -832,7 +807,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                     borderColor: 'transparent',
                                                     color: '#706e73'
                                                 }} />
-                                            <Button aria-label="Modifier" title="Modifier"
+                                            <Button aria-label="Modifier" title="Modifier (en cours d'implementation)"
                                                 display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
                                                 pos={'relative'}
                                                 m={0} p={0}
@@ -1045,7 +1020,8 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                 color: '#f5f2f8'
                                             }} />
                                     </FormControl>
-                                    <FormControl w={'100%'} pos={'relative'}>
+                                    <UserInstrumentManagement data={userInstruments} setData={setUserInstruments} instruments={instruments}/>
+                                    {/* <FormControl w={'100%'} pos={'relative'}>
                                         <FormLabel
                                             display={'block'}
                                             marginInlineEnd={'0.75rem'} mb={'0.75rem'}
@@ -1078,17 +1054,17 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                             {user?.userInstruments.some(userI => userI.instrument === ui.instrument) &&
                                                                 <Flex position={'absolute'} right={0} gap={1} mr={1}>
                                                                     <Button isDisabled={userInstruments.length === 1 && ui.lvl === 1}
-                                                                        p={0}
-                                                                        h={'1.75rem'} w={'1.75rem'} minH={'1.75rem'} minW={'1.75rem'}
-                                                                        bg={'transparent'}
-                                                                        borderRadius={'full'}
-                                                                        onClick={(e) => {
-                                                                            e.preventDefault()
-                                                                            handleReduceLvl(ui)
-                                                                        }}
-                                                                        _hover={{
-                                                                            bg: '#a19fa4'
-                                                                        }}>
+                                                                    p={0}
+                                                                    h={'1.75rem'} w={'1.75rem'} minH={'1.75rem'} minW={'1.75rem'}
+                                                                    bg={'transparent'}
+                                                                    borderRadius={'full'}
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault()
+                                                                        handleReduceLvl(ui)
+                                                                    }}
+                                                                    _hover={{
+                                                                        bg: '#a19fa4'
+                                                                    }}>
                                                                         <RemoveIcon />
                                                                     </Button>
                                                                     <Button isDisabled={ui.lvl === 5}
@@ -1149,7 +1125,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                                 <AddCircleIcon />
                                             </Flex>
                                         </Stack>
-                                    </FormControl>
+                                    </FormControl> */}
                                 </Stack>
                             </Box>
                             <Box
@@ -1167,65 +1143,43 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                     borderWidth={'0 0 1px'} borderColor={'inherit'} borderStyle={'solid'} />
                                 <Stack align={'center'} gap={'1.5rem'} marginInline={'auto'} w={'100%'}>
                                     <Flex gap={'0.75rem'}>
-                                        <Button disabled title="en cour de programmation"
-                                            display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
-                                            pos={'relative'}
-                                            paddingInline={'1.5rem'} py={'0.75rem'} m={0}
-                                            minH={'3rem'} minW={'3rem'}
-                                            fontSize={'16px'} fontWeight={'700'} fontFamily={'Inter,Arial,sans-serif'}
-                                            whiteSpace={'nowrap'} verticalAlign={'middle'} lineHeight={'24px'} textDecor={'none'} color={'#ffff'}
-                                            bg={'transparent'}
-                                            border={'solid 0.0625rem #4e4c51'} borderRadius={'0.75rem'}
-                                            outline={'transparent solid 1px'} outlineOffset={0}
-                                            transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
-                                            appearance={'none'} userSelect={'none'} cursor={'pointer'} overflow={'visible'}
-                                            // onClick={() => setDisplayConfidentialModal('flex')}
-                                            _active={{
-                                                borderColor: '#656367',
-                                                bg: '#38373b',
-                                                color: '#e2dfe6'
-                                            }}
-                                            _focusVisible={{
-                                                boxShadow: 'none',
-                                                borderColor: '#ad47ff',
-                                                color: '#ad47ff'
-                                            }}
-                                            _hover={{
-                                                borderColor: '#59575c',
-                                                bg: '#2e2c30',
-                                                color: '#f5f2f8'
-                                            }}>
-                                            <span>Paramètre de confidentialité</span>
-                                        </Button>
-                                        <Button disabled title="en cour de programmation"
-                                            display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
-                                            pos={'relative'}
-                                            paddingInline={'1.5rem'} py={'0.75rem'} m={0}
-                                            minH={'3rem'} minW={'3rem'}
-                                            fontSize={'16px'} fontWeight={'700'} fontFamily={'Inter,Arial,sans-serif'}
-                                            whiteSpace={'nowrap'} verticalAlign={'middle'} lineHeight={'24px'} textDecor={'none'} color={'#ffff'}
-                                            bg={'transparent'}
-                                            border={'solid 0.0625rem #4e4c51'} borderRadius={'0.75rem'}
-                                            outline={'transparent solid 1px'} outlineOffset={0}
-                                            transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
-                                            appearance={'none'} userSelect={'none'} cursor={'pointer'} overflow={'visible'}
-                                            _active={{
-                                                borderColor: '#656367',
-                                                bg: '#38373b',
-                                                color: '#e2dfe6'
-                                            }}
-                                            _focusVisible={{
-                                                boxShadow: 'none',
-                                                borderColor: '#ad47ff',
-                                                color: '#ad47ff'
-                                            }}
-                                            _hover={{
-                                                borderColor: '#59575c',
-                                                bg: '#2e2c30',
-                                                color: '#f5f2f8'
-                                            }}>
-                                            <span>Mes données personnelles</span>
-                                        </Button>
+                                        <StandardButton aria-label="Paramètre de confidentialité" disabled title="en cour de programmation"
+                                        content="Paramètre de confidentialité"
+                                        bg="transparent" color="#ffffff" border={'#4e4c51 solid 0.0625rem'}
+                                        _active={{
+                                            borderColor: '#656367',
+                                            bg: '#38373b',
+                                            color: '#e2dfe6'
+                                        }}
+                                        _focusVisible={{
+                                            boxShadow: 'none',
+                                            borderColor: '#ad47ff',
+                                            color: '#ad47ff'
+                                        }}
+                                        _hover={{
+                                            borderColor: '#59575c',
+                                            bg: '#2e2c30',
+                                            color: '#f5f2f8'
+                                        }}/>
+
+                                        <StandardButton aria-label="Récuperer mes données personnelles" disabled title="en cour de programmation"
+                                        content="Mes données Personnelles"
+                                        bg={'transparent'} color={"#ffffff"} border={'#4e4c51 solid 0.0625rem'}
+                                        _active={{
+                                            borderColor: '#656367',
+                                            bg: '#38373b',
+                                            color: '#e2dfe6'
+                                        }}
+                                        _focusVisible={{
+                                            boxShadow: 'none',
+                                            borderColor: '#ad47ff',
+                                            color: '#ad47ff'
+                                        }}
+                                        _hover={{
+                                            borderColor: '#59575c',
+                                            bg: '#2e2c30',
+                                            color: '#f5f2f8'
+                                        }}/>
                                     </Flex>
                                     <Stack align={'center'} flexDir={'row'} gap={'0.5rem'} w={'100%'}>
                                         <FormControl w={"100%"}>
@@ -1382,23 +1336,14 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                         </Select>
                                     </FormControl>
                                     <Box>
-                                        <Button
-                                        display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
-                                        pos={'relative'} verticalAlign={'middle'}
-                                        paddingInline={'1.5rem'} py={'0.75rem'}
-                                        minH={'3rem'} minW={'3rem'} h={'auto'}
-                                        fontSize={'16px'} fontWeight={'700'}
-                                        whiteSpace={'nowrap'} lineHeight={'24px'} fontFamily={'Inter,Arial,sans-serif'} textDecor={'none'} color={'#ffffff'}
-                                        bg={'#ad47ff'}
-                                        borderRadius={'0.75rem'}
-                                        outline={'transparent solid 2px'} outlineOffset={'0px'}
-                                        transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
-                                        appearance={'none'} userSelect={'none'} cursor={'pointer'}
+                                        <StandardButton aria-label="Enregister Changements" 
+                                        content="Enregistrer" 
+                                        bg="#ad47ff" color="#ffffff" border={'#4e4c51 solid 0.0625rem'}
                                         onClick={handleOnCLickUpdateProfil}
                                         _active={{
                                             color: '#e2dfe6',
                                             bg: '#ca97ff'
-                                        }}
+                                        }} 
                                         _focusVisible={{
                                             boxShadow: 'none',
                                             outlineColor: '#f5f2f8'
@@ -1406,9 +1351,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                         _hover={{
                                             color: '#f5f2f8',
                                             bg: '#bb73ff'
-                                        }}>
-                                            <span>Enregistrer</span>
-                                        </Button>
+                                        }}/>
                                     </Box>
                                 </Stack>
                             </Box>
@@ -1429,7 +1372,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                 </Heading>
                                 <Stack align={'flex-start'} gap={'0.5rem'} w={'100%'}>
                                     <Text as={'p'} m={0}>
-                                        Pour confirmer la suppression de ton compte, merci d'entrer ton mot de passe ci-dessous. Tu vas recevoir un email de validation finale de ta demande.
+                                        Pour confirmer la suppression de ton compte, merci d'entrer ton mot de passe ci-dessous. { maillingImplemented && "Tu vas recevoir un email de validation finale de ta demande."}
                                     </Text>
                                     <Text as={'p'} m={0}>
                                         Vérifie que l'adresse email de ton compte ci-dessus est valide, sinon ton compte ne pourra pas être supprimé.
@@ -1528,57 +1471,48 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                 </Box>
                             </Stack>
                         }
-                        <Button
-                            display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
-                            pos={'relative'} verticalAlign={'middle'}
-                            paddingInline={'1.5rem'} py={'0.75rem'}
-                            minH={'3rem'} minW={'3rem'} h={'auto'}
-                            fontSize={'16px'} fontWeight={'700'}
-                            whiteSpace={'nowrap'} lineHeight={'24px'} fontFamily={'Inter,Arial,sans-serif'} textDecor={'none'} color={'#ffffff'}
-                            bg={'transparent'}
-                            borderRadius={'0.75rem'} border={'#4e4c51 solid 0.0625rem'}
-                            outline={'transparent solid 2px'} outlineOffset={'0px'}
-                            transitionDuration={'200ms'} transitionProperty={'background-color,border-color,outline-color,color,fill,stroke,opacity,box-shadow,transform'}
-                            appearance={'none'} userSelect={'none'} cursor={'pointer'}
-                            onClick={(e) => {
-                                e.preventDefault()
-                                if (displayDeleteInformations) {
-                                    if (password === '') {
-                                        setIsError(true)
-                                        setMessage('Le champ ne doit pas être vide')
-                                    }
-                                    setIsError(false)
-                                    setMessage('')
-                                    handleFinalDeleting()
-                                } else {
-                                    setDisplayDeleteInformations(true)
+                        <StandardButton aria-label="Supprimer le compte"
+                        content="Supprimer mon compte" 
+                        bg="transparent" color="#ffffff" border={'#4e4c51 solid 0.0625rem'}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            if (displayDeleteInformations) {
+                                if (password === '') {
+                                    setIsError(true)
+                                    setMessage('Le champ ne doit pas être vide')
                                 }
-                            }}
-                            _active={{
-                                borderColor: '#656367',
-                                bg: '#38373b',
-                                color: '#e2dfe6'
-                            }}
-                            _focusVisible={{
-                                boxShadow: 'none',
-                                borderColor: '#ad47ff',
-                                color: '#ad47ff'
-                            }}
-                            _hover={{
-                                borderColor: '#59575c',
-                                bg: '#2e2c30',
-                                color: '#f5f2f8'
-                            }}>
-                            <span>Supprimer mon compte</span>
-                        </Button>
+                                setIsError(false)
+                                setMessage('')
+                                handleFinalDeleting()
+                            } else {
+                                setDisplayDeleteInformations(true)
+                            }
+                        }}
+                        _active={{
+                            borderColor: '#656367',
+                            bg: '#38373b',
+                            color: '#e2dfe6'
+                        }} 
+                        _focusVisible={{
+                            boxShadow: 'none',
+                            borderColor: '#ad47ff',
+                            color: '#ad47ff'
+                        }}
+                        _hover={{
+                            borderColor: '#59575c',
+                            bg: '#2e2c30',
+                            color: '#f5f2f8'
+                        }}/>
                     </Stack>
                 </Container>
             </Flex>
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay background={"rgba(0, 0, 0, 0.48)"}
-                    style={{
-                        opacity: "1"
-                    }} />
+            
+            {/* <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay 
+                background={"rgba(0, 0, 0, 0.48)"}
+                style={{
+                    opacity: "1"
+                }} />
                 <ModalContent
                     p={".75rem"}
                     maxW={'600px'} h={"fit-content"}
@@ -1698,7 +1632,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                         </Flex>
                     </ModalBody>
                 </ModalContent>
-            </Modal>
+            </Modal> */}
             {/* <Flex display={displayConfidentialModal} align={'center'} justify={'center'}
             left={0} pos={'fixed'} top={0}
             mt={0}

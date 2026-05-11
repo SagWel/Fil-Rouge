@@ -1,4 +1,21 @@
-import { Box, Flex, Link, chakra, Stack, FormControl, FormErrorMessage, FormLabel, Input, Heading, Text, InputGroup, InputRightElement, Button, FormHelperText, Wrap } from "@chakra-ui/react"
+import { 
+    Box,
+    Flex,
+    Link,
+    chakra,
+    Stack,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Input,
+    Heading,
+    Text,
+    InputGroup,
+    InputRightElement,
+    Button,
+    FormHelperText,
+    Wrap 
+} from "@chakra-ui/react"
 import '../../style.css'
 import { useState } from "react"
 import { useNavigate, type NavigateFunction } from "react-router-dom"

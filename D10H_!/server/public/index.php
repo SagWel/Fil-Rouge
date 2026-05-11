@@ -84,6 +84,11 @@ if ($ressource && file_exists($controlerFile)) {
         case 'history':
             require_once $middlewareID;
             break;
+        case 'deleteaccount':
+            require_once $middlewareID;
+            require_once '../middlewares/CheckLogin.php';
+            $_POST['userId'] = $id;
+            break;
     }
     require_once $controlerFile;
 } else {

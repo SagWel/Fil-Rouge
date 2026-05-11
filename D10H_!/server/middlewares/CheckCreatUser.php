@@ -32,16 +32,16 @@ static $genders = ['M', 'F', 'NB', 'Private'];
 
 if ($email && $password) {
     if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($password) >= 8 && preg_match('/\d/', $password) === 1 && preg_match('/[a-z]/i', $password) === 1) {
-        $_GET['email'] = filter_var($email, FILTER_SANITIZE_EMAIL);
-        $_GET['password'] = $password;
+        $_POST['email'] = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $_POST['password'] = $password;
         if ($username && 3 < strlen($username) && strlen($username)  <= 20) {
             if (preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
                 if (!in_array(strtolower($username), $reservedNames)) {
-                    $_GET['username'] = $username;
+                    $_POST['username'] = $username;
                     if (is_numeric($age)) {
-                        $_GET['age'] = $age;
+                        $_POST['age'] = $age;
                         if (in_array($gender, $genders)) {
-                            $_GET['gender'] = $gender;
+                            $_POST['gender'] = $gender;
                         } else {
                             http_response_code(400);
                             echo json_encode(['message' => "Erreur : Genre non listé. Veuillez nous contacter si besoin."]);
