@@ -62,18 +62,18 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
     }
 
     let sessionEmail: string = ''
-    let sessionPassword: string = ''
+    // let sessionPassword: string = ''
 
     if (sessionInformations) {
         sessionEmail = JSON.parse(sessionInformations).userData.email || ''
-        sessionPassword = JSON.parse(sessionInformations).userData.password || ''
+        // sessionPassword = JSON.parse(sessionInformations).userData.password || ''
     } else {
         sessionStorage.setItem('smartJourneyState', JSON.stringify(informationsData))
     }
 
     /* States for inputs */
     const [email, setEmail] = useState<string>(sessionEmail)
-    const [password, setPassword] = useState<string>(sessionPassword)
+    const [password, setPassword] = useState<string>('')
     const [inputType, setInputType] = useState<'password' | 'text'>('password')
     const [username, setUsername] = useState<string>('')
     const [age, setAge] = useState<number>(0)
@@ -922,7 +922,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                                     steps: ["email_or_phone", "create_password", "user_profile"],
                                                     userData: {
                                                         email : email,
-                                                        password : password
+                                                        // password : password
                                                     }
                                                 }
                                                 sessionStorage.setItem('smartJourneyState', JSON.stringify(informationsData))
