@@ -180,3 +180,29 @@ function updatePassword($pdo, $userId, $newPasswordHash)
         ];
     }
 }
+
+function updateFilterExplicit($pdo, $userId, $newExplicitFilter)
+{
+
+    try {
+        $sql = $pdo->prepare(
+            'UPDATE user_profiles
+            SET filter_explicit = ?
+            WHERE user_id = ?'
+        );
+
+        $sql->execute([$newExplicitFilter, $userId]);
+
+        return [
+            'updateIsOk' => true,
+            'CodeHttp' => 200,
+            'message' => 'Update du filtre des contenus explicits mis à jour'
+        ];
+    } catch (PDOException $e) {
+        return [
+            'updateIsOk' => false,
+            'CodeHttp' => 500,
+            'Message' => `Erreur : Echec lors de l'update des contenus explicits pour l'utilisateur $userId : ` . $e->getMessage()
+        ];
+    }
+}

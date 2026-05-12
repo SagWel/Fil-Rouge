@@ -11,6 +11,8 @@ interface AuthContextType {
     setIsFirstLogin: React.Dispatch<React.SetStateAction<boolean>>,
     logout: () => void,
     loading: boolean
+    resetContext: boolean,
+    setResetContext: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const AuthContext: React.Context<AuthContextType | undefined> = createContext<AuthContextType | undefined>(undefined)

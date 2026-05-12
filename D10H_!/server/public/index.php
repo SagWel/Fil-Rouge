@@ -94,6 +94,10 @@ if ($ressource && file_exists($controlerFile)) {
             require_once '../middlewares/CheckEditPassword.php';
             $_POST['userId'] = $id;
             break;
+        case 'filterexplicit':
+            require_once $middlewareID;
+            $_POST['userId'] = $id;
+            require_once '../middlewares/CheckFilterExplicitChoice.php';
     }
     require_once $controlerFile;
 } else {

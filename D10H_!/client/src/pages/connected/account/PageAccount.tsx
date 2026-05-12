@@ -61,7 +61,7 @@ export interface ILanguage {
 const PageAccount: React.FC<IPageAccountProps> = () => {
     const maillingImplemented: boolean = false
 
-    const { user, logout } = useAuth()
+    const { user, logout, resetContext, setResetContext } = useAuth()
 
     const navigate = useNavigate()
 
@@ -399,6 +399,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
             setUpdateMessage(data.message)
             setUpdateValidating(data.validating)
             setUpdateModal(true)
+            setResetContext(!resetContext)
             setTimeout(() => {
                 setUpdateModal(false)
                 setUpdateMessage('')

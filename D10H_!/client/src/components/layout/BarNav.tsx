@@ -69,7 +69,7 @@ const BarNav: React.FC<IBarNavProps> = () => {
                                 borderRadius: "0.5rem"
                             }}>
                                 <HomeIcon />
-                                <Heading fontSize={"1.125rem"} fontWeight={"700"}>Acceuil</Heading>
+                                <Heading fontSize={"1.125rem"} fontWeight={"700"}>Accueil</Heading>
                             </Flex>
                         </Link>
                         <Link href={"/instruments/user"}
