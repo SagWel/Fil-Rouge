@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Box, Flex, Button, Text, Image } from "@chakra-ui/react";
+import { Box, Flex, Button, Text, Image, Popover, PopoverContent, PopoverArrow, PopoverBody, Slider, SliderTrack, SliderFilledTrack } from "@chakra-ui/react";
 
 /* Import image for background */
 import Cover from '../../img/dont-stop-the-party.png';
@@ -7,20 +7,56 @@ import Cover from '../../img/dont-stop-the-party.png';
 /* Import SVG */
 import { HeartLoveOnIcon,
     AddIcon,
-    ShuffleIcon, 
-    PreviousIcon, 
-    PlayIcon, 
-    NextIcon, 
-    LoopAllIcon, 
-    LyricsIcon, 
-    QueueListIcon, 
-    ChromcastIcon, 
-    VolumeIcon, 
-    AudioIcon } from "../Svg";
+    PreviousIcon,
+    PlayIcon,
+    NextIcon,
+    ChromcastIcon,
+    VolumeIcon,
+    AudioIcon,
+    BreackIcon
+} from "../Svg";
+import { usePlayScoreDispatch, usePlayScoreStates } from "../../hooks/usePlayScore";
+import { useCallback, useRef } from "react";
 
-export interface IPlayeurMinProps {onClick: () => void}
+import '../../style.css'
 
-const PlayeurMin: React.FC<IPlayeurMinProps> = ({onClick}) => {
+export interface IPlayeurMinProps {}
+
+const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
+    const { setOnPlay, setBackToStart, setNextMeasure, setPreviousMeasure } = usePlayScoreDispatch()
+    const { onPlay } = usePlayScoreStates()
+
+    const timerRef = useRef<number | null>(null)
+
+    const handleClickPrevious: () => void = useCallback(() => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current)
+            timerRef.current = null
+            setBackToStart(true)
+            setTimeout(() => {
+                setBackToStart(false)
+            }, 100)
+        } else {
+            timerRef.current = setTimeout(() => {
+                setPreviousMeasure(true)
+                setTimeout(() => {
+                    setPreviousMeasure(false)
+                }, 100)
+            }, 250)
+        }
+    }, [setBackToStart, setPreviousMeasure])
+
+    const handleClickNext: () => void = useCallback(() => {
+        setNextMeasure(true)
+        setTimeout(() => {
+            setNextMeasure(false)
+        }, 100)
+    }, [setNextMeasure])
+
+    const handlePlay: () => void = useCallback(() => {
+        setOnPlay(!onPlay)
+    }, [onPlay, setOnPlay])
+
     return (
         <Flex 
         alignItems={"center"} justifyContent={"space-between"}
@@ -40,16 +76,16 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = ({onClick}) => {
                     textDecoration: "underline"
                 }}
                 >
-                    <Link
+                    <Box as={Link} onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                     to={"direction page album de la piste"}
                     >
                         Don't Stop The Party
-                    </Link>
+                    </Box>
                 </Box>
                 <Flex id="add-buttons"
                 direction={"row"} justifyContent={"center"} alignItems={"center"}
                 marginLeft={"1rem"}>
-                    <Button aria-label="Retirer des coups de coeur"
+                    <Button aria-label="Retirer des coups de coeur" disabled title="prochainement"
                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                     minHeight={"2rem"} minWidth={"2rem"} height={"2rem"} padding={"0"}
                     color={"#fdfcfe"} background={"transparent"}
@@ -74,7 +110,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = ({onClick}) => {
                     </Button>
                     <Box 
                     marginLeft={"0.25rem"}>
-                        <Button aria-label="Open context menu"
+                        <Button aria-label="Open context menu" disabled title="prochainement"
                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                         padding={"0"}
                         minHeight={"2rem"} minWidth={"2rem"} height={"2rem"}
@@ -103,38 +139,15 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = ({onClick}) => {
             </Flex>
             <Flex id="-center-control"
             justifyContent={"center"} alignItems={"center"}
-            width={"33%"} gap={"0.25rem"} padding={"0 1rem"}>
+            width={"33%"} gap={"1rem"} padding={"0 1rem"}>
                 <Flex display={"inline-flex"} gap={"0.5rem"}>
-                    <Button type="button" aria-label="activer le mode aléatoire"
-                    display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
-                    padding={"0"}
-                    minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}
-                    background={"transparent"}
-                    borderRadius={"full"}
-                    _active={{
-                            background: "transparent",
-                            color: "#bb73ff",
-                    }}
-                    _focus={{
-                        zIndex: "1"
-                    }}
-                    _focusVisible={{
-                        boxShadow: "none",
-                        outlineColor: "#ad47ff"
-                    }}
-                    _hover={{
-                        background: "#2e2c30",
-                        color: "#f5f2f8"
-                    }}
-                    >
-                        <ShuffleIcon />
-                    </Button>
                     <Button type="button" aria-label="Précédent"
                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                     padding={"0"}
                     minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}
                     background={"transparent"}
                     borderRadius={"full"}
+                    onClick={handleClickPrevious}
                     _active={{
                             background: "transparent",
                             color: "#bb73ff",
@@ -158,7 +171,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = ({onClick}) => {
                     marginLeft={"0"} padding={"0"}
                     minHeight={"2rem"} height={"2rem"} minWidth={"2rem"}
                     background={"#a238ff"} borderRadius={"full"}
-                    onClick={onClick}
+                    onClick={handlePlay}
                     _active={{
                         color: "#e2dfe6",
                         background: "#ca97ff"
@@ -175,7 +188,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = ({onClick}) => {
                         background: "#bb73ff"
                     }}
                     >
-                        <PlayIcon />
+                        {onPlay ? <BreackIcon /> : <PlayIcon />}
                     </Button>
                     <Button type="button" aria-label="Suivant"
                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
@@ -183,6 +196,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = ({onClick}) => {
                     minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}
                     background={"transparent"}
                     borderRadius={"full"}
+                    onClick={handleClickNext}
                     _active={{
                             background: "transparent",
                             color: "#bb73ff",
@@ -201,104 +215,64 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = ({onClick}) => {
                     >
                         <NextIcon />
                     </Button>
-                    <Button type="button" aria-label="Réécouter tous les titres"
-                    display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
-                    marginLeft={"0"} padding={"0"}
-                    minHeight={"2rem"} height={"2rem"} minWidth={"2rem"}
-                    background={"transparent"} borderRadius={"full"}
-                    _active={{
-                            background: "transparent",
-                            color: "#bb73ff",
-                    }}
-                    _focus={{
-                        zIndex: "1"
-                    }}
-                    _focusVisible={{
-                        boxShadow: "none",
-                        outlineColor: "#ad47ff"
-                    }}
-                    _hover={{
-                        background: "#2e2c30",
-                        color: "#f5f2f8"
-                    }}
-                    >
-                        <LoopAllIcon />
-                    </Button>
                 </Flex>
-            </Flex>
-            <Flex id="timline" 
-            alignItems={"center"} justifyContent={"center"}
-            paddingY={"0.125rem"}
-            position={"relative"}>
-                <Box paddingRight={"0.5rem"}>
-                    <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
-                    margin={"0"}>
-                        01:24
-                    </Text>
-                </Box>
-                <Box textAlign={"center"} minWidth={"24px"}>
-                    <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
-                    margin={"0"}>
-                        -----
-                    </Text>
-                </Box>
-                <Box paddingLeft={"0.5rem"}
-                position={"relative"} right={"0"}>
-                    <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
-                    margin={"0"}>
-                        06:07
-                    </Text>
-                </Box>
+
+                <Flex id="timline" 
+                alignItems={"center"} justifyContent={"center"}
+                paddingY={"0.125rem"}
+                position={"relative"}>
+                    <Box paddingRight={"0.5rem"}>
+                        <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            01:24
+                        </Text>
+                    </Box>
+                    <Flex textAlign={"center"} minWidth={"24px"}>
+                        <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text>
+                        <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text><Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text><Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text><Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text><Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text><Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text><Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text><Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text><Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            -
+                        </Text>
+                    </Flex>
+                    <Box paddingLeft={"0.5rem"}
+                    position={"relative"} right={"0"}>
+                        <Text fontSize={"12px"} fontWeight={"400"} lineHeight={"16px"} color={"#fdfcfe"}
+                        margin={"0"}>
+                            06:07
+                        </Text>
+                    </Box>
+                </Flex>
             </Flex>
             <Box id="other-control" display={"inline-flex"} justifyContent={"flex-end"} alignItems={"center"}
             width={"33%"}>
-                <Button type="button" aria-label="Afficher les paroles"
-                display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
-                padding={"0"}
-                minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 
-                color={"#fdfcfe"} background={"transparent"}
-                borderRadius={"full"}
-                _active={{
-                                background: "transparent",
-                                color: "#bb73ff",
-                        }}
-                        _focus={{
-                            zIndex: "1"
-                        }}
-                        _focusVisible={{
-                            boxShadow: "none",
-                            outlineColor: "#ad47ff"
-                        }}
-                        _hover={{
-                            background: "#2e2c30",
-                            color: "#f5f2f8"
-                        }}>
-                    <LyricsIcon />
-                </Button>
-                <Button type="button" aria-label="Open queuelist"
-                display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
-                padding={"0"} marginLeft={"0.25rem"}
-                minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 
-                color={"#fdfcfe"} background={"transparent"}
-                borderRadius={"full"}
-                _active={{
-                                background: "transparent",
-                                color: "#bb73ff",
-                        }}
-                        _focus={{
-                            zIndex: "1"
-                        }}
-                        _focusVisible={{
-                            boxShadow: "none",
-                            outlineColor: "#ad47ff"
-                        }}
-                        _hover={{
-                            background: "#2e2c30",
-                            color: "#f5f2f8"
-                        }}>
-                    <QueueListIcon />
-                </Button>
-                <Button type="button" aria-label="Chromcast"
+                <Button type="button" aria-label="Chromcast" disabled title="à venir"
                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
                 padding={"0"} marginLeft={"0.25rem"}
                 minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 

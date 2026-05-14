@@ -39,37 +39,37 @@
                 "currentInstrument": {
                     "id": "chant",
                     "name": "chant",
-                    "imgSrc": "/img/Chant.png"
+                    "img_src": "/img/Chant.png"
                 },
                 "othersInstruments": [
                     {
                         "id": "guitareRythm",
                         "name": "guitare",
-                        "imgSrc": "/img/Guitare.png",
+                        "img_src": "/img/Guitare.png",
                         "linkToScore": "/scores/guitare/116348264"
                     },
                     {
                         "id": "guitarSolo",
                         "name": "guitare",
-                        "imgSrc":"/img/Guitare.png",
+                        "img_src":"/img/Guitare.png",
                         "linkToScore": "/scores/guitare/116348264_2"
                     },
                     {
                         "id": "basse",
                         "name": "basse",
-                        "imgSrc": "/img/Basse.png",
+                        "img_src": "/img/Basse.png",
                         "linkToScore": "/scores/basse/116348264"
                     },
                     {
                         "id": "batterie",
                         "name": "batterie",
-                        "imgSrc":"/img/Batterie.png",
+                        "img_src":"/img/Batterie.png",
                         "linkToScore": "/scores/batterie/116348264"
                     },
                     {
                         "id": "choeurs",
                         "name": "chant",
-                        "imgSrc": "/img/Chant.png",
+                        "img_src": "/img/Chant.png",
                         "linkToScore": "/scores/chant/116348264_2"
                     }
                 ]
@@ -1992,7 +1992,7 @@
                     "id": 1,
                     "name": "guitare",
                     "role": "Rythmic",
-                    "imgSrc": "uploads/instruments/Guitare.png",
+                    "img_src": "uploads/instruments/Guitare.png",
                     "linkToSearch": "/scores/guitare"
                 },
                 "othersInstruments": [
@@ -2000,32 +2000,32 @@
                         "id": 1,
                         "name": "guitare",
                         "role": "solo",
-                        "imgSrc": "uploads/instruments/Guitare.png",
+                        "img_src": "uploads/instruments/Guitare.png",
                         "linkToSearch": "/scores/guitare"
                     },
                     {
                         "id": 2,
                         "name": "chant",
-                        "imgSrc": "uploads/instruments/Chant.png",
+                        "img_src": "uploads/instruments/Chant.png",
                         "linkToSearch": "/scores/chant"
                     },
                     {
                         "id": 3,
                         "name": "basse",
-                        "imgSrc": "uploads/instruments/Basse.png",
+                        "img_src": "uploads/instruments/Basse.png",
                         "linkToSearch": "/scores/basse"
                     },
                     {
                         "id": 2,
                         "name": "chant",
                         "role": "choirs",
-                        "imgSrc": "uploads/instruments/Chant.png",
+                        "img_src": "uploads/instruments/Chant.png",
                         "linkToSearch": "/scores/chant"
                     },
                     {
                         "id": 5,
                         "name": "batterie",
-                        "imgSrc": "uploads/instruments/Batterie.png",
+                        "img_src": "uploads/instruments/Batterie.png",
                         "linkToSearch": "/scores/batterie"
                     }
                 ]

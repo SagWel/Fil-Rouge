@@ -11,13 +11,16 @@ import { useScore } from "../../hooks/useScore";
 /* Import background */
 import Fond from '../../../public/imgs/FondPart.jpg'
 import { useAuth } from "../../hooks/useAuth";
+import { usePlayScoreStates } from "../../hooks/usePlayScore";
 
-export interface IPageMorceauProps {onPlay: boolean}
+export interface IPageMorceauProps {}
 
-const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
+const PageMorceau: React.FC<IPageMorceauProps> = () => {
 
     /* Score from context by hook */
     const { score, setScore} = useScore()
+
+    const { onPlay } = usePlayScoreStates()
 
     const { morceauId } = useParams()
     const { user } = useAuth()
@@ -93,7 +96,7 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
             height={"100%"} width={"97%"}
             marginY={"10px"} marginInlineStart={"20px"}
             overflowY={"auto"}>
-                <ScoreRender onPlay={onPlay}/>
+                <ScoreRender />
             </Box>
         </Flex>
     );

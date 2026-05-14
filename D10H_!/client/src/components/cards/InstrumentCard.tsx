@@ -21,7 +21,7 @@ const InstrumentCard: React.FC<IInstrumentCardProps> = ({instrument}) => {
         height={"16rem"} width={"16rem"}
         borderRadius={"full"} overflow={"hidden"}
         >
-            <Image src={`${BASE_URL}${instrument.img_src}`} height={"100%"} width={"100%"} />
+            <Image src={`${BASE_URL}${instrument.imgSrc}`} height={"100%"} width={"100%"} />
             <Text 
             position={"absolute"} overflow={"hidden"}
             opacity={"0"}

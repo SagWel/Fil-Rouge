@@ -27,7 +27,7 @@ INSERT INTO `genres` (`id`, `name`, `picture`, `picture_small`, `picture_medium`
 -- Déchargement des données de la table `instruments`
 --
 
-INSERT INTO `instruments` (`id`, `name`, `imgSrc`, `linkToSearch`) VALUES
+INSERT INTO `instruments` (`id`, `name`, `img_src`, `linkToSearch`) VALUES
 (1, 'guitare', '../../public/img/Guitare.png', '/partitions/guitare'),
 (2, 'chant', '../../public/img/Chant.png', '/partitions/chant'),
 (3, 'basse', '../../public/img/Basse.png', '/partitions/basse'),

@@ -42,6 +42,7 @@ import PlayeurMin from './components/layout/PlayeurMin.tsx';
 import useWindowWidth from './hooks/useWindowWidth.tsx'
 import { useAuth } from './hooks/useAuth.tsx';
 import ModalManager from './components/modals/ModalManager.tsx';
+import { PlayScoreProvider } from './context/PlayScoreContext.tsx';
 
 function App() {
 
@@ -53,9 +54,6 @@ function App() {
   const PLAYEUR_MIN_HEIGHT = "40px"
   const HEADER_MIN_HEIGHT = "40px";
   const TOOLS_WIDTH = "50px"
-  
-  /* music play status management */
-  const [onPlay, setOnPlay] = useState<boolean>(false)
   
   // Variables for Scores page identification
   const location = useLocation()
@@ -70,14 +68,6 @@ function App() {
   const Breakpoint = 1160
   const isMinimal = width <= Breakpoint
   const navResponsive = isMinimal ? NAV_MIN_WIDTH : NAV_WIDTH
-
-  const handleOnPlay = () => {
-    if (onPlay) {
-      setOnPlay(false)
-    } else {
-      setOnPlay(true)
-    }
-  }
 
   /* authtification management from context by hook */
   const {isAuthenticated, user, loading} = useAuth() 
@@ -98,70 +88,72 @@ function App() {
     <SearchProvider>
       {/* score data distribution */}
       <ScoreProvider>
-        <Grid
-        bg={"#000000"}
-        minH="100vh"
-        templateRows={`${HEADER_MIN_HEIGHT} 1fr ${PLAYEUR_MIN_HEIGHT}`}
-        templateColumns={`${NAV_MIN_WIDTH} 1fr ${TOOLS_WIDTH}`}
+        <PlayScoreProvider>
+          <Grid
+          bg={"#000000"}
+          minH="100vh"
+          templateRows={`${HEADER_MIN_HEIGHT} 1fr ${PLAYEUR_MIN_HEIGHT}`}
+          templateColumns={`${NAV_MIN_WIDTH} 1fr ${TOOLS_WIDTH}`}
 
-        /* layout of display areas */
-        templateAreas={`
-          "nav header tools"
-          "nav main tools"
-          "playeur playeur playeur"
-          `}
-          >
-            <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
-              <BarNavMin />
-            </Box>
-              <Box gridArea={"header"} zIndex={"200"}>
-                <HeaderMin/>
+          /* layout of display areas */
+          templateAreas={`
+            "nav header tools"
+            "nav main tools"
+            "playeur playeur playeur"
+            `}
+            >
+              <Box gridArea={"nav"} bg={"#141216"} borderRight={"solid #4e4c51 0.0625rem"}>
+                <BarNavMin />
               </Box>
-              <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
-                <Routes>
+                <Box gridArea={"header"} zIndex={"200"}>
+                  <HeaderMin/>
+                </Box>
+                <Box gridArea={"main"} bg={"#000000"} width={"100%"}>
+                  <Routes>
+            
+                      {/* Route for home page */}
+                      <Route path='/' element={<PageHome />} />
+
+                      {/* Route for profil editing */}
+                      <Route path='/account' element={<PageAccount />} />
+                      {/* <Route path='/account/notifications' element={<PageAccountNotifications />} />
+                      <Route path='/account/devices' element={<PageAccountDevices />} />
+                      <Route path='/account/display' element={<PageAccountDisplay />} />
+                      <Route path='/account/share' element={<PageAccountShare />} />
+                      <Route path='/account/country_selector' element={<PageAccountCountry />} />
+
+                      <Route path='/apps' element={<PageApps />} /> */}
+
+                      {/* Route to display search results */}
+                      <Route path='/search' element={<PageSearchScores />} />
+
+                      {/* Routes to display instruments */}
+                      <Route path='/instruments/user' element={<PageUserInstruments />} />
+                      {/* <Route path='/instruments/all' element={<AllInstruments />} /> */}
+                      
+                      {/* Route to display scores based on the selected instrument */}
+                      <Route path='/scores/:instrumentName' element={<PageSearchScoresInstrument />} />
+
+                      {/* Route to display selected score */}
+                      <Route path='/scores/:instrumentName/:morceauId' element={<Morceau />} />
+            
+                      {/* Routes to display favorites */}
+                      <Route path='/favoris' element={<Favoris />} />
+                      {/* <Route path='/favoris/scorbraries' element={<Scorbraries />} />          
+                      <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
+                      <Route path='/favoris/history' element={<History />} /> */}
           
-                    {/* Route for home page */}
-                    <Route path='/' element={<PageHome />} />
-
-                    {/* Route for profil editing */}
-                    <Route path='/account' element={<PageAccount />} />
-                    {/* <Route path='/account/notifications' element={<PageAccountNotifications />} />
-                    <Route path='/account/devices' element={<PageAccountDevices />} />
-                    <Route path='/account/display' element={<PageAccountDisplay />} />
-                    <Route path='/account/share' element={<PageAccountShare />} />
-                    <Route path='/account/country_selector' element={<PageAccountCountry />} />
-
-                    <Route path='/apps' element={<PageApps />} /> */}
-
-                    {/* Route to display search results */}
-                    <Route path='/search' element={<PageSearchScores />} />
-
-                    {/* Routes to display instruments */}
-                    <Route path='/instruments/user' element={<PageUserInstruments />} />
-                    {/* <Route path='/instruments/all' element={<AllInstruments />} /> */}
-                    
-                    {/* Route to display scores based on the selected instrument */}
-                    <Route path='/scores/:instrumentName' element={<PageSearchScoresInstrument />} />
-
-                    {/* Route to display selected score */}
-                    <Route path='/scores/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
-          
-                    {/* Routes to display favorites */}
-                    <Route path='/favoris' element={<Favoris />} />
-                    {/* <Route path='/favoris/scorbraries' element={<Scorbraries />} />          
-                    <Route path='/favoris/scorbraries/:scorbraryId' element={<Scorbrary />} />
-                    <Route path='/favoris/history' element={<History />} /> */}
-        
-                </Routes>
+                  </Routes>
+                </Box>
+              <Box gridArea={"tools"} zIndex={"200"} marginTop={HEADER_MIN_HEIGHT} marginBottom={PLAYEUR_MIN_HEIGHT} position={"fixed"} right={"0"} top={"0"} bottom={"0"}>
+                <Tools />
               </Box>
-            <Box gridArea={"tools"} zIndex={"200"} marginTop={HEADER_MIN_HEIGHT} marginBottom={PLAYEUR_MIN_HEIGHT} position={"fixed"} right={"0"} top={"0"} bottom={"0"}>
-              <Tools />
-            </Box>
-            <Box gridArea={"playeur"} zIndex={"10"}
-            position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
-              <PlayeurMin onClick={handleOnPlay}/>
-            </Box>
-        </Grid>
+              <Box gridArea={"playeur"} zIndex={"10"}
+              position={"fixed"} right={"0"} bottom={"0"} left={"0"}>
+                <PlayeurMin />
+              </Box>
+          </Grid>
+        </PlayScoreProvider>
       </ScoreProvider>
       <ModalManager/>
     </SearchProvider>
@@ -221,7 +213,7 @@ function App() {
                   <Route path='/scores/:instrumentName' element={<PageSearchScoresInstrument />} />
         
                   {/* Route to display selected score */}
-                  <Route path='/scores/:instrumentName/:morceauId' element={<Morceau onPlay={onPlay}/>} />
+                  <Route path='/scores/:instrumentName/:morceauId' element={<Morceau/>} />
         
                   {/* Routes to display favorites */}
                   <Route path='/favoris' element={<Favoris />} />
