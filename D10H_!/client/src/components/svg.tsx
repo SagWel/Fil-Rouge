@@ -456,6 +456,18 @@ export const VolumeIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
     </Icon>
 )
 
+export const VolumeOffIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
+    <Icon viewBox="0 0 24 24"
+    w={size || '24px'} h={size || '24px'}
+    fill={color || '#bb73ff'} {...rest}>
+        <path d="M7.015 8.007 10.33 4h1.657s.827 3.636.827 8.007c0 4.357-.83 7.993-.83 
+        7.993H10.33l-3.245-3.993H4.667c-.368 0-.667-.325-.667-.727V8.735c0-.402.299-.728.667-.728h2.348Zm1.104 7.16 2.78 3.42c.236-1.366.582-3.837.582-6.58 
+        0-2.76-.346-5.239-.582-6.604L8.043 8.857l-.4.483h-2.31v5.334h2.386l.4.493ZM18 9.53l.943.943L17.414 12l1.529 1.529-.943.943-1.529-1.529-1.528 1.529L14 13.53l1.529-1.529L14 
+        10.473l.943-.943 1.528 1.529L18 9.53Z">
+        </path>
+    </Icon>
+)
+
 export const AudioIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
     <Icon viewBox="0 0 24 24"
     w={size || "24px"} h={size || "24px"} 
