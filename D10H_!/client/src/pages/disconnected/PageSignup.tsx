@@ -437,7 +437,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                     }}>
                                         <span>Continuer</span>
                                     </Button>
-                                    <Text as={"p"} color={"#a19fa4"}>ou</Text>
+                                    {/* <Text as={"p"} color={"#a19fa4"}>ou</Text>
                                     <Wrap flexShrink={0} justifyContent={"center"}>
                                         <Flex pos={"relative"}>
                                             <Button type="button" aria-label="facebook"
@@ -541,10 +541,10 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                                 lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
                                             </Button>
                                         </Flex>
-                                    </Wrap>
+                                    </Wrap> */}
                                 </Stack>
                             </chakra.form>
-                            <Stack alignItems={"center"} gap={"0.75rem"}>
+                            {/* <Stack alignItems={"center"} gap={"0.75rem"}>
                                 <Link href="https://www.deezer.com/fr/activate"
                                 display={"block"}
                                 paddingInline={"2rem"}
@@ -571,7 +571,7 @@ const PageSignup: React.FC<IPageSignupProps> = () => {
                                         <RightCarouselIcon lineHeight={"1em"} flexShrink={0} verticalAlign={"middle"} color="#a19fa4" display={"block"}/>
                                     </Stack>
                                 </Link>
-                            </Stack>
+                            </Stack> */}
                         </Stack>
                     </Stack>
                     )}
