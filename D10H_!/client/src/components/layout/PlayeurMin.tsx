@@ -22,14 +22,16 @@ import Cover from '../../img/dont-stop-the-party.png';
 /* Import SVG */
 import { HeartLoveOnIcon,
     AddIcon,
-    PreviousIcon,
+    BackIcon,
     PlayIcon,
     NextIcon,
     ChromcastIcon,
     VolumeIcon,
     AudioIcon,
     BreackIcon,
-    VolumeOffIcon
+    VolumeOffIcon,
+    RewindIcon,
+    FFIcon
 } from "../Svg";
 import { usePlayScoreDispatch, usePlayScoreStates } from "../../hooks/usePlayScore";
 import { useCallback, useRef, useState } from "react";
@@ -50,31 +52,29 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
     const [volume, setVolume] = useState<number>(50)
     const [MVolume, setMVolume] = useState<number>(volume)
 
-    const handleClickPrevious: () => void = useCallback(() => {
-        if (timerRef.current) {
-            clearTimeout(timerRef.current)
-            timerRef.current = null
-            setBackToStart(true)
-            setTimeout(() => {
-                setBackToStart(false)
-            }, 100)
-        } else {
-            timerRef.current = setTimeout(() => {
-                setPreviousMeasure(true)
-                setTimeout(() => {
-                    setPreviousMeasure(false)
-                }, 100)
-            }, 250)
-        }
-    }, [setBackToStart, setPreviousMeasure])
+    const handleClickBack: () => void = useCallback(() => {
+        setBackToStart(true)
+        setTimeout(() => {            
+            setBackToStart(false)
+        }, 100)
+    }, [setBackToStart])
 
-    const handleClickNext: () => void = useCallback(() => {
+    const handleClickPrevious: () => void = useCallback(() => {
+        setPreviousMeasure(true)
+        setTimeout(() => {
+            setPreviousMeasure(false)
+        }, 100)
+    }, [setPreviousMeasure])
+
+    const handleClickFF: () => void = useCallback(() => {
         setNextMeasure(true)
         setTimeout(() => {
             setNextMeasure(false)
         }, 100)
     }, [setNextMeasure])
 
+    const handleClickNext: () => void = () => {}
+    
     const handlePlay: () => void = useCallback(() => {
         setOnPlay(!onPlay)
     }, [onPlay, setOnPlay])
@@ -191,6 +191,31 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
                     minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}
                     background={"transparent"}
                     borderRadius={"full"}
+                    onClick={handleClickBack}
+                    _active={{
+                            background: "transparent",
+                            color: "#bb73ff",
+                    }}
+                    _focus={{
+                        zIndex: "1"
+                    }}
+                    _focusVisible={{
+                        boxShadow: "none",
+                        outlineColor: "#ad47ff"
+                    }}
+                    _hover={{
+                        background: "#2e2c30",
+                        color: "#f5f2f8"
+                    }}
+                    >
+                        <BackIcon />
+                    </Button>
+                    <Button type="button" aria-label="Précédent"
+                    display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
+                    padding={"0"}
+                    minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}
+                    background={"transparent"}
+                    borderRadius={"full"}
                     onClick={handleClickPrevious}
                     _active={{
                             background: "transparent",
@@ -208,7 +233,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
                         color: "#f5f2f8"
                     }}
                     >
-                        <PreviousIcon />
+                        <RewindIcon />
                     </Button>
                     <Button type="button" aria-label="Ecouter"
                     display={"inline-flex"} justifyContent={"center"} alignItems={"center"}
@@ -234,7 +259,32 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
                     >
                         {onPlay ? <BreackIcon /> : <PlayIcon />}
                     </Button>
-                    <Button type="button" aria-label="Suivant"
+                    <Button type="button" aria-label="Précédent"
+                    display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
+                    padding={"0"}
+                    minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}
+                    background={"transparent"}
+                    borderRadius={"full"}
+                    onClick={handleClickFF}
+                    _active={{
+                            background: "transparent",
+                            color: "#bb73ff",
+                    }}
+                    _focus={{
+                        zIndex: "1"
+                    }}
+                    _focusVisible={{
+                        boxShadow: "none",
+                        outlineColor: "#ad47ff"
+                    }}
+                    _hover={{
+                        background: "#2e2c30",
+                        color: "#f5f2f8"
+                    }}
+                    >
+                        <FFIcon />
+                    </Button>
+                    <Button type="button" aria-label="Suivant" disabled
                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                     padding={"0"}
                     minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}

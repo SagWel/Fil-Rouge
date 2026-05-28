@@ -5,7 +5,7 @@ import { Box, Flex, Button, Text, Slider, SliderTrack, SliderFilledTrack, Slider
 import Cover from '../../img/dont-stop-the-party.png';
 
 // SVGs import from a unique file
-import { HeartLoveOnIcon, AddIcon, ShuffleIcon, PreviousIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "../Svg";
+import { HeartLoveOnIcon, AddIcon, ShuffleIcon, BackIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "../Svg";
 
 export interface IPlayeurProps {}
 
@@ -161,7 +161,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                             color: "#f5f2f8"
                         }}
                         >
-                            <PreviousIcon />
+                            <BackIcon />
                         </Button>
                         <Button type="button" aria-label="Ecouter"
                         display={"inline-flex"} justifyContent={"center"} alignItems={"center"}

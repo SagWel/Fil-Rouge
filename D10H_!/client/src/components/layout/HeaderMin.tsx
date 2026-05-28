@@ -27,12 +27,6 @@ function HeaderMin() {
         setIsLoading,
     } = useSearch()
 
-    //Viariables for responsive
-        const width = useWindowWidth()
-        const Breakpoint = 1160
-        const isMinimal = width <= Breakpoint
-        const headerResponsiveWidth = isMinimal ? '80px' : '272px'
-
         const host = import.meta.env.VITE_HOST
         const port = import.meta.env.VITE_SERVER_PORT
 
@@ -187,7 +181,7 @@ function HeaderMin() {
         height={"40px"} minWidth={"770px"}
         paddingX={"1rem"} paddingY={"0.3125rem"}
         background={"#000000"}
-        position={"fixed"} right={"0"} top={"0"} left={headerResponsiveWidth}
+        position={"fixed"} right={"0"} top={"0"} left={'80px'}
         borderBottom={"1px solid #4e4c51"}>
             <Flex id="header"
             direction={"row"} align={"center"}

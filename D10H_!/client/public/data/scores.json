@@ -567,10 +567,6 @@
                                     {
                                         "status": "start",
                                         "direction": "up"
-                                    },
-                                    {
-                                        "status":"start",
-                                        "direction":"up"
                                     }
                                 ]
                             ],
@@ -1184,10 +1180,6 @@
                                     {
                                         "status": "start",
                                         "direction": "up"
-                                    },
-                                    {
-                                        "status": "start",
-                                        "direction":"up"
                                     }
                                 ]
                             ],
@@ -1206,6 +1198,10 @@
                                     {
                                         "status": "end",
                                         "direction": "up"
+                                    },
+                                    {
+                                        "status": "start",
+                                        "direction":"up"
                                     }
                                 ]
                             ]

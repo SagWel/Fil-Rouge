@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 /* Import component */
-import ScoreRender from "../../components/ScoreRender";
+import ScoreRenderChant from "../../components/scoreRendering/ScoreRenderChant";
 
 /* Import Hook */
 import { useScore } from "../../hooks/useScore";
@@ -11,7 +11,11 @@ import { useScore } from "../../hooks/useScore";
 /* Import background */
 import Fond from '../../../public/imgs/FondPart.jpg'
 import { useAuth } from "../../hooks/useAuth";
-import { usePlayScoreStates } from "../../hooks/usePlayScore";
+import { usePlayScoreDispatch, usePlayScoreStates } from "../../hooks/usePlayScore";
+
+const SCORE_RENDERERS: Record<string, React.FC> = {
+    chant: ScoreRenderChant
+}
 
 export interface IPageMorceauProps {}
 
@@ -20,7 +24,11 @@ const PageMorceau: React.FC<IPageMorceauProps> = () => {
     /* Score from context by hook */
     const { score, setScore} = useScore()
 
+    const SelectedRenderer = SCORE_RENDERERS['chant'] || ScoreRenderChant
+    
     const { onPlay } = usePlayScoreStates()
+
+    const { setOnPlay } = usePlayScoreDispatch()
 
     const { morceauId } = useParams()
     const { user } = useAuth()
@@ -80,6 +88,20 @@ const PageMorceau: React.FC<IPageMorceauProps> = () => {
         fetchAddUserHistory()
     },[onPlay, user, morceauId])
 
+    useEffect(() => {
+        const pauseForce = () => {
+            if (document.visibilityState === 'hidden' && onPlay) {
+                setOnPlay(false)
+            }
+        }
+
+        document.addEventListener('visibilitychange', pauseForce)
+
+        return () => {
+            document.removeEventListener('visibilitychange', pauseForce)
+        }
+    },[onPlay, setOnPlay])
+
     return (
        <Flex direction={"column"} overflowY={"auto"} justifyContent={"start"} width={"100%"} height={"100%"} background={"transparent"}>
             <Box width={"100%"} textAlign={"center"} position={"relative"}>
@@ -96,7 +118,7 @@ const PageMorceau: React.FC<IPageMorceauProps> = () => {
             height={"100%"} width={"97%"}
             marginY={"10px"} marginInlineStart={"20px"}
             overflowY={"auto"}>
-                <ScoreRender />
+                <SelectedRenderer />
             </Box>
         </Flex>
     );
