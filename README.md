@@ -21,19 +21,28 @@ cd client
 npm install
 ```
 
+4. Install database :
+
+```bash
+cd ../db
+node init.sql
+node seed.sql
+```
+
 4. Start frontend :
 
 ```bash
+cd ../client
 npm run dev
 ```
 
 5. Start backend :
 
-   Start xampp or wampp Apache and MySQL system
+Start xampp or wampp Apache and MySQL system
 
 6. Go to web app :
 
-   _after the server has started_
+ _after the server has started_
 
 ```bash
 o
@@ -215,8 +224,6 @@ D10H\_!
 │ ├── index.php  
 │ └── uploads  
 │ ├── avatars  
-│ │ ├── avatar_35_69f38d7b2e7d8.jpg  
-│ │ └── avatar_46_69f86c941ae55.jpeg  
 │ ├── instruments  
 │ │ ├── Basse.png  
 │ │ ├── Batterie.png  
@@ -227,9 +234,9 @@ D10H\_!
 │ │ ├── Saxo.png  
 │ │ └── Ukulele.png  
 │ └── previews  
-│ └── partition_1.png  
+│ │ └── partition_1.png  
 └── utils  
-└── mapperScores.php  
+│ └── mapperScores.php  
 
 ## Preview
 
