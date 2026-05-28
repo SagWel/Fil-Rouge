@@ -419,16 +419,6 @@ const Header: React.FC<IHeaderProps> = () => {
                             </Box>
                         </Box>
                         }
-
-                    {/*Displays searchs informations*/}
-                    {((query || '').length > 0) && (infoNavigation) &&
-                        <Box position={"absolute"} left={"0"} right={"0"}
-                        background={"#2e2c30"} color={"white"} textAlign={"center"} fontSize={"14px"}>
-                            <Text>
-                                ENTRER : rechercher partition - TAB : lecture morceau
-                            </Text>
-                        </Box>
-                    }
                 </Box>
                 <Box id="notif"
                 marginLeft={"1rem"}

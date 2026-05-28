@@ -257,13 +257,15 @@ function getSearchScores($pdo, $searchTerm)
         LEFT JOIN score_views sv ON s.id = sv.score_id
         WHERE
             so.title LIKE :query
+            OR so.deezer_full_name LIKE :query
             OR a.name LIKE :query
             OR g.name LIKE :query
         ORDER BY
             CASE
                 WHEN a.name LIKE :exact_query THEN 1
                 WHEN so.title LIKE :exact_query THEN 2
-                ELSE 3
+                WHEN so.deezer_full_name LIKE :exact_query THEN 3
+                ELSE 4
             END,
             so.title ASC'
     );
