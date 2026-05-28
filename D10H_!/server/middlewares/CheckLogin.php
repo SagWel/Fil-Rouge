@@ -13,8 +13,8 @@ $password = $data['password'];
 
 if ($email && $password) {
     if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($password) > 7) {
-        $_GET['email'] = filter_var($email, FILTER_SANITIZE_EMAIL);
-        $_GET['password'] = $password;
+        $_POST['email'] = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $_POST['password'] = $password;
     } else {
         http_response_code(400);
         echo json_encode(['erreur' => "Identifiants incorrect ..."]);
