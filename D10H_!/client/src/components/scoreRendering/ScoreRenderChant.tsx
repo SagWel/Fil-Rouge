@@ -237,7 +237,7 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
             }
             allNotes.push(note)
 
-            if (n.lyrics) note.addModifier(new Annotation(n.lyrics).setVerticalJustification(Annotation.VerticalJustify.BOTTOM), 0)
+            if (n.lyrics) note.addModifier(new Annotation(n.lyrics).setVerticalJustification(Annotation.VerticalJustify.BOTTOM).setFont({size: 11}), 0)
         })
         return { allNotes, beams, tuplets }
     }
