@@ -35,6 +35,7 @@ import { HeartLoveOnIcon,
 } from "../Svg";
 import { usePlayScoreDispatch, usePlayScoreStates } from "../../hooks/usePlayScore";
 import { useCallback, useRef, useState } from "react";
+import { useScore } from "../../hooks/useScore";
 
 import '../../style.css'
 
@@ -42,15 +43,16 @@ export interface IPlayeurMinProps {}
 
 const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
     const { setOnPlay, setBackToStart, setNextMeasure, setPreviousMeasure } = usePlayScoreDispatch()
-    const { onPlay } = usePlayScoreStates()
-
-    const timerRef = useRef<number | null>(null)
+    const { onPlay, tempoPercent, countdown } = usePlayScoreStates()
+    const { score } = useScore()
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const timeoutRef = useRef<number | null>(null)
 
     const [volume, setVolume] = useState<number>(50)
     const [MVolume, setMVolume] = useState<number>(volume)
+
+    const [onPlayWithCountdown, setOnPlayWithCountdown] = useState<boolean>(false)
 
     const handleClickBack: () => void = useCallback(() => {
         setBackToStart(true)
@@ -76,8 +78,20 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
     const handleClickNext: () => void = () => {}
     
     const handlePlay: () => void = useCallback(() => {
-        setOnPlay(!onPlay)
-    }, [onPlay, setOnPlay])
+        if (score) {
+            const tempo = score.bpm * (tempoPercent / 100)
+            const beatDurationMs = 60000 / tempo
+            if (countdown) {
+                setOnPlayWithCountdown(true) 
+                const Timer = setInterval(() => {
+    
+                }, beatDurationMs)
+            } else {
+                setOnPlay(prev => !prev)
+            }
+
+        }
+    }, [setOnPlay])
 
     const handleOpen: () => void = () => {
         if (timeoutRef.current) {
@@ -257,7 +271,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
                         background: "#bb73ff"
                     }}
                     >
-                        {onPlay ? <BreackIcon /> : <PlayIcon />}
+                        {(onPlay || onPlayWithCountdown) ? <BreackIcon /> : <PlayIcon />}
                     </Button>
                     <Button type="button" aria-label="Précédent"
                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
@@ -450,7 +464,12 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
                     border={0} borderRadius={'0.5rem'}
                     boxShadow={'rgba(0, 0, 0, 0.4) 0px 0px 25px 10px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px'}
                     onMouseEnter={handleOpen}
-                    onMouseLeave={handleClose}>
+                    onMouseLeave={handleClose}
+                    _focusVisible={{
+                        boxShadow: 'rgba(0, 0, 0, 0.4) 0px 0px 25px 10px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;',
+                        outline: 'solid 2px #ad47ff',
+                        outlineOffset: '0px'
+                    }}>
                         <PopoverArrow color={'#141216'} bg={'#141216'} shadow={'none'}/>
                         <PopoverBody
                         paddingInline={'1rem'} py={'14px'}>

@@ -17,6 +17,7 @@ import {
 
 /* Import hook */
 import { useScore } from "../../hooks/useScore";
+import { useModals } from "../../hooks/useModals";
 
 /* Import conponent */
 import OtherInstrumentCard from "../cards/OtherInstrumentCard";
@@ -41,19 +42,15 @@ const Tools: React.FC<IToolsProps> = () => {
     const { score } = useScore()
 
     const { 
-        setTunnerOn, 
         setCountdown, 
-        setMetronome, 
-        setTempoManagementOn, 
-        setLearningModeOn,
-        setLooperOn,
+        setMetronome,
         setSolo,
-        setMuteOn,
         setMute
     } = usePlayScoreDispatch()
 
-    const { 
-        tunnerOn, 
+    const { onOpen } = useModals()
+    
+    const {
         countdown, 
         metronome, 
         solo, 
@@ -64,8 +61,7 @@ const Tools: React.FC<IToolsProps> = () => {
      } = usePlayScoreStates()
 
     const handleTunner: () => void = useCallback(() => {
-        setTunnerOn(prev=> !prev)
-    }, [setTunnerOn])
+    }, [onOpen])
 
     const handleCountdown: () => void = useCallback(() => {
         setCountdown(prev=> !prev)
@@ -76,16 +72,16 @@ const Tools: React.FC<IToolsProps> = () => {
     }, [setMetronome])
 
     const handleTempoManagement: () => void = useCallback(() => {
-        setTempoManagementOn(true)
-    }, [setTempoManagementOn])
+        onOpen('TEMPO_MANAGEMENT', {
+            title: 'Gestion du tempo'
+        })
+    }, [onOpen])
 
     const handleLearningModeOn: () => void = useCallback(() => {
-        setLearningModeOn(true)
-    },[setLearningModeOn])
+    },[onOpen])
 
     const handleLooperOn: () => void = useCallback(() => {
-        setLooperOn(true)
-    }, [setLooperOn])
+    }, [onOpen])
 
     const handleSolo: () => void = useCallback(() => {
         if (solo) {
@@ -106,8 +102,7 @@ const Tools: React.FC<IToolsProps> = () => {
     }, [solo, mute, setSolo, setMute])
 
     const handleMuteOn: () => void = useCallback(() => {
-        setMuteOn(true)
-    },[setMuteOn])
+    },[onOpen])
 
     const handleAnnotation: () => void = () => {}
 
@@ -118,7 +113,7 @@ const Tools: React.FC<IToolsProps> = () => {
     const Tools = useMemo((): ToolType[] => [
         {
             name: 'tunner',
-            content: <TunnerIcon size="24px" color={tunnerOn ? "#ad47ff" : 'currentColor'}/>,
+            content: <TunnerIcon size="24px" color={'currentColor'}/>,
             handleOnClick: handleTunner
         },
         {
@@ -171,16 +166,10 @@ const Tools: React.FC<IToolsProps> = () => {
             content: <ChordsIcon size="24px" />,
             handleOnClick: handleChords
         }
-    ], [setTunnerOn, 
-        setCountdown, 
-        setMetronome, 
-        setTempoManagementOn, 
-        setLearningModeOn,
-        setLooperOn,
+    ], [setCountdown, 
+        setMetronome,
         setSolo,
-        setMuteOn,
         setMute,
-        tunnerOn,
         countdown,
         metronome,
         tempoPercent,

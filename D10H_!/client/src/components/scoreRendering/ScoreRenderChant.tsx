@@ -47,15 +47,17 @@ export interface IScoreRenderChantProps {}
 const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
     
     // Import score data from context by hook
-    const {score} = useScore() 
+    const { score } = useScore()
 
     // Import State to start timer
-    const { onPlay, backToStart, previousMeasure, nextMeasure } = usePlayScoreStates()
+    const { onPlay, backToStart, previousMeasure, nextMeasure, tempoPercent } = usePlayScoreStates()
 
     const { setOnPlay, setBackToStart } = usePlayScoreDispatch()
 
     // Import State for responsive
     const width = useWindowWidth()
+
+    const tempo = score && score.bpm * (tempoPercent / 100)
 
     // Refs
         /* Partittion Ref */
@@ -83,7 +85,7 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
 
     const [numBeats, beatValue] = score ? score.time_signature.split('/').map(Number) : [4, 4]
 
-    const msPerBeat = score && 60000 / score.bpm
+    const msPerBeat = (score && tempo) && 60000 / tempo
     const msPerMeasure = msPerBeat && numBeats * msPerBeat
 
     //Draw beams on Stave
@@ -287,12 +289,12 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
     }
 
     const getMeasureStartTime = (measureId: number) => {
-        return measureId * msPerMeasure
+        return msPerMeasure ? measureId * msPerMeasure : 0
     }
 
     const findMeasure = (timeMs: number, data: INoteSynchro[]) => {
         const measureNowStartTimeMs = data.find((n) => {     
-            return timeMs >= n.startMeasureMs && timeMs < (n.startMeasureMs + msPerMeasure)
+            return timeMs >= n.startMeasureMs && timeMs < (n.startMeasureMs + (msPerMeasure || 0))
         })
         return measureNowStartTimeMs?.startMeasureMs
     }
@@ -411,6 +413,7 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
 
             tickables.forEach((tickable: Tickable) => {
                 const note = tickable as StaveNote
+                
                 const durationMs: number = (note.getTicks().value() / 4096) * (60000 / score.bpm)               
                 
                 const x: number = note.getAbsoluteX()
@@ -473,7 +476,7 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
                     const currentNote: HTMLElement | null = document.getElementById(`vf-${currentNoteData.id}`)
                     const currentNoteId: number = dataArrayRef.current.findIndex(n => n.id === currentNoteData.id)
                     const nextNoteData: INoteSynchro = dataArrayRef.current[currentNoteId + 1]
-                                        
+                    
                     if (nextNoteData) {
                         const ratio: number = Math.min((now - currentNoteData.startTimeMs) / (currentNoteData.durationMs || 1), 1);
 
@@ -509,6 +512,7 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
                             }
                         }
                     }
+
                 } else onTimeUpdate(null)
                 currentTimeRef.current += 16
 
@@ -522,11 +526,11 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
                     }, 100)
                     currentTimeRef.current = 0
                 }
-            }, 16)
+            }, tempo ? 16 / (tempo / 100) : 16)
 
             return () => clearInterval(Timer)
         }
-    },[onPlay, width, backToStart, previousMeasure, nextMeasure])
+    },[onPlay, width, backToStart, previousMeasure, nextMeasure, tempo])
 
     useEffect(() => {
         const cursor: HTMLElement | null = document.getElementById('music-cursor')
@@ -538,7 +542,10 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
                 lastScrolledYRef.current = dataArrayRef.current[0].y
     
                 moveCursor(cursor, dataArrayRef.current[0].x, dataArrayRef.current[0].y)
-    
+                
+                const newCurrentNote = document.getElementById(`vf-${dataArrayRef.current[0].id}`)
+
+                onTimeUpdate(newCurrentNote)
     
                 setTimeout(() => {
                     const container: HTMLDivElement | null = containerRef.current
@@ -553,13 +560,21 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
 
             if (previousMeasure) {
                 const currentMeasureStartTimeMs = currentMeasureStartTime.current
-                const previousMeasureStartTimeMs = (currentMeasureStartTimeMs && currentMeasureStartTimeMs !== 0) ? currentMeasureStartTimeMs - (msPerMeasure as number) : 0
-                
+
+                const previousMeasureStartTimeMs = (currentMeasureStartTimeMs && currentMeasureStartTimeMs > 0)
+                ? currentMeasureStartTimeMs - (msPerMeasure as number)
+                : 0;
+
                 currentTimeRef.current = previousMeasureStartTimeMs
                 const currentNoteData: INoteSynchro | undefined = findNote(currentTimeRef.current, dataArrayRef.current)
+
                 if (currentNoteData) {
 
                     moveCursor(cursor, currentNoteData.x, currentNoteData.y)
+
+                    const currentNote: HTMLElement | null = document.getElementById(`vf-${currentNoteData.id}`)
+
+                    onTimeUpdate(currentNote)
 
                     setTimeout(() => {
                         const container: HTMLDivElement | null = containerRef.current
@@ -586,7 +601,11 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
 
             if (nextMeasure) {
                 const currentMeasureStartTimeMs = currentMeasureStartTime.current
-                const nextMeasureStartTimeMs = (currentMeasureStartTimeMs && currentMeasureStartTimeMs !== (msPerMeasure as number) * ((score?.measures?.length as number) - 1)) ? currentMeasureStartTimeMs + (msPerMeasure as number) : (msPerMeasure as number) * ((score?.measures?.length as number) - 1)
+
+                const lastMeasureTimeMs = (msPerMeasure as number) * ((score?.measures?.length as number) - 1);
+                const nextMeasureStartTimeMs = (currentMeasureStartTimeMs && currentMeasureStartTimeMs < lastMeasureTimeMs)
+                ? currentMeasureStartTimeMs + (msPerMeasure as number)
+                : lastMeasureTimeMs
 
                 currentTimeRef.current = nextMeasureStartTimeMs
                 const currentNoteData: INoteSynchro | undefined = findNote(currentTimeRef.current, dataArrayRef.current)
@@ -594,6 +613,10 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
                 if (currentNoteData) {
 
                     moveCursor(cursor, currentNoteData.x, currentNoteData.y)
+
+                    const currentNote: HTMLElement | null = document.getElementById(`vf-${currentNoteData.id}`)
+
+                    onTimeUpdate(currentNote)
 
                     setTimeout(() => {
                         const container: HTMLDivElement | null = containerRef.current

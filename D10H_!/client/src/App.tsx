@@ -1,6 +1,6 @@
 import { Grid, Box} from '@chakra-ui/react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 /* Contexts imports */
 import SearchProvider from './context/SearchContext.tsx'
@@ -153,9 +153,9 @@ function App() {
                 <PlayeurMin />
               </Box>
           </Grid>
+          <ModalManager/>
         </PlayScoreProvider>
       </ScoreProvider>
-      <ModalManager/>
     </SearchProvider>
 
   )} else if (isAuthenticated) {
@@ -255,7 +255,7 @@ function App() {
           {/* Route to registering page */}
           <Route path='/signup' element={<PageSignup />}/>
         </Routes>
-        <ModalManager/>
+          <ModalManager/>
       </Box>
     )
   }

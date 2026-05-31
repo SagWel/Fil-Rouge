@@ -1,15 +1,60 @@
 import { Link } from "react-router-dom";
-import { Box, Flex, Button, Text, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from "@chakra-ui/react";
+import { 
+    Box, 
+    Flex, 
+    Button, 
+    Text, 
+    Slider, 
+    SliderTrack, 
+    SliderFilledTrack, 
+    SliderThumb, 
+    Popover, 
+    PopoverContent, 
+    PopoverArrow, 
+    PopoverBody,
+    PopoverTrigger,
+} from "@chakra-ui/react";
+
+import { useState, useRef } from "react";
 
 // Pictures import as modules
 import Cover from '../../img/dont-stop-the-party.png';
 
 // SVGs import from a unique file
-import { HeartLoveOnIcon, AddIcon, ShuffleIcon, BackIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "../Svg";
+import { HeartLoveOnIcon, AddIcon, ShuffleIcon, VolumeOffIcon, BackIcon, PlayIcon, NextIcon, LoopAllIcon, LyricsIcon, QueueListIcon, ChromcastIcon, VolumeIcon, AudioIcon } from "../Svg";
 
 export interface IPlayeurProps {}
 
 const Playeur: React.FC<IPlayeurProps> = () => {
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+
+    const [volume, setVolume] = useState<number>(50)
+    const [MVolume, setMVolume] = useState<number>(volume)
+
+    const timeoutRef = useRef<number | null>(null)
+
+    const handleOpen: () => void = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current)
+        }
+        setIsOpen(true)
+    }
+
+    const handleClose: () => void = () => {
+        timeoutRef.current = setTimeout(() => {
+            setIsOpen(false)
+        }, 100)
+    }
+
+    const handleClickOnVolumeButton: () => void = () => {
+        if (volume > 0) {
+            setMVolume(volume)
+            setVolume(0)
+        } else {
+            setVolume(MVolume)
+        }
+    }
+
     return (
         <Flex 
         alignItems={"center"} justifyContent={"space-between"}
@@ -338,7 +383,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         }}>
                     <ChromcastIcon />
                 </Button>
-                <Button type="button" aria-label="Volume button"
+                {/* <Button type="button" aria-label="Volume button"
                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
                 padding={"0"} marginLeft={"0.25rem"}
                 minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 
@@ -360,7 +405,68 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                             color: "#f5f2f8"
                         }}>
                     <VolumeIcon />
-                </Button>
+                </Button> */}
+                <Popover isOpen={isOpen}>
+                    <PopoverTrigger>
+                        <Button type="button" aria-label="Volume button"
+                        display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
+                        padding={"0"} marginLeft={"0.25rem"}
+                        minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 
+                        color={"#fdfcfe"} background={"transparent"}
+                        borderRadius={"full"}
+                        onClick={handleClickOnVolumeButton}
+                        onMouseEnter={handleOpen}
+                        onMouseLeave={handleClose}
+                        // onMouseLeave={onClose}
+                        _active={{
+                                        background: "transparent",
+                                        color: "#bb73ff",
+                                }}
+                                _focus={{
+                                    zIndex: "1"
+                                }}
+                                _focusVisible={{
+                                    boxShadow: "none",
+                                    outlineColor: "#ad47ff"
+                                }}
+                                _hover={{
+                                    background: "#2e2c30",
+                                    color: "#f5f2f8"
+                                }}>
+                            {volume > 0 ? <VolumeIcon /> : <VolumeOffIcon />}
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                    display={'flex'} flexDir={'column'}
+                    pos={'relative'}
+                    w={'240px'}
+                    bg={'#141216'}
+                    border={0} borderRadius={'0.5rem'}
+                    boxShadow={'rgba(0, 0, 0, 0.4) 0px 0px 25px 10px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px'}
+                    onMouseEnter={handleOpen}
+                    onMouseLeave={handleClose}
+                    _focusVisible={{
+                        boxShadow: 'rgba(0, 0, 0, 0.4) 0px 0px 25px 10px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;',
+                        outline: 'solid 2px #ad47ff',
+                        outlineOffset: '0px'
+                    }}>
+                        <PopoverArrow color={'#141216'} bg={'#141216'} shadow={'none'}/>
+                        <PopoverBody
+                        paddingInline={'1rem'} py={'14px'}>
+                            <Slider value={volume}
+                            pos={'relative'}
+                            display={'flex'} alignItems={'center'}
+                            py={'0.125rem'}
+                            h={'auto'} w={'100%'}
+                            onChange={(e) => setVolume(e)}>
+                                <SliderTrack flex={1} h={'2px'} pos={'relative'} bg={'#242326'}>
+                                <SliderFilledTrack bg={'#ad47ff'}/>
+                                </SliderTrack>
+                                <SliderThumb boxSize={2.5}/>
+                            </Slider>
+                        </PopoverBody>
+                    </PopoverContent>
+                </Popover>
                 <Button type="button" aria-label="Audio"
                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
                 padding={"0"} marginLeft={"0.25rem"}
