@@ -526,7 +526,8 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
                     }, 100)
                     currentTimeRef.current = 0
                 }
-            }, tempo ? 16 / (tempo / 100) : 16)
+            }, 16)
+            // tempo ? 16 / (tempo / 100) : 16
 
             return () => clearInterval(Timer)
         }

@@ -78,13 +78,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
     const handleClickNext: () => void = () => {}
     
     const handlePlay: () => void = useCallback(() => {
-        if (score) {
-            const tempo = score.bpm * (tempoPercent / 100)
-            const beatDurationMs = 60000 / tempo
-            
-                setOnPlay(prev => !prev)
-
-        }
+            setOnPlay(prev => !prev)
     }, [setOnPlay])
 
     const handleOpen: () => void = () => {
