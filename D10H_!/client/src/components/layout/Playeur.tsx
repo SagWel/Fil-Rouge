@@ -78,11 +78,11 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         textDecoration: "underline"
                     }}
                     >
-                        <Link
+                        <Box as={Link} onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                         to={"direction page album de la piste"}
                         >
                             Don't Stop The Party
-                        </Link>
+                        </Box>
                     </Box>
                     <Box id="artist"
                     fontSize={"14px"}
@@ -90,17 +90,17 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         textDecoration: "underline"
                     }}
                     >
-                        <Link
+                        <Box as={Link} onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                         to={"direction page artiste"}
                         >
                             Black Eyed Peas
-                        </Link>
+                        </Box>
                     </Box>
                 </Flex>
                 <Flex id="add-buttons" 
                 direction={"row"} justifyContent={"center"} alignItems={"center"}
                 marginLeft={"1rem"}>
-                    <Button aria-label="Retirer des coups de coeur"
+                    <Button aria-label="Retirer des coups de coeur" isDisabled title="prochainement"
                     display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                     minHeight={"2rem"} minWidth={"2rem"} height={"2rem"} padding={"0"}
                     color={"#fdfcfe"} background={"transparent"}
@@ -125,7 +125,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                     </Button>
                     <Box 
                     marginLeft={"0.25rem"}>
-                        <Button aria-label="Open context menu"
+                        <Button aria-label="Open context menu" isDisabled title="prochainement"
                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                         padding={"0"}
                         minHeight={"2rem"} minWidth={"2rem"} height={"2rem"}
@@ -160,7 +160,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                 {/*Current track controllers*/}
                 <Flex justifyContent={"center"} alignItems={"center"}>
                     <Flex display={"inline-flex"} gap={"0.5rem"}>
-                        <Button type="button" aria-label="activer le mode aléatoire"
+                        <Button type="button" aria-label="activer le mode aléatoire" isDisabled title="prochainement"
                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                         padding={"0"}
                         minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}
@@ -184,7 +184,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         >
                             <ShuffleIcon />
                         </Button>
-                        <Button type="button" aria-label="Précédent"
+                        <Button type="button" aria-label="Précédent" isDisabled title="prochainement"
                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                         padding={"0"}
                         minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}
@@ -208,7 +208,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         >
                             <BackIcon />
                         </Button>
-                        <Button type="button" aria-label="Ecouter"
+                        <Button type="button" aria-label="Ecouter" isDisabled title="prochainement"
                         display={"inline-flex"} justifyContent={"center"} alignItems={"center"}
                         marginLeft={"0"} padding={"0"}
                         minHeight={"2rem"} height={"2rem"} minWidth={"2rem"}
@@ -231,7 +231,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         >
                             <PlayIcon />
                         </Button>
-                        <Button type="button" aria-label="Suivant"
+                        <Button type="button" aria-label="Suivant" isDisabled title="prochainement"
                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                         padding={"0"}
                         minWidth={"2rem"} minHeight={"2rem"} height={"2rem"}
@@ -255,7 +255,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         >
                             <NextIcon />
                         </Button>
-                        <Button type="button" aria-label="Réécouter tous les titres"
+                        <Button type="button" aria-label="Réécouter tous les titres" isDisabled title="prochainement"
                         display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                         marginLeft={"0"} padding={"0"}
                         minHeight={"2rem"} height={"2rem"} minWidth={"2rem"}
@@ -314,7 +314,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
             {/*General controllers*/}
             <Box id="other-control" display={"inline-flex"} justifyContent={"flex-end"} alignItems={"center"}
             width={"33%"}>
-                <Button type="button" aria-label="Afficher les paroles"
+                <Button type="button" aria-label="Afficher les paroles" isDisabled title="prochainement"
                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
                 padding={"0"}
                 minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 
@@ -337,7 +337,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         }}>
                     <LyricsIcon />
                 </Button>
-                <Button type="button" aria-label="Open queuelist"
+                <Button type="button" aria-label="Open queuelist" isDisabled title="prochainement"
                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
                 padding={"0"} marginLeft={"0.25rem"}
                 minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 
@@ -360,7 +360,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         }}>
                     <QueueListIcon />
                 </Button>
-                <Button type="button" aria-label="Chromcast"
+                <Button type="button" aria-label="Chromcast" isDisabled title="prochainement"
                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
                 padding={"0"} marginLeft={"0.25rem"}
                 minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 
@@ -383,29 +383,6 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         }}>
                     <ChromcastIcon />
                 </Button>
-                {/* <Button type="button" aria-label="Volume button"
-                display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
-                padding={"0"} marginLeft={"0.25rem"}
-                minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 
-                color={"#fdfcfe"} background={"transparent"}
-                borderRadius={"full"}
-                _active={{
-                                background: "transparent",
-                                color: "#bb73ff",
-                        }}
-                        _focus={{
-                            zIndex: "1"
-                        }}
-                        _focusVisible={{
-                            boxShadow: "none",
-                            outlineColor: "#ad47ff"
-                        }}
-                        _hover={{
-                            background: "#2e2c30",
-                            color: "#f5f2f8"
-                        }}>
-                    <VolumeIcon />
-                </Button> */}
                 <Popover isOpen={isOpen}>
                     <PopoverTrigger>
                         <Button type="button" aria-label="Volume button"
@@ -467,7 +444,7 @@ const Playeur: React.FC<IPlayeurProps> = () => {
                         </PopoverBody>
                     </PopoverContent>
                 </Popover>
-                <Button type="button" aria-label="Audio"
+                <Button type="button" aria-label="Audio" isDisabled title="prochainement"
                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
                 padding={"0"} marginLeft={"0.25rem"}
                 minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 

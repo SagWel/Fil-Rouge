@@ -135,7 +135,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
                 }}
                 >
                     <Box as={Link} onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
-                    to={"direction page album de la piste"}
+                    to={""}
                     >
                         Don't Stop The Party
                     </Box>
@@ -487,7 +487,7 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
                         </PopoverBody>
                     </PopoverContent>
                 </Popover>
-                <Button type="button" aria-label="Audio"
+                <Button type="button" aria-label="Audio" isDisabled title="prochainement"
                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
                 padding={"0"} marginLeft={"0.25rem"}
                 minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 

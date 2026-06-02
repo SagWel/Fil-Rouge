@@ -11,7 +11,6 @@ import { useSearch } from '../../context/SearchContext'
 // Hooks
 import useSearchHistory, { type IHistoryItem } from '../../hooks/useSearchHistory'
 import { useAuth } from "../../hooks/useAuth";
-import useWindowWidth from '../..//hooks/useWindowWidth.tsx'
 
 // Type
 import { type IDeezerSearchResponse, type IDeezerTrack } from '../../types/Deezer'
@@ -71,9 +70,6 @@ function HeaderMin() {
     
     /* Variables for search history */
     const [history, _, addToHistory] = useSearchHistory()
-
-    /* User data from context by hook */
-    const { user: userToken, logout } = useAuth()
 
     /* search choice management */
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -266,7 +262,7 @@ function HeaderMin() {
                         margin={"0 0.75rem 0 1rem"}
                         display={"flex"} alignItems={"center"} justifyContent={"center"}
                         >
-                            <Button type="button" aria-label="Effacer"
+                            <Button type="button" aria-label="Effacer" isDisabled title="prochainement"
                             padding={"0"}
                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"baseline"} gap={'0.25rem'}
                             appearance={"none"} userSelect={"none"} whiteSpace={"nowrap"} outline={"transparent solid 2px"} pointerEvents={"none"}
@@ -305,7 +301,7 @@ function HeaderMin() {
                                         lineHeight={"24px"} textDecoration={"none"}>
                                             Dernières recherches
                                         </Heading>
-                                        <Button type="button" display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
+                                        <Button type="button" display={"inline-flex"} alignItems={"center"} justifyContent={"center"} isDisabled title="prochainement"
                                         minHeight={"2rem"} minWidth={"2rem"} height={"auto"}
                                         paddingInline={"0px"} paddingY={"0px"}
                                         position={"relative"} verticalAlign={"middle"}
@@ -387,7 +383,7 @@ function HeaderMin() {
                                                             </Box>
                                                         </Flex>
                                                         <Flex direction={"column"} justifyContent={"center"} overflow={"hidden"} width={"fit-content"} color={"#ffffff"}>
-                                                            <Button type="button"
+                                                            <Button type="button" isDisabled title="prochainement"
                                                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                                                             position={"relative"} whiteSpace={"nowrap"} verticalAlign={"middle"}
                                                             paddingInline={0} paddingY={0}
@@ -431,21 +427,11 @@ function HeaderMin() {
                             </Box>
                         </Box>
                     }
-
-                    {/*Displays searchs informations*/}
-                    {((query || '').length > 0) && (infoNavigation) &&
-                        <Box position={"absolute"} left={"0"} right={"0"}
-                        background={"#2e2c30"} color={"white"} textAlign={"center"} fontSize={"14px"}>
-                            <Text>
-                                ENTRER : rechercher partition - TAB : lecture morceau
-                            </Text>
-                        </Box>
-                    }
                 </Box>
                 <Box id="notif"
                 marginLeft={"1rem"}
                 height={"2rem"} width={"2rem"}>
-                    <IconButton type="button" aria-label="Notifications"
+                    <IconButton type="button" aria-label="Notifications" isDisabled title="prochainement"
                     background={"transparent"} borderRadius={"full"}
                     height={"2rem"} width={"2rem"} minWidth={"2rem"}
                     _active={{
@@ -484,7 +470,7 @@ function HeaderMin() {
                     <Box ref={burgerMenuRef}
                     pos={"absolute"} top={0} left={0}
                     pt={"10px"}
-                    transform={"translate3d(-332px, 32px, 0px)"} willChange={"tranform"}>
+                    transform={"translate3d(-332px, 32px, 0px)"} willChange={"tranform"} zIndex={'999999'}>
                         <Box 
                         pos={"relative"}
                         p={0} 
@@ -525,15 +511,15 @@ function HeaderMin() {
                             </Flex>
                             <List borderTop={"1px solid #38373b"} fontSize={"14px"} m={0} p={"8px 0"} listStyleType={"none"}>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"0 none"}
-                                    transition={"015s"} transitionProperty={"background-color, color"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -552,7 +538,7 @@ function HeaderMin() {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     _hover={{
                                         backgroundColor: "#242326",
@@ -565,15 +551,15 @@ function HeaderMin() {
                                     </Flex>
                                 </ListItem>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -584,15 +570,15 @@ function HeaderMin() {
                                     </Flex>
                                 </ListItem>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -610,7 +596,7 @@ function HeaderMin() {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     onClick={() => {
                                         logout()

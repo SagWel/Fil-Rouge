@@ -69,7 +69,6 @@ const Header: React.FC<IHeaderProps> = () => {
     /* States for searchbar */
     const [query, setQuery] = useState<string>('')    
     const [isFocused, setIsFocused] = useState<boolean>(false)
-    const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
     const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
 
     /* States for Avatar button */
@@ -119,7 +118,6 @@ const Header: React.FC<IHeaderProps> = () => {
                 addToHistory(historyItem)
 
                 setQuery(`${item.title} - ${item.artist.name}`)
-                setInfoNavigation(true)
             }
         
         if (timerRef.current != undefined) {
@@ -138,7 +136,6 @@ const Header: React.FC<IHeaderProps> = () => {
         }
         setIsInternalUpdate(true)
         setQuery(`${h.title} - ${h.artistName}`)
-        setInfoNavigation(true)
     }
 
     const handleResetHistory: () => void = () => {
@@ -275,7 +272,7 @@ const Header: React.FC<IHeaderProps> = () => {
                         margin={"0 0.75rem 0 1rem"}
                         display={"flex"} alignItems={"center"} justifyContent={"center"}
                         >
-                            <Button type="button" aria-label="Effacer"
+                            <Button type="button" aria-label="Effacer" isDisabled title="prochainement"
                             padding={"0"}
                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"baseline"} gap={'0.25rem'}
                             appearance={"none"} userSelect={"none"} whiteSpace={"nowrap"} outline={"transparent solid 2px"} pointerEvents={"none"}
@@ -314,7 +311,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                         lineHeight={"24px"} textDecoration={"none"}>
                                             Dernières recherches
                                         </Heading>
-                                        <Button type="button" display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
+                                        <Button type="button" display={"inline-flex"} alignItems={"center"} justifyContent={"center"} isDisabled title="prochainement"
                                         minHeight={"2rem"} minWidth={"2rem"} height={"auto"}
                                         paddingInline={"0px"} paddingY={"0px"}
                                         position={"relative"} verticalAlign={"middle"}
@@ -396,7 +393,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                                             </Box>
                                                         </Flex>
                                                         <Flex direction={"column"} justifyContent={"center"} overflow={"hidden"} width={"fit-content"} color={"#ffffff"}>
-                                                            <Button type="button"
+                                                            <Button type="button" isDisabled title="prochainement"
                                                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                                                             position={"relative"} whiteSpace={"nowrap"} verticalAlign={"middle"}
                                                             paddingInline={0} paddingY={0}
@@ -438,16 +435,6 @@ const Header: React.FC<IHeaderProps> = () => {
                                     </Flex>
                                 </Flex>
                             </Box>
-                        </Box>
-                    }
-
-                    {/*Displays searchs informations*/}
-                    {((query || '').length > 0) && (infoNavigation) &&
-                        <Box position={"absolute"} left={"0"} right={"0"}
-                        background={"#2e2c30"} color={"white"} textAlign={"center"} fontSize={"14px"}>
-                            <Text>
-                                ENTRER : rechercher partition - TAB : lecture morceau
-                            </Text>
                         </Box>
                     }
                 </Box>
@@ -534,15 +521,15 @@ const Header: React.FC<IHeaderProps> = () => {
                             </Flex>
                             <List borderTop={"1px solid #38373b"} fontSize={"14px"} m={0} p={"8px 0"} listStyleType={"none"}>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"0 none"}
-                                    transition={".15s"} transitionProperty={"background-color, color"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -561,7 +548,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     _hover={{
                                         backgroundColor: "#242326",
@@ -574,15 +561,15 @@ const Header: React.FC<IHeaderProps> = () => {
                                     </Flex>
                                 </ListItem>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -593,15 +580,15 @@ const Header: React.FC<IHeaderProps> = () => {
                                     </Flex>
                                 </ListItem>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -619,7 +606,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     onClick={() => {
                                         logout()

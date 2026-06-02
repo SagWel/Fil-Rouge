@@ -188,7 +188,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                             m={0} p={0} pl={"44px"}
                             fontSize={"16px"}
                             color={"#a19fa4"}>
-                            <Text as={Button}
+                            <Text as={Button} isDisabled
                                 display={"flex"} align={'center'}
                                 p={0} m={0}
                                 color={"#a19fa4"}
@@ -201,7 +201,8 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                 boxSizing="border-box"
                                 onClick={handleOnClick}
                                 _hover={{
-                                    bg: 'transparent'
+                                    bg: 'transparent',
+                                    _disabled: {bg: 'transparent'}
                                 }}>
                                 Plus
                                 {(scale === '1' && opacity === '1') ?
@@ -394,7 +395,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                     fontSize={'0.875rem'}
                                     textAlign={'center'}
                                     borderColor={'#38373b'} borderBottom={'1px solid #4e4c51'}>
-                                        <Checkbox
+                                        <Checkbox isDisabled
                                         pos={'relative'}
                                         display={'inline-flex'} alignItems={'center'}
                                         verticalAlign={'top'}
@@ -507,7 +508,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                     fontSize={'0.875rem'}
                                     textAlign={'center'}
                                     borderColor={'#38373b'} borderBottom={'1px solid #4e4c51'}>
-                                        <Checkbox 
+                                        <Checkbox isDisabled
                                         pos={'relative'}
                                         display={'inline-flex'} alignItems={'center'}
                                         verticalAlign={'top'}
@@ -620,7 +621,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                     fontSize={'0.875rem'}
                                     textAlign={'center'}
                                     borderColor={'#38373b'} borderBottom={'1px solid #4e4c51'}>
-                                        <Checkbox 
+                                        <Checkbox isDisabled
                                         pos={'relative'}
                                         display={'inline-flex'} alignItems={'center'}
                                         verticalAlign={'top'}
@@ -733,7 +734,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                     fontSize={'0.875rem'}
                                     textAlign={'center'}
                                     borderColor={'#38373b'} borderBottom={'1px solid #4e4c51'}>
-                                        <Checkbox 
+                                        <Checkbox isDisabled
                                         pos={'relative'}
                                         display={'inline-flex'} alignItems={'center'}
                                         verticalAlign={'top'}
@@ -846,7 +847,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                     fontSize={'0.875rem'}
                                     textAlign={'center'}
                                     borderColor={'#38373b'} borderBottom={'1px solid #4e4c51'}>
-                                        <Checkbox 
+                                        <Checkbox isDisabled
                                         pos={'relative'}
                                         display={'inline-flex'} alignItems={'center'}
                                         verticalAlign={'top'}
@@ -1029,7 +1030,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                     fontSize={'0.875rem'}
                                     textAlign={'center'}
                                     borderColor={'#38373b'} borderBottom={'1px solid #4e4c51'}>
-                                        <Checkbox 
+                                        <Checkbox isDisabled
                                         pos={'relative'}
                                         display={'inline-flex'} alignItems={'center'}
                                         verticalAlign={'top'}
@@ -1142,7 +1143,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                     fontSize={'0.875rem'}
                                     textAlign={'center'}
                                     borderColor={'#38373b'} borderBottom={'1px solid #4e4c51'}>
-                                        <Checkbox 
+                                        <Checkbox isDisabled
                                         pos={'relative'}
                                         display={'inline-flex'} alignItems={'center'}
                                         verticalAlign={'top'}
@@ -1255,7 +1256,7 @@ const PageAccountNotifications: React.FC<IPageAccountNotifictions> = () => {
                                     fontSize={'0.875rem'}
                                     textAlign={'center'}
                                     borderColor={'#38373b'} borderBottom={'1px solid #4e4c51'}>
-                                        <Checkbox 
+                                        <Checkbox isDisabled
                                         pos={'relative'}
                                         display={'inline-flex'} alignItems={'center'}
                                         verticalAlign={'top'}

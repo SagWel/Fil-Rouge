@@ -117,7 +117,7 @@ const BarNav: React.FC<IBarNavProps> = () => {
                             <Link href={"/favoris/scorbraries"} _hover={{textDecor:'none'}}>
                                 <Heading fontSize={"1.125rem"} fontWeight={"700"} color={"#fdfcfeff"}>Scorbraries</Heading>
                             </Link>
-                            <IconButton id="boutoun-new-scorbrary" aria-label="Ajouter un Scorbrary"
+                            <IconButton id="boutoun-new-scorbrary" aria-label="Ajouter un Scorbrary" isDisabled title="prochainement"
                             padding={"0"}
                             height={"2rem"} width={"2rem"} minWidth={"2rem"}
                             borderRadius={"full"}
@@ -142,7 +142,7 @@ const BarNav: React.FC<IBarNavProps> = () => {
                     direction={"column"} padding={"0 1rem"}
                     fontFamily={"Inter, Arial, sans-serif"} fontSize={"16px"} fontWeight={"400"}
                     color={"#fdfcfeff"}>
-                            <Flex as={Link} href={"favoris/scorbraries/concert-30-09"} id="concert-30/09" 
+                            {/* <Flex as={Link} href={"favoris/scorbraries/concert-30-09"} id="concert-30/09" 
                             alignItems={"center"} gap={"0.5rem"} padding={"0.5rem"} borderRadius={"0.5rem"}
                             _hover={{
                                 bg: "#29282D",
@@ -193,7 +193,10 @@ const BarNav: React.FC<IBarNavProps> = () => {
                                 <Box>
                                     Au coin du feu
                                 </Box>
-                            </Flex>
+                            </Flex> */}
+                            <Text fontSize={'14px'} opacity={'0.6'}>
+                                PROCHAINEMNT ...
+                            </Text>
                     </Flex>
                 </Box>
             </Box>

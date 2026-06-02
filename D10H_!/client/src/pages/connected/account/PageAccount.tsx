@@ -654,7 +654,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                             m={0} p={0} pl={"44px"}
                             fontSize={"16px"}
                             color={"#a19fa4"}>
-                            <Text as={Button}
+                            <Text as={Button} isDisabled
                                 display={"flex"} align={'center'}
                                 p={0} m={0}
                                 color={"#a19fa4"}
@@ -667,7 +667,8 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                                 boxSizing="border-box"
                                 onClick={handleOnClick}
                                 _hover={{
-                                    bg: 'transparent'
+                                    bg: 'transparent',
+                                    _disabled: {bg: 'transparent'}
                                 }}>
                                 Plus
                                 {(scale === '1' && opacity === '1') ?

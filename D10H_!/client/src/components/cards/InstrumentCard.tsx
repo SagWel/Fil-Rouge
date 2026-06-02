@@ -11,17 +11,18 @@ const InstrumentCard: React.FC<IInstrumentCardProps> = ({instrument}) => {
     
     const host = import.meta.env.VITE_HOST
     const port = import.meta.env.VITE_SERVER_PORT
-    const BASE_URL = `http://${host}:${port}/D10h_server/public/`
+    const BASE_URL = `http://${host}:${port}/D10h_server/public/uploads/instruments/`
+    const capitalizedName = instrument.name.charAt(0).toUpperCase() + instrument.name.slice(1)
+    const URLImg = `${BASE_URL}${capitalizedName}.png`
     
-    return (
-        
-        <Flex as={Link} to={instrument.link_to_search} role="group"
+    return (        
+        <Flex as={Link} to={`/scores/${instrument.name}`} role="group"
         justifyContent={"center"} alignItems={"center"}
         position={"relative"}
         height={"16rem"} width={"16rem"}
         borderRadius={"full"} overflow={"hidden"}
         >
-            <Image src={`${BASE_URL}${instrument.imgSrc}`} height={"100%"} width={"100%"} />
+            <Image src={`${URLImg}`} height={"100%"} width={"100%"} />
             <Text 
             position={"absolute"} overflow={"hidden"}
             opacity={"0"}

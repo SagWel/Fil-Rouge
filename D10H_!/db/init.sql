@@ -63,9 +63,7 @@ CREATE TABLE IF NOT EXISTS `genres` (
 
 CREATE TABLE IF NOT EXISTS `instruments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `img_src` varchar(500) NOT NULL,
-  `linkToSearch` varchar(255) NOT NULL,
+  `name` varchar(100) NOT NULL
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

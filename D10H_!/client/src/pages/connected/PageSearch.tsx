@@ -12,12 +12,17 @@ import { useAuth } from "../../hooks/useAuth";
 
 /* Import SVG */
 import { DownChevronIcon, UpChevronIcon } from "../../components/Svg";
+import useWindowWidth from "../../hooks/useWindowWidth";
 
 export interface ISearchProps {}
 
 const Search: React.FC<ISearchProps> = () => {
     
     const { user } = useAuth()
+
+    const width = useWindowWidth()
+    const breakpoint = 1024
+    const isMinimal = width <= breakpoint
 
     /* retrieve query from the URL and from backend */
     const [searchParams] = useSearchParams()
@@ -253,7 +258,7 @@ const Search: React.FC<ISearchProps> = () => {
                 <Stack 
                 pos={'absolute'} right={0} bottom={0}
                 mx={"0.75rem"} mb={".5rem"}>
-                <Checkbox isChecked={filteredUserInstruments} 
+                <Checkbox isChecked={filteredUserInstruments} title={isMinimal ? 'Mes instruments' : undefined}
                 colorScheme="gray" flexDir={'row-reverse'} size={"sm"} minW={"10rem"}  gap={2}
                 color={"white"} 
                 onChange={(e) => {
@@ -267,9 +272,9 @@ const Search: React.FC<ISearchProps> = () => {
                     }
                 }}
                 >
-                    Mes instruments
+                    {!isMinimal && 'Mes instruments'}
                 </Checkbox>
-                <Checkbox isChecked={filteredUserLvl} isDisabled={!filteredUserInstruments}
+                <Checkbox isChecked={filteredUserLvl} isDisabled={!filteredUserInstruments} title={isMinimal ? 'Mon niveau' : undefined}
                 colorScheme="gray" flexDir={'row-reverse'} size={"sm"} minW={"10rem"} gap={2}
                 color={"white"} 
                 onChange={(e) => {
@@ -278,7 +283,7 @@ const Search: React.FC<ISearchProps> = () => {
                     setLvlPreference(isChecked)
                 }} 
                 >
-                    Mon niveau
+                    {!isMinimal && 'Mon niveau'}
                 </Checkbox>
                 </Stack>
             </Box>
@@ -289,7 +294,7 @@ const Search: React.FC<ISearchProps> = () => {
                 <Text color={"#a19fa4"}>
                     Aucune partition trouvée pour la rechercher "{safeQuery.length > 0 ? safeQuery : query}"
                 </Text>
-                <Button
+                <Button isDisabled title="prochainement"
                 display={'inline-flex'} alignItems={'center'} justifyContent={'center'} gap={'0.25rem'}
                 pos={'relative'} verticalAlign={'middle'}
                 paddingInline={'1.5rem'} py={'0.75rem'} mt={'3rem'}

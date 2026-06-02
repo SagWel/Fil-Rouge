@@ -27,14 +27,14 @@ INSERT INTO `genres` (`id`, `name`, `picture`, `picture_small`, `picture_medium`
 -- Déchargement des données de la table `instruments`
 --
 
-INSERT INTO `instruments` (`id`, `name`, `img_src`, `linkToSearch`) VALUES
-(1, 'guitare', '../../public/img/Guitare.png', '/partitions/guitare'),
-(2, 'chant', '../../public/img/Chant.png', '/partitions/chant'),
-(3, 'basse', '../../public/img/Basse.png', '/partitions/basse'),
-(4, 'piano', '../../public/img/Piano.png', '/partitions/piano'),
-(5, 'batterie', '../../public/img/Batterie.png', '/partitions/batterie'),
-(6, 'ukulele', '../../public/img/Ukulele.png', '/partitions/ukulele'),
-(7, 'saxophone', './../public/img/Saxo.png', '/partitions/saxophone');
+INSERT INTO `instruments` (`id`, `name`) VALUES
+(1, 'guitare',),
+(2, 'chant'),
+(3, 'basse'),
+(4, 'piano'),
+(5, 'batterie'),
+(6, 'ukulele'),
+(7, 'saxophone');
 
 --
 -- Déchargement des données de la table `partition_instruments`
