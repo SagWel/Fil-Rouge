@@ -1,65 +1,175 @@
 import { Box, chakra, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Button, Avatar, IconButton, Text, Heading, Image, Link, List, ListItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
-/* Import SVG */
-import { SearchIcon, DisableIcon, NotifIcon, RightCarouselIcon } from "../Svg";
+// SVGs import from a unique file
+import { SearchIcon, DisableIcon, NotifIcon, DeleteButtonIcon, HeartIcon, RightCarouselIcon } from "../Svg.tsx";
+
+// Context
+import { useSearch } from '../../context/SearchContext'
 
 // Hooks
+import useSearchHistory, { type IHistoryItem } from '../../hooks/useSearchHistory'
 import { useAuth } from "../../hooks/useAuth";
 
-// Types
-import { type IUsers } from "../../types/user";
+// Type
+import { type IDeezerSearchResponse, type IDeezerTrack } from '../../types/Deezer'
 
 function HeaderMin() {
 
-    /* Navigation */
-    const navigate = useNavigate()
+    const burgerMenuRef = useRef< HTMLDivElement | null>(null)
 
-    /* States for Avatar button */
-    const [user, setUser] = useState< IUsers | null>(null)
-    const [isDisplayed, setIsDisplayed] = useState<boolean>(false)
+    /*Searchs Results management*/
+    const {
+        searchResults,
+        setSearchResults,
+        setIsLoading,
+    } = useSearch()
 
-    const host = import.meta.env.VITE_HOST
-    const port = import.meta.env.VITE_SERVER_PORT
+        const host = import.meta.env.VITE_HOST
+        const port = import.meta.env.VITE_SERVER_PORT
 
-    const BASE_URL = `http://${host}:${port}/D10h_server/public/`
+        const BASE_URL = `http://${host}:${port}/D10h_server/public/`
 
-    /* User data from context by hook */
-    const { user: userToken, logout } = useAuth()
-
-    /* Creat user data about user for the buger menue system he need */
-    const userInfos = async () => {
-        const urlFetchUserInfos = import.meta.env.VITE_URL_FETCH_FINDBYEMAIL
-
+    /*Calling the Deezer API for search suggestions*/
+    async function fetchDeezerSuggestions(query: string) {
         try {
-            const res: Response = await fetch(`http://${host}:${port}${urlFetchUserInfos}${userToken?.email}`, {credentials: 'include'})
+            setIsLoading(true)
+            
+            const safeQuery = encodeURIComponent(query)
+            const apiURL = `/api/search?q=${safeQuery}`
 
-            if (!res.ok) {
-                throw new Error(`Erreur HTTP: ${res.status}`);
-            }
+            const response = await fetch(apiURL);
+            const responseJson = await response.json() as IDeezerSearchResponse
 
-            const data = await res.json()
-            setUser(data.user)
-        } catch (err) {
-            console.error("Impossible de récuperer les informations de l'utilisateur connecté : ", err)
+            setSearchResults(responseJson.data)
+
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setIsLoading(false)
         }
     }
 
-    /* display burger menu */
-    const display = () => {
-        if (isDisplayed) return "block"
-        return "none"
+    /* Navigation */
+    const navigate = useNavigate()
+    
+    type TimerId = ReturnType<typeof setTimeout>    
+    
+    /* States for searchbar */
+    const [query, setQuery] = useState<string>('')    
+    const [isFocused, setIsFocused] = useState<boolean>(false)
+    const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
+    const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
+
+    /* States for Avatar button */
+    const { user } = useAuth()
+    const [isDisplayed, setIsDisplayed] = useState<boolean>(false)    
+    
+    const timerRef = useRef<TimerId | undefined> (undefined)
+    
+    /* Variables for search history */
+    const [history, _, addToHistory] = useSearchHistory()
+
+    /* search choice management */
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key == 'Enter') {
+            event.preventDefault()
+            const safeQuery = encodeURIComponent(query)
+
+            navigate(`/search?q=${safeQuery}`)
+            setIsFocused(false)
+            setQuery("")
+        } else if (event.key == 'Tab') {
+            event.preventDefault()
+            setIsFocused(false)
+            setSearchResults([])
+        }
+    }
+
+    /*Sends suggestion selected to query*/
+    function handleSuggestionClick (id: number) {
+
+        const item = searchResults.find(result => {
+            return result.id == `${id}`
+        })
+
+        if (item != undefined ) {
+                const historyItem = {
+                    query: item.title,
+                    title: item.title,
+                    artistName: item.artist.name,
+                    coverUrl: item.album.cover_small,
+                    type: item.type
+                }
+                
+                addToHistory(historyItem)
+
+                setQuery(`${item.title} - ${item.artist.name}`)
+                setInfoNavigation(true)
+            }
+        
+        if (timerRef.current != undefined) {
+            clearTimeout(timerRef.current)
+            timerRef.current = undefined
+        }
+
+        setIsFocused(false)
+    }
+
+    /*Sends history selected to query*/
+    function handleHistoryClick (h: IHistoryItem) {
+        if (timerRef.current != undefined) {
+            clearTimeout(timerRef.current)
+            timerRef.current = undefined
+        }
+        setIsInternalUpdate(true)
+        setQuery(`${h.title} - ${h.artistName}`)
+        setInfoNavigation(true)
+    }
+
+    const handleResetHistory: () => void = () => {
+        localStorage.removeItem("D10H_!_Search_History")
     }
 
     const handleAvatarClick = () => {
-        if (isDisplayed) return setIsDisplayed(false)
-        return setIsDisplayed(true)        
+        if (isDisplayed) {
+            setIsDisplayed(false)
+        } else {
+            setIsDisplayed(true)
+        }
     }
 
     useEffect(() => {
-        userInfos()       
-    },[userToken])
+        if (isInternalUpdate) {
+            setSearchResults([])
+            setIsInternalUpdate(false)
+        }else if (query && query.length < 2) {
+            setSearchResults([])
+            return
+        } else {
+            timerRef.current = setTimeout( () => {fetchDeezerSuggestions(query)}, 300)
+        }
+        return () => {
+            clearTimeout(timerRef.current)
+        }
+    }, [query, isInternalUpdate])
+
+    useEffect(() => {
+        const handleClickOutside = (e: Event) => {
+            if (burgerMenuRef.current && !burgerMenuRef.current.contains(e.target as Node)) {
+                setIsDisplayed(false)
+            }
+        }
+
+        if (isDisplayed) {
+            document.addEventListener('mousedown', handleClickOutside)
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [isDisplayed])
 
     return(
         <Flex id="header-container" 
@@ -67,7 +177,7 @@ function HeaderMin() {
         height={"40px"} minWidth={"770px"}
         paddingX={"1rem"} paddingY={"0.3125rem"}
         background={"#000000"}
-        position={"fixed"} right={"0"} top={"0"} left={"80px"}
+        position={"fixed"} right={"0"} top={"0"} left={'80px'}
         borderBottom={"1px solid #4e4c51"}>
             <Flex id="header"
             direction={"row"} align={"center"}
@@ -93,7 +203,7 @@ function HeaderMin() {
                             background={"transparent"}
                             _active={{
                             borderColor: "#9A36F3"
-                        }}
+                            }}
                             >
                                 <SearchIcon />
                             </Button>
@@ -103,6 +213,32 @@ function HeaderMin() {
                         height={"2rem"} width={"100%"}
                         borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
                         textDecoration={"none"}
+                        
+                        /*query update*/
+                        onChange={(e) => {
+                            setQuery(e.target.value)
+                            }}
+
+                        /*Search choice management triggering*/
+                        onKeyDown={handleKeyDown}
+
+                        /*setTimeout clearing*/
+                        onFocus={() =>{
+                            {if (timerRef.current != undefined) {
+                                clearTimeout(timerRef.current)
+                                timerRef.current = undefined
+                            }}
+                            setIsFocused(true)
+                        }}
+                        
+                        /*Hide the suggestions after selection*/
+                        onBlur={() => {timerRef.current = setTimeout (() => {setIsFocused(false)}, 250)}}
+                        
+                        sx={{
+                            "&::-webkit-search-cancel-button": {
+                                display: "none"
+                            }
+                        }}
                         _placeholder={{
                             color: "#6F6D6A",
                             fontWeight: "425",
@@ -126,7 +262,7 @@ function HeaderMin() {
                         margin={"0 0.75rem 0 1rem"}
                         display={"flex"} alignItems={"center"} justifyContent={"center"}
                         >
-                            <Button type="button" aria-label="Effacer"
+                            <Button type="button" aria-label="Effacer" isDisabled title="prochainement"
                             padding={"0"}
                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"baseline"} gap={'0.25rem'}
                             appearance={"none"} userSelect={"none"} whiteSpace={"nowrap"} outline={"transparent solid 2px"} pointerEvents={"none"}
@@ -137,11 +273,165 @@ function HeaderMin() {
                             </Button>
                         </InputRightElement>
                     </InputGroup>
+                    {(isFocused) &&
+                        <Box position={"absolute"} top={"0px"} left={"0px"}
+                        paddingTop={"10px"}
+                        transform={"translate3d(-1px, 48px, 0px)"} willChange={"transform"}
+                        width={"100%"}>
+                            <Box position={"relative"}
+                            padding={"0"} width={"375px"} maxHeight={"calc(100vh - 150px)"}
+                            backgroundColor={"#141216"} borderRadius={"10px"}
+                            boxShadow={"0 4px 20px 0 #0000003d"}
+                            color={"#ffffff"}
+                            overflow={"auto"}>
+                                <Flex direction={"column"}
+                                maxHeight={"440px"}
+                                overflowY={"auto"}>
+                                    <Flex direction={"column"}
+                                    maxHeight={"385px"}>
+
+                            {/*Display searh history before query*/}
+                            {((query || '').length === 0 && history && history.length > 0) ? (
+                                <Flex direction={"column"}
+                                maxHeight={"385px"}>
+                                    <Flex direction={"row"} alignItems={"center"} justifyContent={"space-between"}
+                                    paddingInlineStart={"1rem"} paddingInlineEnd={"0.75rem"} paddingY={"0.5rem"}>
+                                        <Heading as={"h2"}
+                                        fontFamily={"Inter,Arial,sans-serif"} fontWeight={"700"} fontSize={"18px"}
+                                        lineHeight={"24px"} textDecoration={"none"}>
+                                            Dernières recherches
+                                        </Heading>
+                                        <Button type="button" display={"inline-flex"} alignItems={"center"} justifyContent={"center"} isDisabled title="prochainement"
+                                        minHeight={"2rem"} minWidth={"2rem"} height={"auto"}
+                                        paddingInline={"0px"} paddingY={"0px"}
+                                        position={"relative"} verticalAlign={"middle"}
+                                        color={"#ffffff"}
+                                        background={"transparent"} borderRadius={"full"}
+                                        appearance={"none"} userSelect={"none"} whiteSpace={"nowrap"}
+                                        outline={"transparent solid 2px"} outlineOffset={"0px"} lineHeight={"20px"}
+                                        fontWeight={"600"} fontSize={"14px"} fontFamily={"Inter,Arial,sans-serif"} textDecoration={"none"}
+                                        onClick={handleResetHistory}
+                                        _hover={{
+                                            background: "#3A393D",
+                                        }}>
+                                            <DeleteButtonIcon />
+                                        </Button>
+                                    </Flex>
+                                    <Box overflow={"auto"}>
+                                        <Box>
+                                    {history.map((h: IHistoryItem) => {
+                                        return (
+                                            <Box key={h.title}>
+                                                <Box paddingInlineStart={"1rem"} paddingInlineEnd={"0"} paddingY={"0.5rem"}
+                                                onClick={() => {handleHistoryClick(h)}}>
+                                                    <Flex alignItems={"center"} gap={"0.5rem"}>
+                                                        <Box id="image" 
+                                                        minWidth={"3rem"} height={"3rem"} width={"3rem"}
+                                                        borderRadius={"0.125px"}>
+                                                            <Flex alignItems={"center"} justifyContent={"center"}
+                                                            position={"relative"}
+                                                            height={"100%"} width={"100%"}
+                                                            borderStyle={"solid"} borderWidth={"0.0625rem"} borderRadius={"0.125rem"}
+                                                            overflow={"hidden"}>
+                                                                <Image src={h.coverUrl} objectFit={"cover"} width={"100%"} height={"100%"} opacity={"1"}/>
+                                                                <Flex alignItems={"center"} gap={"0.25rem"}
+                                                                position={"absolute"} bottom={"0.75rem"} left={"50%"} top={"50%"}
+                                                                transform={"translate(-50%, -50%)"}></Flex>
+                                                            </Flex>
+                                                        </Box>
+                                                        <Flex role="button" direction={"column"} justifyContent={"center"} flex={"1 1 0%"}
+                                                        width={"fit-content"}
+                                                        color={"#ffffff"} textAlign={"left"}
+                                                        overflow={"hidden"}>
+                                                            <Box overflow={"hidden"} position={"relative"} whiteSpace={"nowrap"}>
+                                                                <Flex>
+                                                                    <Box>
+                                                                        <Text as={"p"} 
+                                                                        fontSize={"16px"} fontWeight={"400"} fontFamily={"Inter,Arial,sans-serif"}
+                                                                        color={"#ffffff"} lineHeight={"24px"} textDecoration={"none"} textOverflow={"ellipsis"}
+                                                                        overflow={"hidden"} margin={0}>
+                                                                            {h.title}
+                                                                        </Text>
+                                                                    </Box>
+                                                                </Flex>
+                                                            </Box>
+                                                            <Box overflow={"hidden"} position={"relative"} whiteSpace={"nowrap"} 
+                                                            style={{
+                                                                maskImage: "linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 2.42%, rgb(0, 0, 0) 23.26%)"
+                                                            }}>
+                                                                <Flex
+                                                                style={{
+                                                                    transform: "translate3d(0px, 0px, 0px",
+                                                                    willChange: "transform"
+                                                                }}>
+                                                                    <Box>
+                                                                        <Text
+                                                                        marginTop={"0.125rem"}
+                                                                        fontSize={"14px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
+                                                                        color={"#a19fa4"} lineHeight={"20px"} textDecoration={"none"}
+                                                                        overflow={"hidden"} textOverflow={"ellipsis"}>
+                                                                            <Text as={"span"} marginEnd={1}>
+                                                                                {h.type}
+                                                                            </Text> 
+                                                                            •
+                                                                            <Text as={"span"} color={"#ffffff"} marginStart={1}>
+                                                                                {h.artistName}
+                                                                            </Text>
+                                                                        </Text>
+                                                                    </Box>
+                                                                </Flex>
+                                                            </Box>
+                                                        </Flex>
+                                                        <Flex direction={"column"} justifyContent={"center"} overflow={"hidden"} width={"fit-content"} color={"#ffffff"}>
+                                                            <Button type="button" isDisabled title="prochainement"
+                                                            display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
+                                                            position={"relative"} whiteSpace={"nowrap"} verticalAlign={"middle"}
+                                                            paddingInline={0} paddingY={0}
+                                                            minHeight={"2rem"} minWidth={"2rem"} height={"auto"} 
+                                                            outline={"tranparent solid 2px"} outlineOffset={"0px"}
+                                                            lineHeight={"20px"} fontWeight={"600"} fontSize={"14px"} fontFamily={"Inter,Arial,sans-serif"} textDecoration={"none"} color={"#ffffff"}
+                                                            background={"transparent"} borderRadius={"full"}
+                                                            userSelect={"none"}
+                                                            _hover={{
+                                                                background: "#3A393D"
+                                                            }}>
+                                                                <HeartIcon />
+                                                            </Button>
+                                                        </Flex>
+                                                    </Flex>
+                                                </Box>
+                                            </Box>
+                                        )})}
+                                        </Box>
+                                    </Box>
+                                </Flex>
+
+                                /*Displays suggestions list*/
+                            ) : ((searchResults || []).map((e: IDeezerTrack) => {
+                                return (
+                                    <Box key={e.id} paddingStart={1} marginY={1}
+                                    _hover={{
+                                        background: "#2e2c30",}}
+                                    onClick={() => {handleSuggestionClick(e.id)}}>
+                                        <Text as={"p"} fontWeight={"700"}>
+                                            {e.title}
+                                        </Text>
+                                        <Text as={"p"} fontSize={"14px"}>
+                                            {e.artist.name}
+                                        </Text>
+                                    </Box>
+                                )
+                            }))}
+                                    </Flex>
+                                </Flex>
+                            </Box>
+                        </Box>
+                    }
                 </Box>
                 <Box id="notif"
                 marginLeft={"1rem"}
                 height={"2rem"} width={"2rem"}>
-                    <IconButton type="button" aria-label="Notifications"
+                    <IconButton type="button" aria-label="Notifications" isDisabled title="prochainement"
                     background={"transparent"} borderRadius={"full"}
                     height={"2rem"} width={"2rem"} minWidth={"2rem"}
                     _active={{
@@ -163,7 +453,7 @@ function HeaderMin() {
                     </IconButton>
                 </Box>
                 <Box h={"32px"} pos={"relative"} w={"32px"} ml={"16px"}>
-                    <Avatar as={Button} id="compte" name={userToken?.username} src={`${BASE_URL}uploads/avatars/${user?.avatarUrl}`}
+                    <Avatar as={Button} id="compte" name={user?.username} src={`${BASE_URL}uploads/avatars/${user?.avatarUrl}`}
                     textAlign={"center"} verticalAlign={"top"}
                     padding={0}
                     w={"2rem"} h={"2rem"} minW={"2rem"}
@@ -176,10 +466,11 @@ function HeaderMin() {
                             background: "#29282d"
                     }}
                     />
-                    <Box display={display()}
+                    {isDisplayed && 
+                    <Box ref={burgerMenuRef}
                     pos={"absolute"} top={0} left={0}
                     pt={"10px"}
-                    transform={"translate3d(-332px, 32px, 0px)"} willChange={"tranform"}>
+                    transform={"translate3d(-332px, 32px, 0px)"} willChange={"tranform"} zIndex={'999999'}>
                         <Box 
                         pos={"relative"}
                         p={0} 
@@ -197,12 +488,11 @@ function HeaderMin() {
                             transitionDuration={".15s"} transitionProperty={"background-color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                             cursor={"pointer"} transform={"translateZ(0)"}
                             _hover={{
-                                        backgroundColor: "#242326",
-                                        color: "#ffffff",
-                                        textDecor: "none"
-                                    }}
-                            >
-                                <Avatar as={"span"} name={userToken?.username} src={`${BASE_URL}uploads/avatars/${user?.avatarUrl}`}
+                                backgroundColor: "#242326",
+                                color: "#ffffff",
+                                textDecor: "none"
+                            }}>
+                                <Avatar as={"span"} name={user?.username} src={`${BASE_URL}uploads/avatars/${user?.avatarUrl}`}
                                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                                 pos={"relative"} verticalAlign={"top"}
                                 w={"2.5rem"} h={"2.5rem"}
@@ -221,15 +511,15 @@ function HeaderMin() {
                             </Flex>
                             <List borderTop={"1px solid #38373b"} fontSize={"14px"} m={0} p={"8px 0"} listStyleType={"none"}>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"0 none"}
-                                    transition={"015s"} transitionProperty={"background-color, color"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -248,7 +538,7 @@ function HeaderMin() {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     _hover={{
                                         backgroundColor: "#242326",
@@ -261,15 +551,15 @@ function HeaderMin() {
                                     </Flex>
                                 </ListItem>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -280,15 +570,15 @@ function HeaderMin() {
                                     </Flex>
                                 </ListItem>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -306,7 +596,7 @@ function HeaderMin() {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={"015s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     onClick={() => {
                                         logout()
@@ -326,7 +616,7 @@ function HeaderMin() {
                         my={0}
                         h={0} w={0}
                         border={"6px solid #0000"} borderBottomColor={"#141216"} borderTopWidth={0} />
-                    </Box>
+                    </Box>}
                 </Box>
             </Flex>
         </Flex>

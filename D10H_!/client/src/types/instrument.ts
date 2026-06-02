@@ -4,8 +4,6 @@ export interface IInstrument {
     id: number,
     name: InstrumentType,
     role?: string
-    img_src: string,
-    link_to_search: string,
 }
 
 export interface IOtherInstrument {

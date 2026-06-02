@@ -7,7 +7,7 @@ async function uploadMeasures() {
       host: "localhost",
       user: "root",
       password: "",
-      database: "D10H_!",
+      database: "D10H_!_Vtest",
     });
 
     // 1. On lit le fichier
@@ -26,8 +26,8 @@ async function uploadMeasures() {
 
     // 4. On met à jour la ligne "Michelle" déjà créée dans phpMyAdmin
     const [result] = await db.execute(
-      "UPDATE scores SET measures = ? WHERE title = ?",
-      [measuresString, "Michelle"],
+      "UPDATE scores SET measures = ? WHERE name = ?",
+      [measuresString, "Michelle-Beatles-Chant"],
     );
 
     if (result.affectedRows > 0) {

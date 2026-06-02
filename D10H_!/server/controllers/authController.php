@@ -66,9 +66,7 @@ foreach ($userInstruments as $userInstrument) {
     $userInstrumentLvl[] = [
         "instrument" => [
             "id" => $userInstrument['id'],
-            "name" => $userInstrument['name'],
-            'img_src' => $userInstrument['img_src'],
-            'link_to_search' => $userInstrument['link_to_search']
+            "name" => $userInstrument['name']
         ],
         "lvl" => $userInstrument['lvl']
     ];

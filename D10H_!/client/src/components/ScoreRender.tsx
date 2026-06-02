@@ -23,6 +23,7 @@ import { type INoteData } from "../types/Score";
 import { useScore } from "../hooks/useScore";
 
 import '../style.css'
+import { usePlayScoreStates } from "../hooks/usePlayScore";
 
 export interface IMeasureObject {
     stave: Stave;
@@ -41,12 +42,14 @@ export interface INoteSynchro {
     y: number
 }
 
-export interface IScoreRenderProps {onPlay: boolean}
+export interface IScoreRenderProps {}
 
-const ScoreRender: React.FC<IScoreRenderProps> = ({ onPlay }) => {
+const ScoreRender: React.FC<IScoreRenderProps> = () => {
 
     /* Import score data from context by hook */
     const {score} = useScore() 
+
+    const { onPlay } = usePlayScoreStates()
 
     const { instrumentName } = useParams()
 

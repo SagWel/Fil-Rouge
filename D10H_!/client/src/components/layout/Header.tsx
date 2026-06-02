@@ -21,6 +21,8 @@ export interface IHeaderProps {
 
 const Header: React.FC<IHeaderProps> = () => {
 
+    const burgerMenuRef = useRef< HTMLDivElement | null>(null)
+
     /*Searchs Results management*/
     const {
         searchResults,
@@ -67,7 +69,6 @@ const Header: React.FC<IHeaderProps> = () => {
     /* States for searchbar */
     const [query, setQuery] = useState<string>('')    
     const [isFocused, setIsFocused] = useState<boolean>(false)
-    const [infoNavigation, setInfoNavigation] = useState<boolean>(false)
     const [isInternalUpdate, setIsInternalUpdate] = useState<boolean>(false)
 
     /* States for Avatar button */
@@ -81,21 +82,6 @@ const Header: React.FC<IHeaderProps> = () => {
 
     /* User data from context by hook */
     const { user: userToken, logout } = useAuth()
-
-    useEffect(() => {
-        if (isInternalUpdate) {
-            setSearchResults([])
-            setIsInternalUpdate(false)
-        }else if (query && query.length < 2) {
-            setSearchResults([])
-            return
-        } else {
-            timerRef.current = setTimeout( () => {fetchDeezerSuggestions(query)}, 300)
-        }
-        return () => {
-            clearTimeout(timerRef.current)
-        }
-    }, [query, isInternalUpdate])
 
     /* search choice management */
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -132,7 +118,6 @@ const Header: React.FC<IHeaderProps> = () => {
                 addToHistory(historyItem)
 
                 setQuery(`${item.title} - ${item.artist.name}`)
-                setInfoNavigation(true)
             }
         
         if (timerRef.current != undefined) {
@@ -151,19 +136,50 @@ const Header: React.FC<IHeaderProps> = () => {
         }
         setIsInternalUpdate(true)
         setQuery(`${h.title} - ${h.artistName}`)
-        setInfoNavigation(true)
     }
 
-    /* display burger menu */
-    const display = () => {
-        if (isDisplayed) return "block"
-        return "none"
+    const handleResetHistory: () => void = () => {
+        localStorage.removeItem("D10H_!_Search_History")
     }
 
     const handleAvatarClick = () => {
-        if (isDisplayed) return setIsDisplayed(false)
-        return setIsDisplayed(true)        
+        if (isDisplayed) {
+            setIsDisplayed(false)
+        } else {
+            setIsDisplayed(true)
+        }
     }
+
+    useEffect(() => {
+        if (isInternalUpdate) {
+            setSearchResults([])
+            setIsInternalUpdate(false)
+        }else if (query && query.length < 2) {
+            setSearchResults([])
+            return
+        } else {
+            timerRef.current = setTimeout( () => {fetchDeezerSuggestions(query)}, 300)
+        }
+        return () => {
+            clearTimeout(timerRef.current)
+        }
+    }, [query, isInternalUpdate])
+
+    useEffect(() => {
+        const handleClickOutside = (e: Event) => {
+            if (burgerMenuRef.current && !burgerMenuRef.current.contains(e.target as Node)) {
+                setIsDisplayed(false)
+            }
+        }
+
+        if (isDisplayed) {
+            document.addEventListener('mousedown', handleClickOutside)
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [isDisplayed])
 
     return(
         <Flex id="header-container" 
@@ -203,7 +219,11 @@ const Header: React.FC<IHeaderProps> = () => {
                             </Button>
                         </InputLeftElement>
                         <Input type="search" value={query ?? ''} aria-label="Rechercher" placeholder="Artistes, titres, Scorbraries ..."
-
+                        padding={"0 2.75rem 0 2.75rem" }
+                        height={"3rem"} width={"100%"}
+                        borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
+                        textDecoration={"none"}
+                        
                         /*query update*/
                         onChange={(e) => {
                             setQuery(e.target.value)
@@ -223,10 +243,7 @@ const Header: React.FC<IHeaderProps> = () => {
                         
                         /*Hide the suggestions after selection*/
                         onBlur={() => {timerRef.current = setTimeout (() => {setIsFocused(false)}, 250)}}
-                        padding={"0 2.75rem 0 2.75rem" }
-                        height={"3rem"} width={"100%"}
-                        borderRadius={"0.5rem"} borderColor={"transparent"} borderWidth={"0.125rem"} borderStyle={"solid"}
-                        textDecoration={"none"}
+                        
                         sx={{
                             "&::-webkit-search-cancel-button": {
                                 display: "none"
@@ -255,7 +272,7 @@ const Header: React.FC<IHeaderProps> = () => {
                         margin={"0 0.75rem 0 1rem"}
                         display={"flex"} alignItems={"center"} justifyContent={"center"}
                         >
-                            <Button type="button" aria-label="Effacer"
+                            <Button type="button" aria-label="Effacer" isDisabled title="prochainement"
                             padding={"0"}
                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"baseline"} gap={'0.25rem'}
                             appearance={"none"} userSelect={"none"} whiteSpace={"nowrap"} outline={"transparent solid 2px"} pointerEvents={"none"}
@@ -294,7 +311,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                         lineHeight={"24px"} textDecoration={"none"}>
                                             Dernières recherches
                                         </Heading>
-                                        <Button type="button" display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
+                                        <Button type="button" display={"inline-flex"} alignItems={"center"} justifyContent={"center"} isDisabled title="prochainement"
                                         minHeight={"2rem"} minWidth={"2rem"} height={"auto"}
                                         paddingInline={"0px"} paddingY={"0px"}
                                         position={"relative"} verticalAlign={"middle"}
@@ -303,6 +320,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                         appearance={"none"} userSelect={"none"} whiteSpace={"nowrap"}
                                         outline={"transparent solid 2px"} outlineOffset={"0px"} lineHeight={"20px"}
                                         fontWeight={"600"} fontSize={"14px"} fontFamily={"Inter,Arial,sans-serif"} textDecoration={"none"}
+                                        onClick={handleResetHistory}
                                         _hover={{
                                             background: "#3A393D",
                                         }}>
@@ -375,7 +393,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                                             </Box>
                                                         </Flex>
                                                         <Flex direction={"column"} justifyContent={"center"} overflow={"hidden"} width={"fit-content"} color={"#ffffff"}>
-                                                            <Button type="button"
+                                                            <Button type="button" isDisabled title="prochainement"
                                                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                                                             position={"relative"} whiteSpace={"nowrap"} verticalAlign={"middle"}
                                                             paddingInline={0} paddingY={0}
@@ -418,12 +436,12 @@ const Header: React.FC<IHeaderProps> = () => {
                                 </Flex>
                             </Box>
                         </Box>
-                        }
+                    }
                 </Box>
                 <Box id="notif"
                 marginLeft={"1rem"}
                 height={"2rem"} width={"2rem"}>
-                    <IconButton type="button" aria-label="Notifications"
+                    <IconButton type="button" aria-label="Notifications" disabled
                     background={"transparent"} borderRadius={"full"}
                     height={"2rem"} width={"2rem"} minWidth={"2rem"}
                     _active={{
@@ -458,7 +476,8 @@ const Header: React.FC<IHeaderProps> = () => {
                             background: "#29282d"
                     }}
                     />
-                    <Box display={display()}
+                    {isDisplayed && 
+                    <Box ref={burgerMenuRef}
                     pos={"absolute"} top={0} left={0}
                     pt={"10px"}
                     transform={"translate3d(-332px, 32px, 0px)"} willChange={"tranform"}>
@@ -479,11 +498,10 @@ const Header: React.FC<IHeaderProps> = () => {
                             transitionDuration={".15s"} transitionProperty={"background-color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                             cursor={"pointer"} transform={"translateZ(0)"}
                             _hover={{
-                                        backgroundColor: "#242326",
-                                        color: "#ffffff",
-                                        textDecor: "none"
-                                    }}
-                            >
+                                backgroundColor: "#242326",
+                                color: "#ffffff",
+                                textDecor: "none"
+                            }}>
                                 <Avatar as={"span"} name={userToken?.username} src={`${BASE_URL}uploads/avatars/${user?.avatarUrl}`}
                                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                                 pos={"relative"} verticalAlign={"top"}
@@ -503,15 +521,15 @@ const Header: React.FC<IHeaderProps> = () => {
                             </Flex>
                             <List borderTop={"1px solid #38373b"} fontSize={"14px"} m={0} p={"8px 0"} listStyleType={"none"}>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"0 none"}
-                                    transition={".15s"} transitionProperty={"background-color, color"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -530,7 +548,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     _hover={{
                                         backgroundColor: "#242326",
@@ -543,15 +561,15 @@ const Header: React.FC<IHeaderProps> = () => {
                                     </Flex>
                                 </ListItem>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -562,15 +580,15 @@ const Header: React.FC<IHeaderProps> = () => {
                                     </Flex>
                                 </ListItem>
                                 <ListItem p={"0 8px"} listStyleType={"none"} m={0}>
-                                    <Flex as={Link} role="button"
+                                    <Flex as={Link} role="button" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                     alignItems={"center"}
                                     p={"12px"} 
                                     color={"#ffffff"} textDecor={"inherit"}
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
-                                    transform={"translateZ(0)"} cursor={"pointer"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transform={"translateZ(0)"}
                                     _hover={{
                                         backgroundColor: "#242326",
                                         color: "#ffffff",
@@ -588,7 +606,7 @@ const Header: React.FC<IHeaderProps> = () => {
                                     backgroundColor={"transparent"}
                                     borderRadius={"4px"} 
                                     outline={"transparent solid 2px"} outlineOffset={"2px"}
-                                    transition={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
+                                    transitionDuration={".15s"} transitionProperty={"background-color, color"} transitionTimingFunction={"cubic-bezier(0, 0, 0.2, 1)"}
                                     transform={"translateZ(0)"} cursor={"pointer"}
                                     onClick={() => {
                                         logout()
@@ -608,7 +626,7 @@ const Header: React.FC<IHeaderProps> = () => {
                         my={0}
                         h={0} w={0}
                         border={"6px solid #0000"} borderBottomColor={"#141216"} borderTopWidth={0} />
-                    </Box>
+                    </Box>}
                 </Box>
             </Flex>
         </Flex>

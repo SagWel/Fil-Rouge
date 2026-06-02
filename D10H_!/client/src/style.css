@@ -7,12 +7,16 @@ a {
     stroke: #7328b5 !important;
 }
 
-.tempo-topbar-exposed-links a:not(:last-of-type) {
+.topbar-exposed-links a:not(:last-of-type) {
     margin-right: calc(14px*1.5) !important;
 }
 
 .stack>:not(:last-child) {
     margin-right: calc(14px*2);
+}
+
+.chakra-popover__popper{
+    margin-inline-start: 0.25rem;
 }
 
 @media screen and (min-width: 724px) {
@@ -32,7 +36,7 @@ a {
 }
 
 @media screen and (min-width: 768px) {
-    .tempo-topbar {
+    .topbar {
         padding-left: 64px !important;
         padding-right: 64px !important;
         height: 80px !important;
@@ -89,12 +93,12 @@ a {
 }
 
 @media screen and (min-width: 1160px){
-    .tempo-topbar {
+    .topbar {
         padding-left: 112px !important;
         padding-right: 112px !important; 
     }
 
-    .tempo-topbar-exposed-links {
+    .topbar-exposed-links {
         display: flex !important;
         justify-content: flex-end !important;
     }

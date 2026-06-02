@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 /* Import component */
-import ScoreRender from "../../components/ScoreRender";
+import ScoreRenderChant from "../../components/scoreRendering/ScoreRenderChant";
 
 /* Import Hook */
 import { useScore } from "../../hooks/useScore";
@@ -11,13 +11,24 @@ import { useScore } from "../../hooks/useScore";
 /* Import background */
 import Fond from '../../../public/imgs/FondPart.jpg'
 import { useAuth } from "../../hooks/useAuth";
+import { usePlayScoreDispatch, usePlayScoreStates } from "../../hooks/usePlayScore";
 
-export interface IPageMorceauProps {onPlay: boolean}
+const SCORE_RENDERERS: Record<string, React.FC> = {
+    chant: ScoreRenderChant
+}
 
-const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
+export interface IPageMorceauProps {}
+
+const PageMorceau: React.FC<IPageMorceauProps> = () => {
 
     /* Score from context by hook */
     const { score, setScore} = useScore()
+
+    const SelectedRenderer = SCORE_RENDERERS['chant'] || ScoreRenderChant
+    
+    const { onPlay } = usePlayScoreStates()
+
+    const { setOnPlay } = usePlayScoreDispatch()
 
     const { morceauId } = useParams()
     const { user } = useAuth()
@@ -25,7 +36,9 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
 
     const host = import.meta.env.VITE_HOST
     const port = import.meta.env.VITE_SERVER_PORT
-    const BASE_URL = `http://${host}:${port}/D10h_server/public/`
+    const BASE_URL = `http://${host}:${port}/D10h_server/public/uploads/instruments/`
+    const capitalizedName = score?.instruments.currentInstrument.name.charAt(0).toUpperCase() + score?.instruments.currentInstrument.name.slice(1)
+    const URLImg = `${BASE_URL}${capitalizedName}.png`
 
     if ((user?.filterExplicit || user?.isChildAccount) && score?.song.isExplicit) {
         alert('Ce morceau contient des propos explicites et ne peux donc pas être consulté par vous en raison de votre age ou de vos réglages')
@@ -77,6 +90,20 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
         fetchAddUserHistory()
     },[onPlay, user, morceauId])
 
+    useEffect(() => {
+        const pauseForce = () => {
+            if (document.visibilityState === 'hidden' && onPlay) {
+                setOnPlay(false)
+            }
+        }
+
+        document.addEventListener('visibilitychange', pauseForce)
+
+        return () => {
+            document.removeEventListener('visibilitychange', pauseForce)
+        }
+    },[onPlay, setOnPlay])
+
     return (
        <Flex direction={"column"} overflowY={"auto"} justifyContent={"start"} width={"100%"} height={"100%"} background={"transparent"}>
             <Box width={"100%"} textAlign={"center"} position={"relative"}>
@@ -87,13 +114,13 @@ const PageMorceau: React.FC<IPageMorceauProps> = ({onPlay}) => {
                 {score?.instruments.currentInstrument.role && 
                 <Text pos={"absolute"} top={"35%"} right={"6rem"} color={"#c0c0c0"} fontSize={"20px"}>{score?.instruments.currentInstrument.role}</Text>
                 }
-                <Image position={"absolute"} borderRadius={"full"} src={`${BASE_URL}${score?.instruments.currentInstrument.imgSrc}`} alt="..." h={"4rem"} w={"4rem"} right={"0.625rem"} top={"7px"}/>
+                <Image position={"absolute"} borderRadius={"full"} src={`${URLImg}`} alt="..." h={"4rem"} w={"4rem"} right={"0.625rem"} top={"7px"}/>
             </Box>
             <Box backgroundImage={Fond} backgroundRepeat={"no-repeat"} backgroundPosition={"center"} backgroundSize={"cover"}
             height={"100%"} width={"97%"}
             marginY={"10px"} marginInlineStart={"20px"}
             overflowY={"auto"}>
-                <ScoreRender onPlay={onPlay}/>
+                <SelectedRenderer />
             </Box>
         </Flex>
     );

@@ -278,7 +278,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                                 </Button>
                                             </InputRightElement>
                                         </InputGroup>
-                                        <FormHelperText as={Link} href="/resetpassword" target="_blank"
+                                        <FormHelperText as={Link} href="/resetpassword" target="_blank" onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
                                         mt={"0.5rem"}
                                         fontSize={"0.875rem"}
                                         lineHeight={"normal"} color={"#a19fa4"} textDecor={"inherit"}
@@ -363,7 +363,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                     </Button>
                                 </Stack>
                             </chakra.form>
-                            <Text as={"p"} color={"#a19fa4"}>ou</Text>
+                            {/* <Text as={"p"} color={"#a19fa4"}>ou</Text>
                             <Wrap flexShrink={0} justifyContent={"center"}>
                                 <Flex pos={"relative"}>
                                     <Button type="button" aria-label="facebook"
@@ -467,7 +467,7 @@ const PageLogin: React.FC<IPageLoginProps> = () => {
                                         lineHeight={"1rem"} flexShrink={0} verticalAlign={"middle"} display={"block"}/>
                                     </Button>
                                 </Flex>
-                            </Wrap>
+                            </Wrap> */}
                             <Box textAlign={"center"}>
                                 <Text as={"p"}
                                 display={"inline"} fontSize={"0.875rem"} color={"#a19fa4"}>

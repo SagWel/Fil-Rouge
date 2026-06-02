@@ -1,5 +1,6 @@
 import { useModals } from "../../hooks/useModals";
 import FirstEditProfil from "./childrens/FirstEditProfil";
+import TempoManager from "./childrens/TempoManager";
 import StandardModal from "./StandardModal";
 
 export interface IModalManagerProps { }
@@ -9,7 +10,7 @@ const MODALS: Record<string, React.ComponentType<any>> = {
     'FIRST_EDIT_PROFIL': FirstEditProfil,
     // 'ADD_SCORBRARY': ,
     // 'TUNNER': ,
-    // 'TEMPO_MANAGEMENT': ,
+    'TEMPO_MANAGEMENT': TempoManager,
     // 'LEARNING_MODE': ,
     // 'LOOPER': ,
     // 'MUTE': ,
@@ -32,7 +33,7 @@ const ModalManager: React.FC<IModalManagerProps> = () => {
     }
 
     return (
-        <StandardModal isOpen={!!name} onClose={onClose} heading={modalProps.title} bg={modalProps.bg}>
+        <StandardModal isOpen={!!name} onClose={onClose} heading={modalProps.title} bg={modalProps.bg} border={modalProps.border} footerBtnContent={modalProps.footerBtnContent} footerOnClick={modalProps.footerOnClick} >
             <ActiveModal {...modalProps} />
         </StandardModal>
     )

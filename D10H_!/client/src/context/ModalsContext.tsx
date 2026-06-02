@@ -4,7 +4,7 @@ export type ModalName =
     'FIRST_EDIT_PROFIL' |
     // 'ADD_SCORBRARY' |
     // 'TUNNER' |
-    // 'TEMPO_MANAGEMENT' |
+    'TEMPO_MANAGEMENT' |
     // 'LEARNING_MODE' |
     // 'LOOPER' |
     // 'MUTE' |
@@ -14,7 +14,7 @@ export type ModalName =
     // 'CONFIDENTIAL_PARAMS' | 
     // 'PERSONAL_DATA' |
     // 'CONFIRM_IDENTITY' |
-    'FORGOTTEN_PASSWORD' |
+    // 'FORGOTTEN_PASSWORD' |
     null
 
 interface ModalsContextType {

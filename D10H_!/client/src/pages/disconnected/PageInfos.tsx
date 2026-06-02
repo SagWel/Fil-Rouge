@@ -7,7 +7,7 @@ export interface IPageInfosProps {}
 const PageInfos: React.FC<IPageInfosProps> = () => {
     return (
         <>
-            <chakra.nav className='tempo-topbar'
+            <chakra.nav className='topbar'
             display={"flex"} alignItems={"center"} justifyContent={"space-between"}
             position={"relative"}
             h={"80px"} w={"100%"}
@@ -25,7 +25,7 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                     <LogoTempo />
                     &nbsp;D10H !
                 </Link>
-                <Flex className='tempo-topbar-exposed-links' display={"none"} flexDir={"row"} flexGrow={1}
+                <Flex className='topbar-exposed-links' display={"none"} flexDir={"row"} flexGrow={1}
                 ml={"112px"} mr={"calc(14px*2)"}>
                     <Link href='https://www.deezer.com/fr/offers/'
                     fontSize={"16px"} fontWeight={"700"}
