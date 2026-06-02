@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Text } from "@chakra-ui/react";
 import { useRef, useEffect } from "react";
 import { Renderer, 
         Stave, 
@@ -319,8 +319,9 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
 
         /*dimmensions */
         const lineSpacing: number = 160
-        const containerWidth: number = containerRef.current.offsetWidth ?? 800;        
-        const measurePerLine: number = 4;
+        const containerWidth: number = containerRef.current.offsetWidth ?? 800;
+        const blup: number = width < 1024 ? 2 : 4
+        const measurePerLine: number = width < 768 ? 1 : blup
         const totalLines: number = Math.ceil(score.measures.length / measurePerLine);
         const firstMeasureExtraWidth: number = 80
         const dynamicHeight: number = totalLines * lineSpacing + 50;
@@ -647,6 +648,16 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
 
     if (!score) {
         return <Box textAlign={"center"}><Text color={"black"}>Chargement de la partition ...</Text></Box>
+    }
+
+    if (width < 646) {
+        return (
+            <Flex justify={'center'} align={'center'} h={'full'} textAlign={'center'}>
+                <Text color={"#242222"} fontWeight={'700'} px={1.5}>
+                    Cet outil n'ai pas disponible pour ce format d'écran
+                </Text>
+            </Flex>
+        )
     }
 
     return (
