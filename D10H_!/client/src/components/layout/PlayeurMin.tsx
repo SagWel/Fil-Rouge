@@ -81,14 +81,8 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
         if (score) {
             const tempo = score.bpm * (tempoPercent / 100)
             const beatDurationMs = 60000 / tempo
-            if (countdown) {
-                setOnPlayWithCountdown(true) 
-                const Timer = setInterval(() => {
-    
-                }, beatDurationMs)
-            } else {
+            
                 setOnPlay(prev => !prev)
-            }
 
         }
     }, [setOnPlay])
@@ -403,29 +397,6 @@ const PlayeurMin: React.FC<IPlayeurMinProps> = () => {
                         }}>
                     <ChromcastIcon />
                 </Button>
-                {/* <Button type="button" aria-label="Volume button"
-                display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"}
-                padding={"0"} marginLeft={"0.25rem"}
-                minWidth={"2rem"} minHeight={"2rem"} height={"2rem"} 
-                color={"#fdfcfe"} background={"transparent"}
-                borderRadius={"full"}
-                _active={{
-                                background: "transparent",
-                                color: "#bb73ff",
-                        }}
-                        _focus={{
-                            zIndex: "1"
-                        }}
-                        _focusVisible={{
-                            boxShadow: "none",
-                            outlineColor: "#ad47ff"
-                        }}
-                        _hover={{
-                            background: "#2e2c30",
-                            color: "#f5f2f8"
-                        }}>
-                    <VolumeIcon />
-                </Button> */}
                 <Popover isOpen={isOpen}>
                     <PopoverTrigger>
                         <Button type="button" aria-label="Volume button"
