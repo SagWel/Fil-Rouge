@@ -23,17 +23,12 @@ export interface PlayScoreStatesContextType {
     previousMeasure: boolean,
     backToStart: boolean,
     nextMeasure: boolean,
-    tunnerOn: boolean,
     countdown: boolean,
     metronome: boolean,
-    tempoManagementOn: boolean,
     tempoPercent: number,
-    learningModeOn: boolean,
     learningMode: LearningModeProps,
-    looperOn: boolean,
     looper: LooperProps,
     solo: boolean,
-    muteOn: boolean,
     mute: IInstrumentMute [],
 }
 
@@ -42,17 +37,12 @@ export interface PlayScoreDispatchContextType {
     setPreviousMeasure: React.Dispatch<React.SetStateAction<boolean>>,
     setBackToStart: React.Dispatch<React.SetStateAction<boolean>>,
     setNextMeasure: React.Dispatch<React.SetStateAction<boolean>>,
-    setTunnerOn: React.Dispatch<React.SetStateAction<boolean>>,
     setCountdown: React.Dispatch<React.SetStateAction<boolean>>,
     setMetronome: React.Dispatch<React.SetStateAction<boolean>>,
-    setTempoManagementOn: React.Dispatch<React.SetStateAction<boolean>>,
     setTempoPercent: React.Dispatch<React.SetStateAction<number>>,
-    setLearningModeOn: React.Dispatch<React.SetStateAction<boolean>>,
     setLearningMode: React.Dispatch<React.SetStateAction<LearningModeProps>>,
-    setLooperOn : React.Dispatch<React.SetStateAction<boolean>>,
     setLooper: React.Dispatch<React.SetStateAction<LooperProps>>,
     setSolo: React.Dispatch<React.SetStateAction<boolean>>,
-    setMuteOn: React.Dispatch<React.SetStateAction<boolean>>,
     setMute: React.Dispatch<React.SetStateAction<IInstrumentMute []>>,
 }
 
@@ -71,17 +61,12 @@ const PlayScoreProvider = ({ children } : PlayScoreProviderProps) => {
     const [previousMeasure, setPreviousMeasure] = useState<boolean>(false)
     const [backToStart, setBackToStart] = useState<boolean>(false)
     const [nextMeasure, setNextMeasure] = useState<boolean>(false)
-    const [tunnerOn, setTunnerOn] = useState<boolean>(false)
     const [countdown, setCountdown] = useState<boolean>(false)
     const [metronome, setMetronome] = useState<boolean>(false)
-    const [tempoManagementOn, setTempoManagementOn] = useState<boolean>(false)
     const [tempoPercent, setTempoPercent] = useState<number>(100)
-    const [learningModeOn, setLearningModeOn] = useState<boolean>(false)
     const [learningMode, setLearningMode] = useState<LearningModeProps>({startTempoPercent: 100, endTempoPercent: 100, increment: 1})
-    const [looperOn, setLooperOn] = useState<boolean>(false)
     const [looper, setLooper] = useState<LooperProps>({startMeasure: 0, endMeasure: 0})
     const [solo, setSolo] = useState<boolean>(false)
-    const [muteOn, setMuteOn] = useState<boolean>(false)
     const [mute, setMute] = useState<IInstrumentMute[] | undefined>(() => {
         const firstElement: IInstrumentMute = {
             instrument: score?.instruments.currentInstrument as IInstrument, 
@@ -106,33 +91,23 @@ const PlayScoreProvider = ({ children } : PlayScoreProviderProps) => {
         previousMeasure,
         backToStart,
         nextMeasure,
-        tunnerOn,
         countdown,
         metronome,
-        tempoManagementOn,
         tempoPercent,
-        learningModeOn,
         learningMode,
-        looperOn,
         looper,
         solo,
-        muteOn,
         mute,
     }),[onPlay,
         previousMeasure,
         backToStart,
         nextMeasure,
-        tunnerOn,
         countdown,
         metronome,
-        tempoManagementOn,
         tempoPercent,
-        learningModeOn,
         learningMode,
-        looperOn,
         looper,
         solo,
-        muteOn,
         mute,])
 
     const dispatchContextValue = useMemo(() => ({
@@ -140,17 +115,12 @@ const PlayScoreProvider = ({ children } : PlayScoreProviderProps) => {
         setPreviousMeasure,
         setBackToStart,
         setNextMeasure,
-        setTunnerOn,
         setCountdown,
         setMetronome,
-        setTempoManagementOn,
         setTempoPercent,
-        setLearningModeOn,
         setLearningMode,
-        setLooperOn,
         setLooper,
         setSolo,
-        setMuteOn,
         setMute
     }),[])
 

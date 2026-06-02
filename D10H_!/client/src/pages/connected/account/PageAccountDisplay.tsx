@@ -273,7 +273,7 @@ const PageAccountDisplay : React.FC<IPageAccountDisplayProps> = () => {
                             m={0} p={0} pl={"44px"}
                             fontSize={"16px"}
                             color={"#a19fa4"}>
-                            <Text as={Button}
+                            <Text as={Button} isDisabled
                                 display={"flex"} align={'center'}
                                 p={0} m={0}
                                 color={"#a19fa4"}

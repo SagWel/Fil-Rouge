@@ -12,7 +12,6 @@ function getScoreById($pdo, $id)
             COUNT(DISTINCT sv.id) AS popularity_count,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
-            GROUP_CONCAT(i.img_src) AS all_instruments_images,
             GROUP_CONCAT(si.track_name) As all_instruments_roles,
             GROUP_CONCAT(si.is_current) AS all_is_current
         FROM scores s
@@ -38,9 +37,7 @@ function getOtherInstrumentScoreId($pdo, $songId, $scoreId)
         'SELECT
             s.id AS score_id,
             i.id AS instrument_id,
-            i.name AS instrument_name,
-            i.img_src AS instrument_img,
-            i.link_to_search AS instrument_link
+            i.name AS instrument_name
         FROM scores s
         JOIN score_instruments si ON s.id = si.score_id
         JOIN instruments i ON si.instrument_id = i.id
@@ -66,7 +63,6 @@ function getNewsScores($pdo)
             COUNT(DISTINCT sv.id) AS popularity_count,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
-            GROUP_CONCAT(i.img_src) AS all_instruments_images,
             GROUP_CONCAT(si.track_name) As all_instruments_roles,
             GROUP_CONCAT(si.is_current) AS all_is_current
         FROM scores s
@@ -99,7 +95,6 @@ function getPopularScores($pdo)
             COUNT(DISTINCT sv.id) AS popularity_count,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
-            GROUP_CONCAT(i.img_src) AS all_instruments_images,
             GROUP_CONCAT(si.track_name) As all_instruments_roles,
             GROUP_CONCAT(si.is_current) AS all_is_current
         FROM scores s
@@ -133,7 +128,6 @@ function getSuggestionsScores($pdo, $userId)
             COUNT(DISTINCT sv.id) AS popularity_count,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
-            GROUP_CONCAT(i.img_src) AS all_instruments_images,
             GROUP_CONCAT(si.track_name) As all_instruments_roles,
             GROUP_CONCAT(si.is_current) AS all_is_current
         FROM scores s
@@ -174,7 +168,6 @@ function getUserHistoryScores($pdo, $userId)
             COUNT(DISTINCT sv.id) AS popularity_count,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
-            GROUP_CONCAT(i.img_src) AS all_instruments_images,
             GROUP_CONCAT(si.track_name) As all_instruments_roles,
             GROUP_CONCAT(si.is_current) AS all_is_current
         FROM user_history h
@@ -207,7 +200,6 @@ function getScoresByInstrument($pdo, $instrumentId)
             COUNT(DISTINCT sv.id) AS popularity_count,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
-            GROUP_CONCAT(i.img_src) AS all_instruments_images,
             GROUP_CONCAT(si.track_name) As all_instruments_roles,
             GROUP_CONCAT(si.is_current) AS all_is_current
         FROM scores s
@@ -244,7 +236,6 @@ function getSearchScores($pdo, $searchTerm)
             COUNT(DISTINCT sv.id) AS popularity_count,
             GROUP_CONCAT(i.name) AS all_instruments_names,
             GROUP_CONCAT(i.id) AS all_instruments_ids,
-            GROUP_CONCAT(i.img_src) AS all_instruments_images,
             GROUP_CONCAT(si.track_name) As all_instruments_roles,
             GROUP_CONCAT(si.is_current) AS all_is_current
         FROM scores s
@@ -257,13 +248,16 @@ function getSearchScores($pdo, $searchTerm)
         LEFT JOIN score_views sv ON s.id = sv.score_id
         WHERE
             so.title LIKE :query
+            OR so.deezer_full_name LIKE :query
             OR a.name LIKE :query
             OR g.name LIKE :query
+        GROUP BY s.id
         ORDER BY
             CASE
                 WHEN a.name LIKE :exact_query THEN 1
                 WHEN so.title LIKE :exact_query THEN 2
-                ELSE 3
+                WHEN so.deezer_full_name LIKE :exact_query THEN 3
+                ELSE 4
             END,
             so.title ASC'
     );

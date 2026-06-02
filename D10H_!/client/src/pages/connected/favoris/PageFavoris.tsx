@@ -64,7 +64,7 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                     <Box marginTop={"1.5rem"} marginBottom={"2rem"}>
                         <List display={"inline-flex"} gap={"0.25rem"} listStyleType={"none"} margin={0} padding={0}>
                             <ListItem listStyleType={"none"} margin={0} padding={0}>
-                                <Button type="button" aria-label="Une de Mes Partition Aléatoire"
+                                <Button type="button" aria-label="Une de Mes Partition Aléatoire" isDisabled title="prochainement"
                                 display={"inline-flex"} alignItems={"center"} justifyContent={"center"} verticalAlign={"middle"} gap={"0.25rem"}
                                 minHeight={"3rem"} minWidth={"3rem"} height={"auto"} width={"auto"}
                                 paddingInlineStart={"1rem"} paddingInlineEnd={"1.5rem"} paddingY={"0.75rem"}
@@ -94,7 +94,9 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                                     </chakra.span>
                                     <Box fontFamily={"Inter,Arial,sans-serif"}>
                                         <Flex alignItems={"center"} justifyContent={"center"}>
-                                            <Link to={"/scores/:instrumentId/:morceauId"}>Une de Mes Partition Aléatoire</Link>
+                                            <Box as={Link} to={"/scores/:instrumentId/:morceauId"} cursor={'not-allowed'}>
+                                                Une de Mes Partition Aléatoire
+                                            </Box>
                                         </Flex>
                                     </Box>
                                 </Button>
@@ -129,7 +131,10 @@ const PageFavoris: React.FC<IPageFavorisProps> = () => {
                                 <ListItem 
                                 listStyleType={"none"} margin={0} padding={0}
                                 color={"#a19fa4"} display={"inline-block"} position={"relative"} paddingLeft={"44px"}>
-                                    <Box as={Link} to={"/favoris/scorbraries"} borderBottom={"transparent 2px solid"} paddingBottom={"16px"} backgroundColor={"transparent"}
+                                    <Box as={Link} to={"/favoris/scorbraries"} onClick={(e) => e.preventDefault()} cursor={'not-allowed'} title="prochainement"
+                                    paddingBottom={"16px"} 
+                                    backgroundColor={"transparent"} 
+                                    borderBottom={"transparent 2px solid"} 
                                     display={"block"}
                                     fontSize={"16px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"}
                                     lineHeight={"24px"} textDecoration={"none"}

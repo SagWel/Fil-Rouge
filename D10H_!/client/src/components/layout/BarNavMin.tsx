@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Flex, Box, IconButton, Image } from "@chakra-ui/react";
+import { Flex, Box, IconButton, Image, Text } from "@chakra-ui/react";
 
 // Pictures import as modules
 import Fire from '../../img/au-coin-du-feu.png'
@@ -89,7 +89,7 @@ const BarNavMin: React.FC<IBarNavMinProps> = () => {
                     alignItems={"center"} justifyContent={"center"}
                     marginTop={"1rem"} marginBottom={"0.25rem"}
                     minHeight={"2.5rem"} width={"100%"}>
-                            <IconButton id="boutoun-new-scorbrary" aria-label="Ajouter un Scorbrary"
+                            <IconButton id="boutoun-new-scorbrary" aria-label="Ajouter un Scorbrary" isDisabled title="prochainement"
                             display={"inline-flex"} alignItems={"center"} justifyContent={"center"}
                             userSelect={"none"}
                             minHeight={"2rem"} width={"2rem"} minWidth={"2rem"} height={"auto"}
@@ -112,10 +112,10 @@ const BarNavMin: React.FC<IBarNavMinProps> = () => {
                             ></IconButton>
                     </Flex>
                     <Flex id="scorbraries-list"
-                    direction={"column"} alignItems={"flex-start"} gap={"0"}
+                    direction={"column"} alignItems={"center"} gap={"0"}
                     paddingX={"0.5rem"}
                     width={"100%"}>
-                            <Flex as={Link} to={"/scorbrary/concert-30-09"} id="concert-30/09" 
+                            {/* <Flex as={Link} to={"/scorbrary/concert-30-09"} id="concert-30/09" 
                             alignItems={"center"} gap={"0.5rem"} 
                             padding={"0.5rem"} 
                             width={"100%"}
@@ -186,7 +186,10 @@ const BarNavMin: React.FC<IBarNavMinProps> = () => {
                                 width={"100%"} height={"100%"} opacity={"1"}/>
                                     </Flex>
                                 </Flex>
-                            </Flex>
+                            </Flex> */}
+                            <Text fontSize={'14px'} opacity={'0.6'} title="prochainement">
+                                ...
+                            </Text>
                     </Flex>
                 </Box>
             </Box>

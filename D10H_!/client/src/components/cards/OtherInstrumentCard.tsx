@@ -14,7 +14,7 @@ export interface IOtherInstrumentCardProps {
 const OtherInstrumentCard: React.FC<IOtherInstrumentCardProps> = ({ instrument }) => {
     
     return (
-        <Box as={Link} href={`${instrument.instrument.link_to_search}/${instrument.score_id}`}
+        <Box as={Link} href={`/scores/${instrument.instrument.name}/${instrument.score_id}`}
         height={"fit-content"} width={"fit-content"}
         borderRadius={"full"} padding={"0.185rem"}
         _hover={{

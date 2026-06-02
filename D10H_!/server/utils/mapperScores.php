@@ -1,11 +1,10 @@
 <?php
 
-function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrument = null)
+function mapperScore(array $row, array $rowsOtherInstruments, ?string $searchedInstrument = null)
 {
     $instrumentsNames = explode(',', $row['all_instruments_names'] ?? '');
     $instrumentsIds = explode(',', $row['all_instruments_ids'] ?? '');
     $instrumentsRoles = explode(',', $row['all_instruments_roles'] ?? '');
-    $instrumentsImgs = explode(',', $row['all_instruments_images'] ?? '');
     $instrumentsCurrent = explode(',', $row['all_is_current'] ?? '');
 
     $currentInstrument = null;
@@ -14,17 +13,13 @@ function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrum
         if ($instrumentsRoles[$index] === 'Main') {
             $instrumentData = [
                 "id" => (int)$instrumentsIds[$index],
-                "name" => $instrumentName,
-                "imgSrc" => $instrumentsImgs[$index],
-                "linkToSearch" => "/scores/" . strtolower($instrumentName)
+                "name" => $instrumentName
             ];
         } else {
             $instrumentData = [
                 "id" => (int)$instrumentsIds[$index],
                 "name" => $instrumentName,
-                "role" => $instrumentsRoles[$index],
-                "imgSrc" => $instrumentsImgs[$index],
-                "linkToSearch" => "/scores/" . strtolower($instrumentName)
+                "role" => $instrumentsRoles[$index]
             ];
         }
 
@@ -41,9 +36,7 @@ function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrum
         $othersInstruments[] = [
             "instrument" => [
                 "id" => (int)$otherInstrumentRow['instrument_id'],
-                "name" => $otherInstrumentRow['instrument_name'],
-                "imgSrc" => $otherInstrumentRow['instrument_img'],
-                "linkToSearch" => $otherInstrumentRow['instrument_link']
+                "name" => $otherInstrumentRow['instrument_name']
             ],
             "scorenId" => (int)$otherInstrumentRow['scorenId']
         ];
@@ -94,7 +87,7 @@ function mapperScore(array $row, $rowsOtherInstruments, ?string $searchedInstrum
         "isExplicit" => (int)$row['is_explicit'] === 1 ? true : false
     ];
 
-    return $score = [
+    return [
         "id" => (int)$row['id'],
         "difficulty" => (int)$row['difficulty'],
         "instruments" => [

@@ -1,6 +1,6 @@
 import { Grid, Box} from '@chakra-ui/react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 /* Contexts imports */
 import SearchProvider from './context/SearchContext.tsx'
@@ -65,8 +65,8 @@ function App() {
   
   //Viariables for responsive
   const width = useWindowWidth()
-  const Breakpoint = 1160
-  const isMinimal = width <= Breakpoint
+  const breakpoint = 1160
+  const isMinimal = width <= breakpoint
   const navResponsive = isMinimal ? NAV_MIN_WIDTH : NAV_WIDTH
 
   /* authtification management from context by hook */
@@ -145,7 +145,7 @@ function App() {
           
                   </Routes>
                 </Box>
-              <Box gridArea={"tools"} zIndex={"200"} marginTop={HEADER_MIN_HEIGHT} marginBottom={PLAYEUR_MIN_HEIGHT} position={"fixed"} right={"0"} top={"0"} bottom={"0"}>
+              <Box gridArea={"tools"} zIndex={"100"} marginTop={HEADER_MIN_HEIGHT} marginBottom={PLAYEUR_MIN_HEIGHT} position={"fixed"} right={"0"} top={"0"} bottom={"0"}>
                 <Tools />
               </Box>
               <Box gridArea={"playeur"} zIndex={"10"}
@@ -153,9 +153,9 @@ function App() {
                 <PlayeurMin />
               </Box>
           </Grid>
+          <ModalManager/>
         </PlayScoreProvider>
       </ScoreProvider>
-      <ModalManager/>
     </SearchProvider>
 
   )} else if (isAuthenticated) {
@@ -255,7 +255,7 @@ function App() {
           {/* Route to registering page */}
           <Route path='/signup' element={<PageSignup />}/>
         </Routes>
-        <ModalManager/>
+          <ModalManager/>
       </Box>
     )
   }

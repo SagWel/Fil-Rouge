@@ -31,14 +31,14 @@ INSERT INTO `genders` (`id`, `name`, `picture`, `picture_small`, `picture_medium
 -- Déchargement des données de la table `instruments`
 --
 
-INSERT INTO `instruments` (`id`, `name`, `img_src`, `link_to_search`) VALUES
-(1, 'guitare', 'uploads/instruments/Guitare.png', '/scores/guitare'),
-(2, 'chant', 'uploads/instruments/Chant.png', '/scores/chant'),
-(3, 'basse', 'uploads/instruments/Basse.png', '/scores/basse'),
-(4, 'piano', 'uploads/instruments/Piano.png', '/scores/piano'),
-(5, 'batterie', 'uploads/instruments/Batterie.png', '/scores/batterie'),
-(6, 'ukulele', 'uploads/instruments/Ukulele.png', '/scores/ukulele'),
-(7, 'saxophone', 'uploads/instruments/Saxo.png', '/scores/saxophone');
+INSERT INTO `instruments` (`id`, `name`) VALUES
+(1, 'guitare',),
+(2, 'chant'),
+(3, 'basse'),
+(4, 'piano'),
+(5, 'batterie'),
+(6, 'ukulele'),
+(7, 'saxophone');
 
 --
 -- Déchargement des données de la table `scores` sans la colonne `measures`

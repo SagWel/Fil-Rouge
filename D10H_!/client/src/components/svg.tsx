@@ -331,7 +331,7 @@ export const ShuffleIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
     </Icon>
 )
 
-export const PreviousIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
+export const BackIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
     <Icon viewBox="0 0 24 24"
     w={size || "24px"} h={size || "24px"} 
     fill={color || "#fdfcfeff"}
@@ -343,6 +343,17 @@ export const PreviousIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
     </Icon>
 )
 
+export const RewindIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
+     <Icon viewBox="-3 -1 35 25"
+    w={size || "24px"} h={size || "24px"} 
+    fill={color || "#fdfcfeff"}
+    focusable={"false"} display={"block"} {...rest}>
+        <path d="M24 20.3605V3.63948C24 0.868423 22.0791 -0.883171 20.5161 0.462569L13.2001 7.15266V4.68454C13.2001 2.25987 11.4394 0.727229 10.0067 
+        1.90474L1.10564 9.2202C-0.368546 10.4317 -0.368546 13.5682 1.10563 14.7798L10.0067 22.0953C11.4394 23.2728 13.2001 21.7401 13.2001 
+        19.3155V16.8474L20.5161 23.5374C22.0791 24.8832 24 23.1316 24 20.3605Z"/>
+    </Icon>
+)
+
 export const NextIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
     <Icon viewBox="0 0 24 24"
     w={size || "24px"} h={size || "24px"} 
@@ -351,6 +362,18 @@ export const NextIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
         <path d="M16.621 5h1.248v14H16.62V13.163a67.378 67.378 0 01-1.988 1.28 76.01 76.01 0 01-4.231 2.443 69.672 69.672 0 01-3.153 1.588.618.618 
         0 01-.877-.507 69.532 69.532 0 01-.201-3.524 75.958 75.958 0 010-4.886c.039-1.218.107-2.397.2-3.524a.618.618 0 01.878-.507 69.648 69.648 0 
         013.153 1.588 76.173 76.173 0 016.22 3.723V5Z">
+        </path>
+    </Icon>
+)
+
+export const FFIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
+    <Icon viewBox="-8 -1 35 25"
+    w={size || "24px"} h={size || "24px"} 
+    fill={color || "#fdfcfeff"}
+    focusable={"false"} display={"block"} {...rest}>
+        <path d="M1.05139e-06 3.63946V20.3605C1.05139e-06 23.1316 1.92086 24.8832 3.48388 23.5374L10.7999 16.8473V19.3155C10.7999 21.7401 12.5606 
+        23.2728 13.9933 22.0953L22.8944 14.7798C24.3685 13.5683 24.3685 10.4318 22.8944 9.22021L13.9933 1.90471C12.5606 0.727207 10.7999 2.25991 
+        10.7999 4.6845V7.15261L3.48388 0.462606C1.92086 -0.883194 1.05139e-06 0.868357 1.05139e-06 3.63946Z">
         </path>
     </Icon>
 )

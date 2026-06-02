@@ -4,16 +4,17 @@ import StandardButton from "../buttons/StandardButton";
 import { useModals } from "../../hooks/useModals";
 
 export interface IStandardModalProps {
-    heading?: string,
-    bg?: string,
-    children: ReactNode,
-    footerBtnContent?: string,
-    footerOnClick?: () => void,
     isOpen: boolean,
     onClose: () => void
+    heading?: string,
+    bg?: string,
+    border?: string
+    footerBtnContent?: string,
+    footerOnClick?: () => void,
+    children: ReactNode,
  }
 
-const StandardModal: React.FC<IStandardModalProps> = ({ heading, children, footerBtnContent, footerOnClick, isOpen, onClose, bg }) => {
+const StandardModal: React.FC<IStandardModalProps> = ({ heading, children, footerBtnContent, footerOnClick, isOpen, onClose, bg, border }) => {
 
     const { name, updateProps } = useModals()
 
@@ -33,7 +34,7 @@ const StandardModal: React.FC<IStandardModalProps> = ({ heading, children, foote
             <ModalContent
             p={".75rem"}
             maxW={'600px'} h={"fit-content"}
-            bg={bg || "#000000"}
+            bg={bg || "#000000"} top={'25%'} border={border || ''}
             borderRadius={"0.5rem"} gap={'1rem'}
             boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,rgba(0, 0, 0, 0.2) 0px 5px 10px,rgba(0, 0, 0, 0.4) 0px 15px 40px"}
             style={{

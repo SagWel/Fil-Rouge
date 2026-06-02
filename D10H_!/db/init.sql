@@ -66,14 +66,11 @@ CREATE TABLE `genders` (
 -- Structure de la table `instruments`
 --
 
-CREATE TABLE `instruments` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `img_src` varchar(500) NOT NULL,
-  `link_to_search` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `instruments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Structure de la table `scorbraries`
