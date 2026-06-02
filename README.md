@@ -2,7 +2,7 @@
 
 Projet fil rouge = "D10H !"
 
-Main project during the web and mobile web developer training at AFEC in Angoulême :
+Main project during web developer course in Angoulême's AFEC centre :
 
 D10H ! is a Third-party application using the Deezer API to provide a complementary synchronized music learning service
 
@@ -42,7 +42,7 @@ Start xampp or wampp Apache and MySQL system
 
 6. Go to web app :
 
- _after the server has started_
+_once the server has started_
 
 ```bash
 o
@@ -61,30 +61,31 @@ o
 1. Implemented
    - Login
    - Registering
-   - Select one or more instruments and the corresponding level at first login
-   - Configure Profil (password, gender, username, instruments ans the corresponding level, birthday)
+   - Select one or more instruments and the appropriate level at first login
+   - Configure Profil (password, gender, username, instruments and the appropriate level, date of birth)
    - Search for Score, filter and sort the results
    - Delete Profil
    - Configure the display of explicit content (set to “no explicit content” by default for children)
    - Display Score and start playing it
 
-2. Futur
-   - Submit a suggestion for a score if it doesn't appear in the results
-   - Full mailling system
-   - Playlist system called 'Scorebraies'
-   - Popularity system for scores
-   - Shuffle score select button system for Favory page
-   - Confidentialites infos and personal data management infos on account page
-   - Add more security for deleting account
-   - Add pause or playing choice if visibilityState change to 'hidden'
-   - Full notifications system
-   - All tools buttons fonction
-   - Connect to a SDK
-   - Renderring Scores new system
-   - Button to simplifing score view
-   - Preview audio on Score cards
-   - New carousels for more than just scores
-   - Searchbzr stabilisation
+2. In the future
+
+- Submit a suggestion for a score if it doesn't appear in the results
+- Full mailling system
+- Playlist system called 'Scorebraies'
+- Popularity system for scores
+- Shuffle score select button system for Favorites page
+- Private infos and personal data management infos on account page
+- Add more security for deleting account
+- Add pause or playing choice if visibilityState change to 'hidden'
+- Full notifications system
+- All tools buttons fonction
+- Connect to a SDK
+- Renderring Scores new system
+- Button to simplifing score view
+- Preview audio on Score cards
+- New carousels for more than just scores
+- Searchbar stabilisation
 
 ## Tree Structure
 
@@ -236,7 +237,7 @@ D10H\_!
 │ └── previews  
 │ │ └── partition_1.png  
 └── utils  
-│ └── mapperScores.php  
+│ └── mapperScores.php
 
 ## Preview
 
