@@ -14,14 +14,20 @@ Pour que l'installation soit complète et fonctionnel le terminal dois être en 
 
 ```bash
   git clone https://github.com/SagWel/Fil-Rouge.git
-  cd Fil-Rouge
+  cd D10H_!
 ```
 
 2. Install database :
 
+sous xampp : 
 ```bash
 cd db
-php install.php
+C:\xampp\php\php.exe install.php
+```
+sous wamp : 
+```bash
+cd db
+C:\wwamp64\bin\php\php8.4.0\php.exe install.php
 ```
 
 3. Install dependencies :
