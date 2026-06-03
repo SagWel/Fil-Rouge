@@ -80,11 +80,7 @@ function HeaderMin() {
             navigate(`/search?q=${safeQuery}`)
             setIsFocused(false)
             setQuery("")
-        } else if (event.key == 'Tab') {
-            event.preventDefault()
-            setIsFocused(false)
-            setSearchResults([])
-        }
+        } 
     }
 
     /*Sends suggestion selected to query*/

@@ -92,10 +92,6 @@ const Header: React.FC<IHeaderProps> = () => {
             navigate(`/search?q=${safeQuery}`)
             setIsFocused(false)
             setQuery("")
-        } else if (event.key == 'Tab') {
-            event.preventDefault()
-            setIsFocused(false)
-            setSearchResults([])
         }
     }
 

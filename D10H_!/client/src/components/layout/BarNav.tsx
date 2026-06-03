@@ -39,6 +39,13 @@ const BarNav: React.FC<IBarNavProps> = () => {
                     paddingLeft={"105px"}
                     fontSize={"1,125rem"} fontWeight={"600"}>
                         <Link href={"/"}
+                        _active={{
+                            bg: '#2e2c30',
+                            textDecor: 'none'
+                        }}
+                        _focusVisible={{
+                            textDecor: 'underline'
+                        }}
                         _hover={{
                             color: '#bb73ff',
                             textDecor: 'none'
