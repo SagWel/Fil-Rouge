@@ -7,7 +7,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE DATABASE IF NOT EXISTS `d10h_!` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE `d10h_!`;
+USE `d10h_database`;
 
 -- --------------------------------------------------------
 
@@ -43,7 +43,6 @@ CREATE TABLE `artists` (
   `picture_big` varchar(500) DEFAULT NULL,
   `picture_xl` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- --------------------------------------------------------
 
 --
@@ -66,11 +65,10 @@ CREATE TABLE `genders` (
 -- Structure de la table `instruments`
 --
 
-CREATE TABLE IF NOT EXISTS `instruments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `instruments` (
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Structure de la table `scorbraries`
@@ -154,6 +152,7 @@ CREATE TABLE `songs` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `deezer_link` varchar(500) DEFAULT NULL,
+  `deezer_full_name` varchar(255) NOT NULL,
   `audio_preview` varchar(500) DEFAULT NULL,
   `duration` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL,
@@ -332,7 +331,7 @@ ALTER TABLE `user_profiles`
 -- AUTO_INCREMENT pour la table `instruments`
 --
 ALTER TABLE `instruments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `scorbraries`
@@ -344,7 +343,7 @@ ALTER TABLE `scorbraries`
 -- AUTO_INCREMENT pour la table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `score_views`
@@ -356,19 +355,19 @@ ALTER TABLE `score_views`
 -- AUTO_INCREMENT pour la table `songs`
 --
 ALTER TABLE `songs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT pour la table `user_history`
 --
 ALTER TABLE `user_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=231;
 
 --
 -- Contraintes pour les tables déchargées

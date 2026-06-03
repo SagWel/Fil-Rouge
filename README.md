@@ -12,27 +12,26 @@ D10H ! is a Third-party application using the Deezer API to provide a complement
 
 ```bash
   git clone https://github.com/SagWel/Fil-Rouge.git
+  cd Fil-Rouge
+```
+
+2. Install database :
+
+```bash
+cd /db
+php install.php
 ```
 
 3. Install dependencies :
 
 ```bash
-cd client
+cd ../client
 npm install
-```
-
-4. Install database :
-
-```bash
-cd ../db
-node init.sql
-node seed.sql
 ```
 
 4. Start frontend :
 
 ```bash
-cd ../client
 npm run dev
 ```
 
@@ -182,6 +181,7 @@ D10H\_!
 │ │ └── user.ts  
 ├── db  
 │ ├── init.sql  
+│ ├── install.php  
 │ └── seed.sql  
 └── server  
 ├── config  

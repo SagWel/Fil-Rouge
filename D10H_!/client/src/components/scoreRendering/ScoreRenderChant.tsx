@@ -320,8 +320,8 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
         /*dimmensions */
         const lineSpacing: number = 160
         const containerWidth: number = containerRef.current.offsetWidth ?? 800;
-        const blup: number = width < 1024 ? 2 : 4
-        const measurePerLine: number = width < 768 ? 1 : blup
+        const maxMeasurePerLine: number = width < 1024 ? 2 : 4
+        const measurePerLine: number = width < 768 ? 1 : maxMeasurePerLine
         const totalLines: number = Math.ceil(score.measures.length / measurePerLine);
         const firstMeasureExtraWidth: number = 80
         const dynamicHeight: number = totalLines * lineSpacing + 50;

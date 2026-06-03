@@ -8,11 +8,12 @@ $password = $_POST['password'];
 
 $user = getUserByEmail($pdo, $email);
 
-if (!$user) {
-    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-    creatUser($pdo, $email, $passwordHash);
-    $user = getUserByEmail($pdo, $email);
-}
+/* SSO simulé désactivé */
+// if (!$user) {
+//     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+//     creatUser($pdo, $email, $passwordHash);
+//     $user = getUserByEmail($pdo, $email);
+// }
 
 if (!password_verify($password, $user['password'])) {
     http_response_code(401);
@@ -40,9 +41,6 @@ $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $se
 $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
 
 $jwt = $base64UrlHeader . '.' . $base64UrlPayload . "." . $base64UrlSignature;
-
-// Si utilisation d'une bibliothèque
-// $jwt = JWT::encode($payload, $secret, 'HS256');
 
 setcookie(
     "auth_token",
