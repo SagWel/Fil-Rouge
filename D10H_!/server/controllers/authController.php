@@ -50,7 +50,7 @@ setcookie(
         'path' => '/',
         'secure' => true,
         'httponly' => true,
-        'samesite' => 'Lax'
+        'samesite' => 'none'
     ]
 );
 

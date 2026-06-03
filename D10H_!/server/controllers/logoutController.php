@@ -7,7 +7,7 @@ setcookie(
         'expires' => time() - 86400,
         'path' => '/',
         'httponly' => true,
-        'samesite' => 'Lax'
+        'samesite' => 'none'
     ]
 );
 
