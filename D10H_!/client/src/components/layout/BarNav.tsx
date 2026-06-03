@@ -121,7 +121,7 @@ const BarNav: React.FC<IBarNavProps> = () => {
                     padding={"0px 1rem 0px 16px"}
                     direction={"row"} justifyContent={"space-between"} alignItems={"center"} 
                     height={"40px"}>
-                            <Link href={"/favoris/scorbraries"} _hover={{textDecor:'none'}}>
+                            <Link href={"/favoris/scorbraries"} onClick={(e) => e.preventDefault()} cursor={'not-allowed'} _hover={{textDecor:'none'}}>
                                 <Heading fontSize={"1.125rem"} fontWeight={"700"} color={"#fdfcfeff"}>Scorbraries</Heading>
                             </Link>
                             <IconButton id="boutoun-new-scorbrary" aria-label="Ajouter un Scorbrary" isDisabled title="prochainement"
