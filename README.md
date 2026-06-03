@@ -8,6 +8,8 @@ D10H ! is a Third-party application using the Deezer API to provide a complement
 
 ## Installation
 
+Pour que l'installation soit complète et fonctionnel le terminal dois être en mode **Administrateur**
+
 1. Clone Repository :
 
 ```bash
@@ -18,7 +20,7 @@ D10H ! is a Third-party application using the Deezer API to provide a complement
 2. Install database :
 
 ```bash
-cd /db
+cd db
 php install.php
 ```
 
@@ -29,17 +31,25 @@ cd ../client
 npm install
 ```
 
-4. Start frontend :
+4. Install env variables :
+
+```bash
+cp .env.example .env
+```
+
+Enter the values for the ‘VITE_HOST’ and ‘VITE_SERVER_PORT’ variables on new file '.env'
+
+5. Start frontend :
 
 ```bash
 npm run dev
 ```
 
-5. Start backend :
+6. Start backend :
 
 Start xampp or wampp Apache and MySQL system
 
-6. Go to web app :
+7. Go to web app :
 
 _once the server has started_
 
@@ -68,23 +78,22 @@ o
    - Display Score and start playing it
 
 2. In the future
-
-- Submit a suggestion for a score if it doesn't appear in the results
-- Full mailling system
-- Playlist system called 'Scorebraies'
-- Popularity system for scores
-- Shuffle score select button system for Favorites page
-- Private infos and personal data management infos on account page
-- Add more security for deleting account
-- Add pause or playing choice if visibilityState change to 'hidden'
-- Full notifications system
-- All tools buttons fonction
-- Connect to a SDK
-- Renderring Scores new system
-- Button to simplifing score view
-- Preview audio on Score cards
-- New carousels for more than just scores
-- Searchbar stabilisation
+   - Submit a suggestion for a score if it doesn't appear in the results
+   - Full mailling system
+   - Playlist system called 'Scorebraies'
+   - Popularity system for scores
+   - Shuffle score select button system for Favorites page
+   - Private infos and personal data management infos on account page
+   - Add more security for deleting account
+   - Add pause or playing choice if visibilityState change to 'hidden'
+   - Full notifications system
+   - All tools buttons fonction
+   - Connect to a SDK
+   - Renderring Scores new system
+   - Button to simplifing score view
+   - Preview audio on Score cards
+   - New carousels for more than just scores
+   - Searchbar stabilisation
 
 ## Tree Structure
 
@@ -99,6 +108,7 @@ D10H\_!
 │ │ └── svg  
 │ │ └── logo-horizontal-white-text.svg  
 │ ├── seed.cjs  
+│ ├── .env.exemple  
 │ ├── src  
 │ │ ├── App.tsx  
 │ │ ├── components  

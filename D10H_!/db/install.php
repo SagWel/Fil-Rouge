@@ -20,12 +20,27 @@ fwrite(STDOUT, "Quel est le mot de passe associé ? ");
 
 $password = trim(fgets(STDIN));
 
+
 try {
+    fwrite(STDOUT, "Merci de fournir le chemin absolue vers htdocs. Par défault sous windows C:\xampp\htdocs ");
+
+    $htdocsPath = trim(fgets(STDIN));
+
+    if ($htdocsPath === '') {
+        $htdocsPath = 'C:\xampp\htdocs';
+    }
+
+    $serverPath = realpath(__DIR__ . '/../server');
+
+    $folderPath = $htdocsPath . '/D10h_server';
+
+
     $pdo = new PDO(
         sprintf('mysql:host=%s;port=%s;charset=utf8', $host, '3306'),
         $user,
         $password
     );
+
 
     echo "Connexion au serveur MySQL réussie...\n";
 
@@ -39,28 +54,31 @@ try {
 
     $pdo->exec('USE d10h_database');
 
-    $init = file_get_contents(__DIR__ . 'init.sql');
+    $init = file_get_contents(__DIR__ . '/init.sql');
 
     $pdo->exec($init);
 
     echo "Structure de la base de données injectée avec succès !\n";
 
-    $seed = file_get_contents(__DIR__ . 'seed.sql');
+    $seed = file_get_contents(__DIR__ . '/seed.sql');
 
     $pdo->exec($seed);
 
-    echo "Installation de l'application D10h terminée avec succès ! L'application est prête. \n";
-
     $env = <<<EOD
-    MYSQL_HOST= $host
-    MYSQL_PORT= 3306
-    MYSQL_USER= $user
-    MYSQL_PWD= $password
-    MYSQL_NAME= d10h_database
-    EOD;
+MYSQL_HOST=$host
+MYSQL_PORT=3306
+MYSQL_USER=$user
+MYSQL_PWD=$password
+MYSQL_NAME=d10h_database
+EOD;
 
     file_put_contents(__DIR__ . '/../server/.env', $env);
+
     echo "Fichier .env généré automatiquement avec vos identifiants !\n";
+
+    symlink($serverPath, $folderPath);
+
+    echo "Installation de l'application D10h terminée avec succès ! L'application est prête. \n";
 } catch (Exception $e) {
     die('Erreur :' . $e->getMessage());
 }
