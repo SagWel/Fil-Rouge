@@ -6,7 +6,7 @@ SET time_zone = "+00:00";
 -- Base de données : `d10h_!`
 --
 
-CREATE DATABASE IF NOT EXISTS `d10h_!` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+CREATE DATABASE IF NOT EXISTS `d10h_database` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 USE `d10h_database`;
 
 -- --------------------------------------------------------
