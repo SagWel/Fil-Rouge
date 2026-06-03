@@ -27,7 +27,7 @@ C:\xampp\php\php.exe install.php
 sous wamp : 
 ```bash
 cd db
-C:\wwamp64\bin\php\php8.4.0\php.exe install.php
+C:\wamp64\bin\php\php8.4.0\php.exe install.php
 ```
 
 3. Install dependencies :
