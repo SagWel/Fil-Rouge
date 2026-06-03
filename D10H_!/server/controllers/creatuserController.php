@@ -53,7 +53,7 @@ setcookie(
     [
         'expires' => time() + 86400,
         'path' => '/',
-        'secure' => false,
+        'secure' => true,
         'httponly' => true,
         'samesite' => 'Lax'
     ]
