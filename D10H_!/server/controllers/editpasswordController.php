@@ -16,7 +16,7 @@ if (!password_verify($currentPassword, $oldPasswordDb)) {
     exit;
 }
 
-$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+$passwordHash = password_hash($newPassword, PASSWORD_ARGON2ID);
 
 $updatePassword = updatePassword($pdo, $userId, $passwordHash);
 

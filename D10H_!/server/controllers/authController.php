@@ -10,7 +10,7 @@ $user = getUserByEmail($pdo, $email);
 
 /* SSO simulé désactivé */
 // if (!$user) {
-//     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+//     $passwordHash = password_hash($password, PASSWORD_ARGON2ID);
 //     creatUser($pdo, $email, $passwordHash);
 //     $user = getUserByEmail($pdo, $email);
 // }

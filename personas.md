@@ -1,41 +1,54 @@
-# Personas D10H ! 
+# Personas D10H !
 
-## Duplin Elisa
-Femme - 19 ans 
-<br>
-Etudiante - Bordeaux
-<br>
-Basse (2ans)
+## Thomas
 
-### Objectifs : 
+Homme - 19 ans
+<br>
+Etudiante en musicologie - Bordeaux
+<br>
+Guitariste (débutant)
+
+### Objectifs :
+
 Cherche à apprendre des nouveau morceaux
 
 ### Besoins :
-Lecture fluide des partitions
+
+Trouver des partitions exactes (pas de versions amateurs pleines d'erreurs).
 <br>
-Posibilité de repeter seulement certraine partie de la partition
+Pouvoir isoler et trier uniquement les partitions écrites pour son instrument (Guitare).
+<br>
+Organiser ses morceaux de travail de la semaine dans un dossier dédié pour y accéder instantanément.
 
 ### Frustrations :
-Latence de lecture
+
+Le format MIDI des lecteurs traditionnels est désagréable à l'écoute.
 <br>
-Décalage lecture/son
+Les partitions papier s'accumulent, se perdent et sont impossibles à trier intelligemment sur un pupitre.
 
 ### Habitudes numérique :
-Ecoute intensive de musiques - reseaux socio 
 
+Utilise quotidiennement son smartphone et sa tablette pour travailler sa musique.
+<br>
+Recherche régulièrement des tablatures et partitions sur internet pour apprendre ses morceaux favoris.
+<br>
+Est abonné à Deezer pour l'écoute audio.
 
-## Lastanie Victor
-Homme - 10 ans
+## Ana
+
+Femme - 10 ans
 <br>
 Etudiant - Dijon
 <br>
-Guitare (Débutant)
+piano (Débutant)
 
 ### Objectifs :
+
 Apprendre d'un instrument
 
 ### Besoins :
-Possibilité de ralentir la lecture 
+
+Possibilité de ralentir la lecture
 <br>
 Possibilité de n'avoir qu'un seul instrument à l'écoute
 <br>
@@ -43,18 +56,20 @@ Diversité des niveaux de difficultés
 <br>
 Affichage des détails des accords
 
-### Frustrations : 
+### Frustrations :
+
 Complexité du site
 <br>
 Difficulté des morceaux élevé
 
-### Habitude Numérique : 
+### Habitude Numérique :
+
 Bases navigation
 <br>
 Sans utilistation précises
 
+## Edouard
 
-## Goulispache Edouard
 Homme - 39 ans
 <br>
 Salarié dans le commerce de proximité - Paris
@@ -62,9 +77,11 @@ Salarié dans le commerce de proximité - Paris
 Batterie (15 ans)
 
 ### Objectif :
+
 Diversifié les morceaux de musique de son groupe
 
 ### Besoins :
+
 Pouvoir partager les morceaux choisit
 <br>
 Pouvoir travailler sur sa partie de la partition
@@ -74,6 +91,7 @@ Grande diversité de morceaux
 Imprimer les partitions de chaques membre (annotations comprises)
 
 ### Frustartions :
+
 Qualité mediocre du son
 <br>
 Peu de choix dans les morceaux

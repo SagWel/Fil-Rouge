@@ -9,7 +9,7 @@ $username = $_POST['username'] ?? null;
 $age = $_POST['age'] ?? null;
 $gender = $_POST['gender'] ?? null;
 
-$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+$passwordHash = password_hash($password, PASSWORD_ARGON2ID);
 
 creatUser($pdo, $email, $passwordHash, $username, $age, $gender);
 $user = getUserByEmail($pdo, $email);

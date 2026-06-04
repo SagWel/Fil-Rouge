@@ -1,8 +1,8 @@
 import {Box, Flex, Heading, IconButton, List} from "@chakra-ui/react"
-import { useState, useRef, useEffect, type ReactNode } from "react"
+import { useState, useRef, useEffect } from "react"
 
 /* Import SVG */
-import { LeftCarouselIcon, RightCarouselIcon } from "./Svg"
+import { LeftCarouselIcon, RightCarouselIcon } from "./svg"
 
 /* Import type */
 import type { IScore } from "../types/Score"
@@ -158,7 +158,7 @@ const ScoreCarousel: React.FC<IScoreCarouselProps> = ({ data, id, title }) => {
                         style={{
                             transform: `translateX(${translate}px)`
                         }}>
-                            <List as={Flex} ref={listRef} 
+                            <List as={Flex} ref={listRef}
                             flexWrap={"nowrap"} gap={"5rem"}
                             mt={"-24px"} m={0} p={0}
                             position={"relative"}
