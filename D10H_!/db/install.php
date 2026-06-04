@@ -22,7 +22,7 @@ $password = trim(fgets(STDIN));
 
 
 try {
-    fwrite(STDOUT, "Merci de fournir le chemin absolue vers htdocs. Par défault sous windows C:\xampp\htdocs ");
+    fwrite(STDOUT, "Merci de fournir le chemin absolue vers htdocs pour xampp ou vers www pour wamp. Par défault sous windows C:\xampp\htdocs ");
 
     $htdocsPath = trim(fgets(STDIN));
 
