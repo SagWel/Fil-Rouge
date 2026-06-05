@@ -27,7 +27,7 @@ import {
   DeleteButtonIcon,
   HeartIcon,
   RightCarouselIcon,
-} from "../svg.tsx";
+} from "../Svg";
 
 // Context
 import { useSearch } from "../../context/SearchContext";

@@ -18,7 +18,7 @@ import {
 import { Link } from "react-router-dom"
 import { useState } from "react"
 
-import { UpChevronSoftIcon, DownChevronSoftIcon } from "../../../components/svg"
+import { UpChevronSoftIcon, DownChevronSoftIcon } from "../../../components/Svg"
 
 export interface IPageAccountNotifictions {}
 

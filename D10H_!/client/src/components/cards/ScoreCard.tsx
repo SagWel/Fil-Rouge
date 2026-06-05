@@ -13,7 +13,7 @@ import {
   UkuleleIcon,
   SaxoIcon,
   DifficultyIcon,
-} from "../svg";
+} from "../Svg";
 
 // Displays icons according to the difficulty value
 export const difficultyLvl = (difficulty: number, size?: string) => {

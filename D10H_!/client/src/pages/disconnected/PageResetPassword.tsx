@@ -1,5 +1,5 @@
 import { Box, Flex, Stack, chakra, Link, Heading, FormControl, FormLabel, Input, FormHelperText, Button} from "@chakra-ui/react"
-import { LogoTempo } from "../../components/svg"
+import { LogoTempo } from "../../components/Svg"
 import { useState } from "react"
 
 export interface IPageResetPasswordProps {}

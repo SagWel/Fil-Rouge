@@ -32,7 +32,7 @@ import { HeartLoveOnIcon,
     VolumeOffIcon,
     RewindIcon,
     FFIcon
-} from "../svg";
+} from "../Svg";
 import { usePlayScoreDispatch, usePlayScoreStates } from "../../hooks/usePlayScore";
 import { useCallback, useRef, useState } from "react";
 import { useScore } from "../../hooks/useScore";

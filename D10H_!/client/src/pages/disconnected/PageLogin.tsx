@@ -31,7 +31,7 @@ import {
   GoogleIcon,
   AppleIcon,
   WarningIcon,
-} from "../../components/svg";
+} from "../../components/Svg";
 
 export interface IPageLoginProps {}
 
