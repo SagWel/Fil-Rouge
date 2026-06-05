@@ -26,7 +26,7 @@ import ScoreCard, { difficultyLvl } from "../../components/cards/ScoreCard";
 import { useAuth } from "../../hooks/useAuth";
 
 /* Import SVG */
-import { DownChevronIcon, UpChevronIcon } from "../../components/Svg";
+import { DownChevronIcon, UpChevronIcon } from "../../components/svg";
 import useWindowWidth from "../../hooks/useWindowWidth";
 
 export interface ISearchProps {}

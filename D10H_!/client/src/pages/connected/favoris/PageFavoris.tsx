@@ -15,7 +15,7 @@ import { type IScore } from "../../../types/Score";
 import ScoreCard from "../../../components/cards/ScoreCard";
 
 // SVGs import from a unique file
-import { ShuffleIcon } from "../../../components/Svg";
+import { ShuffleIcon } from "../../../components/svg";
 import { useAuth } from "../../../hooks/useAuth";
 
 import "../../../style.css";

@@ -9,7 +9,7 @@ import Rock from '../../img/Rock.png'
 import Var from '../../img/var.png'
 
 // SVGs import from a unique file
-import { LogoIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon, CollabIcon } from "../Svg";
+import { LogoIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon, CollabIcon } from "../svg";
 
 
 export interface IBarNavProps {}

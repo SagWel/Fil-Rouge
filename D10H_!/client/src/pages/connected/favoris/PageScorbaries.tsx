@@ -2,7 +2,7 @@ import { Box, Flex, Heading, Button, List, ListItem, chakra, Grid } from "@chakr
 import { Link } from "react-router-dom";
 
 // SVGs import from a unique file
-import { ShuffleIcon } from "../../../components/Svg";
+import { ShuffleIcon } from "../../../components/svg";
 
 
 export interface IPageScorbrariesProps {}

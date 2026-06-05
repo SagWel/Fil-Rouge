@@ -1,7 +1,7 @@
 import { Flex, Menu, MenuButton, MenuItem, MenuList, Portal, Text, Button, FormLabel } from "@chakra-ui/react"
 
 /* Import SVG */
-import type { SvgProps } from "./Svg"
+import type { SvgProps } from "./svg"
 
 export interface Item {
     id: string,

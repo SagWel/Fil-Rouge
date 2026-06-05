@@ -13,7 +13,7 @@ import {
     AnnotationsIcon, 
     ImpressionIcon, 
     ChordsIcon
-} from "../Svg";
+} from "../svg";
 
 /* Import hook */
 import { useScore } from "../../hooks/useScore";

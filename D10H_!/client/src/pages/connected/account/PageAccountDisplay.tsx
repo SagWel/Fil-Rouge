@@ -20,7 +20,7 @@ import {
   UpChevronSoftIcon,
   DownChevronSoftIcon,
   InfosIcon,
-} from "../../../components/Svg";
+} from "../../../components/svg";
 import { useAuth } from "../../../hooks/useAuth";
 
 export interface IPageAccountDisplayProps {}

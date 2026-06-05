@@ -18,7 +18,7 @@ import { useParams } from "react-router-dom";
 import { type IScore } from "../../types/Score";
 
 /* Import SVG */
-import { DownChevronIcon, UpChevronIcon } from "../../components/Svg";
+import { DownChevronIcon, UpChevronIcon } from "../../components/svg";
 
 /* Imports components */
 import ScoreCard, { difficultyLvl } from "../../components/cards/ScoreCard";

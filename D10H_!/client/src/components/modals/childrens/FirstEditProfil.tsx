@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { WarningIcon } from "../../Svg";
+import { WarningIcon } from "../../svg";
 
 import type { IInstrument, IInstrumentLvl } from "../../../types/instrument";
 
