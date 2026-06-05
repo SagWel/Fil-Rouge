@@ -98,11 +98,6 @@ a {
         padding-right: 112px !important; 
     }
 
-    .topbar-exposed-links {
-        display: flex !important;
-        justify-content: flex-end !important;
-    }
-
     #page-homepage-brand {
         font-size: 56px !important;
     }

@@ -1,18 +1,33 @@
-import { Box, Link, Flex, Heading, Text, chakra } from '@chakra-ui/react'
-import '../../style.css'
+import { Box, Link, Flex, Heading, Text, chakra, List, ListItem } from '@chakra-ui/react'
 import { LogoTempo } from '../../components/Svg'
+import useWindowWidth from '../../hooks/useWindowWidth'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export interface IPageInfosProps {}
 
 const PageInfos: React.FC<IPageInfosProps> = () => {
+    const width = useWindowWidth()
+    const navigate = useNavigate()
+    
+    const mobileBreackpoint = 768
+    const desktopBreackpoint = 1160
+
+    const paddingNavMin = width >= mobileBreackpoint ? '64px' : '16px'
+    const responsiveSize = width >= mobileBreackpoint ? '24px' : '16px'
+
+    const [bugerMenuContentDisplayed, setBurgerMenuContentDisplayed] = useState<boolean>(false)
+
+
     return (
         <>
-            <chakra.nav className='topbar'
+            <chakra.nav
             display={"flex"} alignItems={"center"} justifyContent={"space-between"}
             position={"relative"}
-            h={"80px"} w={"100%"}
-            paddingInline={"112px"}
+            h={width >= mobileBreackpoint ? "80px" : '60px'} w={"100%"}
+            paddingInline={'112px'} px={width >= desktopBreackpoint ? '112px' : paddingNavMin}
             bg={"#0F0D13"}
+            borderBottom={width >= mobileBreackpoint ? '1px solid #555257' : undefined}
             boxSizing='border-box'>
                 <Link href='/'
                 flexGrow={0}
@@ -25,7 +40,7 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                     <LogoTempo />
                     &nbsp;D10H !
                 </Link>
-                <Flex className='topbar-exposed-links' display={"none"} flexDir={"row"} flexGrow={1}
+                {width >= desktopBreackpoint && <Flex className='topbar-exposed-links' justify={'flex-end'} flexDir={"row"} flexGrow={1}
                 ml={"112px"} mr={"calc(14px*2)"}>
                     <Link href='https://www.deezer.com/fr/offers/'
                     fontSize={"16px"} fontWeight={"700"}
@@ -81,11 +96,16 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                     }}>
                         Musique
                     </Link>
-                </Flex>
-                <Flex className='stack' 
-                flexDir={'row'} flexGrow={0} justifyContent={"flex-end"} alignItems={"center"}>
-                    <Link id='topbar-login-button' href='/login' className='topbar-action'
-                    display={"none"} alignItems={"center"} gap={"14px"} justifyContent={"space-evenly"}
+                </Flex>}
+                <Flex
+                flexDir={'row'} flexGrow={0} justifyContent={"flex-end"} alignItems={"center"}
+                sx={{
+                    "& > *:not(:last-child)": {
+                        mr: width >= desktopBreackpoint ? '28px' : responsiveSize
+                    }
+                }}>
+                    {width >= mobileBreackpoint && <Link id='topbar-login-button' href='/login'
+                    display={"inline-flex"} alignItems={"center"} gap={"14px"} justifyContent={"space-evenly"}
                     position={"relative"} 
                     padding={"9px 20px"}
                     minH={"34px"} w={"fit-content"}
@@ -106,9 +126,9 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                         bg: "#29282d"
                     }}>
                         Connexion
-                    </Link>
-                    <Link id='topbar-register-button' href='/signup/?step=0' className='topbar-action'
-                    display={"none"} alignItems={"center"} gap={"14px"} justifyContent={"space-evenly"}
+                    </Link>}
+                    <Link id='topbar-register-button' href='/signup/?step=0'
+                    display={"inline-flex"} alignItems={"center"} gap={"14px"} justifyContent={"space-evenly"}
                     position={"relative"}
                     padding={"9px 20px"}
                     minH={"34px"} w={"fit-content"}
@@ -130,6 +150,153 @@ const PageInfos: React.FC<IPageInfosProps> = () => {
                     }}>
                         Inscription
                     </Link>
+                    {width < mobileBreackpoint &&
+                        <Box pos={'relative'} zIndex={'200'}>
+                            <Box pos={'relative'} zIndex={'202'}
+                            onClick={(e) => setBurgerMenuContentDisplayed(prev => !prev)}>
+                                <chakra.span 
+                                display={'block'}
+                                mb={'8px'}
+                                h={'3px'} w={'25px'}
+                                bgColor={'#f8f8f9'}
+                                transform={bugerMenuContentDisplayed ? 'translateY(10px) rotate(45deg)' : undefined}
+                                transition={'all .2s ease-in-out'}/>
+                                <chakra.span 
+                                display={'block'}
+                                mb={'8px'}
+                                h={'3px'} w={'25px'}
+                                bgColor={'#f8f8f9'}
+                                opacity={bugerMenuContentDisplayed ? 0 : undefined}
+                                transition={'all .2s ease-in-out'}/>
+                                <chakra.span 
+                                display={'block'}
+                                h={'3px'} w={'25px'}
+                                bgColor={'#f8f8f9'}
+                                transform={bugerMenuContentDisplayed ? 'translateY(-12px) rotate(-45deg)' : undefined}
+                                transition={'all .2s ease-in-out'}/>
+                            </Box>
+                            {bugerMenuContentDisplayed && 
+                            <List 
+                            display={'flex'} alignItems={'center'} flexDirection={'column'} justifyContent={''}
+                            bgColor={'#0f0d13'}
+                            left={0} pos={'fixed'} top={0}
+                            h={'100%'} w={'100%'}
+                            overflowY={'auto'}
+                            pt={'89px'}>
+                                <ListItem
+                                mb={'28px'}>
+                                    <Link href='/login'
+                                    fontSize={'20px'} fontWeight={'600'} 
+                                    color={'#fdfcfe'} textDecor={'none'}
+                                    outline={'0 none'}
+                                    cursor={'pointer'}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setBurgerMenuContentDisplayed(prev => !prev)
+                                        setTimeout(() => {
+                                            navigate('/login')
+                                        },250)
+                                    }}
+                                    _focusVisible={{
+                                        outline: '0'
+                                    }}
+                                    _hover={{
+                                        textDecor: 'none'
+                                    }}>
+                                        Connexion
+                                    </Link>
+                                </ListItem>
+                                <ListItem
+                                mb={'28px'}>
+                                    <Link href='/signup/?step=0'
+                                    fontSize={'20px'} fontWeight={'600'} 
+                                    color={'#fdfcfe'} textDecor={'none'}
+                                    outline={'0 none'}
+                                    cursor={'pointer'}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setBurgerMenuContentDisplayed(prev => !prev)
+                                        setTimeout(() => {
+                                            navigate('/signup/?step=0')
+                                        },250)
+                                    }}
+                                    _focusVisible={{
+                                        outline: '0'
+                                    }}
+                                    _hover={{
+                                        textDecor: 'none'
+                                    }}>
+                                        Inscription
+                                    </Link>
+                                </ListItem>
+                                <ListItem
+                                mb={'28px'}>
+                                    <Link href='https://www.deezer.com/fr/offers/'
+                                    fontSize={'20px'} fontWeight={'600'} 
+                                    color={'#fdfcfe'} textDecor={'none'}
+                                    outline={'0 none'}
+                                    cursor={'pointer'}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setBurgerMenuContentDisplayed(prev => !prev)
+                                        setTimeout(() => {
+                                            navigate('https://www.deezer.com/fr/offers/')
+                                        },250)
+                                    }}
+                                    _focusVisible={{
+                                        outline: '0'
+                                    }}
+                                    _hover={{
+                                        textDecor: 'none'
+                                    }}>
+                                        Offres
+                                    </Link>
+                                </ListItem>
+                                <ListItem
+                                mb={'28px'}>
+                                    <Link href="'https://www.deezer.com/fr/channels/explore"
+                                    fontSize={'20px'} fontWeight={'600'} 
+                                    color={'#fdfcfe'} textDecor={'none'}
+                                    outline={'0 none'}
+                                    cursor={'pointer'}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setBurgerMenuContentDisplayed(prev => !prev)
+                                        setTimeout(() => {
+                                            navigate('https://www.deezer.com/fr/channels/explore')
+                                        },250)
+                                    }}
+                                    _focusVisible={{
+                                        outline: '0'
+                                    }}
+                                    _hover={{
+                                        textDecor: 'none'
+                                    }}>
+                                        Explorer tout notre univers
+                                    </Link>
+                                </ListItem>
+                                <ListItem
+                                mb={'28px'}>
+                                    <Link href="https://www.deezer.com/explore/fr/features/"
+                                    fontSize={'20px'} fontWeight={'600'} 
+                                    color={'#fdfcfe'} textDecor={'none'}
+                                    outline={'0 none'}
+                                    cursor={'pointer'}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setBurgerMenuContentDisplayed(prev => !prev)
+                                        setTimeout(() => {
+                                            navigate('https://www.deezer.com/explore/fr/features/')
+                                        },250)
+                                    }}
+                                    _focusVisible={{
+                                        outline: '0'
+                                    }}>
+                                        Découvrir Deezer
+                                    </Link>
+                                </ListItem>
+                            </List>}
+                        </Box>}
                 </Flex>
             </chakra.nav>
             <Box id='page-homepage-brand'
