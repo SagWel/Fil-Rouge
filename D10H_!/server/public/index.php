@@ -47,32 +47,32 @@ if ($ressource && file_exists($controlerFile)) {
         case 'score':
             require_once $middlewareID;
             break;
-        case 'scoresinstrument':
+        case 'scoresInstruments':
             require_once '../middlewares/CheckInstrument.php';
             break;
         case 'auth':
             require_once '../middlewares/CheckLogin.php';
             break;
-        case 'foundbyemail':
+        case 'foundByEmail':
             require_once '../middlewares/CheckEmail.php';
             break;
-        case 'creatuser':
+        case 'creatUser':
             require_once '../middlewares/CheckCreatUser.php';
             break;
-        case 'creatuserinstruments':
+        case 'creatUserInstruments':
             require_once $middlewareID;
             break;
         case 'profil':
             require_once $middlewareID;
             break;
-        case 'updateprofil':
+        case 'updateProfil':
             require_once '../middlewares/CheckProfilInputs.php';
             $_POST['userId'] = $id;
             break;
-        case 'searchscore':
+        case 'searchScore':
             require_once '../middlewares/CheckQuery.php';
             break;
-        case 'adduserhistory':
+        case 'addUserHistory':
             require_once $middlewareID;
             $_POST['userId'] = $id;
             $_POST['scoreId'] = $id2;
@@ -83,20 +83,31 @@ if ($ressource && file_exists($controlerFile)) {
         case 'history':
             require_once $middlewareID;
             break;
-        case 'deleteaccount':
+        case 'deleteAccount':
             require_once $middlewareID;
             require_once '../middlewares/CheckLogin.php';
             $_POST['userId'] = $id;
             break;
-        case 'editpassword':
+        case 'editPassword':
             require_once $middlewareID;
             require_once '../middlewares/CheckEditPassword.php';
             $_POST['userId'] = $id;
             break;
-        case 'filterexplicit':
+        case 'filterExplicit':
             require_once $middlewareID;
             $_POST['userId'] = $id;
             require_once '../middlewares/CheckFilterExplicitChoice.php';
+            break;
+        case 'checkAuth':
+            break;
+        case 'logout':
+            break;
+        case 'allInstruments':
+            break;
+        case 'popular':
+            break;
+        case 'news':
+            break;
     }
     require_once $controlerFile;
 } else {
