@@ -94,6 +94,9 @@ function HeaderMin() {
   /* Variables for search history */
   const [history, _, addToHistory] = useSearchHistory();
 
+  /* User data from context by hook */
+  const { user: userToken, logout } = useAuth();
+
   /* search choice management */
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key == "Enter") {

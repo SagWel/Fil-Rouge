@@ -952,8 +952,8 @@ const Header: React.FC<IHeaderProps> = () => {
                       transform={"translateZ(0)"}
                       cursor={"pointer"}
                       onClick={() => {
-                        logout();
-                        navigate("/login");
+                        logout()
+                        navigate("/login")
                       }}
                       _hover={{
                         backgroundColor: "#242326",
