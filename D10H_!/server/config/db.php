@@ -16,7 +16,12 @@ $secretKey = $_ENV['MA_SUPER_CLEF_SECRETE'];
 
 try {
     $pdo = new PDO(
-        sprintf('mysql:host=%s;dbname=%s;port=%s;charset=utf8', $dbHost, $dbName, $dbPort),
+        sprintf(
+            'mysql:host=%s;dbname=%s;port=%s;charset=utf8',
+            $dbHost,
+            $dbName,
+            $dbPort
+        ),
         $dbuser,
         $dbPwd
     );

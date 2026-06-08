@@ -22,7 +22,7 @@ export interface IMenuSelectProps {
 /* Menu to simulate Select balise */
 const MenuSelect: React.FC<IMenuSelectProps> = ({ label, listObject, listString, itemObject, itemString, setItemObject, setItemString }) => {
     return (
-        <Flex gridColumn={"span 1"} direction={"column"} background={"#9A36F3"} borderRadius={"0.5rem"}>
+        <Flex gridColumn={"span 1"} direction={"column"} background={"#ad47ff"} borderRadius={"0.5rem"}>
             <FormLabel htmlFor={label} 
             color={"#fdfcfe"} textAlign={"center"} 
             p={0} m={0}

@@ -3,8 +3,8 @@ a {
 }
 
 .note-active g {
-    fill: #7328b5 !important;
-    stroke: #7328b5 !important;
+    fill: #ad47ff !important;
+    stroke: #ad47ff !important;
 }
 
 .topbar-exposed-links a:not(:last-of-type) {

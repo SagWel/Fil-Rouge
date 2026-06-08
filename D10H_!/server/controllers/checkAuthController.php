@@ -13,24 +13,43 @@ if (!$token) {
 
 $parts = explode('.', $token);
 
-$jsonPayload = base64_decode(str_replace(['-', '_', ''], ['+', '/', '='], $parts[1]));
+$jsonPayload = base64_decode(str_replace(
+    ['-', '_', ''],
+    ['+', '/', '='],
+    $parts[1]
+));
 
 $payload = json_decode($jsonPayload, true);
 
 $secretKey = $_ENV['MA_SUPER_CLEF_SECRETE'];
 
-$signatureTest = hash_hmac('sha256', $parts[0] . "." . $parts[1], $secretKey, true);
-$base64UrlSignatureTest = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signatureTest));
+$signatureTest = hash_hmac(
+    'sha256',
+    $parts[0] . "." . $parts[1],
+    $secretKey,
+    true
+);
+$base64UrlSignatureTest = str_replace(
+    ['+', '/', '='],
+    ['-', '_', ''],
+    base64_encode($signatureTest)
+);
 
 if ($base64UrlSignatureTest !== $parts[2]) {
     http_response_code(401);
-    echo json_encode(["isAuthenticate" => false, "message" => "Token non conforme"]);
+    echo json_encode([
+        "isAuthenticate" => false,
+        "message" => "Token non conforme"
+    ]);
     exit;
 }
 
 if (time() > $payload['exp']) {
     http_response_code(401);
-    echo json_encode(["isAuthenticate" => false, "message" => "Token exipré"]);
+    echo json_encode([
+        "isAuthenticate" => false,
+        "message" => "Token exipré"
+    ]);
     exit;
 }
 

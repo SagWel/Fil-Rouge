@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { useRef, useEffect } from "react";
 import { Renderer, 
         Stave, 
@@ -264,7 +264,7 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
     const drawCursor = (context: SVGContext, stave: Stave, svg: HTMLElement) => {
         context.beginPath()
         context.setLineWidth(5)
-        context.setStrokeStyle("rgba(255, 129, 92, 0.7)")
+        context.setStrokeStyle("#FF8564")
         context.moveTo(0,0)
         context.lineTo(0, stave.getHeight())
         context.stroke()
@@ -489,7 +489,7 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
                         const cursor: HTMLElement | null = document.getElementById('music-cursor')
 
                         if (cursor) {
-                            moveCursor(cursor, posX, currentNoteData.y)
+                            moveCursor(cursor, posX, currentNoteData.y - 20)
                         }
                     }
 
@@ -543,7 +543,7 @@ const ScoreRenderChant: React.FC<IScoreRenderChantProps> = () => {
 
                 lastScrolledYRef.current = dataArrayRef.current[0].y
     
-                moveCursor(cursor, dataArrayRef.current[0].x, dataArrayRef.current[0].y)
+                moveCursor(cursor, dataArrayRef.current[0].x, dataArrayRef.current[0].y - 20)
                 
                 const newCurrentNote = document.getElementById(`vf-${dataArrayRef.current[0].id}`)
 

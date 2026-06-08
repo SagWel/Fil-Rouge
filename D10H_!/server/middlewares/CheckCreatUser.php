@@ -31,7 +31,12 @@ static $reservedNames = ['admin', 'root', 'support', 'help', 'api', 'moderator']
 static $genders = ['M', 'F', 'NB', 'Private'];
 
 if ($email && $password) {
-    if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($password) >= 8 && preg_match('/\d/', $password) === 1 && preg_match('/[a-z]/i', $password) === 1) {
+    if (
+        filter_var($email, FILTER_VALIDATE_EMAIL)
+        && strlen($password) >= 8
+        && preg_match('/\d/', $password) === 1
+        && preg_match('/[a-z]/i', $password) === 1
+    ) {
         $_POST['email'] = filter_var($email, FILTER_SANITIZE_EMAIL);
         $_POST['password'] = $password;
         if ($username && 3 < strlen($username) && strlen($username)  <= 20) {
@@ -53,7 +58,9 @@ if ($email && $password) {
                     }
                 } else {
                     http_response_code(400);
-                    echo json_encode(['message' => "Erreur : Ce nom d'utilisateur est réservé."]);
+                    echo json_encode([
+                        'message' => "Erreur : Ce nom d'utilisateur est réservé."
+                    ]);
                     exit;
                 }
             } else {
