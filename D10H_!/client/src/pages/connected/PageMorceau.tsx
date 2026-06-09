@@ -179,7 +179,7 @@ const PageMorceau: React.FC<IPageMorceauProps> = () => {
         backgroundImage={Fond}
         backgroundPosition={"center"}
         backgroundSize={"cover"}
-        filter={'opacity(1)'}/>
+        filter={'opacity(0.9)'}/>
         <SelectedRenderer />
       </Box>
     </Flex>
