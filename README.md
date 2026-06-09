@@ -14,7 +14,7 @@ Pour que l'installation soit complète et fonctionnel le terminal dois être en 
 
 ```bash
   git clone https://github.com/SagWel/Fil-Rouge.git
-  cd D10H_!
+  cd Fil-Rouge/D10H_!
 ```
 
 2. Install database :
