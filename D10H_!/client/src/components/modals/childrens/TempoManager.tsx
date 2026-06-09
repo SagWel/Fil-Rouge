@@ -17,7 +17,8 @@ const TempoManager: React.FC<ITempoManagerProps> = () => {
             fontSize={"1.25rem"} fontWeight={"500"}>
                 Pourcentage tempo :
             </FormLabel>
-            <NumberInput min={1} max={200} value={format(tempoPercent)}
+            <NumberInput aria-label="pourcentage du tempo"
+            min={1} max={200} value={format(tempoPercent)}
             maxW={'80px'} 
             m={0} p={0}
             onChange={(v) => {

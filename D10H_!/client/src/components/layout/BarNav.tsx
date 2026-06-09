@@ -3,11 +3,6 @@ import {
     ModalOverlay, useDisclosure, Text, Input, FormControl, FormLabel, Switch, Link
  } from "@chakra-ui/react";
 
-// Pictures import as modules
-import Fire from '../../img/au-coin-du-feu.png'
-import Rock from '../../img/Rock.png'
-import Var from '../../img/var.png'
-
 // SVGs import from a unique file
 import { LogoIcon, HomeIcon, InstruIcon, HeartIcon, AddIcon, CollabIcon } from "../Svg";
 
@@ -267,9 +262,10 @@ const BarNav: React.FC<IBarNavProps> = () => {
                                         <Text fontSize={"14px"} fontWeight={"400"} lineHeight={"20px"} fontFamily={"Inter,Arial,sans-serif"} role="heading" color={"whiteAlpha.900"}>
                                             Nom
                                         </Text>
-                                        <Input placeholder={"Nom de la Scrobrary"} maxLength={50}  
+                                        <Input aria-label="Nom de la Scorbrary" type="text"
+                                        placeholder={"Nom de la Scrobrary"} maxLength={50}
                                         paddingStart={"1rem"} paddingInlineEnd={"0.75rem"}
-                                        h={"2rem"} minH={0} 
+                                        h={"2rem"} minH={0}
                                         bg={"#242326"}
                                         border={"transparent 0.125rem solid"} borderRadius={"0.5rem"}
                                         fontSize={"14px"} fontFamily={"Inter,Arial,sans-serif"} fontWeight={"400"} lineHeight={"20px"}

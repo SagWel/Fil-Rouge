@@ -1132,7 +1132,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                         objectFit={"cover"}
                       />
                     </Box>
-                    <Input
+                    <Input aria-label="image avatar"
                       type="file"
                       accept="image/jpeg, image/png"
                       ref={fileInputRef}
@@ -1286,7 +1286,7 @@ const PageAccount: React.FC<IPageAccountProps> = () => {
                       Ton E-mail&nbsp;:
                     </FormLabel>
                     <Stack align={"center"} flexDir={"row"} gap={"0.5rem"}>
-                      <Input
+                      <Input type="email"
                         id="field-:ron:"
                         value={user?.email}
                         disabled
