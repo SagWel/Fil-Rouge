@@ -48,7 +48,7 @@ export function IconCard(instrumentKey: string): React.JSX.Element | null {
 
 const host = import.meta.env.VITE_HOST;
 const port = import.meta.env.VITE_API_PORT;
-const BASE_URL = `http://${host}:${port}/D10h_server/public/`;
+const BASE_URL = `http://${host}:${port}/`;
 
 export interface IScoreCardProps {
   score: IScore;

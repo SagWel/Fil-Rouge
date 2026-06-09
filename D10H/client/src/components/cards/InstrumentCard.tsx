@@ -12,7 +12,7 @@ export interface IInstrumentCardProps {
 const InstrumentCard: React.FC<IInstrumentCardProps> = ({ instrument }) => {
   const host = import.meta.env.VITE_HOST;
   const port = import.meta.env.VITE_API_PORT;
-  const BASE_URL = `http://${host}:${port}/D10h_server/public/uploads/instruments/`;
+  const BASE_URL = `http://${host}:${port}/uploads/instruments/`;
   const capitalizedName =
     instrument.name.charAt(0).toUpperCase() + instrument.name.slice(1);
   const URLImg = `${BASE_URL}${capitalizedName}.png`;

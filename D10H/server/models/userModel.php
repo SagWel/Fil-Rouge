@@ -48,7 +48,7 @@ function creatUser($pdo, $email, $passwordHash, $username = null, $age = null, $
 
         $isChildAccount = $age < 18;
 
-        $sql2->execute([$id, $age, $identity, $isChildAccount ? 1 : 0, $isChildAccount ? "hidden" : 'not-filtered']);
+        $sql2->execute([$id, $age, $identity, $isChildAccount ? 1 : 0, $isChildAccount ? "hidden" : 'not_filtered']);
 
         $pdo->commit();
     } catch (PDOException $e) {

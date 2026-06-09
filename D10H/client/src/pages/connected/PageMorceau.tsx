@@ -38,7 +38,7 @@ const PageMorceau: React.FC<IPageMorceauProps> = () => {
 
   const host = import.meta.env.VITE_HOST;
   const port = import.meta.env.VITE_API_PORT;
-  const BASE_URL = `http://${host}:${port}/D10h_server/public/uploads/instruments/`;
+  const BASE_URL = `http://${host}:${port}/uploads/instruments/`;
   const capitalizedName =
     score?.instruments.currentInstrument.name.charAt(0).toUpperCase() +
     score?.instruments.currentInstrument.name.slice(1);

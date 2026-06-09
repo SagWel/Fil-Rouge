@@ -6,7 +6,7 @@ $email = $data['email'] ?? $_GET['id'];
 
 if ($email) {
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_GET['email'] = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $_POST['email'] = filter_var($email, FILTER_SANITIZE_EMAIL);
     } else {
         http_response_code(400);
         echo json_encode(['erreur' => "email invalide ..."]);

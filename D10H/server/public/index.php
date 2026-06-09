@@ -49,11 +49,7 @@ if ($ressource && file_exists($controlerFile)) {
     $middlewareID = '../middlewares/CheckNumericId.php';
 
     switch ($ressource) {
-        case 'score':
-            require_once $middlewareID;
-            break;
-        case 'scoresInstruments':
-            require_once '../middlewares/CheckInstrument.php';
+        case 'checkAuth':
             break;
         case 'auth':
             require_once '../middlewares/CheckLogin.php';
@@ -61,36 +57,29 @@ if ($ressource && file_exists($controlerFile)) {
         case 'foundByEmail':
             require_once '../middlewares/CheckEmail.php';
             break;
+        case 'logout':
+            break;
         case 'creatUser':
             require_once '../middlewares/CheckCreatUser.php';
             break;
         case 'creatUserInstruments':
             require_once $middlewareID;
             break;
-        case 'profil':
+        case 'deleteAccount':
             require_once $middlewareID;
-            break;
-        case 'updateProfil':
-            require_once '../middlewares/CheckProfilInputs.php';
+            require_once '../middlewares/CheckLogin.php';
             $_POST['userId'] = $id;
             break;
-        case 'searchScore':
-            require_once '../middlewares/CheckQuery.php';
+        case 'profil':
+            require_once $middlewareID;
             break;
         case 'addUserHistory':
             require_once $middlewareID;
             $_POST['userId'] = $id;
             $_POST['scoreId'] = $id2;
             break;
-        case 'suggestions':
-            require_once $middlewareID;
-            break;
-        case 'history':
-            require_once $middlewareID;
-            break;
-        case 'deleteAccount':
-            require_once $middlewareID;
-            require_once '../middlewares/CheckLogin.php';
+        case 'updateProfil':
+            require_once '../middlewares/CheckProfilInputs.php';
             $_POST['userId'] = $id;
             break;
         case 'editPassword':
@@ -103,10 +92,36 @@ if ($ressource && file_exists($controlerFile)) {
             $_POST['userId'] = $id;
             require_once '../middlewares/CheckFilterExplicitChoice.php';
             break;
-        case 'checkAuth':
+        case 'score':
+            require_once $middlewareID;
             break;
-        case 'logout':
+        case 'allInstruments':
             break;
+        case 'scoresInstruments':
+            require_once '../middlewares/CheckInstrument.php';
+            break;
+        case 'searchScore':
+            require_once '../middlewares/CheckQuery.php';
+            break;
+        case 'popular':
+            break;
+        case 'news':
+            break;
+        case 'suggestions':
+            require_once $middlewareID;
+            break;
+        case 'history':
+            require_once $middlewareID;
+            break;
+        default:
+            http_response_code(500);
+            echo json_encode([
+                "erreur" => 'route non reconnue',
+                "ressource" => $ressource,
+                "parts" => $parts,
+                "path" => $path
+            ]);
+            exit;
     }
     require_once $controlerFile;
 } else {

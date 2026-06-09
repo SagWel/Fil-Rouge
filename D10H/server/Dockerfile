@@ -23,4 +23,7 @@ RUN composer install --no-interaction --optimize-autoloader
 
 COPY . .
 
+RUN chown -R www-data:www-data /var/www/html/public/uploads
+RUN chmod -R 755 /var/www/html/public/uploads
+
 EXPOSE 80
