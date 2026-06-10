@@ -279,7 +279,7 @@ export const HeartUnloveIcon: React.FC<SvgProps> = ({ size, color, ...rest }) =>
     </Icon>
 )
 
-export const RemoveIcon: React.FC<IconProps> = ({ size, color, ...rest }) => (
+export const RemoveIcon: React.FC<SvgProps> = ({ size, color, ...rest }) => (
     <Icon viewBox="0 0 18 24"
     w={size || "24px"} h={size || '24px'}
     fill={color || "#fdfcfeff"} color={color || "#fdfcfeff"} {...rest}>

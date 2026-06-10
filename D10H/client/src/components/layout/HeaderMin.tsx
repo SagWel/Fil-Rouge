@@ -27,7 +27,7 @@ import {
   DeleteButtonIcon,
   HeartIcon,
   RightCarouselIcon,
-} from "../svg.tsx";
+} from "../Svg";
 
 // Context
 import { useSearch } from "../../context/SearchContext";
@@ -93,6 +93,9 @@ function HeaderMin() {
 
   /* Variables for search history */
   const [history, _, addToHistory] = useSearchHistory();
+
+  /* User data from context by hook */
+  const { user: userToken, logout } = useAuth();
 
   /* search choice management */
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

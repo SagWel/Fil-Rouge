@@ -2,7 +2,7 @@ import {Box, Flex, Heading, IconButton, List} from "@chakra-ui/react"
 import { useState, useRef, useEffect } from "react"
 
 /* Import SVG */
-import { LeftCarouselIcon, RightCarouselIcon } from "./svg"
+import { LeftCarouselIcon, RightCarouselIcon } from "./Svg"
 
 /* Import type */
 import type { IScore } from "../types/Score"

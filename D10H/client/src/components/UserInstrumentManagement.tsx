@@ -115,7 +115,7 @@ const UserInstrumentManagement: React.FC<IUserInstrumentManagementProps> = ({ da
                             textDecoration={"none"} color={"#ffffff"} size={'m'}>
                             Ajouter un instrument
                         </Heading>
-                        <CloseButtonIcon color="#ffffff" flexShrink={0}
+                        <CloseButtonIcon color="#ffffff" flexShrink={0} aria-label="fermer"
                         pos={"absolute"} top={0} right={0}
                         mt={'3px'} mr={'3px'}
                         size="24px" onClick={() => setIsOpenAddInstrument(false)} />
@@ -237,7 +237,7 @@ const UserInstrumentManagement: React.FC<IUserInstrumentManagementProps> = ({ da
                                             _hover={{
                                                 bg: '#a19fa4'
                                             }}>
-                                                <RemoveIcon />
+                                                <RemoveIcon aria-label="supprimer"/>
                                             </Button>
                                             <Button isDisabled={ui.lvl === 5}
                                                 p={0}
@@ -251,7 +251,7 @@ const UserInstrumentManagement: React.FC<IUserInstrumentManagementProps> = ({ da
                                                 _hover={{
                                                     bg: '#a19fa4'
                                                 }}>
-                                                <AddIcon size="20px" />
+                                                <AddIcon size="20px" aria-label="ajouter" />
                                             </Button>
                                         </Flex>
                                     }
@@ -273,7 +273,7 @@ const UserInstrumentManagement: React.FC<IUserInstrumentManagementProps> = ({ da
                                     _focusVisible={{
                                         boxShadow: "0 0 0 3px #ad47ff"
                                     }}>
-                                        <DisableIcon />
+                                        <DisableIcon aria-label="supprimer" />
                                     </Button>
                                 }
                             </Flex>
@@ -294,7 +294,7 @@ const UserInstrumentManagement: React.FC<IUserInstrumentManagementProps> = ({ da
                                 _focusVisible={{
                                     boxShadow: "0 0 0 3px #ad47ff"
                                 }}>
-                                    <DisableIcon />
+                                    <DisableIcon aria-label="supprimer" />
                                 </Button>
                             }
                         </Flex>
@@ -314,7 +314,7 @@ const UserInstrumentManagement: React.FC<IUserInstrumentManagementProps> = ({ da
                         _focusVisible={{
                             boxShadow: "0 0 0 3px #ad47ff"
                         }}>
-                        <AddCircleIcon />
+                        <AddCircleIcon aria-label="ajouter" />
                     </Flex>
                 </>)
                 }

@@ -7,7 +7,6 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-
 $port = getenv('MYSQL_PORT') ?: $_ENV['MYSQL_PORT'];
 $host = getenv('MYSQL_HOST') ?: $_ENV['MYSQL_HOST'];
 $dbname = getenv('MYSQL_NAME') ?: $_ENV['MYSQL_NAME'];

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 /* Import component */
-import ScoreRenderChant from "../../components/scoreRendering/ScoreRenderChant";
+import ScoreRenderSing from "../../components/scoreRendering/ScoreRenderSing";
 
 /* Import Hook */
 import { useScore } from "../../hooks/useScore";
@@ -17,7 +17,7 @@ import {
 } from "../../hooks/usePlayScore";
 
 const SCORE_RENDERERS: Record<string, React.FC> = {
-  chant: ScoreRenderChant,
+  Sing: ScoreRenderSing,
 };
 
 export interface IPageMorceauProps {}
@@ -26,7 +26,7 @@ const PageMorceau: React.FC<IPageMorceauProps> = () => {
   /* Score from context by hook */
   const { score, setScore } = useScore();
 
-  const SelectedRenderer = SCORE_RENDERERS["chant"] || ScoreRenderChant;
+  const SelectedRenderer = SCORE_RENDERERS["Sing"] || ScoreRenderSing;
 
   const { onPlay } = usePlayScoreStates();
 
@@ -167,17 +167,19 @@ const PageMorceau: React.FC<IPageMorceauProps> = () => {
           top={"7px"}
         />
       </Box>
-      <Box
+      <Box pos={'relative'}
+      height={"100%"}
+      width={"97%"}
+      marginY={"10px"}
+      marginInlineStart={"20px"}
+      overflowY={"hidden"}>
+        <Box 
+        pos={'absolute'} top={0} left={0}
+        w={'100%'} h={'100%'}
         backgroundImage={Fond}
-        backgroundRepeat={"no-repeat"}
         backgroundPosition={"center"}
         backgroundSize={"cover"}
-        height={"100%"}
-        width={"97%"}
-        marginY={"10px"}
-        marginInlineStart={"20px"}
-        overflowY={"auto"}
-      >
+        filter={'opacity(0.9)'}/>
         <SelectedRenderer />
       </Box>
     </Flex>

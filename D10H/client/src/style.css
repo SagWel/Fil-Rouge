@@ -3,8 +3,8 @@ a {
 }
 
 .note-active g {
-    fill: #7328b5 !important;
-    stroke: #7328b5 !important;
+    fill: #ad47ff !important;
+    stroke: #ad47ff !important;
 }
 
 .topbar-exposed-links a:not(:last-of-type) {
@@ -96,11 +96,6 @@ a {
     .topbar {
         padding-left: 112px !important;
         padding-right: 112px !important; 
-    }
-
-    .topbar-exposed-links {
-        display: flex !important;
-        justify-content: flex-end !important;
     }
 
     #page-homepage-brand {
