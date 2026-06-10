@@ -6,7 +6,7 @@ import { useAuth } from "../hooks/useAuth"
 
 import type { IInstrument, IInstrumentLvl } from "../types/instrument"
 
-import { DisableIcon, RemoveIcon, AddIcon, AddCircleIcon, CloseButtonIcon } from "./svg"
+import { DisableIcon, RemoveIcon, AddIcon, AddCircleIcon, CloseButtonIcon } from "./Svg"
 
 import { difficultyLvl } from "./cards/ScoreCard"
 

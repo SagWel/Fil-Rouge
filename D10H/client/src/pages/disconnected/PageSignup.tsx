@@ -44,7 +44,7 @@ import {
   DecrementIcon,
   ValidateIcon,
   CheckIcon,
-} from "../../components/svg";
+} from "../../components/Svg";
 
 import "../../style.css";
 

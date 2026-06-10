@@ -39,7 +39,7 @@ import {
   WarningIcon,
   ValidateIcon,
   CheckIcon,
-} from "../../../components/svg";
+} from "../../../components/Svg";
 
 import { useEffect, useRef, useState } from "react";
 
