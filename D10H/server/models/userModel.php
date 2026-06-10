@@ -54,7 +54,7 @@ function creatUser($pdo, $email, $passwordHash, $username = null, $age = null, $
             $age,
             $identity,
             $isChildAccount ? 1 : 0,
-            $isChildAccount ? "hidden" : 'not-filtered'
+            $isChildAccount ? "hidden" : 'not_filtered'
         ]);
 
         $pdo->commit();
